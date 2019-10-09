@@ -33,7 +33,7 @@ Plug 'nfischer/vim-rainbows'
 
 call plug#end()
 
-
+set cursorline
 set termguicolors
 set ts=4
 set sw=4
