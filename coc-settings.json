@@ -1,5 +1,7 @@
 {
-    "languageserver": {
+
+    "suggest.noselect": false,
+     "languageserver": {
         "golang": {
           "command": "gopls",
           "rootPatterns": ["go.mod"],
