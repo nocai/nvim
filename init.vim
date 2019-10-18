@@ -11,7 +11,6 @@ set scrolloff=5
 "set showcmd
 set hlsearch incsearch smartcase ignorecase
 
-"noremap U 5k
 
 call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-startify'
@@ -25,8 +24,58 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar'
 
-Plug 'mileszs/ack.vim'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'mileszs/ack.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
+" If installed using git
+Plug '~/.fzf'
+Plug 'junegunn/fzf.vim'
+nnoremap <silent> <Leader>f :Files<CR>
+nnoremap <silent> <Leader>b :Buffers<CR>
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+" In Neovim, you can set up fzf window using a Vim command
+"let g:fzf_layout = { 'window': 'enew' }
+"let g:fzf_layout = { 'window': '-tabnew' }
+"let g:fzf_layout = { 'window': '10new' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+nnoremap <silent> <Leader>r :Rg<CR>
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
     
@@ -34,6 +83,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'fatih/vim-go'
+
+
 
 " Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'ncm2/ncm2'
@@ -66,12 +117,11 @@ inoremap <c-c> <ESC>
 " When the <Enter> key is pressed while the popup menu is visible, it only
 " hides the menu. Use this mapping to close the menu and also start a new
 " line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 
 " wrap existing omnifunc
 " Note that omnifunc does not run in background and may probably block the
@@ -89,7 +139,6 @@ au User Ncm2Plugin call ncm2#register_source({
         \ 'complete_pattern': ':\s*',
         \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
         \ })
-
 
 
 " //....
@@ -132,14 +181,6 @@ let g:airline#extensions#tabline#enabled = 1
 " ===========
 
 
-" ======
-" Ack Start
-" ==========
-" cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
-" ======
-" Ack End
-" ==========
 
 " =======
 " Tagbar Start
@@ -166,54 +207,4 @@ map tt :TagbarToggle<CR>
 "set background=dark
 "let g:seoul256_background = 256
 colorscheme gruvbox
-
-" ========
-" COC Start
-" ========
-" if hidden is not set, TextEdit might fail.
-"set hidden
-
-"" Some servers have issues with backup files, see #649
-"set nobackup
-"set nowritebackup
-
-"" Better display for messages
-"set cmdheight=2
-
-"" You will have bad experience for diagnostic messages when it's default 4000.
-"set updatetime=300
-
-"" don't give |ins-completion-menu| messages.
-"set shortmess+=c
-
-"" always show signcolumns
-"set signcolumn=yes
-
-"" Use tab for trigger completion with characters ahead and navigate.
-"" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-"inoremap <silent><expr> <TAB>
-      "\ pumvisible() ? "\<C-n>" :
-      "\ <SID>check_back_space() ? "\<TAB>" :
-      "\ coc#refresh()
-"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-"function! s:check_back_space() abort
-  "let col = col('.') - 1
-  "return !col || getline('.')[col - 1]  =~# '\s'
-"endfunction
-
-"" Use <c-space> to trigger completion.
-"inoremap <silent><expr> <c-space> coc#refresh()
-
-"" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-"" Coc only does snippet and additional edit on confirm.
-"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"" Or use `complete_info` if your vim support it, like:
-"" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-"" To make <cr> select the first completion item and confirm the completion when no item has been selected:
-"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
-"" To make coc.nvim format your code on <cr>, use keymap:
-"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
