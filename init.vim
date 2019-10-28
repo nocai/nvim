@@ -1,3 +1,30 @@
+" let mapleader=" "
+" ===
+" === Cursor Movement
+" ===
+" New cursor movement (the default arrow keys are used for resizing windows)
+"     ^
+"     e
+" < h   i >
+"     n
+"     v
+noremap <silent> n j
+noremap <silent> j n
+noremap <silent> e k
+noremap <silent> k e
+noremap <silent> i l
+noremap <silent> l i
+
+" 快捷上下移动(5行)
+noremap <C-n> 5j
+nnoremap <C-e> 5k
+
+" Resize splits with arrow keys
+noremap <up> :res +5<CR>
+noremap <down> :res -5<CR>
+noremap <left> :vertical resize-5<CR>
+noremap <right> :vertical resize+5<CR>
+
 set hidden
 set cursorline
 set termguicolors
@@ -11,23 +38,49 @@ set scrolloff=5
 "set showcmd
 set hlsearch incsearch smartcase ignorecase
 
+set timeoutlen=1000 ttimeoutlen=0
+
+
 
 call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-startify'
-Plug 'morhetz/gruvbox'
+"Plug 'morhetz/gruvbox'
+"let g:gruvbox_italic=1
+"set background=dark
+"let g:seoul256_background = 256
+Plug 'iCyMind/NeoSolarized'
 Plug 'jiangmiao/auto-pairs'
 Plug 'myusuf3/numbers.vim'
-Plug 'scrooloose/nerdcommenter'
 Plug 'easymotion/vim-easymotion'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'majutsushi/tagbar'
+Plug 'vim-airline/vim-airline'
+let g:airline_powerline_fonts = 1  " 支持 powerline 字体
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = ' > '
+Plug 'vim-airline/vim-airline-themes'
 
+Plug 'scrooloose/nerdtree'
+map tt :NERDTreeToggle<CR>
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+Plug 'majutsushi/tagbar'
+" 设置tagbar的窗口宽度
+let g:tagbar_width=30
+" 设置tagbar的窗口显示的位置,为左边
+let g:tagbar_right=1
+"打开文件自动 打开tagbar
+" autocmd BufReadPost *.go,*.c call tagbar#autoopen()
+map <leader>tt :TagbarToggle<CR>
+    
 "Plug 'mileszs/ack.vim'
 "Plug 'ctrlpvim/ctrlp.vim'
+
 " If installed using git
 Plug '~/.fzf'
+"Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
@@ -76,15 +129,12 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 nnoremap <silent> <Leader>r :Rg<CR>
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-    
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 
+Plug 'scrooloose/nerdcommenter'
 Plug 'fatih/vim-go'
-
-
+let g:go_fmt_command = "goimports"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 " Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'ncm2/ncm2'
@@ -140,71 +190,11 @@ au User Ncm2Plugin call ncm2#register_source({
         \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
         \ })
 
-
 " //....
 
 
 call plug#end()
 
-
-
-
-
-
-" ==========
-" vim-go Start
-" =================
-let g:go_fmt_command = "goimports"
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
-" ==========
-" vim-go End
-" =================
-
-" ==========
-" NERDTree Start
-" =================
-map <C-n> :NERDTreeToggle<CR>
-" ==========
-" NERDTree End
-" =================
-
-" ========
-" airline Start
-" ===========
-let g:airline_powerline_fonts = 1  " 支持 powerline 字体
-let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = ' > '
-" ========
-" airline End
-" ===========
-
-
-
-" =======
-" Tagbar Start
-" =======
-" 安装tagbar插件
-" 设置tagbar使用的ctags的插件,必须要设置对
-" let g:tagbar_ctags_bin='/usr/bin/ctags'
-" 设置tagbar的窗口宽度
-let g:tagbar_width=30
-" 设置tagbar的窗口显示的位置,为左边
-let g:tagbar_right=1
-"打开文件自动 打开tagbar
-" autocmd BufReadPost *.go,*.c call tagbar#autoopen()
-map tt :TagbarToggle<CR>
-" =======
-" Tagbar End
-" =======
-
-
-" ==========
-" gruvbox Start
-" ============
-"let g:gruvbox_italic=1
-"set background=dark
-"let g:seoul256_background = 256
-colorscheme gruvbox
+"colorscheme gruvbox
+colorscheme NeoSolarized
 
