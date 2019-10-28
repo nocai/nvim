@@ -71,6 +71,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'scrooloose/nerdtree'
 map tt :NERDTreeToggle<CR>
+let NERDTreeMapOpenExpl = ""
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
