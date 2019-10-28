@@ -1,19 +1,28 @@
 " let mapleader=" "
+
 " ===
 " === Cursor Movement
 " ===
 " New cursor movement (the default arrow keys are used for resizing windows)
 "     ^
-"     e
-" < h   i >
 "     n
+" < h   i >
+"     e
 "     v
 noremap <silent> n j
 noremap <silent> j n
+noremap <silent> N J
+noremap <silent> J N
+
 noremap <silent> e k
 noremap <silent> k e
+noremap <silent> E K
+noremap <silent> K E
+
 noremap <silent> i l
 noremap <silent> l i
+noremap <silent> I L
+noremap <silent> L I
 
 " 快捷上下移动(5行)
 noremap <C-n> 5j
