@@ -9,25 +9,27 @@
 " < h   i >
 "     e
 "     v
-noremap <silent> n j
-noremap <silent> j n
-noremap <silent> N J
-noremap <silent> J N
+"noremap <silent> n j
+"noremap <silent> j n
+"noremap <silent> N J
+"noremap <silent> J N
 
-noremap <silent> e k
-noremap <silent> k e
-noremap <silent> E K
-noremap <silent> K E
+"noremap <silent> e k
+"noremap <silent> k e
+"noremap <silent> E K
+"noremap <silent> K E
 
-noremap <silent> i l
-noremap <silent> l i
-noremap <silent> I L
-noremap <silent> L I
+"noremap <silent> i l
+"noremap <silent> l i
+"noremap <silent> I L
+"noremap <silent> L I
 
 " 快捷上下移动(5行)
-noremap <C-n> 5j
-nnoremap <C-e> 5k
+"noremap <C-n> 5j
+"nnoremap <C-e> 5k
 
+noremap <C-j> 5j
+nnoremap <C-k> 5k
 " Resize splits with arrow keys
 noremap <up> :res +5<CR>
 noremap <down> :res -5<CR>
@@ -200,6 +202,28 @@ au User Ncm2Plugin call ncm2#register_source({
         \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
         \ })
 
+" If you don't have nodejs and yarn
+" use pre build
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'dhruvasagar/vim-table-mode'
+function! s:isAtStartOfLine(mapping)
+  let text_before_cursor = getline('.')[0 : col('.')-1]
+  let mapping_pattern = '\V' . escape(a:mapping, '\')
+  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+          \ <SID>isAtStartOfLine('\|\|') ?
+          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+          \ <SID>isAtStartOfLine('__') ?
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+let g:table_mode_corner = '|'
+"let g:table_mode_delimiter = ' '
+"let g:table_mode_verbose = 0
+"let g:table_mode_auto_align = 0
+"autocmd FileType markdown TableModeEnable
 " //....
 
 
