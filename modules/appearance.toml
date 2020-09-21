@@ -15,6 +15,10 @@
 # '''
 
 [[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+on_cmd = ['DeinUpdate']
+
+[[plugins]]
 merged = 1
 repo = 'mengelbrecht/lightline-bufferline'
 depends = 'lightline.vim'
@@ -101,7 +105,7 @@ hook_add = '''
 repo = "Shougo/defx.nvim"
 on_cmd = "Defx"
 hook_add = '''
-  nmap <silent>tt :Defx<CR>
+  nmap <silent>tt :<C-u>Defx<CR>
 '''
 hook_source = '''
     call defx#custom#option('_', {

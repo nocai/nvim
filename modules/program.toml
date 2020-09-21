@@ -1,14 +1,12 @@
-[[plugins]]
-repo = 'Yggdroot/indentLine'
-on_event = 'BufReadPre'
-on_cmd = ['IndentLinesToggle']
-hook_source = '''
-    let g:indentLine_enabled = 1
-    # let g:indentLine_char='┆'
-    let g:indentLine_fileTypeExclude = ['defx','dbui','vista_kind','vista','dashboard', 'help']
-    let g:indentLine_concealcursor = 'niv'
-    let g:indentLine_showFirstIndentLevel =1
-'''
+# [[plugins]]
+# repo = 'Yggdroot/indentLine'
+# on_event = 'BufReadPre'
+# on_cmd = ['IndentLinesToggle']
+# hook_source = '''
+#     let g:indentLine_fileTypeExclude = ['defx','dbui','vista_kind','vista','dashboard', 'help']
+#     let g:indentLine_concealcursor = 'niv'
+#     let g:indentLine_showFirstIndentLevel =1
+# '''
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
@@ -38,10 +36,8 @@ hook_add = '''
     nmap <silent> t<C-g> :TestVisit<CR>
 '''
 hook_source = '''
-let test#strategy = "neovim"
+  let test#strategy = "neovim"
 '''
-
-
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
@@ -51,7 +47,6 @@ repo = 'honza/vim-snippets'
 depends = 'coc.nvim'
 if = 'has("python3")'
 merged = 0
-
 
 [[plugins]]
 repo = 'neoclide/coc.nvim'
@@ -75,7 +70,6 @@ hook_add = '''
 		\ 'coc-yaml',
 		\ 'coc-yank',
 		\ 'coc-actions',
-		\ 'coc-spell-checker',
 		\ 'coc-vimlsp',
 		\ 'coc-vetur',
 		\ 'coc-emmet',
@@ -86,19 +80,12 @@ hook_add = '''
 
     augroup coc_event
       autocmd!
-      " Setup formatexpr specified filetype(s).
-      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-      " Update signature help on jump placeholder
-      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
       " Highlight the symbol and its references when holding the cursor.
-      " autocmd CursorHold * silent call CocActionAsync('highlight')
+      autocmd CursorHold * silent call CocActionAsync('highlight')
       " 自定义一下颜色，方便显示
       autocmd ColorScheme * highlight! CocHighlightText guibg=#054c20 ctermbg=023
       autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
     augroup end
-
-    " Highlight symbol under cursor on CursorHold
-    " "autocmd CursorHold * silent call CocActionAsync('highlight')
 
     "Use tab for trigger completion with characters ahead and navigate
     inoremap <silent><expr> <TAB>
@@ -134,38 +121,42 @@ hook_add = '''
    endfunction
 
    " Mappings using CoCList:
-" Show all diagnostics.
-nnoremap <silent> <space>dg  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent> <space>cm  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>n  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>e  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-" Symbol renaming.
-nmap <space>rn <Plug>(coc-rename)
+  " Show all diagnostics.
+  nnoremap <silent> <space>dg  :<C-u>CocList diagnostics<cr>
+  " Manage extensions.
+  nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+  " Show commands.
+  nnoremap <silent> <space>cm  :<C-u>CocList commands<cr>
+  " Find symbol of current document.
+  nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+  " Search workspace symbols.
+  nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+  " Do default action for next item.
+  nnoremap <silent> <space>n  :<C-u>CocNext<CR>
+  " Do default action for previous item.
+  nnoremap <silent> <space>e  :<C-u>CocPrev<CR>
+  " Resume latest coc list.
+  nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+  " Symbol renaming.
+  nmap <space>rn <Plug>(coc-rename)
 
-nmap <space>tt :CocCommand explorer<CR>
-" coc-translator
-nmap <space>ts <Plug>(coc-translator-p)
-" coc-yank
-nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+  nmap <space>tt :CocCommand explorer<CR>
+  " coc-translator
+  nmap <space>ts <Plug>(coc-translator-p)
+  " coc-yank
+  nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
 
-" Remap for do codeAction of selected region
-function! s:cocActionsOpenFromSelected(type) abort
-  execute 'CocCommand actions.open ' . a:type
-endfunction
-xmap <silent> <space>ca :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-nmap <silent> <space>ca :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+  " Remap for do codeAction of selected region
+  function! s:cocActionsOpenFromSelected(type) abort
+    execute 'CocCommand actions.open ' . a:type
+  endfunction
+  xmap <silent> <space>ca :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+  nmap <silent> <space>ca :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
 
-
-
+  " Map function and class text objects
+  " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+  xmap uf <Plug>(coc-funcobj-i)
+  omap uf <Plug>(coc-funcobj-i)
+  xmap af <Plug>(coc-funcobj-a)
+  omap af <Plug>(coc-funcobj-a) 
 '''

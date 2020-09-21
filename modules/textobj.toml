@@ -2,14 +2,19 @@
 merged = 1
 repo = 'kana/vim-textobj-user'
 
-[[plugins]]
-repo = 'kana/vim-textobj-function'
-merged = 1
-depends = 'vim-textobj-user'
-on_map = { ox = '<Plug>' }
-hook_add = '''
-	let g:textobj_function_no_default_key_mappings = 1
-'''
+# [[plugins]]
+# repo = 'kana/vim-textobj-function'
+# merged = 1
+# depends = 'vim-textobj-user'
+# on_map = { ox = '<Plug>' }
+# hook_add = '''
+# 	let g:textobj_function_no_default_key_mappings = 1
+
+# 	xmap uf	<Plug>(textobj-function-i)
+# 	xmap uF	<Plug>(textobj-function-I)
+# 	omap uf	<Plug>(textobj-function-i)
+# 	omap uF	<Plug>(textobj-function-I)
+# '''
 
 [[plugins]]
 repo = 'kana/vim-textobj-indent'
@@ -17,16 +22,17 @@ depends = 'vim-textobj-user'
 merged = 1
 on_map = { ox = '<Plug>' }
 hook_add = '''
-let g:textobj_indent_no_default_key_mappings=1
-xmap uu <Plug>(textobj-indent-i)
-omap uu <Plug>(textobj-indent-i)
-xmap uU <Plug>(textobj-indent-same-i)
-omap uU <Plug>(textobj-indent-same-i)
+  let g:textobj_indent_no_default_key_mappings=1
 
-xmap au <Plug>(textobj-indent-a)
-omap au <Plug>(textobj-indent-a)
-xmap aU <Plug>(textobj-indent-same-a)
-omap aU <Plug>(textobj-indent-same-a)
+  xmap uu <Plug>(textobj-indent-i)
+  omap uu <Plug>(textobj-indent-i)
+  xmap uU <Plug>(textobj-indent-same-i)
+  omap uU <Plug>(textobj-indent-same-i)
+
+  xmap au <Plug>(textobj-indent-a)
+  omap au <Plug>(textobj-indent-a)
+  xmap aU <Plug>(textobj-indent-same-a)
+  omap aU <Plug>(textobj-indent-same-a)
 '''
 
 [[plugins]]
@@ -35,9 +41,10 @@ depends = 'vim-textobj-user'
 merged = 1
 on_map = { ox = '<Plug>' }
 hook_add = '''
-let g:textobj_parameter_no_default_key_mappings=1
-xmap u, <Plug>(textobj-parameter-i)
-omap u, <Plug>(textobj-parameter-i)
-xmap a, <Plug>(textobj-parameter-a)
-omap a, <Plug>(textobj-parameter-a)
+  let g:textobj_parameter_no_default_key_mappings=1
+
+  xmap u, <Plug>(textobj-parameter-i)
+  omap u, <Plug>(textobj-parameter-i)
+  xmap a, <Plug>(textobj-parameter-a)
+  omap a, <Plug>(textobj-parameter-a)
 '''

@@ -9,10 +9,12 @@ local global = {
 global.path_sep = global.is_windows and "\\" or "/"
 -- nvim_path: ~/.config/nvim
 global.nvim_path = global.home .. global.path_sep .. ".config" .. global.path_sep .. "nvim"
--- cache_dir: ~/.cache/nvim/
-global.cache_dir = global.home .. global.path_sep .. ".cache" .. global.path_sep .. "nvim" .. global.path_sep
 -- modules_dir: ~/.config/nvim/modules/
 global.modules_dir = global.nvim_path .. global.path_sep .. "modules" .. global.path_sep
+-- cache_nvim_dir: ~/.cache/
+global.cache_dir = global.home .. global.path_sep .. ".cache" .. global.path_sep
+-- cache_dir: ~/.cache/nvim/
+global.cache_nvim_dir = global.cache_dir .. "nvim" .. global.path_sep
 
 function global.exists(file) 
 	local ok, err, code = os.remove(file, file)

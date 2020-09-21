@@ -60,7 +60,8 @@ nmap ga <Plug>(EasyAlign)
 
 [[plugins]]
 repo = "junegunn/fzf"
-on_map = '<Plug>'
+on_cmd = 'FZF'
+on_func = 'fzf#run'
 hook_post_update = '''
     call fzf#install()
 '''

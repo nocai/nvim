@@ -2,7 +2,7 @@ local global = require("global")
 
 function load()
   local dein_cache_dir = global.cache_dir .. 'dein'
-  local dein_dir = global.cache_dir ..'dein/repos/github.com/Shougo/dein.vim'
+  local dein_dir = global.cache_nvim_dir ..'dein/repos/github.com/Shougo/dein.vim'
   local cmd = "git clone https://github.com/Shougo/dein.vim " .. dein_dir
 
   if vim.fn.has('vim_starting') then

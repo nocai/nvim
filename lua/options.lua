@@ -7,12 +7,15 @@ local options = {
 	global = {
 		mouse          = "a", -- all
 		hidden         = true,
-		clipboard      = "unnamedplus",
 
-		wildignorecase = true,
-		wildignore     = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
+    wildignorecase = true,
+    wildignore     = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
 
-		backup         = false,
+    pumheight      = 15,        -- Pop-up menu's line height
+    pumwidth       = 15,        -- Pop-up menu's line width
+
+
+    backup         = false,
 		writebackup    = false,
 		undofile       = false,
 		swapfile       = false,
