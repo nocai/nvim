@@ -1,0 +1,8 @@
+# [[plugins]]
+# repo = 'sainnhe/sonokai'
+
+[[plugins]]
+repo = 'morhetz/gruvbox'
+
+[[plugins]]
+repo = 'joshdick/onedark.vim'

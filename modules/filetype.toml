@@ -1,0 +1,9 @@
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+
+[[plugins]]
+repo = 'ekalinin/Dockerfile.vim'
+on_ft = [ 'Dockerfile', 'docker-compose' ]
+
