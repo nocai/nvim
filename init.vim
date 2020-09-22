@@ -1,5 +1,5 @@
 " ===
-" === Cursor Movement for colmark
+" === Cursor Movement
 " ===
 " New cursor movement (the default arrow keys are used for resizing windows)
 "     ^
@@ -7,7 +7,6 @@
 " < h   i >
 "     e
 "     v
-
 " let mapleader=" "
 
 noremap n j
@@ -102,4 +101,3 @@ colorscheme gruvbox
 "
 " 背景透明
 " highlight Normal guibg=NONE ctermbg=None
-

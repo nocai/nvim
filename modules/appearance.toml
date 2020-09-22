@@ -19,6 +19,10 @@ repo = 'wsdjeg/dein-ui.vim'
 on_cmd = ['DeinUpdate']
 
 [[plugins]]
+repo = 'haya14busa/dein-command.vim'
+on_cmd = ['Dein']
+
+[[plugins]]
 merged = 1
 repo = 'mengelbrecht/lightline-bufferline'
 depends = 'lightline.vim'
