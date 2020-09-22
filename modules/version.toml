@@ -1,10 +1,23 @@
-# [[plugins]]
-# repo = 'mhinz/vim-signify'
-# on_event = ['BufReadPre','BufNewFile']
-# hook_source = '''
-#     let g:signify_sign_add = '▋'
-#     let g:signify_sign_change = '▋'
-#     let g:signify_sign_delete = '▋'
-#     let g:signify_sign_delete_first_line = '▘'
-#     let g:signify_sign_show_count = 0
-# '''
+[[plugins]]
+repo = 'mhinz/vim-signify'
+on_event = ['BufReadPre','BufNewFile']
+hook_source = '''
+    let g:signify_sign_add = '▋'
+    let g:signify_sign_change = '▋'
+    let g:signify_sign_delete = '▋'
+    let g:signify_sign_delete_first_line = '▘'
+    let g:signify_sign_show_count = 0
+'''
+
+
+[[plugins]]
+repo = 'kdheepak/lazygit.nvim'
+on_cmd = ['LazyGitConfig']
+hook_add = '''
+  " setup mapping to call :LazyGit
+  nnoremap <silent> <leader>lg :LazyGit<CR>
+'''
+hook_source = '''
+  let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+  let g:lazygit_floating_window_scaling_factor = 0.9 " scaling factor for floating window
+'''

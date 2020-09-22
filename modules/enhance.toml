@@ -60,15 +60,13 @@ nmap ga <Plug>(EasyAlign)
 
 [[plugins]]
 repo = "junegunn/fzf"
-on_cmd = 'FZF'
-on_func = 'fzf#run'
 hook_post_update = '''
     call fzf#install()
 '''
 
 [[plugins]]
 repo = "junegunn/fzf.vim"
-on_source = "fzf"
+on_cmd = ['Files', 'Buffers']
 hook_add = '''
     let g:fzf_preview_window = 'right:60%'
     nnoremap <silent> <Leader>ff :Files<CR>

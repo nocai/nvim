@@ -1,1 +1,185 @@
-/Users/liujun/.dotfiles/.vim/coc-settings.json
+{
+  "signature.target": "float",
+
+  "yank.enableCompletion": false,
+
+  "codeLens.enable": true,
+
+  "list.nextKeymap": "<C-n>",
+  "list.previousKeymap": "<C-e>",
+  "list.previewHighlightGroup": "Statement",
+
+  //CocList
+  "list.source.files.defaultOptions": ["--auto-preview"],
+  "list.source.outline.defaultOptions": ["--auto-preview"],
+  "coc.source.around.firstMatch": false,
+  "coc.source.buffer.firstMatch": false,
+
+  "coc.preferences.hoverTarget": "float",
+  "coc.preferences.enableFloatHighlight": true,
+  "coc.preferences.snippetStatusText": "Ⓢ ",
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "coc.preferences.messageLevel": "error",
+  "coc.preferences.colorSupport": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "go",
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "javascriptreact",
+    "typescript.tsx",
+    "css",
+    "Markdown",
+    "less",
+    "sass",
+    "scss",
+    "html",
+    "vue"
+  ],
+  //prettier
+  "prettier.statusItemText": "ⓟ ",
+  "prettier.eslintIntegration": true,
+  "prettier.tslintIntegration": false,
+  "prettier.stylelintIntegration": true,
+  "prettier.disableSuccessMessage": true,
+
+  // diagnostic
+  "diagnostic.signOffset": 1,
+  "diagnostic.errorSign": "\uf467",
+  "diagnostic.warningSign": "\uf071",
+  "diagnostic.infoSign": "\uf129",
+  "diagnostic.hintSign": "\uf864",
+  "diagnostic.displayByAle": false,
+  "diagnostic.refreshOnInsertMode": false,
+  "diagnostic.refreshAfterSave": false,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.virtualTextPrefix": " ❯❯❯ ",
+  "diagnostic.virtualText": true,
+  "diagnostic.enableMessage": "never",
+
+  //"suggest.numberSelect": true,
+  //"suggest.maxCompleteItemCount": 9,
+  "suggest.detailMaxLength": 30,
+  "suggest.labelMaxLength": 30,
+  "suggest.noselect": true,
+  "suggest.enablePreselect": false,
+  "suggest.triggerAfterInsertEnter": true,
+  "suggest.autoTrigger": "always",
+  "suggest.timeout": 5000,
+  "suggest.enablePreview": false,
+  "suggest.floatEnable": true,
+  "suggest.detailField": "preview",
+  "suggest.snippetIndicator": "",
+  "suggest.triggerCompletionWait": 100,
+  "suggest.echodocSupport": true,
+  "suggest.minTriggerInputLength": 3,
+  "suggest.completionItemKindLabels": {
+    "class": "\uf0e8",
+    "color": "\ue22b",
+    "constant": "\uf8fe",
+    "default": "\uf29c",
+    "enum": "\uf435",
+    "enumMember": "\uf02b",
+    "event": "\ufacd",
+    "field": "\uf93d",
+    "file": "\uf723",
+    "folder": "\uf115",
+    "function": "\u0192",
+    "interface": "\uf417",
+    "keyword": "\uf1de",
+    "method": "\uf6a6",
+    "module": "\uf40d",
+    "operator": "\uf915",
+    "property": "\ue624",
+    "reference": "\ufa46",
+    "snippet": "\ue60b",
+    "struct": "\ufb44",
+    "text": "\ue612",
+    "typeParameter": "\uf728",
+    "unit": "\uf475",
+    "value": "\uf89f",
+    "variable": "\ue71b"
+  },
+
+  "explorer.width": 30,
+  "explorer.quitOnOpen": true,
+  "explorer.file.column.indent.indentLine": true,
+  "explorer.file.showHiddenFiles": true,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.file.column.git.showIgnored": true,
+  "explorer.buffer.showHiddenBuffers": false,
+  "explorer.sources": [
+    {
+      "name": "buffer",
+      "expand": false
+    },
+    {
+      "name": "file",
+      "expand": true
+    }
+  ],
+  "explorer.keyMappings": {
+    "n": "nodeNext",
+    "e": "nodePrev",
+    "i": ["expandable?", "expand", "open"],
+
+    "ge": "expandablePrev",
+    "gn": "expandableNext"
+  },
+
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact",
+    "typescript.tsx",
+    "scss",
+    "vue"
+  ],
+
+  //git
+  "git.enableGutters": true,
+  "git.branchCharacter": "\uf418",
+  "git.addGBlameToBufferVar": true,
+  "git.addGBlameToVirtualText": true,
+  "git.virtualTextPrefix": " ❯❯❯ ",
+  "git.addedSign.hlGroup": "GitGutterAdd",
+  "git.changedSign.hlGroup": "GitGutterChange",
+  "git.removedSign.hlGroup": "GitGutterDelete",
+  "git.topRemovedSign.hlGroup": "GitGutterDelete",
+  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
+  "git.addedSign.text": "▋",
+  "git.changedSign.text": "▋",
+  "git.removedSign.text": "▋",
+  "git.topRemovedSign.text": "▔",
+  "git.changeRemovedSign.text": "▋",
+
+  "languageserver": {
+    "golang": {
+      "env": { "TMPDIR": "/tmp" },
+      "command": "gopls",
+      "args": ["-remote=auto"],
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "disableWorkspaceFolders": true,
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true,
+        "completeUnimported": true
+      }
+    },
+    "lua": {
+      "cwd": "/home/liujun/.lua-language-server",
+      "command": "/home/liujun/.lua-language-server/bin/Linux/lua-language-server",
+      "args": [
+        "-E",
+        "-e",
+        "LANG=en",
+        "/home/liujun/.lua-language-server/main.lua"
+      ],
+      "filetypes": ["lua"],
+      "rootPatterns": [".git/"]
+    }
+  }
+}
