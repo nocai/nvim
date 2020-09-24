@@ -98,8 +98,14 @@ function! StatusDiagnostic() abort
 endfunction
 " Your vimrc
 function! GitStatus()
-  let [a,m,r] = GitGutterGetHunkSummary()
-  return printf('+%d ~%d -%d', a, m, r)
+	if exists('*GitGutterGetHunkSummary')
+    let [a,m,r] = GitGutterGetHunkSummary()
+    if a > 0 || m > 0 || r > 0
+      return printf('+%d ~%d -%d', a, m, r)
+    endif
+    return ''
+  endif
+  return ''
 endfunction
 " set statusline+=%{GitStatus()}
 '''
@@ -240,4 +246,7 @@ on_source = "defx.nvim"
 [[plugins]]
 repo = "kristijanhusak/defx-icons"
 on_source = "defx.nvim"
+
+# [[plugins]]
+# repo = 'mhinz/vim-startify'
 
