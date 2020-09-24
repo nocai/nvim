@@ -17,7 +17,7 @@ global.cache_dir = global.home .. global.path_sep .. ".cache" .. global.path_sep
 global.cache_nvim_dir = global.cache_dir .. "nvim" .. global.path_sep
 
 function global.exists(file) 
-	local ok, err, code = os.remove(file, file)
+	local ok, err, code = os.rename(file, file)
 	if not ok then
 		if code == 13 then
 			return true

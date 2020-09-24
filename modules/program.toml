@@ -76,6 +76,8 @@ hook_add = '''
 		\ 'coc-prettier',
 		\ 'coc-diagnostic',
 		\ 'coc-translator',
+    \ 'coc-pairs',
+    \ 'coc-tabnine',
         \]
 
     augroup coc_event

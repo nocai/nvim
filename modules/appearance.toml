@@ -37,7 +37,7 @@ let g:lightline = {
     \ 'active': {
     \   'left': [ 
     \             [ 'mode', 'paste' ],
-    \             [ 'fugitive' ],
+    \             [ 'fugitive', 'gitgutter' ],
     \             [ 'filename', 'cocstatus' ],
     \           ],
     \ },
@@ -51,6 +51,7 @@ let g:lightline = {
     \ 'component_function': {
     \   'filename': 'LightlineFilename',
    	\   'fugitive': 'LightlineFugitive',
+    \   'gitgutter': 'GitStatus',
 	  \   'cocstatus': 'StatusDiagnostic',
     \ },
     \ 'component_expand': {
@@ -60,12 +61,13 @@ let g:lightline = {
     \   'buffers': 'tabsel'
     \ }
     \ }
+
 function! LightlineFugitive()
 	if exists('*FugitiveHead')
-		let branch = FugitiveHead()
-		return branch !=# '' ? ' '.branch : ''
+    let branch = FugitiveHead()
+    return branch !=# '' ? ' ' . branch : ''
 	endif
-	return ''
+  return ''
 endfunction
 " autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 function! LightlineFilename()
@@ -94,6 +96,12 @@ function! StatusDiagnostic() abort
     endif
     return join(msgs, 'ok') . '' . get(g:, 'coc_status', '')
 endfunction
+" Your vimrc
+function! GitStatus()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf('+%d ~%d -%d', a, m, r)
+endfunction
+" set statusline+=%{GitStatus()}
 '''
 
 [[plugins]]

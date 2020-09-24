@@ -30,9 +30,9 @@ hook_source = '''
 repo = 'tpope/vim-surround'
 on_event = ["BufReadPre","BufNewFile"]
 
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
-on_event = ["BufReadPre","BufNewFile"]
+# [[plugins]]
+# repo = 'jiangmiao/auto-pairs'
+# on_event = ["BufReadPre","BufNewFile"]
 
 [[plugins]]
 repo = 'voldikss/vim-floaterm'
@@ -75,3 +75,14 @@ hook_add = '''
     nnoremap <silent> <Leader>fag :Ag<CR>
 '''
 
+[[plugins]]
+repo = 'liuchengxu/vim-which-key'
+lazy = 1
+on_cmd = ['WhichKey', 'WhichKey!']
+
+[[plugins]]
+repo = 'francoiscabrol/ranger.vim'
+on_cmd = ['Ranger']
+hook_add = '''
+  let g:ranger_map_keys = 0
+'''
