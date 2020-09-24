@@ -79,8 +79,9 @@ local options = {
 		foldenable     = true, -- set foldenable
 		foldmethod     = "indent",
 		cursorline     = true,
+    colorcolumn    = "88",
 		signcolumn     = "yes",
-	}, 
+	},
 
 	-- set buffer-scoped local-options
 	-- table: vim.bo
