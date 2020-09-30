@@ -90,11 +90,15 @@ local options = {
   -- set window-scoped local-options
   -- table: vim.wo
   window = {
+    list           = true,
+    listchars      = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
+
     number         = true,
     relativenumber = true,
 
     foldenable     = true, -- set foldenable
     foldmethod     = "indent",
+
     cursorline     = true,
     colorcolumn    = "88",
     signcolumn     = "yes",

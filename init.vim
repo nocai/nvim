@@ -1,3 +1,4 @@
+let mapleader="\<space>"
 " ===
 " === Cursor Movement
 " ===
@@ -7,7 +8,6 @@
 " < h   i >
 "     e
 "     v
-" let mapleader=" "
 
 noremap n j
 noremap N J
@@ -95,11 +95,5 @@ set clipboard=unnamed
 "   \ }
 
 
-set background=dark
-" colorscheme gruvbox8
-colorscheme gruvbox
-" colorscheme onedark
-" colorscheme sonokai
-"
 " 背景透明
-highlight Normal guibg=NONE ctermbg=None
+" highlight Normal guibg=NONE ctermbg=None

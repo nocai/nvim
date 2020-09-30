@@ -8,11 +8,21 @@ hook_source = '''
   lua require'colorizer'.setup()
 '''
 
+
+# set background=dark
+# " colorscheme gruvbox8
+# colorscheme gruvbox
+# " colorscheme onedark
+# " colorscheme sonokai
 [[plugins]]
 repo = 'sainnhe/sonokai'
 
 [[plugins]]
 repo = 'morhetz/gruvbox'
+hook_source = '''
+  lua vim.cmd('set background=dark')
+  lua vim.cmd('colorscheme gruvbox')
+'''
 
 [[plugins]]
 repo = 'joshdick/onedark.vim'

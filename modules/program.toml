@@ -80,18 +80,17 @@ hook_add = '''
 		\ 'coc-prettier',
 		\ 'coc-diagnostic',
 		\ 'coc-translator',
-    \ 'coc-pairs',
     \ 'coc-metals',
-    \ 'coc-lua',
         \]
 
     " \ 'coc-tabnine',
+    " \ 'coc-lua',
     augroup coc_event
       autocmd!
       " Highlight the symbol and its references when holding the cursor.
       autocmd CursorHold * silent call CocActionAsync('highlight')
-      " 自定义一下颜色，方便显示
       autocmd ColorScheme * highlight! CocHighlightText guibg=#054c20 ctermbg=023
+
       autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
     augroup end
 
@@ -103,16 +102,12 @@ hook_add = '''
           \ coc#refresh()
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
     inoremap <expr><C-e> pumvisible() ? "\<C-p>" : "\<C-e>"
-    inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
     function s:check_right_bracket() abort
       let c = getline('.')[col('.')-1]
       return c =~ '[\)\]\}]' || c == '"' || c == "'" || c == ';'
     endf
+
+    inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
     " Use `[g` and `]g` to navigate diagnostics
     nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -124,8 +119,11 @@ hook_add = '''
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
 
+    " Symbol renaming.
+    nmap <leader>rn <Plug>(coc-rename)
+
     " Use K to show documentation in preview window.
-    nnoremap <silent><space>k :call <SID>show_documentation()<CR>
+    nnoremap <silent><leader>k :call <SID>show_documentation()<CR>
     function! s:show_documentation()
      if (index(['vim','help'], &filetype) >= 0)
       execute 'h '.expand('<cword>')
@@ -134,43 +132,33 @@ hook_add = '''
      endif
    endfunction
 
-   " Mappings using CoCList:
-  " Show all diagnostics.
-  nnoremap <silent> <space>dg  :<C-u>CocList diagnostics<cr>
-  " Manage extensions.
-  nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-  " Show commands.
-  nnoremap <silent> <space>cm  :<C-u>CocList commands<cr>
-  " Find symbol of current document.
-  nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-  " Search workspace symbols.
-  nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-  " Do default action for next item.
-  nnoremap <silent> <space>n  :<C-u>CocNext<CR>
-  " Do default action for previous item.
-  nnoremap <silent> <space>e  :<C-u>CocPrev<CR>
-  " Resume latest coc list.
-  nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-  " Symbol renaming.
-  nmap <space>rn <Plug>(coc-rename)
+    " Show all diagnostics.
+    nnoremap <silent> <leader>dg  :<C-u>CocList diagnostics<cr>
+    " Manage extensions.
+    nnoremap <silent> <leader>ex  :<C-u>CocList extensions<cr>
+    " Show commands.
+    nnoremap <silent> <leader>cm  :<C-u>CocList commands<cr>
+    " Find symbol of current document.
+    nnoremap <silent> <leader>ol  :<C-u>CocList outline<cr>
+    " Search workspace symbols.
+    nnoremap <silent> <leader>sb  :<C-u>CocList -I symbols<cr>
 
-  nmap <space>tt :CocCommand explorer<CR>
-  " coc-translator
-  nmap <space>ts <Plug>(coc-translator-p)
-  " coc-yank
-  nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+    " Remap for do codeAction of selected region
+    function! s:cocActionsOpenFromSelected(type) abort
+        execute 'CocCommand actions.open ' . a:type
+    endfunction
+    xmap <silent> <leader>ca :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+    nmap <silent> <leader>ca :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
 
-  " Remap for do codeAction of selected region
-  function! s:cocActionsOpenFromSelected(type) abort
-    execute 'CocCommand actions.open ' . a:type
-  endfunction
-  xmap <silent> <space>ca :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-  nmap <silent> <space>ca :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+    " Map function and class text objects
+    " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+    xmap uf <Plug>(coc-funcobj-i)
+    omap uf <Plug>(coc-funcobj-i)
+    xmap af <Plug>(coc-funcobj-a)
+    omap af <Plug>(coc-funcobj-a) 
 
-  " Map function and class text objects
-  " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-  xmap uf <Plug>(coc-funcobj-i)
-  omap uf <Plug>(coc-funcobj-i)
-  xmap af <Plug>(coc-funcobj-a)
-  omap af <Plug>(coc-funcobj-a) 
+    " coc-translator
+    nmap <leader>ts <Plug>(coc-translator-p)
+    " coc-yank
+    nnoremap <silent> <leader>ya :<C-u>CocList -A --normal yank<cr>
 '''
