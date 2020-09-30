@@ -5,15 +5,15 @@
 # hook_source = '''
 #     let g:indentLine_fileTypeExclude = ['defx','dbui','vista_kind','vista','dashboard', 'help']
 #     let g:indentLine_concealcursor = 'niv'
-#     let g:indentLine_showFirstIndentLevel =1
+#     " let g:indentLine_showFirstIndentLevel =1
 # '''
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
-on_ft = ['go']
+on_ft = ['go','scala','java', 'javascript']
 on_cmd = 'QuickRun'
 hook_add = '''
-    nmap <Leader>qr <Plug>(quickrun)
+    nmap <Leader>r <Plug>(quickrun)
 '''
 hook_source = '''
     let g:quickrun_config = {
@@ -41,6 +41,10 @@ hook_source = '''
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'sbdchd/neoformat'
+on_cmd = ['Neoformat', 'Neoformat!']
 
 [[plugins]]
 repo = 'honza/vim-snippets'
@@ -92,7 +96,7 @@ hook_add = '''
     "Use tab for trigger completion with characters ahead and navigate
     inoremap <silent><expr> <TAB>
           \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<TAB>" :
+          \ v:lua.check_back_space() ? "\<TAB>" :
           \ coc#refresh()
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
     inoremap <expr><C-e> pumvisible() ? "\<C-p>" : "\<C-e>"

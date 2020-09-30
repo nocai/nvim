@@ -1,6 +1,6 @@
-# [[plugins]]
-# merged = 1
-# repo = 'sheerun/vim-polyglot'
+[[plugins]]
+merged = 1
+repo = 'sheerun/vim-polyglot'
 
 # [[plugins]]
 # repo = 'norcalli/nvim-colorizer.lua'
