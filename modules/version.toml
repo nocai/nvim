@@ -1,6 +1,9 @@
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 on_cmd = ['G', 'Git']
+hook_source = '''
+  nnoremap <silent> <leader>gf :Git<CR>
+'''
 
 # [[plugins]]
 # repo = 'mhinz/vim-signify'
@@ -16,9 +19,10 @@ on_cmd = ['G', 'Git']
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 on_event = ['BufReadPre','BufNewFile']
-on_cmd = ['GitGutterToggle']
+on_cmd = ['GitGutterToggle', 'GitGutterEnable']
 hook_source = '''
   let g:gitgutter_enabled = 0
+  nnoremap <silent> <leader>gt :GitGutterToggle<CR>
 '''
 
 
@@ -27,7 +31,7 @@ repo = 'kdheepak/lazygit.nvim'
 on_cmd = ['LazyGit']
 hook_add = '''
   " setup mapping to call :LazyGit
-  nnoremap <silent> <leader>lg :LazyGit<CR>
+  nnoremap <silent> <leader>gg :LazyGit<CR>
 '''
 hook_source = '''
   let g:lazygit_floating_window_winblend = 0 " transparency of floating window

@@ -13,7 +13,7 @@ repo = 'thinca/vim-quickrun'
 on_ft = ['go', 'java', 'javascript', 'typescript', 'lua', 'scala' ]
 on_cmd = 'QuickRun'
 hook_add = '''
-    nmap <Leader>r <Plug>(quickrun)
+    nmap <Leader>rr <Plug>(quickrun)
 '''
 hook_source = '''
     let g:quickrun_config = {
@@ -28,12 +28,11 @@ hook_source = '''
 repo = 'vim-test/vim-test'
 on_ft = ['go', 'java', 'javascript', 'typescript', 'lua', 'scala' ]
 hook_add = '''
-    " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-    nmap <silent> t<C-n> :TestNearest<CR>
-    nmap <silent> t<C-f> :TestFile<CR>
-    nmap <silent> t<C-s> :TestSuite<CR>
-    nmap <silent> t<C-l> :TestLast<CR>
-    nmap <silent> t<C-g> :TestVisit<CR>
+    nmap <silent> <leader>tn :TestNearest<CR>
+    nmap <silent> <leader>tf :TestFile<CR>
+    nmap <silent> <leader>ts :TestSuite<CR>
+    nmap <silent> <leader>tl :TestLast<CR>
+    nmap <silent> <leader>tg :TestVisit<CR>
 '''
 hook_source = '''
   let test#strategy = "neovim"
@@ -119,11 +118,12 @@ hook_add = '''
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
 
-    " Symbol renaming.
-    nmap <leader>rn <Plug>(coc-rename)
+    nmap <silent>rn <Plug>(coc-rename)
+    nmap <silent>ca <Plug>(coc-codeaction)
+    nmap <silent>fc <Plug>(coc-fix-current)
 
     " Use K to show documentation in preview window.
-    nnoremap <silent><leader>k :call <SID>show_documentation()<CR>
+    nnoremap <silent><silent>H :call <SID>show_documentation()<CR>
     function! s:show_documentation()
      if (index(['vim','help'], &filetype) >= 0)
       execute 'h '.expand('<cword>')
@@ -132,26 +132,26 @@ hook_add = '''
      endif
    endfunction
 
+    " coc list
+    nnoremap <silent> <leader>cc  :<C-u>CocList<cr>
     " Show all diagnostics.
-    nnoremap <silent> <leader>dg  :<C-u>CocList diagnostics<cr>
+    nnoremap <silent> <leader>ca  :<C-u>CocList diagnostics<cr>
     " Manage extensions.
-    nnoremap <silent> <leader>ex  :<C-u>CocList extensions<cr>
+    nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
     " Show commands.
     nnoremap <silent> <leader>cm  :<C-u>CocList commands<cr>
     " Find symbol of current document.
-    nnoremap <silent> <leader>ol  :<C-u>CocList outline<cr>
+    nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
     " Search workspace symbols.
-    nnoremap <silent> <leader>sb  :<C-u>CocList -I symbols<cr>
-
-    " Remap for do codeAction of selected region
-    function! s:cocActionsOpenFromSelected(type) abort
-        execute 'CocCommand actions.open ' . a:type
-    endfunction
-    xmap <silent> <leader>ca :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-    nmap <silent> <leader>ca :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+    nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
+    " Do default action for next item.
+    nnoremap <silent><nowait> <leader>n  :<C-u>CocNext<CR>
+    " Do default action for previous item.
+    nnoremap <silent><nowait> <leader>e  :<C-u>CocPrev<CR>
+    " Resume latest coc list.
+    nnoremap <silent><nowait> <leader>p  :<C-u>CocListResume<CR>
 
     " Map function and class text objects
-    " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
     xmap uf <Plug>(coc-funcobj-i)
     omap uf <Plug>(coc-funcobj-i)
     xmap af <Plug>(coc-funcobj-a)
