@@ -1,11 +1,4 @@
 # [[plugins]]
-# merged = 1
-# repo = 'sheerun/vim-polyglot'
-
-# [[plugins]]
-# repo = 'norcalli/nvim-colorizer.lua'
-
-# [[plugins]]
 # repo = 'vim-airline/vim-airline'
 # hook_add = '''
 #   let g:airline_powerline_fonts = 1  " 支持 powerline 字体

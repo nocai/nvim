@@ -7,3 +7,6 @@ on_ft = 'toml'
 repo = 'ekalinin/Dockerfile.vim'
 on_ft = [ 'Dockerfile', 'docker-compose' ]
 
+[[plugins]]
+repo = 'vimwiki/vimwiki'
+on_ft = ['markdown', 'wiki']

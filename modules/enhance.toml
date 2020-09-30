@@ -80,25 +80,21 @@ repo = 'Yggdroot/LeaderF'
 hook_post_update = '''
   ./install.sh
 '''
-# on_map = ['<leader>ff']
+on_map = ['<leader>ff']
 hook_add = '''
-" let g:Lf_CommandMap = {'<C-e>': ['<Up>'], '<C-n>': ['<Down>']}
-let g:Lf_CommandMap = {'<C-E>': ['<C-K>'], '<C-N>': ['<C-J>']}
-
+let g:Lf_CommandMap = {'<C-K>': ['<C-e>'], '<C-J>': ['<C-n>']}
 
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
 let g:Lf_ShortcutF = "<leader>ff"
 noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
 noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+noremap <leader>fr :<C-U><C-R>=printf("Leaderf rg %s", "")<CR><CR>
 '''
-
-
 
 [[plugins]]
 repo = 'liuchengxu/vim-which-key'
