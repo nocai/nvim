@@ -1,4 +1,14 @@
 [[plugins]]
+merged = 1
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'norcalli/nvim-colorizer.lua'
+hook_source = '''
+  lua require'colorizer'.setup()
+'''
+
+[[plugins]]
 repo = 'sainnhe/sonokai'
 
 [[plugins]]
@@ -6,3 +16,5 @@ repo = 'morhetz/gruvbox'
 
 [[plugins]]
 repo = 'joshdick/onedark.vim'
+
+

@@ -10,7 +10,7 @@
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
-on_ft = ['go','scala','java', 'javascript']
+on_ft = ['go', 'java', 'javascript', 'typescript', 'lua', 'scala' ]
 on_cmd = 'QuickRun'
 hook_add = '''
     nmap <Leader>r <Plug>(quickrun)
@@ -26,7 +26,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'vim-test/vim-test'
-on_ft = ['go']
+on_ft = ['go', 'java', 'javascript', 'typescript', 'lua', 'scala' ]
 hook_add = '''
     " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
     nmap <silent> t<C-n> :TestNearest<CR>
@@ -81,9 +81,11 @@ hook_add = '''
 		\ 'coc-diagnostic',
 		\ 'coc-translator',
     \ 'coc-pairs',
-    \ 'coc-tabnine',
+    \ 'coc-metals',
+    \ 'coc-lua',
         \]
 
+    " \ 'coc-tabnine',
     augroup coc_event
       autocmd!
       " Highlight the symbol and its references when holding the cursor.
@@ -95,16 +97,22 @@ hook_add = '''
 
     "Use tab for trigger completion with characters ahead and navigate
     inoremap <silent><expr> <TAB>
+          \ <SID>check_right_bracket() ? "\<Right>" :
           \ pumvisible() ? "\<C-n>" :
           \ v:lua.check_back_space() ? "\<TAB>" :
           \ coc#refresh()
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
     inoremap <expr><C-e> pumvisible() ? "\<C-p>" : "\<C-e>"
     inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
     function! s:check_back_space() abort
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
+    function s:check_right_bracket() abort
+      let c = getline('.')[col('.')-1]
+      return c =~ '[\)\]\}]' || c == '"' || c == "'" || c == ';'
+    endf
 
     " Use `[g` and `]g` to navigate diagnostics
     nmap <silent> [g <Plug>(coc-diagnostic-prev)
