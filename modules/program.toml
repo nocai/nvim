@@ -12,6 +12,7 @@
 repo = 'thinca/vim-quickrun'
 on_ft = ['go', 'java', 'javascript', 'typescript', 'lua', 'scala' ]
 on_cmd = 'QuickRun'
+if = '!exists("g:vscode")'
 hook_add = '''
     nmap <Leader>rr <Plug>(quickrun)
 '''
@@ -27,6 +28,7 @@ hook_source = '''
 [[plugins]]
 repo = 'vim-test/vim-test'
 on_ft = ['go', 'java', 'javascript', 'typescript', 'lua', 'scala' ]
+if = '!exists("g:vscode")'
 hook_add = '''
     nmap <silent> <leader>tn :TestNearest<CR>
     nmap <silent> <leader>tf :TestFile<CR>
@@ -38,23 +40,33 @@ hook_source = '''
   let test#strategy = "neovim"
 '''
 
+
 [[plugins]]
 repo = 'tpope/vim-commentary'
 
 [[plugins]]
 repo = 'sbdchd/neoformat'
 on_cmd = ['Neoformat', 'Neoformat!']
+if = '!exists("g:vscode")'
 
 [[plugins]]
 repo = 'honza/vim-snippets'
 depends = 'coc.nvim'
 if = 'has("python3")'
+if = '!exists("g:vscode")'
 merged = 0
+
+
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = ['go']
+if = '!exists("g:vscode")'
 
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 rev = "release"
 merged = 0
+if = '!exists("g:vscode")'
 hook_add = '''
     let g:coc_snippet_next = '<TAB>'
     let g:coc_snippet_prev = '<S-TAB>'

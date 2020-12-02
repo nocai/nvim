@@ -37,7 +37,7 @@ function load()
       vim.fn['dein#install']()
     end
 
-    print("dein reload plugins......")
+    print("plugins reloading...")
   end
 
   vim.api.nvim_command('filetype plugin indent on')

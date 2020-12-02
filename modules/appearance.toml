@@ -2,10 +2,12 @@
 merged = 1
 repo = 'mengelbrecht/lightline-bufferline'
 depends = 'lightline.vim'
+if = '!exists("g:vscode")'
 
 [[plugins]]
 merged = 1
 repo = 'itchyny/lightline.vim'
+if = '!exists("g:vscode")'
 hook_source = '''
 let g:lightline = {
     \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
@@ -90,6 +92,7 @@ endfunction
 merged = 1
 repo = "ryanoasis/vim-devicons"
 on_source = "defx.nvim"
+if = '!exists("g:vscode")'
 hook_add = '''
     let g:webdevicons_enable_airline_tabline = 1
     let g:webdevicons_enable_airline_statusline = 1
@@ -98,6 +101,7 @@ hook_add = '''
 [[plugins]]
 repo = "Shougo/defx.nvim"
 on_cmd = "Defx"
+if = '!exists("g:vscode")'
 hook_add = '''
   nmap <silent>tt :<C-u>Defx<CR>
 '''
@@ -218,10 +222,12 @@ hook_source = '''
 [[plugins]]
 repo = "kristijanhusak/defx-git"
 on_source = "defx.nvim"
+if = '!exists("g:vscode")'
 
 [[plugins]]
 repo = "kristijanhusak/defx-icons"
 on_source = "defx.nvim"
+if = '!exists("g:vscode")'
 
 # [[plugins]]
 # repo = 'vim-airline/vim-airline'

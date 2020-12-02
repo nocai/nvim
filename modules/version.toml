@@ -1,6 +1,7 @@
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 on_cmd = ['G', 'Git']
+if = '!exists("g:vscode")'
 hook_source = '''
   nnoremap <silent> <leader>gf :Git<CR>
 '''
@@ -20,6 +21,7 @@ hook_source = '''
 repo = 'airblade/vim-gitgutter'
 on_event = ['BufReadPre','BufNewFile']
 on_cmd = ['GitGutterToggle', 'GitGutterEnable']
+if = '!exists("g:vscode")'
 hook_source = '''
   let g:gitgutter_enabled = 0
   nnoremap <silent> <leader>gt :GitGutterToggle<CR>
@@ -29,6 +31,7 @@ hook_source = '''
 [[plugins]]
 repo = 'kdheepak/lazygit.nvim'
 on_cmd = ['LazyGit']
+if = '!exists("g:vscode")'
 hook_add = '''
   " setup mapping to call :LazyGit
   nnoremap <silent> <leader>gg :LazyGit<CR>

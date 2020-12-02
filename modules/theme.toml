@@ -1,9 +1,11 @@
 [[plugins]]
 merged = 1
 repo = 'sheerun/vim-polyglot'
+if = '!exists("g:vscode")'
 
 [[plugins]]
 repo = 'norcalli/nvim-colorizer.lua'
+if = '!exists("g:vscode")'
 hook_source = '''
   lua require'colorizer'.setup()
 '''
@@ -16,9 +18,11 @@ hook_source = '''
 # " colorscheme sonokai
 [[plugins]]
 repo = 'sainnhe/sonokai'
+if = '!exists("g:vscode")'
 
 [[plugins]]
 repo = 'morhetz/gruvbox'
+if = '!exists("g:vscode")'
 hook_source = '''
   lua vim.cmd('set background=dark')
   lua vim.cmd('colorscheme gruvbox')
@@ -26,5 +30,6 @@ hook_source = '''
 
 [[plugins]]
 repo = 'joshdick/onedark.vim'
+if = '!exists("g:vscode")'
 
 
