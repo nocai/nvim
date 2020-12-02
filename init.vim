@@ -52,7 +52,7 @@ nmap <silent><ESC> :nohlsearch<CR>
 " let g:python2_host_skip_check=1
 " let g:python2_host_prog = '/usr/bin/python'
 let g:python3_host_skip_check=1
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = '/usr/local/bin/python3'
 
 " Disable vim distribution plugins
 let g:loaded_gzip = 1
@@ -81,18 +81,18 @@ lua require("core")
 
 noremap Y "+y
 set clipboard=unnamed
-" let g:clipboard = {
-"   \ 'name': 'pbcopy',
-"   \ 'copy': {
-"   \    '+': 'pbcopy',
-"   \    '*': 'pbcopy',
-"   \  },
-"   \ 'paste': {
-"   \    '+': 'pbpaste',
-"   \    '*': 'pbpaste',
-"   \ },
-"   \ 'cache_enabled': 0,
-"   \ }
+let g:clipboard = {
+  \ 'name': 'pbcopy',
+  \ 'copy': {
+  \    '+': 'pbcopy',
+  \    '*': 'pbcopy',
+  \  },
+  \ 'paste': {
+  \    '+': 'pbpaste',
+  \    '*': 'pbpaste',
+  \ },
+  \ 'cache_enabled': 0,
+  \ }
 
 
 " 背景透明

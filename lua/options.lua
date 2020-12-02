@@ -80,8 +80,8 @@ local options = {
     fileencoding = "UTF-8",
 
     expandtab    = true,
-    tabstop      = 2,
-    shiftwidth   = 2,
+    tabstop      = 4,
+    shiftwidth   = 4,
     softtabstop  = -1,
 
     autoindent   = true,
@@ -110,8 +110,8 @@ local options = {
     fileencoding = "UTF-8",
 
     expandtab    = true,
-    tabstop      = 2,
-    shiftwidth   = 2,
+    tabstop      = 4,
+    shiftwidth   = 4,
     softtabstop  = -1,
 
     autoindent   = true,

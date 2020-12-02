@@ -58,13 +58,12 @@ merged = 0
 hook_add = '''
     let g:coc_snippet_next = '<TAB>'
     let g:coc_snippet_prev = '<S-TAB>'
-    let g:snips_author = 'lj.liujun'
+    let g:snips_author = 'bucai'
     let g:coc_status_error_sign = '•'
     let g:coc_status_warning_sign = '•'
     let g:coc_global_extensions =[
 		\ 'coc-marketplace',
 		\ 'coc-snippets',
-		\ 'coc-pairs',
 		\ 'coc-json',
 		\ 'coc-highlight',
 		\ 'coc-emoji',
@@ -79,9 +78,10 @@ hook_add = '''
 		\ 'coc-prettier',
 		\ 'coc-diagnostic',
 		\ 'coc-translator',
-    \ 'coc-metals',
         \]
 
+	" \ 'coc-pairs',
+    " \ 'coc-metals',
     " \ 'coc-tabnine',
     " \ 'coc-lua',
     augroup coc_event
@@ -133,23 +133,23 @@ hook_add = '''
    endfunction
 
     " coc list
-    nnoremap <silent> <leader>cc  :<C-u>CocList<cr>
+    nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>
     " Show all diagnostics.
-    nnoremap <silent> <leader>ca  :<C-u>CocList diagnostics<cr>
+    nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>
     " Manage extensions.
-    nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
+    nnoremap <silent> <leader><leader>e  :<C-u>CocList extensions<cr>
     " Show commands.
-    nnoremap <silent> <leader>cm  :<C-u>CocList commands<cr>
+    nnoremap <silent> <leader><leader>c  :<C-u>CocList commands<cr>
     " Find symbol of current document.
-    nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
+    nnoremap <silent> <leader><leader>o  :<C-u>CocList outline<cr>
     " Search workspace symbols.
-    nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
+    nnoremap <silent> <leader><leader>s  :<C-u>CocList -I symbols<cr>
     " Do default action for next item.
-    nnoremap <silent><nowait> <leader>n  :<C-u>CocNext<CR>
+    nnoremap <silent><nowait> <leader><leader>n  :<C-u>CocNext<CR>
     " Do default action for previous item.
-    nnoremap <silent><nowait> <leader>e  :<C-u>CocPrev<CR>
+    nnoremap <silent><nowait> <leader><leader>e  :<C-u>CocPrev<CR>
     " Resume latest coc list.
-    nnoremap <silent><nowait> <leader>p  :<C-u>CocListResume<CR>
+    nnoremap <silent><nowait> <leader><leader>p  :<C-u>CocListResume<CR>
 
     " Map function and class text objects
     xmap uf <Plug>(coc-funcobj-i)

@@ -6,13 +6,13 @@ on_cmd = ['DeinUpdate']
 repo = 'haya14busa/dein-command.vim'
 on_cmd = ['Dein']
 
-[[plugins]]
-repo = 'rhysd/accelerated-jk'
-on_map = '<Plug>'
-hook_add = '''
-  nmap <silent>n <Plug>(accelerated_jk_gj)
-  nmap <silent>e <Plug>(accelerated_jk_gk)
-'''
+# [[plugins]]
+# repo = 'rhysd/accelerated-jk'
+# on_map = '<Plug>'
+# hook_add = '''
+#   nmap <silent>n <Plug>(accelerated_jk_gj)
+#   nmap <silent>e <Plug>(accelerated_jk_gk)
+# '''
 
 [[plugins]]
 repo = 'luochen1990/rainbow'
@@ -38,9 +38,9 @@ hook_source = '''
 repo     = 'tpope/vim-surround'
 on_event = ["BufReadPre","BufNewFile"]
 
-# [[plugins]]
-# repo = 'jiangmiao/auto-pairs'
-# on_event = ["BufReadPre","BufNewFile"]
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+on_event = ["BufReadPre","BufNewFile"]
 
 [[plugins]]
 repo   = 'voldikss/vim-floaterm'
@@ -54,20 +54,20 @@ hook_source= '''
     hi FloatermBorder guibg=none guifg=cyan
 '''
 
-[[plugins]]
-repo   = 'simnalamburt/vim-mundo'
-on_cmd = 'MundoToggle'
+# [[plugins]]
+# repo   = 'simnalamburt/vim-mundo'
+# on_cmd = 'MundoToggle'
 
-[[plugins]]
-repo     = 'junegunn/vim-easy-align'
-on_cmd   = '<Plug>(EasyAlign)'
-hook_add = '''
-    " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-    vmap <Enter> <Plug>(EasyAlign)
+# [[plugins]]
+# repo     = 'junegunn/vim-easy-align'
+# on_cmd   = '<Plug>(EasyAlign)'
+# hook_add = '''
+#     " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+#     vmap <Enter> <Plug>(EasyAlign)
 
-    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-    nmap ga <Plug>(EasyAlign)
-'''
+#     " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+#     nmap ga <Plug>(EasyAlign)
+# '''
 
 # [[plugins]]
 # repo = "junegunn/fzf"
@@ -128,26 +128,16 @@ hook_source = '''
       \ 'r' : [':Leaderf rg', 'Leaderf rg'],
       \ }
 
-	" CocList
-	let g:which_key_map.c = {
-      \ 'name' : '+CocList' ,
-      \ 'c' : [':CocList', 'CocList']        ,
-      \ 'a' : [':CocList diagnostics', 'CocList diagnostics'],
-      \ 'e' : [':CocList extensions', 'CocList extensions'],
-      \ 'm' : [':CocList commands', 'CocList commands'],
-      \ 'o' : [':CocList outline', 'CocList outline'],
-      \ 's' : [':CocList -I symbols', 'CocList symbols'],
-      \ }
 
 	" QuickRun
 	let g:which_key_map.r = {
       \ 'name' : '+QuickRun' ,
-			\ }
+	  \ }
 
 	" Test
 	let g:which_key_map.t = {
       \ 'name' : '+Test' ,
-			\ }
+	  \ }
 
 	" Git
 	let g:which_key_map.g = {
