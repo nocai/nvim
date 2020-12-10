@@ -43,6 +43,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
+if = '!exists("g:vscode")'
 
 [[plugins]]
 repo = 'sbdchd/neoformat'
