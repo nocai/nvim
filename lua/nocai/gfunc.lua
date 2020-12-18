@@ -7,6 +7,11 @@ function _G.check_back_space()
   end
 end
 
+function _G.dump(...)
+    local objects = vim.tbl_map(vim.inspect, {...})
+    print(unpack(objects))
+end
+
 -- _G.PrintString = function(str)
 --   print(str)
 -- end

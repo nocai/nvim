@@ -63,6 +63,28 @@ repo = 'fatih/vim-go'
 on_ft = ['go']
 if = '!exists("g:vscode")'
 
+# [[plugins]]
+# repo = 'nvim-lua/completion-nvim'
+
+# [[plugins]]
+# repo = 'neovim/nvim-lspconfig'
+# hook_add = '''
+# autocmd BufWritePre *.go lua goimports(1000)
+
+# autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+# nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+# nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+# nnoremap <silent> gh     <cmd>lua vim.lsp.buf.hover()<CR>
+# nnoremap <silent> gi    <cmd>lua vim.lsp.buf.implementation()<CR>
+# " nnoremap <silent> gh <cmd>lua vim.lsp.buf.signature_help()<CR>
+# nnoremap <silent> gt   <cmd>lua vim.lsp.buf.type_definition()<CR>
+# nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+# nnoremap <silent> gs    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+# nnoremap <silent> gS    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+# nnoremap <silent> gD    <cmd>lua vim.lsp.buf.declaration()<CR>
+# '''
+
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 rev = "release"
@@ -127,7 +149,7 @@ hook_add = '''
 
     " GoTo code navigation.
     nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gt <Plug>(coc-type-definition)
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
 
@@ -136,7 +158,7 @@ hook_add = '''
     nmap <silent>fc <Plug>(coc-fix-current)
 
     " Use K to show documentation in preview window.
-    nnoremap <silent><silent>H :call <SID>show_documentation()<CR>
+    nnoremap <silent><silent>gh :call <SID>show_documentation()<CR>
     function! s:show_documentation()
      if (index(['vim','help'], &filetype) >= 0)
       execute 'h '.expand('<cword>')
@@ -175,3 +197,5 @@ hook_add = '''
     " coc-yank
     nnoremap <silent> <leader>ya :<C-u>CocList -A --normal yank<cr>
 '''
+
+

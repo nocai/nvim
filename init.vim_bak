@@ -38,15 +38,18 @@ noremap l u
 noremap L U
 noremap <C-l> <C-u>
 
+inoremap <expr> <c-j> ("\<C-n>")
+inoremap <expr> <c-k> ("\<C-p>")
+
 " Resize splits with arrow keys
-noremap <silent><up> :res +5<CR>
-noremap <silent><down> :res -5<CR>
-noremap <silent><left> :vertical resize-5<CR>
-noremap <silent><right> :vertical resize+5<CR>
+" noremap <silent><up> :res +5<CR>
+" noremap <silent><down> :res -5<CR>
+" noremap <silent><left> :vertical resize-5<CR>
+" noremap <silent><right> :vertical resize+5<CR>
 
-noremap R :source $MYVIMRC<CR>
+" noremap R :source $MYVIMRC<CR>
 
-nmap <silent><ESC> :nohlsearch<CR>
+" nmap <silent><ESC> :nohlsearch<CR>
 
 " 插件对python的依赖配置
 " let g:python2_host_skip_check=1

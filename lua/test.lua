@@ -17,3 +17,6 @@
 for k,v in pairs(vim.o) do
   print(k, v)
 end
+
+print("Hello lua")
+print(vim.o)
