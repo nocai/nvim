@@ -13,12 +13,10 @@ let mapleader="\<space>"
 noremap n j
 noremap N J
 noremap <C-w>n <C-w>j
-noremap <C-n> 5j
 
 noremap e k
 noremap E K
 noremap <C-w>e <C-w>k
-noremap <C-e> 5k
 
 noremap i l
 noremap I L
@@ -40,7 +38,6 @@ noremap L U
 noremap <C-l> <C-u>
 
 if exists('g:vscode')
-    echo 'g:vscode'
     nnoremap <silent> <Leader>rr <Cmd>call VSCodeNotify('code-runner.run')<CR>
 
     " rename
@@ -56,4 +53,11 @@ if exists('g:vscode')
     " nnoremap <silent> gR <Cmd>call VSCodeNotify('editor.action.referenceSearch.trigger')<CR>
 
     nnoremap <silent> <leader>fr <Cmd>call VSCodeNotify('workbench.action.findInFiles', { 'query': expand('<cword>')})<CR>
+
+    
+    " nnoremap <silent> <expr> <C-d> VSCodeExtensionCall('scroll', 'halfPage', 'down')
+    " xnoremap <silent> <expr> <C-d> VSCodeExtensionCall('scroll', 'halfPage', 'down')
+    " nnoremap <silent> <C-l> VSCodeExtensionCall('scroll', 'halfPage', 'up')
+    " xnoremap <silent> <C-l> VSCodeExtensionCall('scroll', 'halfPage', 'up'
 endif
+

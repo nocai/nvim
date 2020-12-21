@@ -13,20 +13,32 @@ local plugins = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/auto-pairs"
+    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/auto-pairs"
   },
   ["lazygit.nvim"] = {
     commands = { "LazyGit" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/lazygit.nvim"
+    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/lazygit.nvim"
   },
   ["packer.nvim"] = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/packer.nvim"
+    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/packer.nvim"
+  },
+  ["vim-surround"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/vim-surround"
+  },
+  ["vim-toml"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/vim-toml"
   }
 }
 
@@ -170,7 +182,8 @@ command! -nargs=* -range -bang -complete=file LazyGit call s:load(['lazygit.nvim
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
+  au FileType toml ++once call s:load(['vim-toml'], { "ft": "toml" })
   " Event lazy-loads
-  au BufReadPre * ++once call s:load(['auto-pairs'], { "event": "BufReadPre *" })
-  au BufNewFile * ++once call s:load(['auto-pairs'], { "event": "BufNewFile *" })
+  au BufReadPre * ++once call s:load(['auto-pairs', 'vim-surround'], { "event": "BufReadPre *" })
+  au BufNewFile * ++once call s:load(['auto-pairs', 'vim-surround'], { "event": "BufNewFile *" })
 augroup END

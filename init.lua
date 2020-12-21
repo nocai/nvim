@@ -61,10 +61,43 @@ vim.api.nvim_set_keymap('', 'L', 'U', { noremap=true, silent=true })
 vim.api.nvim_set_keymap('', '<c-l>', '<c-u>', { noremap=true, silent=true })
 
 
+-- Disable vim distribution plugins
+vim.g.loaded_gzip = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+
+vim.g.loaded_getscript = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_logiPat = 1
+vim.g.loaded_rrhelper = 1
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrwFileHandlers = 1
 
 require("nocai.gfunc")
 require("global")
 require('options').load()
+
+if vim.fn.has("g:vscode") then
+  -- noremap Y "+y
+  vim.api.nvim_set_keymap('', 'Y', '"+y', { noremap=true })
+  vim.api.nvim_exec(
+    [[
+      set clipboard=unnamed
+      let g:clipboard = { 'name': 'pbcopy', 'copy': { '+': 'pbcopy', '*': 'pbcopy', }, 'paste': { '+': 'pbpaste', '*': 'pbpaste', }, 'cache_enabled': 0 }
+    ]],
+  false)
+end
 
 vim.cmd("autocmd BufWritePost init.lua PackerCompile")
 
@@ -76,10 +109,18 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function()
   -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
+
     use 'norcalli/nvim-colorizer.lua'
-    use 'cespare/vim-toml'
+
+    use {
+      'cespare/vim-toml',
+      ft = { 'toml' }
+    }
+
     use 'euclidianAce/BetterLua.vim'
+
     use 'yggdroot/indentLine'
+
     use { 'thinca/vim-quickrun' }
     vim.g.quickrun_no_default_key_mappings = 1
     vim.api.nvim_set_keymap('n', '<leader>rr', '<Plug>(quickrun)', { noremap=false, silent=false })
@@ -90,38 +131,37 @@ return require('packer').startup(function()
     false)
 
     use {
-        'glepnir/galaxyline.nvim',
-        branch = 'main',
-        -- your statusline
-        config = function() require('eviline') end,
-        -- some optional icons
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+      'glepnir/galaxyline.nvim',
+      branch = 'main',
+      config = function() require('eviline') end,
+      requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
 
     use {
-        'morhetz/gruvbox',
+      'morhetz/gruvbox',
     }
     vim.cmd("colorscheme gruvbox")
     vim.cmd("set background=dark")
 
     use {
-        'luochen1990/rainbow',
+      'luochen1990/rainbow',
     }
-    -- vim.cmd("let g:rainbow_active = 1")
     vim.g.rainbow_active = 1
 
     use {
-        'jiangmiao/auto-pairs',
-        event = {'BufReadPre *', 'BufNewFile *'}
+      'jiangmiao/auto-pairs',
+      event = {'BufReadPre *', 'BufNewFile *'}
     }
 
     use { 'tpope/vim-commentary' }
 
     use { 'kana/vim-textobj-user' }
 
-    use { 'kana/vim-textobj-indent', requires = {'kana/vim-textobj-user'} }
+    use { 
+      'kana/vim-textobj-indent',
+      requires = {'kana/vim-textobj-user'},
+    }
     vim.g.textobj_indent_no_default_key_mappings = 1
-
     vim.api.nvim_set_keymap('x', 'uu', '<Plug>(textobj-indent-i)', {})
     vim.api.nvim_set_keymap('o', 'uu', '<Plug>(textobj-indent-i)', {})
 
@@ -155,19 +195,19 @@ return require('packer').startup(function()
     vim.g.lazygit_floating_window_scaling_factor = 0.9
 
     use {
-      'kyazdani42/nvim-tree.lua'
+      'kyazdani42/nvim-tree.lua',
     }
     vim.api.nvim_set_keymap('n', 'tt', ':LuaTreeToggle<CR>', { noremap=true, silent=true })
-    
+    vim.api.nvim_set_keymap('n', 'q', ':LuaTreeClose<CR>', { noremap=true, silent=true })
+    -- vim.api.nvim_buf_set_keymap('0', 'n', 'q', ':LuaTreeClose<CR>', { noremap=true, silent=true })
+
     use {
       'tpope/vim-surround',
       event = { 'BufReadPre *', 'BufNewFile *'}
     }
-    
+
     use {
       'Yggdroot/LeaderF',
-      cmd = { '<leader>ff' },
-      run = './install.sh'
     }
     vim.api.nvim_exec(
       [[
@@ -198,7 +238,6 @@ return require('packer').startup(function()
 
         autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
-        
         inoremap <silent><expr> <TAB> pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
         inoremap <expr><S-TAB> pumvisible() ? "<C-p>" : "<C-h>"
 
