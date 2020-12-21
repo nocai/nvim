@@ -1,168 +1,146 @@
-local global = require("global")
+local g, o, api = vim.g, vim.o, vim.api
 
--- From Lua you can work with editor |options| by reading and setting items in these Lua tables:
-local options = {
-  -- set editor options
-  -- table: vim.o
-  global = {
-    mouse          = "a", -- all
-    encoding       = "UTF-8",
-    hidden         = true,
+local python_host_prog = os.getenv('PYTHON_HOST_PROG')
+local python3_host_prog = os.getenv('PYTHON3_HOST_PROG')
 
-    wildignorecase = true,
-    wildignore     = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
+if python_host_prog ~= nil then
+  g.python_host_prog = python_host_prog
+end
 
-    pumheight      = 15,        -- Pop-up menu's line height
-    pumwidth       = 15,        -- Pop-up menu's line width
+if python3_host_prog ~= nil then
+  g.python3_host_prog = python3_host_prog
+end
 
+g.mapleader = ' '
 
-    backup         = false,
-    writebackup    = false,
-    undofile       = false,
-    swapfile       = false,
-    undodir        = global.cache_dir .. "undo" .. global.path_sep,
-    viewdir        = global.cache_dir .. "view" .. global.path_sep,
-    backupdir      = global.cache_dir .. "backup" .. global.path_sep,
-    backupskip     = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
+g.loaded_gzip = 1
+g.loaded_tar = 1
+g.loaded_tarPlugin = 1
+g.loaded_zip = 1
+g.loaded_zipPlugin = 1
+g.loaded_getscript = 1
+g.loaded_getscriptPlugin = 1
+g.loaded_vimball = 1
+g.loaded_vimballPlugin = 1
+g.loaded_matchit = 1
+g.loaded_2html_plugin = 1
+g.loaded_logiPat = 1
+g.loaded_rrhelper = 1
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+g.loaded_netrwSettings = 1
+g.loaded_netrwFileHandlers = 1
 
-    fileformats    = "unix,mac,dos",
-
-    history        = 2000,
-
-    smarttab       = true,
-    shiftround     = true,
-
-    timeout        = true,
-    ttimeout       = true,
-    timeoutlen     = 500,
-    ttimeoutlen    = 0,
-    updatetime     = 100,
-    redrawtime     = 1500,
-
-    ignorecase     = true,
-    smartcase      = true,
-    incsearch      = true,
-
-    showmode       = false,
-    shortmess      = "aoOTIcF",
-
-    scrolloff      = 5,
-    sidescrolloff  = 5,
-    ruler          = false,
-    list           = true,
-    listchars      = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
-    showbreak      = "↳  ",
-
-    -- autoread       = true, -- default it is
-    autowrite      = true,
-    autowriteall   = true,
-
-    showtabline    = 2,
-    laststatus     = 2,
-
-    foldlevelstart = 99,
-
-    termguicolors  = true,
-
-    completeopt    = "menu,menuone,noselect,noinsert",
-
-    -- window
-    number         = true,
-    relativenumber = true,
-
-    foldenable     = true,
-    foldmethod     = "indent",
-    cursorline     = true,
-    colorcolumn    = "88",
-    signcolumn     = "yes",
-
-    -- buffers
-    fileencoding = "UTF-8",
-
-    expandtab    = true,
-    tabstop      = 4,
-    shiftwidth   = 4,
-    softtabstop  = -1,
-
-    autoindent   = true,
-  },
-
-  -- set window-scoped local-options
-  -- table: vim.wo
-  window = {
-    list           = true,
-    listchars      = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
-
-    number         = true,
-    relativenumber = true,
-
-    foldenable     = true, -- set foldenable
-    foldmethod     = "indent",
-
-    cursorline     = true,
-    colorcolumn    = "88",
-    signcolumn     = "yes",
-  },
-
-  -- set buffer-scoped local-options
-  -- table: vim.bo
-  buffer = {
-    fileencoding = "UTF-8",
-
-    expandtab    = true,
-    tabstop      = 4,
-    shiftwidth   = 4,
-    softtabstop  = -1,
-
-    autoindent   = true,
-  },
-}
-
-local function create_dirs()
-  -- TODO: 判断一下是否需要创建 <19-09-20, lj.liujun> --
-  local dirs = {
-    options.undodir,
-    options.viewdir,
-    options.backupdir,
+if jit.os == 'OSX' then
+  g.clipboard = {
+    name = 'macOS-clipboard',
+    copy = {['+'] = 'pbcopy', ['*'] = 'pbcopy'},
+    paste = {['+'] = 'pbpaste', ['*'] = 'pbpaste'},
+    cache_enabled = 0,
   }
+end
 
-  for _, dir in pairs(dirs) do
-    if not global.is_dir(dir) then
-      os.execute("mkdir -p " .. dir)
-    end
+o.undofile       = false
+o.backupskip     = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim"
+o.smarttab       = true
+o.ignorecase     = true
+o.incsearch      = true
+o.scrolloff      = 5
+o.sidescrolloff  = 5
+o.ruler          = false
+o.showbreak      = "↳  "
+o.autowrite      = true
+o.autowriteall   = true
+o.shortmess = 'aoOTIcF'
+o.encoding = 'utf-8'
+o.fileencoding = 'utf-8'
+o.termguicolors = true
+o.completeopt = 'menu,noinsert,noselect,longest'
+o.modeline = true
+o.smartcase = true
+o.hidden = true
+o.cmdheight = 1
+o.showcmd = false
+o.showmode = false
+o.history = 2000
+o.hlsearch = true
+o.writebackup = false
+o.backup = false
+o.swapfile = false
+o.shiftround = true
+o.timeout = true
+o.ttimeout = true
+o.updatetime = 120
+o.timeoutlen = 500
+o.ttimeoutlen = 10
+o.redrawtime = 1500
+o.showmatch = true
+o.matchtime = 2
+o.lazyredraw = true
+o.report = 0
+o.linespace = 0
+o.pumheight = 15
+o.winminheight = 0
+o.backspace = 'eol,start,indent'
+o.whichwrap = 'b,s,<,>,h,l'
+o.cursorline = true
+o.fileformats = 'unix,mac,dos'
+o.autoread = true
+o.cursorcolumn = false
+o.errorbells = false
+o.visualbell = false
+o.t_vb = ''
+o.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
+o.switchbuf = 'useopen,uselast'
+o.autochdir = false
+o.viewoptions = 'folds,cursor,curdir,slash,unix'
+o.sessionoptions = 'curdir,help,tabpages,winsize'
+o.clipboard = 'unnamedplus'
+o.mouse = 'a'
+o.laststatus = 2
+o.showtabline = 2
+o.grepformat = '%f:%l:%c:%m';
+o.grepprg = 'rg --hidden --vimgrep --smart-case --';
+o.wildignorecase = true
+o.wildignore = '*.aux,*.out,*.toc' .. '*.o,*.obj,*.dll,*.jar,*.pyc,*.rbc,*.class' ..
+                 '*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp' ..
+                 '*.avi,*.m4a,*.mp3,*.oga,*.ogg,*.wav,*.webm' .. '*.eot,*.otf,*.ttf,*.woff' .. '*.doc,*.pdf' ..
+                 '*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz' .. '*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*.gem' ..
+                 '*.*~,*~' .. '*.swp,.lock,.DS_Store,._*,tags.lock'
+o.shada = '!,\'300,<50,@100,s10,h'
+o.inccommand = 'nosplit'
+o.wildoptions = 'pum'
+o.pumblend = 3
+
+-- ======================================================================================================================================
+
+local function bind_options(k, v)
+  if v == true then
+    api.nvim_command('set ' .. k)
+  elseif v == false then
+    api.nvim_command('set no' .. k)
+  else
+    api.nvim_command('set ' .. k .. '=' .. v)
   end
 end
 
-local function load_global_options()
-  for option, value in pairs(options.global) do
-    vim.o[option] = value
-  end
-end
-
-local function load_window_option()
-  for option, value in pairs(options.window) do
-    vim.wo[option] = value
-  end
-end
-
-local function load_buffer_option()
-  for option, value in pairs(options.buffer) do
-    vim.bo[option] = value
-  end
-end
-
-local function load()
-  -- create dirs: like undo, view, backup and so on
-  create_dirs()
-
-  -- load options
-  load_global_options()
-  load_window_option()
-  load_buffer_option()
-end
-
-return {
-  load = load,
-}
-
-
+bind_options('colorcolumn', 88)
+bind_options('signcolumn', 'yes')
+bind_options('synmaxcol', 2500)
+bind_options('formatoptions', '1n2jvcroql')
+bind_options('textwidth', 120)
+bind_options('expandtab', true)
+bind_options('tabstop', 2)
+bind_options('shiftwidth', 2)
+bind_options('softtabstop', 2)
+bind_options('autoindent', true)
+bind_options('smartindent', true)
+bind_options('cindent', true)
+bind_options('wrap', true)
+bind_options('number', true)
+bind_options('list', false)
+bind_options('relativenumber', true)
+bind_options('foldenable', true)
+bind_options('foldtext', 'folds#render()')
+bind_options('foldmethod', 'indent')
+bind_options('foldlevelstart', 10)

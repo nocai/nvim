@@ -163,8 +163,14 @@ end
 
 -- Pre-load configuration
 -- Post-load configuration
+-- Config for: gruvbox
+loadstring("\27LJ\2\n[\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0\24set background=dark\24colorscheme gruvbox\bcmd\bvim\0")()
+-- Config for: rainbow
+loadstring("\27LJ\2\n0\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\19rainbow_active\6g\bvim\0")()
 -- Config for: galaxyline.nvim
 loadstring("\27LJ\2\n'\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\feviline\frequire\0")()
+-- Config for: nvim-colorizer.lua
+loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0")()
 -- Conditional loads
 -- Load plugins in order defined by `after`
 END
@@ -184,6 +190,6 @@ augroup packer_load_aucmds
   " Filetype lazy-loads
   au FileType toml ++once call s:load(['vim-toml'], { "ft": "toml" })
   " Event lazy-loads
-  au BufNewFile * ++once call s:load(['auto-pairs', 'vim-surround'], { "event": "BufNewFile *" })
   au BufReadPre * ++once call s:load(['auto-pairs', 'vim-surround'], { "event": "BufReadPre *" })
+  au BufNewFile * ++once call s:load(['auto-pairs', 'vim-surround'], { "event": "BufNewFile *" })
 augroup END

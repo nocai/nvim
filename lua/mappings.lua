@@ -1,6 +1,5 @@
 local vim = vim
 
-vim.cmd('let mapleader=" "')
 
 -- New cursor movement (Colmark Layout)
 --     ^
@@ -59,3 +58,5 @@ vim.api.nvim_set_keymap('', 'l', 'u', { noremap=true, silent=true })
 vim.api.nvim_set_keymap('', 'L', 'U', { noremap=true, silent=true })
 -- vim.cmd('noremap <c-l> <c-u>')
 vim.api.nvim_set_keymap('', '<c-l>', '<c-u>', { noremap=true, silent=true })
+
+vim.api.nvim_set_keymap('', 'Y', '"+y', { noremap=true })
