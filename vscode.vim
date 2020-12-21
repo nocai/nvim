@@ -12,30 +12,30 @@ let mapleader="\<space>"
 
 noremap n j
 noremap N J
-noremap <C-w>n <C-w>j
+noremap <c-w>n <c-w>j
 
 noremap e k
 noremap E K
-noremap <C-w>e <C-w>k
+noremap <c-w>e <c-w>k
 
 noremap i l
 noremap I L
-noremap <C-w>i <C-w>l
+noremap <c-w>i <c-w>l
 
 noremap k n
 noremap K N
 
 noremap j e
 noremap J E
-noremap <C-j> <C-e>
+noremap <c-j> <c-e>
 
 noremap u i
 noremap U I
-noremap <C-u> <C-i>
+noremap <c-u> <c-i>
 
 noremap l u
 noremap L U
-noremap <C-l> <C-u>
+noremap <c-l> <c-u>
 
 if exists('g:vscode')
     nnoremap <silent> <Leader>rr <Cmd>call VSCodeNotify('code-runner.run')<CR>
