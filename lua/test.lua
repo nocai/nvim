@@ -1,2 +1,7 @@
 -- print("Hello lua")
--- print(vim.fn.has('g:vscode') == 1)
+
+-- print()
+-- print(vim.api.nvim_eval('exists("g:vscode")'))
+
+
+-- print("Test")

@@ -1,6 +1,7 @@
 require("test")
 
-require("gfunc")
+local global = require("global")
+
 require("options")
 require("mappings")
 
@@ -19,7 +20,8 @@ return require('packer').startup(function()
         'norcalli/nvim-colorizer.lua',
         config = function ()
             require'colorizer'.setup()
-        end
+        end,
+        cond = function() return false end
     }
 
     use {
@@ -48,7 +50,7 @@ return require('packer').startup(function()
     use {
       'glepnir/galaxyline.nvim',
       branch = 'main',
-      config = function() require('eviline') end,
+      config = function() require('galaxyline/eviline') end,
       requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
 
@@ -75,7 +77,7 @@ return require('packer').startup(function()
     use {
       'morhetz/gruvbox',
       config = function ()
-        vim.cmd("set background=dark")
+        -- vim.cmd("set background=dark")
         vim.cmd("colorscheme gruvbox")
       end
     }

@@ -1,22 +1,25 @@
+local api, jit = vim.api, jit
+
 local global = {
 	home = os.getenv("HOME"),
 
 	is_mac = jit.os == "OSX",
 	is_linux = jit.os == "Linux",
 	is_windows = jit.os == "Windows",
+	is_vscode = api.nvim_eval('exists("g:vscode")') == 1,
+
+	-- path_sep = is_windows and "\\" or "/",
+	-- -- nvim_path: ~/.config/nvim
+	-- nvim_path = home .. path_sep .. ".config" .. path_sep .. "nvim",
+	-- -- modules_dir: ~/.config/nvim/modules/
+	-- modules_dir = nvim_path .. path_sep .. "modules" .. path_sep,
+	-- -- cache_nvim_dir: ~/.cache/
+	-- cache_dir = home .. path_sep .. ".cache" ..path_sep,
+	-- -- cache_dir: ~/.cache/nvim/
+	-- cache_nvim_dir = global.cache_dir .. "nvim" .. global.path_sep
 }
 
-global.path_sep = global.is_windows and "\\" or "/"
--- nvim_path: ~/.config/nvim
-global.nvim_path = global.home .. global.path_sep .. ".config" .. global.path_sep .. "nvim"
--- modules_dir: ~/.config/nvim/modules/
-global.modules_dir = global.nvim_path .. global.path_sep .. "modules" .. global.path_sep
--- cache_nvim_dir: ~/.cache/
-global.cache_dir = global.home .. global.path_sep .. ".cache" .. global.path_sep
--- cache_dir: ~/.cache/nvim/
-global.cache_nvim_dir = global.cache_dir .. "nvim" .. global.path_sep
-
-function global.exists(file) 
+function global.exists(file)
 	local ok, err, code = os.rename(file, file)
 	if not ok then
 		if code == 13 then

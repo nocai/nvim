@@ -1,15 +1,5 @@
+local global = require("global")
 local g, o, api = vim.g, vim.o, vim.api
-
-local python_host_prog = os.getenv('PYTHON_HOST_PROG')
-local python3_host_prog = os.getenv('PYTHON3_HOST_PROG')
-
-if python_host_prog ~= nil then
-  g.python_host_prog = python_host_prog
-end
-
-if python3_host_prog ~= nil then
-  g.python3_host_prog = python3_host_prog
-end
 
 g.mapleader = ' '
 
@@ -31,13 +21,24 @@ g.loaded_netrwPlugin = 1
 g.loaded_netrwSettings = 1
 g.loaded_netrwFileHandlers = 1
 
-if jit.os == 'OSX' then
+if global.is_mac then
   g.clipboard = {
     name = 'macOS-clipboard',
     copy = {['+'] = 'pbcopy', ['*'] = 'pbcopy'},
     paste = {['+'] = 'pbpaste', ['*'] = 'pbpaste'},
     cache_enabled = 0,
   }
+end
+
+local python_host_prog = os.getenv('PYTHON_HOST_PROG')
+local python3_host_prog = os.getenv('PYTHON3_HOST_PROG')
+
+if python_host_prog ~= nil then
+  g.python_host_prog = python_host_prog
+end
+
+if python3_host_prog ~= nil then
+  g.python3_host_prog = python3_host_prog
 end
 
 o.undofile       = false

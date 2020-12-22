@@ -38,19 +38,32 @@ local plugins = {
     only_setup = false,
     path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/lazygit.nvim"
   },
-  ["nvim-tree.lua"] = {
-    config = { "\27LJ\2\n·\1\0\0\6\0\n\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\22:LuaTreeClose<CR>\6q\1\0\2\fnoremap\2\vsilent\2\23:LuaTreeToggle<CR>\att\6n\20nvim_set_keymap\bapi\bvim\0" },
-    keys = { { "", "tt" } },
+  ["nvim-colorizer.lua"] = {
+    config = { "\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua"
   },
   ["packer.nvim"] = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
     path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/packer.nvim"
+  },
+  rainbow = {
+    config = { "\27LJ\2\n0\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\19rainbow_active\6g\bvim\0" },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/rainbow"
+  },
+  ["vim-commentary"] = {
+    keys = { { "", "gcc" }, { "", "gc" } },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/vim-commentary"
   },
   ["vim-quickrun"] = {
     config = { "\27LJ\2\nž\2\0\0\6\0\v\0\0196\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0005\5\b\0B\0\5\0016\0\0\0009\0\3\0009\0\t\0'\2\n\0+\3\1\0B\0\3\1K\0\1\0X            let g:quickrun_config = { \"_\" : { \"outputter\" : \"message\" }}\n          \14nvim_exec\1\0\2\fnoremap\1\vsilent\1\21<Plug>(quickrun)\15<leader>rr\6n\20nvim_set_keymap\bapi%quickrun_no_default_key_mappings\6g\bvim\0" },
@@ -195,19 +208,27 @@ end
 
 -- Pre-load configuration
 -- Post-load configuration
--- Config for: galaxyline.nvim
-loadstring("\27LJ\2\n'\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\feviline\frequire\0")()
--- Config for: rainbow
-loadstring("\27LJ\2\n0\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\19rainbow_active\6g\bvim\0")()
--- Config for: vim-textobj-parameter
-loadstring("\27LJ\2\n¡\2\0\0\6\0\v\0%6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\t\0'\4\n\0004\5\0\0B\0\5\1K\0\1\0 <Plug>(textobj-parameter-a)\aa,\6o <Plug>(textobj-parameter-i)\au,\6x\20nvim_set_keymap\bapi.textobj_parameter_no_default_key_mappings\6g\bvim\0")()
--- Config for: nvim-colorizer.lua
-loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0")()
--- Config for: gruvbox
-loadstring("\27LJ\2\n[\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0\24colorscheme gruvbox\24set background=dark\bcmd\bvim\0")()
 -- Config for: vim-textobj-indent
 loadstring("\27LJ\2\nÌ\3\0\0\6\0\15\0E6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\v\0'\4\f\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\v\0'\4\f\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\r\0'\4\14\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\r\0'\4\14\0004\5\0\0B\0\5\1K\0\1\0\27<Plug>(textobj-same-a)\aaU\29<Plug>(textobj-indent-a)\aau\27<Plug>(textobj-same-i)\auU\6o\29<Plug>(textobj-indent-i)\auu\6x\20nvim_set_keymap\bapi+textobj_indent_no_default_key_mappings\6g\bvim\0")()
+-- Config for: nvim-tree.lua
+loadstring("\27LJ\2\n·\1\0\0\6\0\n\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\22:LuaTreeClose<CR>\6q\1\0\2\fnoremap\2\vsilent\2\23:LuaTreeToggle<CR>\att\6n\20nvim_set_keymap\bapi\bvim\0")()
+-- Config for: galaxyline.nvim
+loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23galaxyline/eviline\frequire\0")()
+-- Config for: vim-textobj-parameter
+loadstring("\27LJ\2\n¡\2\0\0\6\0\v\0%6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\t\0'\4\n\0004\5\0\0B\0\5\1K\0\1\0 <Plug>(textobj-parameter-a)\aa,\6o <Plug>(textobj-parameter-i)\au,\6x\20nvim_set_keymap\bapi.textobj_parameter_no_default_key_mappings\6g\bvim\0")()
+-- Config for: gruvbox
+loadstring("\27LJ\2\n7\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\24colorscheme gruvbox\bcmd\bvim\0")()
 -- Conditional loads
+if
+    loadstring("\27LJ\2\n\15\0\0\1\0\0\0\2+\0\1\0L\0\2\0\0")()
+    then
+      vim.cmd("packadd nvim-colorizer.lua")
+	
+	-- Config for: nvim-colorizer.lua
+	loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0")()
+	
+    end
+    
 -- Load plugins in order defined by `after`
 END
 
@@ -219,20 +240,21 @@ endfunction
 " Command lazy-loads
 
 " Keymap lazy-loads
-noremap <silent> <leader>gg <cmd>call <SID>load(['lazygit.nvim'], { "keys": "<leader>gg", "prefix": "" })<cr>
-noremap <silent> <leader>rr <cmd>call <SID>load(['vim-quickrun'], { "keys": "<leader>rr", "prefix": "" })<cr>
 noremap <silent> <leader>fr <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fr", "prefix": "" })<cr>
+noremap <silent> <leader>gg <cmd>call <SID>load(['lazygit.nvim'], { "keys": "<leader>gg", "prefix": "" })<cr>
+noremap <silent> <leader>ff <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>ff", "prefix": "" })<cr>
+noremap <silent> gc <cmd>call <SID>load(['vim-commentary'], { "keys": "gc", "prefix": "" })<cr>
+noremap <silent> <leader>rr <cmd>call <SID>load(['vim-quickrun'], { "keys": "<leader>rr", "prefix": "" })<cr>
+noremap <silent> gcc <cmd>call <SID>load(['vim-commentary'], { "keys": "gcc", "prefix": "" })<cr>
+noremap <silent> <leader>fb <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fb", "prefix": "" })<cr>
 noremap <silent> <leader>fm <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fm", "prefix": "" })<cr>
 noremap <silent> <leader>fl <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fl", "prefix": "" })<cr>
-noremap <silent> <leader>ff <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>ff", "prefix": "" })<cr>
-noremap <silent> tt <cmd>call <SID>load(['nvim-tree.lua'], { "keys": "tt", "prefix": "" })<cr>
-noremap <silent> <leader>fb <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fb", "prefix": "" })<cr>
 
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
   au FileType toml ++once call s:load(['vim-toml'], { "ft": "toml" })
   " Event lazy-loads
-  au BufNewFile * ++once call s:load(['coc.nvim', 'vim-surround', 'auto-pairs'], { "event": "BufNewFile *" })
-  au BufReadPre * ++once call s:load(['coc.nvim', 'vim-surround', 'auto-pairs'], { "event": "BufReadPre *" })
+  au BufReadPre * ++once call s:load(['vim-surround', 'coc.nvim', 'auto-pairs', 'rainbow'], { "event": "BufReadPre *" })
+  au BufNewFile * ++once call s:load(['vim-surround', 'coc.nvim', 'auto-pairs', 'rainbow'], { "event": "BufNewFile *" })
 augroup END
