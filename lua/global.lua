@@ -1,12 +1,10 @@
-local api, jit = vim.api, jit
-
 local global = {
 	home = os.getenv("HOME"),
 
 	is_mac = jit.os == "OSX",
 	is_linux = jit.os == "Linux",
 	is_windows = jit.os == "Windows",
-	is_vscode = api.nvim_eval('exists("g:vscode")') == 1,
+	is_vscode = vim.fn.exists('g:vscode') == 1
 
 	-- path_sep = is_windows and "\\" or "/",
 	-- -- nvim_path: ~/.config/nvim

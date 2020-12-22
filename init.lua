@@ -19,14 +19,19 @@ return require('packer').startup(function()
     use {
         'norcalli/nvim-colorizer.lua',
         config = function ()
-            require'colorizer'.setup()
+          require'colorizer'.setup()
         end,
-        cond = function() return false end
+        cond = function ()
+          return vim.fn.exists('g:vscode') == 0
+        end
     }
 
     use {
       'cespare/vim-toml',
-      ft = { 'toml' }
+      ft = { 'toml' },
+      cond = function ()
+        return vim.fn.exists('g:vscode') == 0
+      end
     }
 
     -- use 'euclidianAce/BetterLua.vim'
@@ -44,6 +49,9 @@ return require('packer').startup(function()
             let g:quickrun_config = { "_" : { "outputter" : "message" }}
           ]],
         false)
+      end,
+      cond = function ()
+          return vim.fn.exists('g:vscode') == 0
       end
     }
 
@@ -51,7 +59,10 @@ return require('packer').startup(function()
       'glepnir/galaxyline.nvim',
       branch = 'main',
       config = function() require('galaxyline/eviline') end,
-      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+      requires = {'kyazdani42/nvim-web-devicons', opt = true},
+      cond = function ()
+          return vim.fn.exists('g:vscode') == 0
+      end
     }
 
     -- use {
@@ -79,6 +90,9 @@ return require('packer').startup(function()
       config = function ()
         -- vim.cmd("set background=dark")
         vim.cmd("colorscheme gruvbox")
+      end,
+      cond = function ()
+          return vim.fn.exists('g:vscode') == 0
       end
     }
     
@@ -93,17 +107,26 @@ return require('packer').startup(function()
       event = {'BufReadPre *', 'BufNewFile *'},
       config = function ()
         vim.g.rainbow_active = 1
+      end,
+      cond = function ()
+        return vim.fn.exists('g:vscode') == 0
       end
     }
 
     use {
       'jiangmiao/auto-pairs',
-      event = {'BufReadPre *', 'BufNewFile *'}
+      event = {'BufReadPre *', 'BufNewFile *'},
+      cond = function ()
+        return vim.fn.exists('g:vscode') == 0
+      end
     }
 
     use { 
       'tpope/vim-commentary',
-      keys = { 'gcc', 'gc' }
+      keys = { 'gcc', 'gc' },
+      cond = function ()
+        return vim.fn.exists('g:vscode') == 0
+      end
     }
 
     use { 'kana/vim-textobj-user' }
@@ -125,7 +148,7 @@ return require('packer').startup(function()
 
         vim.api.nvim_set_keymap('x', 'aU', '<Plug>(textobj-same-a)', {})
         vim.api.nvim_set_keymap('o', 'aU', '<Plug>(textobj-same-a)', {})
-      end
+      end,
     }
 
     use {
@@ -149,17 +172,21 @@ return require('packer').startup(function()
         vim.g.lazygit_floating_window_winblend = 0
         vim.g.lazygit_floating_window_scaling_factor = 0.9
         vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { noremap=true, silent=true })
+      end,
+      cond = function ()
+        return vim.fn.exists('g:vscode') == 0
       end
     }
 
     use {
       'kyazdani42/nvim-tree.lua',
-      -- keys = { 'tt' },
-      -- cmd = { 'LuaTreeToggle' },
       config = function ()
         vim.api.nvim_set_keymap('n', 'tt', ':LuaTreeToggle<CR>', { noremap=true, silent=true })
         vim.api.nvim_set_keymap('n', 'q', ':LuaTreeClose<CR>', { noremap=true, silent=true })
         -- vim.api.nvim_buf_set_keymap('0', 'n', 'q', ':LuaTreeClose<CR>', { noremap=true, silent=true })
+      end,
+      cond = function ()
+        return vim.fn.exists('g:vscode') == 0
       end
     }
 
@@ -171,10 +198,14 @@ return require('packer').startup(function()
     use {
       'Yggdroot/LeaderF',
       keys = { '<leader>ff', '<leader>fb', '<leader>fm', '<leader>fl', '<leader>fr' },
+      cond = function ()
+        return vim.fn.exists('g:vscode') == 0
+      end,
       config = function()
         -- vim.g.Lf_ShortcutF = '<leader>ff'
         vim.api.nvim_exec(
           [[
+            let g:Lf_ShortcutF = '<leader>ff'
             let g:Lf_CommandMap = {'<c-k>': ['<c-e>'], '<c-j>': ['<c-n>']}
 
             let g:Lf_WindowPosition = 'popup'
@@ -198,53 +229,56 @@ return require('packer').startup(function()
 
     use {
       'neoclide/coc.nvim',
+      cond = function ()
+        return vim.fn.exists('g:vscode') == 0
+      end,
       event = { 'BufReadPre *', 'BufNewFile *'},
-        config = function ()
-          vim.api.nvim_exec(
-            [[
-              let g:coc_snippet_next = '<TAB>'
-              let g:coc_snippet_prev = '<S-TAB>'
-              let g:snips_author = 'bucai'
-              let g:coc_global_extensions =[ 'coc-marketplace', 'coc-pairs', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
+      config = function ()
+        vim.api.nvim_exec(
+          [[
+            let g:coc_snippet_next = '<TAB>'
+            let g:coc_snippet_prev = '<S-TAB>'
+            let g:snips_author = 'bucai'
+            let g:coc_global_extensions =[ 'coc-marketplace', 'coc-pairs', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
 
-              autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
+            autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
-              inoremap <silent><expr> <TAB> pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
-              inoremap <expr><S-TAB> pumvisible() ? "<C-p>" : "<C-h>"
+            inoremap <silent><expr> <TAB> pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
+            inoremap <expr><S-TAB> pumvisible() ? "<C-p>" : "<C-h>"
 
-              inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
-              inoremap <expr><C-e> pumvisible() ? "<C-p>" : "<C-e>"
-              
-              nmap <silent> [g <Plug>(coc-diagnostic-prev)
-              nmap <silent> ]g <Plug>(coc-diagnostic-next)
+            inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
+            inoremap <expr><C-e> pumvisible() ? "<C-p>" : "<C-e>"
+            
+            nmap <silent> [g <Plug>(coc-diagnostic-prev)
+            nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-              nmap <silent> gd <Plug>(coc-definition)
-              nmap <silent> gt <Plug>(coc-type-definition)
-              nmap <silent> gi <Plug>(coc-implementation)
-              nmap <silent> gr <Plug>(coc-references)
+            nmap <silent> gd <Plug>(coc-definition)
+            nmap <silent> gt <Plug>(coc-type-definition)
+            nmap <silent> gi <Plug>(coc-implementation)
+            nmap <silent> gr <Plug>(coc-references)
 
-              nmap <silent>rn <Plug>(coc-rename)
-              nmap <silent>ca <Plug>(coc-codeaction)
-              nmap <silent>fc <Plug>(coc-fix-current)
+            nmap <silent>rn <Plug>(coc-rename)
+            nmap <silent>ca <Plug>(coc-codeaction)
+            nmap <silent>fc <Plug>(coc-fix-current)
 
-              nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>
-              nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>
-              nnoremap <silent> <leader><leader>e  :<C-u>CocList extensions<cr>
-              nnoremap <silent> <leader><leader>c  :<C-u>CocList commands<cr>
-              nnoremap <silent> <leader><leader>o  :<C-u>CocList outline<cr>
-              nnoremap <silent> <leader><leader>s  :<C-u>CocList -I symbols<cr>
-              nnoremap <silent> <leader><leader>n  :<C-u>CocNext<CR>
-              nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>
-              nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>
+            nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>
+            nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>
+            nnoremap <silent> <leader><leader>e  :<C-u>CocList extensions<cr>
+            nnoremap <silent> <leader><leader>c  :<C-u>CocList commands<cr>
+            nnoremap <silent> <leader><leader>o  :<C-u>CocList outline<cr>
+            nnoremap <silent> <leader><leader>s  :<C-u>CocList -I symbols<cr>
+            nnoremap <silent> <leader><leader>n  :<C-u>CocNext<CR>
+            nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>
+            nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>
 
-              nnoremap <silent> K :call CocAction('doHover')<CR>
+            nnoremap <silent> K :call CocAction('doHover')<CR>
 
-              xmap uf <Plug>(coc-funcobj-i)
-              omap uf <Plug>(coc-funcobj-i)
-              xmap af <Plug>(coc-funcobj-a)
-              omap af <Plug>(coc-funcobj-a) 
-            ]],
-          false)
-        end
-      }
+            xmap uf <Plug>(coc-funcobj-i)
+            omap uf <Plug>(coc-funcobj-i)
+            xmap af <Plug>(coc-funcobj-a)
+            omap af <Plug>(coc-funcobj-a) 
+          ]],
+        false)
+      end
+    }
 end)
