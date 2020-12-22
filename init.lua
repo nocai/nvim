@@ -88,6 +88,7 @@ return require('packer').startup(function()
 
     use {
       'luochen1990/rainbow',
+      event = {'BufReadPre *', 'BufNewFile *'},
       config = function ()
         vim.g.rainbow_active = 1
       end
@@ -98,7 +99,10 @@ return require('packer').startup(function()
       event = {'BufReadPre *', 'BufNewFile *'}
     }
 
-    use { 'tpope/vim-commentary' }
+    use { 
+      'tpope/vim-commentary',
+      keys = { 'gcc', 'gc' }
+    }
 
     use { 'kana/vim-textobj-user' }
 
@@ -148,7 +152,8 @@ return require('packer').startup(function()
 
     use {
       'kyazdani42/nvim-tree.lua',
-      keys = { 'tt' },
+      -- keys = { 'tt' },
+      -- cmd = { 'LuaTreeToggle' },
       config = function ()
         vim.api.nvim_set_keymap('n', 'tt', ':LuaTreeToggle<CR>', { noremap=true, silent=true })
         vim.api.nvim_set_keymap('n', 'q', ':LuaTreeClose<CR>', { noremap=true, silent=true })
