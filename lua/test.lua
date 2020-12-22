@@ -1,1 +1,2 @@
 -- print("Hello lua")
+-- print(vim.fn.has('g:vscode') == 1)

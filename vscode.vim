@@ -38,6 +38,7 @@ noremap L U
 noremap <c-l> <c-u>
 
 if exists('g:vscode')
+    echo 'g:vscode'
     nnoremap <silent> <Leader>rr <Cmd>call VSCodeNotify('code-runner.run')<CR>
 
     " rename
