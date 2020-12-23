@@ -1,7 +1,7 @@
 require("test").setup()
 
-require("options")
-require("mappings")
+require("options").setup()
+require("mappings").setup()
 
 vim.cmd("autocmd BufWritePost init.lua PackerCompile")
 
