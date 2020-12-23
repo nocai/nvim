@@ -1,4 +1,3 @@
-local global = require("global")
 local g, o, api = vim.g, vim.o, vim.api
 
 local options = {}
@@ -34,7 +33,7 @@ function options.setup()
   g.loaded_netrwSettings = 1
   g.loaded_netrwFileHandlers = 1
 
-  if global.is_mac then
+  if vim.g.is_mac then
   g.clipboard = {
       name = 'macOS-clipboard',
       copy = {['+'] = 'pbcopy', ['*'] = 'pbcopy'},

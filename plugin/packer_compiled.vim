@@ -10,101 +10,103 @@ endif
 lua << END
 local plugins = {
   LeaderF = {
-    config = { "\27LJ\2\nä\5\0\0\4\0\4\0\a6\0\0\0009\0\1\0009\0\2\0'\2\3\0+\3\1\0B\0\3\1K\0\1\0²\5            let g:Lf_ShortcutF = '<leader>ff'\n            let g:Lf_CommandMap = {'<c-k>': ['<c-e>'], '<c-j>': ['<c-n>']}\n\n            let g:Lf_WindowPosition = 'popup'\n            let g:Lf_PreviewInPopup = 1\n            let g:Lf_StlSeparator = { 'left': \"\\ue0b0\", 'right': \"\\ue0b2\" }\n            let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }\n\n            noremap <leader>fb :<C-U><C-R>=printf(\"Leaderf buffer %s\", \"\")<CR><CR>\n            noremap <leader>fm :<C-U><C-R>=printf(\"Leaderf mru %s\", \"\")<CR><CR>\n            noremap <leader>fl :<C-U><C-R>=printf(\"Leaderf line %s\", \"\")<CR><CR>\n            noremap <leader>fr :<C-U><C-R>=printf(\"Leaderf rg %s\", \"\")<CR><CR>\n          \14nvim_exec\bapi\bvim\0" },
-    keys = { { "", "<leader>ff" }, { "", "<leader>fb" }, { "", "<leader>fm" }, { "", "<leader>fl" }, { "", "<leader>fr" } },
+    config = { "\27LJ\2\n–\3\0\0\4\0\4\0\a6\0\0\0009\0\1\0009\0\2\0'\2\3\0+\3\1\0B\0\3\1K\0\1\0ä\2                noremap <leader>fb :<C-U><C-R>=printf(\"Leaderf buffer %s\", \"\")<CR><CR>\n                noremap <leader>fm :<C-U><C-R>=printf(\"Leaderf mru %s\", \"\")<CR><CR>\n                noremap <leader>fl :<C-U><C-R>=printf(\"Leaderf line %s\", \"\")<CR><CR>\n                noremap <leader>fr :<C-U><C-R>=printf(\"Leaderf rg %s\", \"\")<CR><CR>\n            \14nvim_exec\bapi\bvim\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/LeaderF"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/LeaderF"
   },
   ["auto-pairs"] = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/auto-pairs"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/auto-pairs"
   },
   ["coc.nvim"] = {
-    config = { "\27LJ\2\nþ\17\0\0\4\0\4\0\a6\0\0\0009\0\1\0009\0\2\0'\2\3\0+\3\1\0B\0\3\1K\0\1\0Ì\17            let g:coc_snippet_next = '<TAB>'\n            let g:coc_snippet_prev = '<S-TAB>'\n            let g:snips_author = 'bucai'\n            let g:coc_global_extensions =[ 'coc-marketplace', 'coc-pairs', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]\n\n            autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')\n\n            inoremap <silent><expr> <TAB> pumvisible() ? \"<C-n>\" : v:lua.check_back_space() ? \"<TAB>\" : coc#refresh()\n            inoremap <expr><S-TAB> pumvisible() ? \"<C-p>\" : \"<C-h>\"\n\n            inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : \"<C-g>u<CR><c-r>=coc#on_enter()<CR>\"\n            inoremap <expr><C-e> pumvisible() ? \"<C-p>\" : \"<C-e>\"\n            \n            nmap <silent> [g <Plug>(coc-diagnostic-prev)\n            nmap <silent> ]g <Plug>(coc-diagnostic-next)\n\n            nmap <silent> gd <Plug>(coc-definition)\n            nmap <silent> gt <Plug>(coc-type-definition)\n            nmap <silent> gi <Plug>(coc-implementation)\n            nmap <silent> gr <Plug>(coc-references)\n\n            nmap <silent>rn <Plug>(coc-rename)\n            nmap <silent>ca <Plug>(coc-codeaction)\n            nmap <silent>fc <Plug>(coc-fix-current)\n\n            nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>\n            nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>\n            nnoremap <silent> <leader><leader>e  :<C-u>CocList extensions<cr>\n            nnoremap <silent> <leader><leader>c  :<C-u>CocList commands<cr>\n            nnoremap <silent> <leader><leader>o  :<C-u>CocList outline<cr>\n            nnoremap <silent> <leader><leader>s  :<C-u>CocList -I symbols<cr>\n            nnoremap <silent> <leader><leader>n  :<C-u>CocNext<CR>\n            nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>\n            nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>\n\n            nnoremap <silent> K :call CocAction('doHover')<CR>\n\n            xmap uf <Plug>(coc-funcobj-i)\n            omap uf <Plug>(coc-funcobj-i)\n            xmap af <Plug>(coc-funcobj-a)\n            omap af <Plug>(coc-funcobj-a) \n          \14nvim_exec\bapi\bvim\0" },
+    config = { "\27LJ\2\n„\19\0\0\4\0\4\0\a6\0\0\0009\0\1\0009\0\2\0'\2\3\0+\3\1\0B\0\3\1K\0\1\0Ò\18                let g:coc_snippet_next = '<TAB>'\n                let g:coc_snippet_prev = '<S-TAB>'\n                let g:snips_author = 'bucai'\n                let g:coc_global_extensions =[ 'coc-marketplace', 'coc-pairs', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]\n\n                autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')\n\n                inoremap <silent><expr> <TAB> pumvisible() ? \"<C-n>\" : v:lua.check_back_space() ? \"<TAB>\" : coc#refresh()\n                inoremap <expr><S-TAB> pumvisible() ? \"<C-p>\" : \"<C-h>\"\n\n                inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : \"<C-g>u<CR><c-r>=coc#on_enter()<CR>\"\n                inoremap <expr><C-e> pumvisible() ? \"<C-p>\" : \"<C-e>\"\n                \n                nmap <silent> [g <Plug>(coc-diagnostic-prev)\n                nmap <silent> ]g <Plug>(coc-diagnostic-next)\n\n                nmap <silent> gd <Plug>(coc-definition)\n                nmap <silent> gt <Plug>(coc-type-definition)\n                nmap <silent> gi <Plug>(coc-implementation)\n                nmap <silent> gr <Plug>(coc-references)\n\n                nmap <silent>rn <Plug>(coc-rename)\n                nmap <silent>ca <Plug>(coc-codeaction)\n                nmap <silent>fc <Plug>(coc-fix-current)\n\n                nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>\n                nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>\n                nnoremap <silent> <leader><leader>e  :<C-u>CocList extensions<cr>\n                nnoremap <silent> <leader><leader>c  :<C-u>CocList commands<cr>\n                nnoremap <silent> <leader><leader>o  :<C-u>CocList outline<cr>\n                nnoremap <silent> <leader><leader>s  :<C-u>CocList -I symbols<cr>\n                nnoremap <silent> <leader><leader>n  :<C-u>CocNext<CR>\n                nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>\n                nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>\n\n                nnoremap <silent> K :call CocAction('doHover')<CR>\n\n                xmap uf <Plug>(coc-funcobj-i)\n                omap uf <Plug>(coc-funcobj-i)\n                xmap af <Plug>(coc-funcobj-a)\n                omap af <Plug>(coc-funcobj-a) \n            \14nvim_exec\bapi\bvim\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/coc.nvim"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/coc.nvim"
   },
   ["galaxyline.nvim"] = {
     config = { "\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23galaxyline/eviline\frequire\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/galaxyline.nvim"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/galaxyline.nvim"
   },
   gruvbox = {
     config = { "\27LJ\2\n7\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\24colorscheme gruvbox\bcmd\bvim\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/gruvbox"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/gruvbox"
   },
   ["lazygit.nvim"] = {
-    config = { "\27LJ\2\nå\1\0\0\6\0\n\1\0176\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\17:LazyGit<CR>\15<leader>gg\6n\20nvim_set_keymap\bapi+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvim›³æÌ\25Ì™³ÿ\3\0" },
+    config = { "\27LJ\2\nå\1\0\0\6\0\n\1\0176\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\17:LazyGit<CR>\15<leader>gg\6n\20nvim_set_keymap\bapi+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvim›³æÌ\25Ì™³ÿ\3\0" },
     keys = { { "", "<leader>gg" } },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/lazygit.nvim"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/lazygit.nvim"
   },
   ["nvim-colorizer.lua"] = {
     config = { "\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua"
   },
   ["nvim-tree.lua"] = {
-    config = { "\27LJ\2\n·\1\0\0\6\0\n\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\22:LuaTreeClose<CR>\6q\1\0\2\vsilent\2\fnoremap\2\23:LuaTreeToggle<CR>\att\6n\20nvim_set_keymap\bapi\bvim\0" },
+    config = { "\27LJ\2\nµ\1\0\0\6\0\n\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\22:LuaTreeClose<CR>\6q\1\0\2\fnoremap\2\vsilent\2\21:LuaTreeOpen<CR>\att\6n\20nvim_set_keymap\bapi\bvim\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/packer.nvim"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/packer.nvim"
   },
   rainbow = {
-    config = { "\27LJ\2\n0\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\19rainbow_active\6g\bvim\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/rainbow"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/rainbow"
   },
   ["vim-commentary"] = {
-    keys = { { "", "gcc" }, { "", "gc" } },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/vim-commentary"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/vim-commentary"
   },
   ["vim-quickrun"] = {
-    config = { "\27LJ\2\nž\2\0\0\6\0\v\0\0196\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0005\5\b\0B\0\5\0016\0\0\0009\0\3\0009\0\t\0'\2\n\0+\3\1\0B\0\3\1K\0\1\0X            let g:quickrun_config = { \"_\" : { \"outputter\" : \"message\" }}\n          \14nvim_exec\1\0\2\vsilent\1\fnoremap\1\21<Plug>(quickrun)\15<leader>rr\6n\20nvim_set_keymap\bapi%quickrun_no_default_key_mappings\6g\bvim\0" },
-    keys = { { "", "<leader>rr" } },
+    config = { "\27LJ\2\nu\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\2\fnoremap\1\vsilent\1\21<Plug>(quickrun)\15<leader>rr\6n\20nvim_set_keymap\bapi\bvim\0" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/vim-quickrun"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/vim-quickrun"
   },
   ["vim-surround"] = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/vim-surround"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/vim-surround"
   },
   ["vim-toml"] = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/Users/liujun/.local/share/nvim/site/pack/packer/opt/vim-toml"
+    path = "/home/liujun/.local/share/nvim/site/pack/packer/opt/vim-toml"
   }
 }
 
@@ -228,63 +230,66 @@ end
 -- Runtimepath customization
 
 -- Pre-load configuration
+-- Setup for: vim-quickrun
+loadstring("\27LJ\2\n„\1\0\0\3\0\a\0\v6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0005\1\5\0005\2\4\0=\2\6\1=\1\3\0K\0\1\0\6_\1\0\0\1\0\1\14outputter\fmessage\20quickrun_config%quickrun_no_default_key_mappings\6g\bvim\0")()
+-- Setup for: LeaderF
+loadstring("\27LJ\2\nÑ\1\0\0\2\0\f\0\0216\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0006\0\0\0009\0\1\0)\1\1\0=\1\6\0004\0\0\0005\1\b\0=\1\a\0005\1\n\0=\1\t\0006\1\0\0009\1\1\1=\0\v\1K\0\1\0\18Lf_CommandMap\1\2\0\0\n<c-n>\n<c-j>\1\2\0\0\n<c-e>\n<c-k>\22Lf_PreviewInPopup\npopup\22Lf_WindowPosition\15<leader>ff\17Lf_ShortcutF\6g\bvim\0")()
+-- Setup for: rainbow
+loadstring("\27LJ\2\n0\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\19rainbow_active\6g\bvim\0")()
 -- Post-load configuration
--- Config for: vim-textobj-indent
-loadstring("\27LJ\2\nÌ\3\0\0\6\0\15\0E6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\v\0'\4\f\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\v\0'\4\f\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\r\0'\4\14\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\r\0'\4\14\0004\5\0\0B\0\5\1K\0\1\0\27<Plug>(textobj-same-a)\aaU\29<Plug>(textobj-indent-a)\aau\27<Plug>(textobj-same-i)\auU\6o\29<Plug>(textobj-indent-i)\auu\6x\20nvim_set_keymap\bapi+textobj_indent_no_default_key_mappings\6g\bvim\0")()
 -- Config for: vim-textobj-parameter
 loadstring("\27LJ\2\n¡\2\0\0\6\0\v\0%6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\t\0'\4\n\0004\5\0\0B\0\5\1K\0\1\0 <Plug>(textobj-parameter-a)\aa,\6o <Plug>(textobj-parameter-i)\au,\6x\20nvim_set_keymap\bapi.textobj_parameter_no_default_key_mappings\6g\bvim\0")()
+-- Config for: vim-textobj-indent
+loadstring("\27LJ\2\nÌ\3\0\0\6\0\15\0E6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\6\0'\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\t\0'\4\n\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\v\0'\4\f\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\v\0'\4\f\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\r\0'\4\14\0004\5\0\0B\0\5\0016\0\0\0009\0\3\0009\0\4\0'\2\b\0'\3\r\0'\4\14\0004\5\0\0B\0\5\1K\0\1\0\27<Plug>(textobj-same-a)\aaU\29<Plug>(textobj-indent-a)\aau\27<Plug>(textobj-same-i)\auU\6o\29<Plug>(textobj-indent-i)\auu\6x\20nvim_set_keymap\bapi+textobj_indent_no_default_key_mappings\6g\bvim\0")()
 -- Conditional loads
 if
-    loadstring("\27LJ\2\nK\0\0\3\0\4\1\v6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\2\b\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\rg:vscode\vexists\afn\bvim\0\0")()
+    loadstring("\27LJ\2\n+\0\0\1\0\3\0\0056\0\0\0009\0\1\0009\0\2\0\19\0\0\0L\0\2\0\14is_vscode\6g\bvim\0")()
     then
-      vim.cmd("packadd lazygit.nvim")
+      vim.cmd("packadd galaxyline.nvim")
 	
-	-- Config for: lazygit.nvim
-	loadstring("\27LJ\2\nå\1\0\0\6\0\n\1\0176\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\17:LazyGit<CR>\15<leader>gg\6n\20nvim_set_keymap\bapi+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvim›³æÌ\25Ì™³ÿ\3\0")()
-	
-	vim.cmd("packadd coc.nvim")
-	
-	-- Config for: coc.nvim
-	loadstring("\27LJ\2\nþ\17\0\0\4\0\4\0\a6\0\0\0009\0\1\0009\0\2\0'\2\3\0+\3\1\0B\0\3\1K\0\1\0Ì\17            let g:coc_snippet_next = '<TAB>'\n            let g:coc_snippet_prev = '<S-TAB>'\n            let g:snips_author = 'bucai'\n            let g:coc_global_extensions =[ 'coc-marketplace', 'coc-pairs', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]\n\n            autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')\n\n            inoremap <silent><expr> <TAB> pumvisible() ? \"<C-n>\" : v:lua.check_back_space() ? \"<TAB>\" : coc#refresh()\n            inoremap <expr><S-TAB> pumvisible() ? \"<C-p>\" : \"<C-h>\"\n\n            inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : \"<C-g>u<CR><c-r>=coc#on_enter()<CR>\"\n            inoremap <expr><C-e> pumvisible() ? \"<C-p>\" : \"<C-e>\"\n            \n            nmap <silent> [g <Plug>(coc-diagnostic-prev)\n            nmap <silent> ]g <Plug>(coc-diagnostic-next)\n\n            nmap <silent> gd <Plug>(coc-definition)\n            nmap <silent> gt <Plug>(coc-type-definition)\n            nmap <silent> gi <Plug>(coc-implementation)\n            nmap <silent> gr <Plug>(coc-references)\n\n            nmap <silent>rn <Plug>(coc-rename)\n            nmap <silent>ca <Plug>(coc-codeaction)\n            nmap <silent>fc <Plug>(coc-fix-current)\n\n            nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>\n            nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>\n            nnoremap <silent> <leader><leader>e  :<C-u>CocList extensions<cr>\n            nnoremap <silent> <leader><leader>c  :<C-u>CocList commands<cr>\n            nnoremap <silent> <leader><leader>o  :<C-u>CocList outline<cr>\n            nnoremap <silent> <leader><leader>s  :<C-u>CocList -I symbols<cr>\n            nnoremap <silent> <leader><leader>n  :<C-u>CocNext<CR>\n            nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>\n            nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>\n\n            nnoremap <silent> K :call CocAction('doHover')<CR>\n\n            xmap uf <Plug>(coc-funcobj-i)\n            omap uf <Plug>(coc-funcobj-i)\n            xmap af <Plug>(coc-funcobj-a)\n            omap af <Plug>(coc-funcobj-a) \n          \14nvim_exec\bapi\bvim\0")()
-	
-	vim.cmd("packadd nvim-tree.lua")
-	
-	-- Config for: nvim-tree.lua
-	loadstring("\27LJ\2\n·\1\0\0\6\0\n\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\22:LuaTreeClose<CR>\6q\1\0\2\vsilent\2\fnoremap\2\23:LuaTreeToggle<CR>\att\6n\20nvim_set_keymap\bapi\bvim\0")()
+	-- Config for: galaxyline.nvim
+	loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23galaxyline/eviline\frequire\0")()
 	
 	vim.cmd("packadd vim-commentary")
-	vim.cmd("packadd nvim-colorizer.lua")
-	
-	-- Config for: nvim-colorizer.lua
-	loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0")()
-	
-	vim.cmd("packadd LeaderF")
-	
-	-- Config for: LeaderF
-	loadstring("\27LJ\2\nä\5\0\0\4\0\4\0\a6\0\0\0009\0\1\0009\0\2\0'\2\3\0+\3\1\0B\0\3\1K\0\1\0²\5            let g:Lf_ShortcutF = '<leader>ff'\n            let g:Lf_CommandMap = {'<c-k>': ['<c-e>'], '<c-j>': ['<c-n>']}\n\n            let g:Lf_WindowPosition = 'popup'\n            let g:Lf_PreviewInPopup = 1\n            let g:Lf_StlSeparator = { 'left': \"\\ue0b0\", 'right': \"\\ue0b2\" }\n            let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }\n\n            noremap <leader>fb :<C-U><C-R>=printf(\"Leaderf buffer %s\", \"\")<CR><CR>\n            noremap <leader>fm :<C-U><C-R>=printf(\"Leaderf mru %s\", \"\")<CR><CR>\n            noremap <leader>fl :<C-U><C-R>=printf(\"Leaderf line %s\", \"\")<CR><CR>\n            noremap <leader>fr :<C-U><C-R>=printf(\"Leaderf rg %s\", \"\")<CR><CR>\n          \14nvim_exec\bapi\bvim\0")()
-	
 	vim.cmd("packadd gruvbox")
 	
 	-- Config for: gruvbox
 	loadstring("\27LJ\2\n7\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\24colorscheme gruvbox\bcmd\bvim\0")()
 	
+	vim.cmd("packadd nvim-web-devicons")
+	vim.cmd("packadd auto-pairs")
+	vim.cmd("packadd nvim-colorizer.lua")
+	
+	-- Config for: nvim-colorizer.lua
+	loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0")()
+	
+	vim.cmd("packadd coc.nvim")
+	
+	-- Config for: coc.nvim
+	loadstring("\27LJ\2\n„\19\0\0\4\0\4\0\a6\0\0\0009\0\1\0009\0\2\0'\2\3\0+\3\1\0B\0\3\1K\0\1\0Ò\18                let g:coc_snippet_next = '<TAB>'\n                let g:coc_snippet_prev = '<S-TAB>'\n                let g:snips_author = 'bucai'\n                let g:coc_global_extensions =[ 'coc-marketplace', 'coc-pairs', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]\n\n                autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')\n\n                inoremap <silent><expr> <TAB> pumvisible() ? \"<C-n>\" : v:lua.check_back_space() ? \"<TAB>\" : coc#refresh()\n                inoremap <expr><S-TAB> pumvisible() ? \"<C-p>\" : \"<C-h>\"\n\n                inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : \"<C-g>u<CR><c-r>=coc#on_enter()<CR>\"\n                inoremap <expr><C-e> pumvisible() ? \"<C-p>\" : \"<C-e>\"\n                \n                nmap <silent> [g <Plug>(coc-diagnostic-prev)\n                nmap <silent> ]g <Plug>(coc-diagnostic-next)\n\n                nmap <silent> gd <Plug>(coc-definition)\n                nmap <silent> gt <Plug>(coc-type-definition)\n                nmap <silent> gi <Plug>(coc-implementation)\n                nmap <silent> gr <Plug>(coc-references)\n\n                nmap <silent>rn <Plug>(coc-rename)\n                nmap <silent>ca <Plug>(coc-codeaction)\n                nmap <silent>fc <Plug>(coc-fix-current)\n\n                nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>\n                nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>\n                nnoremap <silent> <leader><leader>e  :<C-u>CocList extensions<cr>\n                nnoremap <silent> <leader><leader>c  :<C-u>CocList commands<cr>\n                nnoremap <silent> <leader><leader>o  :<C-u>CocList outline<cr>\n                nnoremap <silent> <leader><leader>s  :<C-u>CocList -I symbols<cr>\n                nnoremap <silent> <leader><leader>n  :<C-u>CocNext<CR>\n                nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>\n                nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>\n\n                nnoremap <silent> K :call CocAction('doHover')<CR>\n\n                xmap uf <Plug>(coc-funcobj-i)\n                omap uf <Plug>(coc-funcobj-i)\n                xmap af <Plug>(coc-funcobj-a)\n                omap af <Plug>(coc-funcobj-a) \n            \14nvim_exec\bapi\bvim\0")()
+	
+	vim.cmd("packadd nvim-tree.lua")
+	
+	-- Config for: nvim-tree.lua
+	loadstring("\27LJ\2\nµ\1\0\0\6\0\n\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\22:LuaTreeClose<CR>\6q\1\0\2\fnoremap\2\vsilent\2\21:LuaTreeOpen<CR>\att\6n\20nvim_set_keymap\bapi\bvim\0")()
+	
+	vim.cmd("packadd lazygit.nvim")
+	
+	-- Config for: lazygit.nvim
+	loadstring("\27LJ\2\nå\1\0\0\6\0\n\1\0176\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\17:LazyGit<CR>\15<leader>gg\6n\20nvim_set_keymap\bapi+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvim›³æÌ\25Ì™³ÿ\3\0")()
+	
+	vim.cmd("packadd rainbow")
 	vim.cmd("packadd vim-quickrun")
 	
 	-- Config for: vim-quickrun
-	loadstring("\27LJ\2\nž\2\0\0\6\0\v\0\0196\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0'\2\5\0'\3\6\0'\4\a\0005\5\b\0B\0\5\0016\0\0\0009\0\3\0009\0\t\0'\2\n\0+\3\1\0B\0\3\1K\0\1\0X            let g:quickrun_config = { \"_\" : { \"outputter\" : \"message\" }}\n          \14nvim_exec\1\0\2\vsilent\1\fnoremap\1\21<Plug>(quickrun)\15<leader>rr\6n\20nvim_set_keymap\bapi%quickrun_no_default_key_mappings\6g\bvim\0")()
-	
-	vim.cmd("packadd galaxyline.nvim")
-	
-	-- Config for: galaxyline.nvim
-	loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23galaxyline/eviline\frequire\0")()
+	loadstring("\27LJ\2\nu\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\2\fnoremap\1\vsilent\1\21<Plug>(quickrun)\15<leader>rr\6n\20nvim_set_keymap\bapi\bvim\0")()
 	
 	vim.cmd("packadd vim-toml")
-	vim.cmd("packadd rainbow")
+	vim.cmd("packadd LeaderF")
 	
-	-- Config for: rainbow
-	loadstring("\27LJ\2\n0\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\1\0=\1\2\0K\0\1\0\19rainbow_active\6g\bvim\0")()
+	-- Config for: LeaderF
+	loadstring("\27LJ\2\n–\3\0\0\4\0\4\0\a6\0\0\0009\0\1\0009\0\2\0'\2\3\0+\3\1\0B\0\3\1K\0\1\0ä\2                noremap <leader>fb :<C-U><C-R>=printf(\"Leaderf buffer %s\", \"\")<CR><CR>\n                noremap <leader>fm :<C-U><C-R>=printf(\"Leaderf mru %s\", \"\")<CR><CR>\n                noremap <leader>fl :<C-U><C-R>=printf(\"Leaderf line %s\", \"\")<CR><CR>\n                noremap <leader>fr :<C-U><C-R>=printf(\"Leaderf rg %s\", \"\")<CR><CR>\n            \14nvim_exec\bapi\bvim\0")()
 	
-	vim.cmd("packadd auto-pairs")
     end
     
 -- Load plugins in order defined by `after`
@@ -298,21 +303,13 @@ endfunction
 " Command lazy-loads
 
 " Keymap lazy-loads
-noremap <silent> <leader>fm <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fm", "prefix": "" })<cr>
-noremap <silent> <leader>fl <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fl", "prefix": "" })<cr>
 noremap <silent> <leader>gg <cmd>call <SID>load(['lazygit.nvim'], { "keys": "<leader>gg", "prefix": "" })<cr>
-noremap <silent> <leader>rr <cmd>call <SID>load(['vim-quickrun'], { "keys": "<leader>rr", "prefix": "" })<cr>
-noremap <silent> <leader>ff <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>ff", "prefix": "" })<cr>
-noremap <silent> gcc <cmd>call <SID>load(['vim-commentary'], { "keys": "gcc", "prefix": "" })<cr>
-noremap <silent> gc <cmd>call <SID>load(['vim-commentary'], { "keys": "gc", "prefix": "" })<cr>
-noremap <silent> <leader>fr <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fr", "prefix": "" })<cr>
-noremap <silent> <leader>fb <cmd>call <SID>load(['LeaderF'], { "keys": "<leader>fb", "prefix": "" })<cr>
 
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
   au FileType toml ++once call s:load(['vim-toml'], { "ft": "toml" })
   " Event lazy-loads
-  au BufNewFile * ++once call s:load(['vim-surround', 'coc.nvim', 'rainbow', 'auto-pairs'], { "event": "BufNewFile *" })
-  au BufReadPre * ++once call s:load(['vim-surround', 'coc.nvim', 'rainbow', 'auto-pairs'], { "event": "BufReadPre *" })
+  au BufReadPre * ++once call s:load(['vim-surround', 'coc.nvim'], { "event": "BufReadPre *" })
+  au BufNewFile * ++once call s:load(['vim-surround', 'coc.nvim'], { "event": "BufNewFile *" })
 augroup END

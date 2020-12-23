@@ -1,59 +1,24 @@
-local global = {
-	home = os.getenv("HOME"),
+-- 直接将全局变量挂到vim.g上面
+-- 方便其它地方使用
+vim.g.home = os.getenv("HOME")
 
-	is_mac = jit.os == "OSX",
-	is_linux = jit.os == "Linux",
-	is_windows = jit.os == "Windows",
-	is_vscode = vim.fn.exists('g:vscode') == 1
+vim.g.is_mac = jit.os == "OSX"
+vim.g.is_linux = jit.os == "Linux"
+vim.g.is_windows = jit.os == "Windows"
+vim.g.is_vscode = vim.fn.exists('g:vscode') == 1
 
-	-- path_sep = is_windows and "\\" or "/",
-	-- -- nvim_path: ~/.config/nvim
-	-- nvim_path = home .. path_sep .. ".config" .. path_sep .. "nvim",
-	-- -- modules_dir: ~/.config/nvim/modules/
-	-- modules_dir = nvim_path .. path_sep .. "modules" .. path_sep,
-	-- -- cache_nvim_dir: ~/.cache/
-	-- cache_dir = home .. path_sep .. ".cache" ..path_sep,
-	-- -- cache_dir: ~/.cache/nvim/
-	-- cache_nvim_dir = global.cache_dir .. "nvim" .. global.path_sep
-}
-
-function global.exists(file)
-	local ok, err, code = os.rename(file, file)
-	if not ok then
-		if code == 13 then
-			return true
-		end
-	end
-	return ok, err
+-- v:lua
+-- v:lua.check_back_space()
+function _G.check_back_space()
+  local col = vim.fn.col('.') - 1
+  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+      return true
+  else
+      return false
+  end
 end
 
-function global.is_dir(path) 
-	return global.exists(path .. global.path_sep)
+function _G.dump(...)
+    local objects = vim.tbl_map(vim.inspect, {...})
+    print(unpack(objects))
 end
-
-function global.has_key(tbl, key)
-	for idx, _ in pairs(tbl) do
-		if idx == key then
-			return true
-		end
-	end
-	return false
-end
-
-function global.has_value(tbl, value)
-	for _, val in pairs(tbl) do
-		if val == value then
-			return true
-		end
-	end
-	return false
-end
-
-function global.readAll(file)
-    local f = assert(io.open(file, "rb"))
-    local content = f:read("*all")
-    f:close()
-    return content
-end
-
-return global

@@ -63,7 +63,7 @@ function mappings.setup()
 
   api.nvim_set_keymap('', 'Y', '"+y', { noremap=true })
 
-  if require("global").is_vscode then
+  if vim.g.is_vscode then
     api.nvim_exec(
       [[
       nnoremap rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
