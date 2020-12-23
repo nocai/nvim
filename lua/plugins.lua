@@ -49,7 +49,13 @@ return require('packer').startup(function()
 
     -- use 'euclidianAce/BetterLua.vim'
 
-    -- use 'yggdroot/indentLine'
+    use {
+        'yggdroot/indentLine',
+        ft = { 'python' },
+        cond = function ()
+            return not vim.g.is_vscode
+        end
+    }
 
     use { 
         'thinca/vim-quickrun',

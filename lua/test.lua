@@ -7,9 +7,9 @@
 -- print("Test")
 
 
-m = {}
+-- m = {}
 
-function m.setup()
+-- function m.setup()
     -- print(vim.g.is_vscode)
 
     -- print(vim.g.is_linux)
@@ -19,6 +19,8 @@ function m.setup()
     -- for i = 0, 2 do
     --     print(array[i])
     -- end
-end
+-- end
 
-return m
+-- return m
+
+print("test")
