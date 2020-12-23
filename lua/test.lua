@@ -5,3 +5,12 @@
 
 
 -- print("Test")
+
+
+m = {}
+
+function m.setup()
+    -- print("setup")
+end
+
+return m

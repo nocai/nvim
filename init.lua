@@ -1,6 +1,4 @@
-require("test")
-
-local global = require("global")
+require("test").setup()
 
 require("options")
 require("mappings")
@@ -22,7 +20,7 @@ return require('packer').startup(function()
           require'colorizer'.setup()
         end,
         cond = function ()
-          return vim.fn.exists('g:vscode') == 0
+          return not require("global").is_vscode
         end
     }
 
@@ -30,7 +28,7 @@ return require('packer').startup(function()
       'cespare/vim-toml',
       ft = { 'toml' },
       cond = function ()
-        return vim.fn.exists('g:vscode') == 0
+        return not require("global").is_vscode
       end
     }
 
@@ -40,7 +38,7 @@ return require('packer').startup(function()
 
     use { 
       'thinca/vim-quickrun',
-      keys = { '<leader>rr' },
+      -- keys = { '<leader>rr' },
       config = function ()
         vim.g.quickrun_no_default_key_mappings = 1
         vim.api.nvim_set_keymap('n', '<leader>rr', '<Plug>(quickrun)', { noremap=false, silent=false })
@@ -51,7 +49,7 @@ return require('packer').startup(function()
         false)
       end,
       cond = function ()
-          return vim.fn.exists('g:vscode') == 0
+          return not require("global").is_vscode
       end
     }
 
@@ -61,7 +59,7 @@ return require('packer').startup(function()
       config = function() require('galaxyline/eviline') end,
       requires = {'kyazdani42/nvim-web-devicons', opt = true},
       cond = function ()
-          return vim.fn.exists('g:vscode') == 0
+          return not require("global").is_vscode
       end
     }
 
@@ -92,7 +90,7 @@ return require('packer').startup(function()
         vim.cmd("colorscheme gruvbox")
       end,
       cond = function ()
-          return vim.fn.exists('g:vscode') == 0
+          return not require("global").is_vscode
       end
     }
     
@@ -104,28 +102,26 @@ return require('packer').startup(function()
 
     use {
       'luochen1990/rainbow',
-      event = {'BufReadPre *', 'BufNewFile *'},
-      config = function ()
+      setup = function ()
         vim.g.rainbow_active = 1
       end,
       cond = function ()
-        return vim.fn.exists('g:vscode') == 0
+        return not require("global").is_vscode
       end
     }
 
     use {
       'jiangmiao/auto-pairs',
-      event = {'BufReadPre *', 'BufNewFile *'},
       cond = function ()
-        return vim.fn.exists('g:vscode') == 0
+        return not require("global").is_vscode
       end
     }
 
     use { 
       'tpope/vim-commentary',
-      keys = { 'gcc', 'gc' },
+      -- keys = { 'gcc', 'gc' },
       cond = function ()
-        return vim.fn.exists('g:vscode') == 0
+        return not require("global").is_vscode
       end
     }
 
@@ -174,7 +170,7 @@ return require('packer').startup(function()
         vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { noremap=true, silent=true })
       end,
       cond = function ()
-        return vim.fn.exists('g:vscode') == 0
+        return not require("global").is_vscode
       end
     }
 
@@ -186,7 +182,7 @@ return require('packer').startup(function()
         -- vim.api.nvim_buf_set_keymap('0', 'n', 'q', ':LuaTreeClose<CR>', { noremap=true, silent=true })
       end,
       cond = function ()
-        return vim.fn.exists('g:vscode') == 0
+        return not require("global").is_vscode
       end
     }
 
@@ -197,22 +193,23 @@ return require('packer').startup(function()
 
     use {
       'Yggdroot/LeaderF',
-      keys = { '<leader>ff', '<leader>fb', '<leader>fm', '<leader>fl', '<leader>fr' },
+      -- keys = { '<leader>ff', '<leader>fb', '<leader>fm', '<leader>fl', '<leader>fr' },
       cond = function ()
-        return vim.fn.exists('g:vscode') == 0
+        return not require("global").is_vscode
+      end,
+      setup = function()
+        vim.g.Lf_ShortcutF = '<leader>ff'
+        vim.g.Lf_WindowPosition = 'popup'
+        vim.g.Lf_PreviewInPopup = 1
+
+        local cmdMap= {}
+        cmdMap["<c-k>"] = {"<c-e>"}
+        cmdMap["<c-j>"] = {"<c-n>"}
+        vim.g.Lf_CommandMap = cmdMap
       end,
       config = function()
-        -- vim.g.Lf_ShortcutF = '<leader>ff'
         vim.api.nvim_exec(
           [[
-            let g:Lf_ShortcutF = '<leader>ff'
-            let g:Lf_CommandMap = {'<c-k>': ['<c-e>'], '<c-j>': ['<c-n>']}
-
-            let g:Lf_WindowPosition = 'popup'
-            let g:Lf_PreviewInPopup = 1
-            let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2" }
-            let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
-
             noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
             noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
             noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
@@ -221,16 +218,11 @@ return require('packer').startup(function()
         false)
       end
     }
-    vim.api.nvim_exec(
-      [[
-        let g:Lf_ShortcutF = '<leader>ff'
-      ]],
-    false)
 
     use {
       'neoclide/coc.nvim',
       cond = function ()
-        return vim.fn.exists('g:vscode') == 0
+        return not require("global").is_vscode
       end,
       event = { 'BufReadPre *', 'BufNewFile *'},
       config = function ()

@@ -60,3 +60,23 @@ api.nvim_set_keymap('', 'L', 'U', { noremap=true, silent=true })
 api.nvim_set_keymap('', '<c-l>', '<c-u>', { noremap=true, silent=true })
 
 api.nvim_set_keymap('', 'Y', '"+y', { noremap=true })
+
+if require("global").is_vscode then
+  api.nvim_exec(
+    [[
+    nnoremap rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
+
+    nnoremap gt <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
+    nnoremap gT <Cmd>call VSCodeNotify('editor.action.peekTypeDefinition')<CR>
+
+    nnoremap gi <Cmd>call VSCodeNotify('editor.action.goToImplementation')<CR>
+    nnoremap gI <Cmd>call VSCodeNotify('editor.action.peekImplementation')<CR>
+
+    nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
+    " nnoremap gR <Cmd>call VSCodeNotify('editor.action.referenceSearch.trigger')<CR>
+
+    nnoremap <Leader>rr <Cmd>call VSCodeNotify('code-runner.run')<CR>
+    nnoremap <leader>fr <Cmd>call VSCodeNotify('workbench.action.findInFiles', { 'query': expand('<cword>')})<CR>
+    ]],
+  false)
+end
