@@ -47,6 +47,16 @@ return require('packer').startup(function()
         end
     }
 
+    -- use {
+    --     'npxbr/glow.nvim',
+    --     run = ':GlowInstall',
+    --     cmd = { 'Glow' },
+    --     cond = function ()
+    --         return not vim.g.is_vscode
+    --     end,
+    --     ft = { 'markdown', 'md' },
+    -- }
+
     -- use 'euclidianAce/BetterLua.vim'
 
     use {
@@ -86,6 +96,51 @@ return require('packer').startup(function()
         requires = { 'kyazdani42/nvim-web-devicons' },
         cond = function ()
             return not vim.g.is_vscode
+        end
+    }
+
+    use {
+        'akinsho/nvim-bufferline.lua',
+        requires = { 'kyazdani42/nvim-web-devicons' },
+        cond = function ()
+            return not vim.g.is_vscode
+        end,
+        config = function ()
+            require'bufferline'.setup{
+                options = {
+                    view = "multiwindow",-- "multiwindow" | "default",
+                    numbers = "ordinal", -- "none" | "ordinal" | "buffer_id",
+                    number_style = "superscript", -- "superscript" | "",
+                    mappings = true, -- true | false,
+                    buffer_close_icon= '',
+                    modified_icon = '●',
+                    close_icon = '',
+                    left_trunc_marker = '',
+                    right_trunc_marker = '',
+                    max_name_length = 18,
+                    max_prefix_length = 15, -- prefix used when a buffer is deduplicated
+                    tab_size = 18,
+                    show_buffer_close_icons = true, -- true | false,
+                    persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
+                    -- can also be a table containing 2 custom separators
+                    -- [focused and unfocused]. eg: { '|', '|' }
+                    separator_style = "thick", -- "slant" | "thick" | "thin" | { 'any', 'any' },
+                    enforce_regular_tabs = true, --false | true,
+                    always_show_bufferline = true, --true | false,
+                    sort_by = 'extension' --'extension' | 'relative_directory' | 'directory' | function(buffer_a, buffer_b)
+                        -- add custom logic
+                        -- return buffer_a.modified > buffer_b.modified
+                    -- end
+                }
+            }
+
+            vim.api.nvim_exec([[
+                nnoremap <silent>[b :BufferLineCycleNext<CR>
+                nnoremap <silent>]b :BufferLineCyclePrev<CR>
+
+                nnoremap <silent><mymap> :BufferLineMoveNext<CR>
+                nnoremap <silent><mymap> :BufferLineMovePrev<CR>
+            ]], false)
         end
     }
 
@@ -213,6 +268,16 @@ return require('packer').startup(function()
     }
 
     use {
+        'f-person/git-blame.nvim',
+        cond = function ()
+            return not vim.g.is_vscode
+        end,
+        setup = function()
+            vim.g.gitblame_message_template = ' ❯❯❯  <author> • <summary> • <date>'
+        end
+    }
+
+    use {
         'tpope/vim-surround',
         event = { 'BufReadPre *', 'BufNewFile *'}
     }
@@ -261,7 +326,7 @@ return require('packer').startup(function()
 
                 autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
-                inoremap <silent><expr> <TAB> pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
+                inoremap <silent><expr> <TAB> v:lua.is_right_pairs() ? "<Right>" : pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
                 inoremap <expr><S-TAB> pumvisible() ? "<C-p>" : "<C-h>"
 
                 inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
