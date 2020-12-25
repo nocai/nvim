@@ -171,16 +171,17 @@
     },
 
     "lua": {
-      "cwd": "~/.config/nvim/.lsp/lua-language-server",
-      "command": "~/.config/nvim/.lsp/lua-language-server/bin/Linux/lua-language-server",
+      "cwd": "/home/liujun/.config/nvim/.lsp/lua-language-server",
+      "command": "/home/liujun/.config/nvim/.lsp/lua-language-server/bin/Linux/lua-language-server",
       "args": [
         "-E",
         "-e",
         "LANG=en",
-        "~/.config/nvim/.lsp/lua-language-server/main.lua"
+        "/home/liujun/.config/nvim/.lsp/lua-language-server/main.lua"
       ],
       "filetypes": ["lua"],
       "rootPatterns": [".git/"]
     }
-  }
+  },
+  "Lua.diagnostics.disable": ["lowercase-global"]
 }

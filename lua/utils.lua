@@ -1,4 +1,4 @@
-
+require('global')
 local utils = {}
 
 function utils.exists(file)
@@ -11,8 +11,8 @@ function utils.exists(file)
 	return ok, err
 end
 
-function utils.is_dir(path) 
-	return global.exists(path .. global.path_sep)
+function utils.is_dir(path)
+	return utils.exists(path .. vim.g.sep)
 end
 
 function utils.has_key(tbl, key)
@@ -43,7 +43,8 @@ end
 local function show_table(tbl, level)
     local show = ''
     local temp = ''
-    local level = level or 1
+
+    level = level or 1
     local space = string.rep(' ', (level-1)*4)
     local sapce4 = string.rep(' ', 4)
     if(type(tbl) ~= 'table') then

@@ -25,7 +25,7 @@ vim.cmd [[packadd packer.nvim]]
 -- Only if your version of Neovim doesn't have https://github.com/neovim/neovim/pull/12632 merged
 -- vim._update_package_paths()
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
 -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
@@ -67,7 +67,7 @@ return require('packer').startup(function()
         end
     }
 
-    use { 
+    use {
         'thinca/vim-quickrun',
         -- keys = { '<leader>rr' },
         setup = function()
@@ -83,7 +83,7 @@ return require('packer').startup(function()
     }
 
     use {
-        'kyazdani42/nvim-web-devicons', 
+        'kyazdani42/nvim-web-devicons',
         cond = function ()
             return not vim.g.is_vscode
         end
@@ -325,7 +325,7 @@ return require('packer').startup(function()
                 let g:coc_snippet_next = '<TAB>'
                 let g:coc_snippet_prev = '<S-TAB>'
                 let g:snips_author = 'bucai'
-                let g:coc_global_extensions =[ 'coc-marketplace', 'coc-pairs', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
+                let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
 
                 autocmd BufWritePre * silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
