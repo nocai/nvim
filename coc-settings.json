@@ -171,13 +171,13 @@
     },
 
     "lua": {
-      "cwd": "/home/liujun/.config/nvim/.lsp/lua-language-server",
-      "command": "/home/liujun/.config/nvim/.lsp/lua-language-server/bin/Linux/lua-language-server",
+      "cwd": "~/.config/nvim/.lsp/lua-language-server",
+      "command": "~/.config/nvim/.lsp/lua-language-server/bin/Linux/lua-language-server",
       "args": [
         "-E",
         "-e",
         "LANG=en",
-        "/home/liujun/.config/nvim/.lsp/lua-language-server/main.lua"
+        "~/.config/nvim/.lsp/lua-language-server/main.lua"
       ],
       "filetypes": ["lua"],
       "rootPatterns": [".git/"]
