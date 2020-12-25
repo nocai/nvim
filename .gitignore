@@ -2,3 +2,6 @@
 t.txt
 .netrwhist
 .idea/
+
+plugin/packer_compiled.vim
+.vscode/settings.json
