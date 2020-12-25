@@ -1,21 +1,21 @@
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if not packer_exists then
-  if vim.fn.input('Download Packer? (y for yes)') ~= 'y' then
+    if vim.fn.input('Download Packer? (y for yes)') ~= 'y' then
+        return
+    end
+
+    local directory = string.format('%s/site/pack/packer/opt/', vim.fn.stdpath('data')) 
+
+    vim.fn.mkdir(directory, 'p')
+
+    local out = vim.fn.system(string.format('git clone %s %s', 
+        'https://github.com/wbthomason/packer.nvim', directory .. '/packer.nvim'))
+
+    print(out)
+    print('Downloading packer.nvim...')
+
     return
-  end
-
-  local directory = string.format('%s/site/pack/packer/opt/', vim.fn.stdpath('data')) 
-
-  vim.fn.mkdir(directory, 'p')
-
-  local out = vim.fn.system(string.format('git clone %s %s', 
-    'https://github.com/wbthomason/packer.nvim', directory .. '/packer.nvim'))
-
-  print(out)
-  print('Downloading packer.nvim...')
-
-  return
 end
 
 vim.cmd("autocmd BufWritePost plugins.lua PackerCompile")
@@ -157,23 +157,23 @@ return require('packer').startup(function()
     }
 
     -- use {
-    --   'datwaft/bubbly.nvim',
-    --   config = function()
-    --     vim.g.bubbly_palette = {
-    --       background = "#34343c",
-    --       foreground = "#c5cdd9",
-    --       black = "#3e4249",
-    --       red = "#ec7279",
-    --       green = "#a0c980",
-    --       yellow = "#deb974",
-    --       blue = "#6cb6eb",
-    --       purple = "#d38aea",
-    --       cyan = "#5dbbc1",
-    --       white = "#c5cdd9",
-    --       lightgrey = "#57595e",
-    --       darkgrey = "#404247",
-    --     }
-    --   end
+    --     'datwaft/bubbly.nvim',
+    --     config = function()
+    --         vim.g.bubbly_palette = {
+    --             background = "#34343c",
+    --             foreground = "#c5cdd9",
+    --             black = "#3e4249",
+    --             red = "#ec7279",
+    --             green = "#a0c980",
+    --             yellow = "#deb974",
+    --             blue = "#6cb6eb",
+    --             purple = "#d38aea",
+    --             cyan = "#5dbbc1",
+    --             white = "#c5cdd9",
+    --             lightgrey = "#57595e",
+    --             darkgrey = "#404247",
+    --         }
+    --     end
     -- }
 
     use {
@@ -188,9 +188,14 @@ return require('packer').startup(function()
     }
     
     -- use {
-    --   "npxbr/gruvbox.nvim", 
-    --   requires = {"tjdevries/colorbuddy.vim"},
-    --   config = require("colorbuddy").colorscheme("gruvbox")
+    --     'kyazdani42/nvim-palenight.lua',
+    --     cond = function ()
+    --         return not vim.g.is_vscode
+    --     end,
+    --     config = function ()
+    --         vim.cmd([[set termguicolors]])
+    --         vim.cmd([[colorscheme palenight]])
+    --     end
     -- }
 
     use {
