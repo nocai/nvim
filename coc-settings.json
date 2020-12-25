@@ -168,19 +168,19 @@
         "usePlaceholders": true,
         "completeUnimported": true
       }
+    },
+
+    "lua": {
+      "cwd": "/home/liujun/.config/nvim/.lsp/lua-language-server",
+      "command": "/home/liujun/.config/nvim/.lsp/lua-language-server/bin/Linux/lua-language-server",
+      "args": [
+        "-E",
+        "-e",
+        "LANG=en",
+        "/home/liujun/.config/nvim/.lsp/lua-language-server/main.lua"
+      ],
+      "filetypes": ["lua"],
+      "rootPatterns": [".git/"]
     }
-    //,
-    //"lua": {
-    //"cwd": "/home/liujun/.lua-language-server",
-    //"command": "/home/liujun/.lua-language-server/bin/Linux/lua-language-server",
-    //"args": [
-    //"-E",
-    //"-e",
-    //"LANG=en",
-    //"/home/liujun/.lua-language-server/main.lua"
-    //],
-    //"filetypes": ["lua"],
-    //"rootPatterns": [".git/"]
-    //}
   }
 }
