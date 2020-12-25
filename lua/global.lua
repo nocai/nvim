@@ -23,12 +23,18 @@ function _G.check_back_space()
   end
 end
 
-local right_pairs = {')', ']', '}', '\'', '"', '`', '.', ',', ';'}
-function _G.is_right_pairs()
+local ps = {'(',')', '[',']', '{','}', '<', '>', '\'', '"', '`', '.', ',', ';'}
+function _G.is_pairs(shift)
+    print(shift)
     local col = vim.fn.col('.')
+
+    if shift then 
+        col = col - 1
+    end
+
     local c = vim.fn.getline('.'):sub(col, col)
 
-    for k, v in ipairs(right_pairs) do
+    for k, v in ipairs(ps) do
         if v == c then
             return true
         end
