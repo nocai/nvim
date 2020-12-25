@@ -331,8 +331,8 @@ return require('packer').startup(function()
 
                 autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
-                inoremap <silent><expr> <TAB> v:lua.is_right_pairs() ? "<Right>" : pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
-                inoremap <expr><S-TAB> pumvisible() ? "<C-p>" : "<C-h>"
+                inoremap <silent><expr><TAB> v:lua.is_pairs() ? "<Right>" : pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
+                inoremap <silent><expr><S-TAB> v:lua.is_pairs(v:true) ? "<Left>" : pumvisible() ? "<C-p>" : "<C-h>"
 
                 inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
                 inoremap <expr><C-e> pumvisible() ? "<C-p>" : "<C-e>"
