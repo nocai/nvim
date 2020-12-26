@@ -25,7 +25,7 @@ vim.cmd [[packadd packer.nvim]]
 -- Only if your version of Neovim doesn't have https://github.com/neovim/neovim/pull/12632 merged
 -- vim._update_package_paths()
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
 -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
@@ -67,7 +67,7 @@ return require('packer').startup(function()
         end
     }
 
-    use { 
+    use {
         'thinca/vim-quickrun',
         -- keys = { '<leader>rr' },
         setup = function()
@@ -83,7 +83,7 @@ return require('packer').startup(function()
     }
 
     use {
-        'kyazdani42/nvim-web-devicons', 
+        'kyazdani42/nvim-web-devicons',
         cond = function ()
             return not vim.g.is_vscode
         end
@@ -317,9 +317,7 @@ return require('packer').startup(function()
 
     use {
         'neoclide/coc.nvim',
-        cond = function ()
-            return not vim.g.is_vscode
-        end,
+        cond = function () return not vim.g.is_vscode end,
         event = { 'BufReadPre *', 'BufNewFile *'},
         config = function ()
             vim.api.nvim_exec(
@@ -327,9 +325,9 @@ return require('packer').startup(function()
                 let g:coc_snippet_next = '<TAB>'
                 let g:coc_snippet_prev = '<S-TAB>'
                 let g:snips_author = 'bucai'
-                let g:coc_global_extensions =[ 'coc-marketplace', 'coc-pairs', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
+                let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
 
-                autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
+                autocmd BufWritePre * silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
                 inoremap <silent><expr><TAB> v:lua.is_pairs() ? "<Right>" : pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
                 inoremap <silent><expr><S-TAB> v:lua.is_pairs(v:true) ? "<Left>" : pumvisible() ? "<C-p>" : "<C-h>"
@@ -359,7 +357,7 @@ return require('packer').startup(function()
                 nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>
                 nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>
 
-                nnoremap <silent> K :call CocAction('doHover')<CR>
+                nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 
                 xmap uf <Plug>(coc-funcobj-i)
                 omap uf <Plug>(coc-funcobj-i)
@@ -369,5 +367,37 @@ return require('packer').startup(function()
             false)
         end
     }
+
+    -- use {{
+    --         'neovim/nvim-lspconfig',
+    --         cond = function () return not vim.g.is_vscode end,
+    --         config = function()
+    --             require'lspconfig'.gopls.setup{}
+    --             vim.api.nvim_exec([[
+    --                 autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
+    --             ]])
+    --         end,
+    --     },{
+    --         'nvim-lua/completion-nvim',
+    --         cond = function () return not vim.g.is_vscode end,
+    --         setup = function()
+    --             vim.g.completion_enable_snippet = 'snippets.nvim'
+    --             vim.api.nvim_exec([[
+    --                 set completeopt=menuone,noinsert,noselect
+    --                 set shortmess+=c
+
+    --                 imap <tab> <Plug>(completion_smart_tab)
+    --                 imap <s-tab> <Plug>(completion_smart_s_tab)
+
+    --                 let g:completion_confirm_key = ""
+    --                 imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ? "<Plug>(completion_confirm_completion)"  : "<c-e><CR>" :  "<CR>"
+    --             ]], false)
+    --         end,
+    --         config = function()
+    --             vim.cmd [[ au BufEnter * lua require('completion').on_attach() ]]
+    --         end,
+    --         requires = { 'norcalli/snippets.nvim' }
+    --     }
+    -- }
 end)
 

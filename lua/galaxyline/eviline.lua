@@ -59,7 +59,8 @@ gls.left[4] = {
   FileName = {
     provider = {'FileName','FileSize'},
     condition = buffer_not_empty,
-    highlight = {colors.fg,colors.line_bg,'bold'}
+    highlight = {colors.fg,colors.line_bg,'bold'},
+    -- separator = '<U+2B80>'
   }
 }
 
