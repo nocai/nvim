@@ -61,7 +61,7 @@ return require('packer').startup(function(use)
 
     use {
         'yggdroot/indentLine',
-        ft = { 'python' },
+        ft = { 'python', 'nvimtree' },
         cond = function ()
             return not vim.g.is_vscode
         end
@@ -92,7 +92,12 @@ return require('packer').startup(function(use)
     use {
         'glepnir/galaxyline.nvim',
         branch = 'main',
-        config = function() require('galaxyline/eviline') end,
+        config = function()
+            require('galaxyline/eviline')
+
+            -- local gl = require('galaxyline/eviline')
+            -- gl.short_line_list = {'NvimTree'}
+        end,
         requires = { 'kyazdani42/nvim-web-devicons' },
         cond = function ()
             return not vim.g.is_vscode
@@ -147,8 +152,8 @@ return require('packer').startup(function(use)
     use {
         'kyazdani42/nvim-tree.lua',
         config = function ()
-            vim.api.nvim_set_keymap('n', 'tt', ':LuaTreeOpen<CR>', { noremap=true, silent=true })
-            vim.api.nvim_set_keymap('n', 'q', ':LuaTreeClose<CR>', { noremap=true, silent=true })
+            vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeOpen<CR>', { noremap=true, silent=true })
+            vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
         end,
         requires = { 'kyazdani42/nvim-web-devicons' },
         cond = function ()
@@ -357,7 +362,7 @@ return require('packer').startup(function(use)
                 nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>
                 nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>
 
-                nnoremap <silent> K :call CocActionAsync('doHover')<CR>
+                nnoremap <silent> gh :call CocActionAsync('doHover')<CR>
 
                 xmap uf <Plug>(coc-funcobj-i)
                 omap uf <Plug>(coc-funcobj-i)

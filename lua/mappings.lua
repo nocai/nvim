@@ -1,4 +1,4 @@
-local api = vim.api
+local vim, api = vim, vim.api
 
 local mappings = {}
 
@@ -62,6 +62,10 @@ function mappings.setup()
   api.nvim_set_keymap('', '<c-l>', '<c-u>', { noremap=true, silent=true })
 
   api.nvim_set_keymap('', 'Y', '"+y', { noremap=true })
+
+  if not vim.g.is_vscode then
+      api.nvim_set_keymap('', '<leader>lf', ':luafile %<CR>', { noremap=true, silent=true })
+  end
 
   if vim.g.is_vscode then
     api.nvim_exec(
