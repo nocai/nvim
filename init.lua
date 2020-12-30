@@ -3,5 +3,5 @@ require("global")
 require("options").setup()
 require("mappings").setup()
 
-require("plugins")
+require("plugin.packer")
 -- require("dein")

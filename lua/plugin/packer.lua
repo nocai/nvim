@@ -18,7 +18,7 @@ if not packer_exists then
     return
 end
 
-vim.cmd("autocmd BufWritePost plugins.lua PackerCompile")
+vim.cmd("autocmd BufWritePost packer.lua PackerCompile")
 
 -- Only required if you have packer in your `opt` pack
 vim.cmd [[packadd packer.nvim]]
@@ -61,6 +61,7 @@ return require('packer').startup(function(use)
 
     use {
         'yggdroot/indentLine',
+
         ft = { 'python', 'nvimtree' },
         cond = function ()
             return not vim.g.is_vscode
@@ -133,24 +134,31 @@ return require('packer').startup(function(use)
                     enforce_regular_tabs = true, --false | true,
                     always_show_bufferline = true, --true | false,
                     sort_by = 'extension' --'extension' | 'relative_directory' | 'directory' | function(buffer_a, buffer_b)
-                        -- add custom logic
-                        -- return buffer_a.modified > buffer_b.modified
+                    -- add custom logic
+                    -- return buffer_a.modified > buffer_b.modified
                     -- end
                 }
             }
 
             vim.api.nvim_exec([[
-                nnoremap <silent>[b :BufferLineCycleNext<CR>
-                nnoremap <silent>]b :BufferLineCyclePrev<CR>
+            nnoremap <silent>[b :BufferLineCycleNext<CR>
+            nnoremap <silent>]b :BufferLineCyclePrev<CR>
 
-                nnoremap <silent><mymap> :BufferLineMoveNext<CR>
-                nnoremap <silent><mymap> :BufferLineMovePrev<CR>
+            nnoremap <silent><mymap> :BufferLineMoveNext<CR>
+            nnoremap <silent><mymap> :BufferLineMovePrev<CR>
             ]], false)
         end
     }
 
     use {
         'kyazdani42/nvim-tree.lua',
+        setup = function()
+            vim.g.nvim_tree_auto_close = 1
+            vim.g.nvim_tree_quit_on_open = 1
+            vim.g.nvim_tree_indent_markers = 1
+            vim.g.nvim_tree_width_allow_resize  = 1
+            vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
+        end,
         config = function ()
             vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeOpen<CR>', { noremap=true, silent=true })
             vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
@@ -191,7 +199,7 @@ return require('packer').startup(function(use)
             return not vim.g.is_vscode
         end
     }
-    
+
     -- use {
     --     'kyazdani42/nvim-palenight.lua',
     --     cond = function ()
@@ -302,11 +310,10 @@ return require('packer').startup(function(use)
             vim.g.Lf_ShortcutF = '<leader>ff'
             vim.g.Lf_WindowPosition = 'popup'
             vim.g.Lf_PreviewInPopup = 1
-
-            local cmdMap= {}
-            cmdMap["<c-k>"] = {"<c-e>"}
-            cmdMap["<c-j>"] = {"<c-n>"}
-            vim.g.Lf_CommandMap = cmdMap
+            vim.g.Lf_CommandMap = {
+                ['<c-k>'] = {'<c-e>'},
+                ['<c-j>'] = {'<c-n>'}
+            }
         end,
         config = function()
             vim.api.nvim_exec(

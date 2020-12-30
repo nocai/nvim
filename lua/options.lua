@@ -73,7 +73,7 @@ function options.setup()
   o.smartcase = true
   o.hidden = true
   o.cmdheight = 1
-  o.showcmd = false
+  o.showcmd = true
   o.showmode = false
   o.history = 2000
   o.hlsearch = true
