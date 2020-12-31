@@ -39,30 +39,59 @@ return require('packer').startup(function(use)
         end
     }
 
-    use {
-        'cespare/vim-toml',
-        ft = { 'toml' },
-        cond = function ()
-            return not vim.g.is_vscode
-        end
-    }
-
-    -- use {
-    --     'npxbr/glow.nvim',
-    --     run = ':GlowInstall',
-    --     cmd = { 'Glow' },
-    --     cond = function ()
-    --         return not vim.g.is_vscode
-    --     end,
-    --     ft = { 'markdown', 'md' },
-    -- }
-
     -- use 'euclidianAce/BetterLua.vim'
 
     use {
         'yggdroot/indentLine',
+        ft = { 'python', 'nvimtree', 'markdown', 'md', 'wiki' },
+        cond = function () return not vim.g.is_vscode end,
+    }
 
-        ft = { 'python', 'nvimtree' },
+    -- Markdown viki
+    use {
+        'vimwiki/vimwiki',
+        ft = { 'wiki', 'markdown', 'md' },
+        cond = function() return not vim.g.is_vscode end,
+    }
+
+    -- use {  
+    --     'plasticboy/vim-markdown',
+    --     ft = { 'md', 'markdown' },
+    --     cond = function() return not vim.g.is_vscode end,
+    --     setup = function()
+    --         vim.g.vim_markdown_conceal = 0
+    --     end,
+    --     requires = {
+    --         'godlygeek/tabular',
+    --         ft = { 'md', 'markdown' },
+    --         cond = function() return not vim.g.is_vscode end,
+    --     } 
+    -- }
+
+    use {
+        'mzlogin/vim-markdown-toc',
+        ft = { 'md', 'markdown' },
+        cond = function() return not vim.g.is_vscode end,
+    }
+
+    use {
+        'npxbr/glow.nvim',
+        run = ':GlowInstall',
+        -- opt = true,
+        -- cmd = { 'Glow' },
+        cond = function ()
+            return not vim.g.is_vscode
+        end,
+        config = function()
+            vim.api.nvim_set_keymap('n', '<leader>gl', ':Glow<CR>', { noremap = false, silent = false })
+        end,
+        ft = { 'markdown', 'md' },
+    }
+
+    -- toml
+    use {
+        'cespare/vim-toml',
+        ft = { 'toml' },
         cond = function ()
             return not vim.g.is_vscode
         end
@@ -297,6 +326,11 @@ return require('packer').startup(function(use)
 
     use {
         'tpope/vim-surround',
+        event = { 'BufReadPre *', 'BufNewFile *'}
+    }
+
+    use {
+        'tpope/vim-repeat',
         event = { 'BufReadPre *', 'BufNewFile *'}
     }
 
