@@ -18,7 +18,7 @@ if not packer_exists then
     return
 end
 
-vim.cmd("autocmd BufWritePost plugins.lua PackerCompile")
+vim.cmd("autocmd BufWritePost packer.lua PackerCompile")
 
 -- Only required if you have packer in your `opt` pack
 vim.cmd [[packadd packer.nvim]]
@@ -39,29 +39,59 @@ return require('packer').startup(function(use)
         end
     }
 
-    use {
-        'cespare/vim-toml',
-        ft = { 'toml' },
-        cond = function ()
-            return not vim.g.is_vscode
-        end
-    }
-
-    -- use {
-    --     'npxbr/glow.nvim',
-    --     run = ':GlowInstall',
-    --     cmd = { 'Glow' },
-    --     cond = function ()
-    --         return not vim.g.is_vscode
-    --     end,
-    --     ft = { 'markdown', 'md' },
-    -- }
-
     -- use 'euclidianAce/BetterLua.vim'
 
     use {
         'yggdroot/indentLine',
-        ft = { 'python' },
+        ft = { 'python', 'nvimtree', 'markdown', 'md', 'wiki' },
+        cond = function () return not vim.g.is_vscode end,
+    }
+
+    -- Markdown viki
+    use {
+        'vimwiki/vimwiki',
+        ft = { 'wiki', 'markdown', 'md' },
+        cond = function() return not vim.g.is_vscode end,
+    }
+
+    -- use {  
+    --     'plasticboy/vim-markdown',
+    --     ft = { 'md', 'markdown' },
+    --     cond = function() return not vim.g.is_vscode end,
+    --     setup = function()
+    --         vim.g.vim_markdown_conceal = 0
+    --     end,
+    --     requires = {
+    --         'godlygeek/tabular',
+    --         ft = { 'md', 'markdown' },
+    --         cond = function() return not vim.g.is_vscode end,
+    --     } 
+    -- }
+
+    use {
+        'mzlogin/vim-markdown-toc',
+        ft = { 'md', 'markdown' },
+        cond = function() return not vim.g.is_vscode end,
+    }
+
+    use {
+        'npxbr/glow.nvim',
+        run = ':GlowInstall',
+        -- opt = true,
+        -- cmd = { 'Glow' },
+        cond = function ()
+            return not vim.g.is_vscode
+        end,
+        config = function()
+            vim.api.nvim_set_keymap('n', '<leader>gl', ':Glow<CR>', { noremap = false, silent = false })
+        end,
+        ft = { 'markdown', 'md' },
+    }
+
+    -- toml
+    use {
+        'cespare/vim-toml',
+        ft = { 'toml' },
         cond = function ()
             return not vim.g.is_vscode
         end
@@ -92,7 +122,12 @@ return require('packer').startup(function(use)
     use {
         'glepnir/galaxyline.nvim',
         branch = 'main',
-        config = function() require('galaxyline/eviline') end,
+        config = function()
+            require('galaxyline/eviline')
+
+            -- local gl = require('galaxyline/eviline')
+            -- gl.short_line_list = {'NvimTree'}
+        end,
         requires = { 'kyazdani42/nvim-web-devicons' },
         cond = function ()
             return not vim.g.is_vscode
@@ -128,27 +163,34 @@ return require('packer').startup(function(use)
                     enforce_regular_tabs = true, --false | true,
                     always_show_bufferline = true, --true | false,
                     sort_by = 'extension' --'extension' | 'relative_directory' | 'directory' | function(buffer_a, buffer_b)
-                        -- add custom logic
-                        -- return buffer_a.modified > buffer_b.modified
+                    -- add custom logic
+                    -- return buffer_a.modified > buffer_b.modified
                     -- end
                 }
             }
 
             vim.api.nvim_exec([[
-                nnoremap <silent>[b :BufferLineCycleNext<CR>
-                nnoremap <silent>]b :BufferLineCyclePrev<CR>
+            nnoremap <silent>[b :BufferLineCycleNext<CR>
+            nnoremap <silent>]b :BufferLineCyclePrev<CR>
 
-                nnoremap <silent><mymap> :BufferLineMoveNext<CR>
-                nnoremap <silent><mymap> :BufferLineMovePrev<CR>
+            nnoremap <silent><mymap> :BufferLineMoveNext<CR>
+            nnoremap <silent><mymap> :BufferLineMovePrev<CR>
             ]], false)
         end
     }
 
     use {
         'kyazdani42/nvim-tree.lua',
+        setup = function()
+            vim.g.nvim_tree_auto_close = 1
+            vim.g.nvim_tree_quit_on_open = 1
+            vim.g.nvim_tree_indent_markers = 1
+            vim.g.nvim_tree_width_allow_resize  = 1
+            vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
+        end,
         config = function ()
-            vim.api.nvim_set_keymap('n', 'tt', ':LuaTreeOpen<CR>', { noremap=true, silent=true })
-            vim.api.nvim_set_keymap('n', 'q', ':LuaTreeClose<CR>', { noremap=true, silent=true })
+            vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeOpen<CR>', { noremap=true, silent=true })
+            vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
         end,
         requires = { 'kyazdani42/nvim-web-devicons' },
         cond = function ()
@@ -186,7 +228,7 @@ return require('packer').startup(function(use)
             return not vim.g.is_vscode
         end
     }
-    
+
     -- use {
     --     'kyazdani42/nvim-palenight.lua',
     --     cond = function ()
@@ -288,6 +330,11 @@ return require('packer').startup(function(use)
     }
 
     use {
+        'tpope/vim-repeat',
+        event = { 'BufReadPre *', 'BufNewFile *'}
+    }
+
+    use {
         'Yggdroot/LeaderF',
         -- keys = { '<leader>ff', '<leader>fb', '<leader>fm', '<leader>fl', '<leader>fr' },
         cond = function ()
@@ -297,11 +344,10 @@ return require('packer').startup(function(use)
             vim.g.Lf_ShortcutF = '<leader>ff'
             vim.g.Lf_WindowPosition = 'popup'
             vim.g.Lf_PreviewInPopup = 1
-
-            local cmdMap= {}
-            cmdMap["<c-k>"] = {"<c-e>"}
-            cmdMap["<c-j>"] = {"<c-n>"}
-            vim.g.Lf_CommandMap = cmdMap
+            vim.g.Lf_CommandMap = {
+                ['<c-k>'] = {'<c-e>'},
+                ['<c-j>'] = {'<c-n>'}
+            }
         end,
         config = function()
             vim.api.nvim_exec(
@@ -357,7 +403,7 @@ return require('packer').startup(function(use)
                 nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>
                 nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>
 
-                nnoremap <silent> K :call CocActionAsync('doHover')<CR>
+                nnoremap <silent> gh :call CocActionAsync('doHover')<CR>
 
                 xmap uf <Plug>(coc-funcobj-i)
                 omap uf <Plug>(coc-funcobj-i)
