@@ -1,4 +1,3 @@
-print("deinnnnnnnnnnnnnnnnnnnnnnnnnnn")
 local utils = require('utils')
 local vim = vim
 

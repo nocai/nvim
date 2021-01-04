@@ -3,7 +3,6 @@ local vim, api = vim, vim.api
 local mappings = {}
 
 function mappings.setup()
-  print("tsraaaaaaaaaaaaaaaaaaaaaaa")
   -- New cursor movement (Colmark Layout)
   --     ^
   --     n
