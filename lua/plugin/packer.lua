@@ -28,7 +28,55 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
 -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true,
-        cond = function () return not vim.g.is_vscode end
+        -- cond = function () return not vim.g.is_vscode end
+    }
+
+    use {
+        'tpope/vim-surround',
+        event = { 'BufReadPre *', 'BufNewFile *'},
+        -- TODO: vscode里用不了，不知道为什么？？？
+    }
+
+    use {
+        'tpope/vim-repeat',
+        event = { 'BufReadPre *', 'BufNewFile *'}
+    }
+
+    use { 'kana/vim-textobj-user' }
+
+    use {
+        'kana/vim-textobj-indent',
+        requires = {'kana/vim-textobj-user'},
+        config = function ()
+            vim.g.textobj_indent_no_default_key_mappings = 1
+
+            vim.api.nvim_set_keymap('x', 'll', '<Plug>(textobj-indent-i)', {})
+            vim.api.nvim_set_keymap('o', 'll', '<Plug>(textobj-indent-i)', {})
+
+            vim.api.nvim_set_keymap('x', 'lL', '<Plug>(textobj-same-i)', {})
+            vim.api.nvim_set_keymap('o', 'lL', '<Plug>(textobj-same-i)', {})
+
+            vim.api.nvim_set_keymap('x', 'al', '<Plug>(textobj-indent-a)', {})
+            vim.api.nvim_set_keymap('o', 'al', '<Plug>(textobj-indent-a)', {})
+
+            vim.api.nvim_set_keymap('x', 'aL', '<Plug>(textobj-same-a)', {})
+            vim.api.nvim_set_keymap('o', 'aL', '<Plug>(textobj-same-a)', {})
+        end,
+    }
+
+    use {
+        'sgur/vim-textobj-parameter',
+        requires = { 'kana/vim-textobj-user' },
+        setup = function() vim.g.vim_textobj_parameter_mapping = 'a' end,
+        config = function ()
+            vim.g.textobj_parameter_no_default_key_mappings = 1
+
+            vim.api.nvim_set_keymap('x', 'la', '<Plug>(textobj-parameter-i)', {})
+            vim.api.nvim_set_keymap('o', 'la', '<Plug>(textobj-parameter-i)', {})
+
+            vim.api.nvim_set_keymap('x', 'aa', '<Plug>(textobj-parameter-a)', {})
+            vim.api.nvim_set_keymap('o', 'aa', '<Plug>(textobj-parameter-a)', {})
+        end,
     }
 
     use {
@@ -265,49 +313,6 @@ return require('packer').startup(function(use)
         end
     }
 
-    use { 'kana/vim-textobj-user' }
-
-    use {
-        'kana/vim-textobj-indent',
-        requires = {'kana/vim-textobj-user'},
-        config = function ()
-            vim.g.textobj_indent_no_default_key_mappings = 1
-
-            vim.api.nvim_set_keymap('x', 'll', '<Plug>(textobj-indent-i)', {})
-            vim.api.nvim_set_keymap('o', 'll', '<Plug>(textobj-indent-i)', {})
-
-            vim.api.nvim_set_keymap('x', 'lL', '<Plug>(textobj-same-i)', {})
-            vim.api.nvim_set_keymap('o', 'lL', '<Plug>(textobj-same-i)', {})
-
-            vim.api.nvim_set_keymap('x', 'al', '<Plug>(textobj-indent-a)', {})
-            vim.api.nvim_set_keymap('o', 'al', '<Plug>(textobj-indent-a)', {})
-
-            vim.api.nvim_set_keymap('x', 'aL', '<Plug>(textobj-same-a)', {})
-            vim.api.nvim_set_keymap('o', 'aL', '<Plug>(textobj-same-a)', {})
-        end,
-        cond = function ()
-            return not vim.g.is_vscode
-        end
-    }
-
-    use {
-        'sgur/vim-textobj-parameter',
-        requires = { 'kana/vim-textobj-user' },
-        setup = function() vim.g.vim_textobj_parameter_mapping = 'a' end,
-        config = function ()
-            vim.g.textobj_parameter_no_default_key_mappings = 1
-
-            vim.api.nvim_set_keymap('x', 'la', '<Plug>(textobj-parameter-i)', {})
-            vim.api.nvim_set_keymap('o', 'la', '<Plug>(textobj-parameter-i)', {})
-
-            vim.api.nvim_set_keymap('x', 'aa', '<Plug>(textobj-parameter-a)', {})
-            vim.api.nvim_set_keymap('o', 'aa', '<Plug>(textobj-parameter-a)', {})
-        end,
-        cond = function ()
-            return not vim.g.is_vscode
-        end
-    }
-
     use {
         'kdheepak/lazygit.nvim',
         keys = { '<leader>gg' },
@@ -321,26 +326,15 @@ return require('packer').startup(function(use)
         end
     }
 
-    -- use {
-    --     'f-person/git-blame.nvim',
-    --     cond = function ()
-    --         return not vim.g.is_vscode
-    --     end,
-    --     setup = function()
-    --         vim.g.gitblame_message_template = ' ❯❯❯  <author> • <summary> • <date>'
-    --     end
-    -- }
-
     use {
-        'tpope/vim-surround',
-        event = { 'BufReadPre *', 'BufNewFile *'},
-        cond = function() return not vim.g.is_vscode end,
+        'f-person/git-blame.nvim',
+        cond = function ()
+            return not vim.g.is_vscode
+        end,
+        setup = function()
+            vim.g.gitblame_message_template = '❯❯❯  <author> • <summary> • <date>'
+        end
     }
-
-    -- use {
-    --     'tpope/vim-repeat',
-    --     event = { 'BufReadPre *', 'BufNewFile *'}
-    -- }
 
     use {
         'Yggdroot/LeaderF',
