@@ -27,25 +27,25 @@ vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
 -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true}
+    use {'wbthomason/packer.nvim', opt = true,
+        cond = function () return not vim.g.is_vscode end
+    }
 
     use {
         'norcalli/nvim-colorizer.lua',
         config = function ()
             require'colorizer'.setup()
         end,
-        cond = function ()
-            return not vim.g.is_vscode
-        end
+        cond = function () return not vim.g.is_vscode end
     }
 
     -- use 'euclidianAce/BetterLua.vim'
 
-    use {
-        'yggdroot/indentLine',
-        ft = { 'python', 'nvimtree', 'markdown', 'md', 'wiki' },
-        cond = function () return not vim.g.is_vscode end,
-    }
+    -- use {
+    --     'yggdroot/indentLine',
+    --     ft = { 'python', 'nvimtree' },
+    --     cond = function () return not vim.g.is_vscode end,
+    -- }
 
     -- Markdown viki
     use {
@@ -321,25 +321,26 @@ return require('packer').startup(function(use)
         end
     }
 
-    use {
-        'f-person/git-blame.nvim',
-        cond = function ()
-            return not vim.g.is_vscode
-        end,
-        setup = function()
-            vim.g.gitblame_message_template = ' ❯❯❯  <author> • <summary> • <date>'
-        end
-    }
+    -- use {
+    --     'f-person/git-blame.nvim',
+    --     cond = function ()
+    --         return not vim.g.is_vscode
+    --     end,
+    --     setup = function()
+    --         vim.g.gitblame_message_template = ' ❯❯❯  <author> • <summary> • <date>'
+    --     end
+    -- }
 
     use {
         'tpope/vim-surround',
-        event = { 'BufReadPre *', 'BufNewFile *'}
+        event = { 'BufReadPre *', 'BufNewFile *'},
+        cond = function() return not vim.g.is_vscode end,
     }
 
-    use {
-        'tpope/vim-repeat',
-        event = { 'BufReadPre *', 'BufNewFile *'}
-    }
+    -- use {
+    --     'tpope/vim-repeat',
+    --     event = { 'BufReadPre *', 'BufNewFile *'}
+    -- }
 
     use {
         'Yggdroot/LeaderF',
@@ -395,10 +396,10 @@ return require('packer').startup(function(use)
                 nmap <silent> gt <Plug>(coc-type-definition)
                 nmap <silent> gi <Plug>(coc-implementation)
                 nmap <silent> gr <Plug>(coc-references)
-
                 nmap <silent>rn <Plug>(coc-rename)
-                nmap <silent>ca <Plug>(coc-codeaction)
-                nmap <silent>fc <Plug>(coc-fix-current)
+
+                nmap <silent><leader>ac  <Plug>(coc-codeaction)
+                nmap <leader>qf  <Plug>(coc-fix-current)
 
                 nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>
                 nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>
