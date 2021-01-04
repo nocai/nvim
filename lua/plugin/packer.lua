@@ -128,7 +128,7 @@ return require('packer').startup(function(use)
             -- local gl = require('galaxyline/eviline')
             -- gl.short_line_list = {'NvimTree'}
         end,
-        requires = { 'kyazdani42/nvim-web-devicons' },
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
         cond = function ()
             return not vim.g.is_vscode
         end
@@ -257,7 +257,7 @@ return require('packer').startup(function(use)
         end
     }
 
-    use { 
+    use {
         'tpope/vim-commentary',
         -- keys = { 'gcc', 'gc' },
         cond = function ()
@@ -267,37 +267,44 @@ return require('packer').startup(function(use)
 
     use { 'kana/vim-textobj-user' }
 
-    use { 
+    use {
         'kana/vim-textobj-indent',
         requires = {'kana/vim-textobj-user'},
         config = function ()
             vim.g.textobj_indent_no_default_key_mappings = 1
 
-            vim.api.nvim_set_keymap('x', 'uu', '<Plug>(textobj-indent-i)', {})
-            vim.api.nvim_set_keymap('o', 'uu', '<Plug>(textobj-indent-i)', {})
+            vim.api.nvim_set_keymap('x', 'll', '<Plug>(textobj-indent-i)', {})
+            vim.api.nvim_set_keymap('o', 'll', '<Plug>(textobj-indent-i)', {})
 
-            vim.api.nvim_set_keymap('x', 'uU', '<Plug>(textobj-same-i)', {})
-            vim.api.nvim_set_keymap('o', 'uU', '<Plug>(textobj-same-i)', {})
+            vim.api.nvim_set_keymap('x', 'lL', '<Plug>(textobj-same-i)', {})
+            vim.api.nvim_set_keymap('o', 'lL', '<Plug>(textobj-same-i)', {})
 
-            vim.api.nvim_set_keymap('x', 'au', '<Plug>(textobj-indent-a)', {})
-            vim.api.nvim_set_keymap('o', 'au', '<Plug>(textobj-indent-a)', {})
+            vim.api.nvim_set_keymap('x', 'al', '<Plug>(textobj-indent-a)', {})
+            vim.api.nvim_set_keymap('o', 'al', '<Plug>(textobj-indent-a)', {})
 
-            vim.api.nvim_set_keymap('x', 'aU', '<Plug>(textobj-same-a)', {})
-            vim.api.nvim_set_keymap('o', 'aU', '<Plug>(textobj-same-a)', {})
+            vim.api.nvim_set_keymap('x', 'aL', '<Plug>(textobj-same-a)', {})
+            vim.api.nvim_set_keymap('o', 'aL', '<Plug>(textobj-same-a)', {})
         end,
+        cond = function ()
+            return not vim.g.is_vscode
+        end
     }
 
     use {
         'sgur/vim-textobj-parameter',
         requires = { 'kana/vim-textobj-user' },
+        setup = function() vim.g.vim_textobj_parameter_mapping = 'a' end,
         config = function ()
             vim.g.textobj_parameter_no_default_key_mappings = 1
 
-            vim.api.nvim_set_keymap('x', 'u,', '<Plug>(textobj-parameter-i)', {})
-            vim.api.nvim_set_keymap('o', 'u,', '<Plug>(textobj-parameter-i)', {})
+            vim.api.nvim_set_keymap('x', 'la', '<Plug>(textobj-parameter-i)', {})
+            vim.api.nvim_set_keymap('o', 'la', '<Plug>(textobj-parameter-i)', {})
 
-            vim.api.nvim_set_keymap('x', 'a,', '<Plug>(textobj-parameter-a)', {})
-            vim.api.nvim_set_keymap('o', 'a,', '<Plug>(textobj-parameter-a)', {})
+            vim.api.nvim_set_keymap('x', 'aa', '<Plug>(textobj-parameter-a)', {})
+            vim.api.nvim_set_keymap('o', 'aa', '<Plug>(textobj-parameter-a)', {})
+        end,
+        cond = function ()
+            return not vim.g.is_vscode
         end
     }
 
