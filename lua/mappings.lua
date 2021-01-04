@@ -3,6 +3,8 @@ local vim, api = vim, vim.api
 local mappings = {}
 
 function mappings.setup()
+  vim.api.nvim_exec([[let mapleader = "\<space>"]], false)
+
   -- New cursor movement (Colmark Layout)
   --     ^
   --     n
@@ -33,23 +35,14 @@ function mappings.setup()
   api.nvim_set_keymap('', 'K', 'N', { noremap=true, silent=true })
 
   -- iI => lL => iI
-  vim.cmd([[
-    noremap i l
-    noremap I L
-    noremap <c-w>i <c-w>l
+  api.nvim_set_keymap('', 'l', 'i', { noremap=true, silent=true })
+  api.nvim_set_keymap('', 'L', 'I', { noremap=true, silent=true })
+  api.nvim_set_keymap('', '<c-w>l', '<c-w>i', { noremap=true, silent=true })
 
-    noremap l i
-    noremap L I
-    noremap <c-l> <c-i>
-  ]])
-  -- api.nvim_set_keymap('', 'l', 'i', { noremap=true, silent=true })
-  -- api.nvim_set_keymap('', 'L', 'I', { noremap=true, silent=true })
-  -- api.nvim_set_keymap('', '<c-w>l', '<c-w>i', { noremap=true, silent=true })
-
-  -- api.nvim_set_keymap('', 'i', 'l', { noremap=true, silent=true })
-  -- api.nvim_set_keymap('', 'I', 'L', { noremap=true, silent=true })
+  api.nvim_set_keymap('', 'i', 'l', { noremap=true, silent=true })
+  api.nvim_set_keymap('', 'I', 'L', { noremap=true, silent=true })
   -- vim.cmd('noremap <c-w>i <c-w>l')
-  -- api.nvim_set_keymap('', '<c-w>i', '<c-w>l', { noremap=true, silent=true })
+  api.nvim_set_keymap('', '<c-w>i', '<c-w>l', { noremap=true, silent=true })
 
   api.nvim_set_keymap('', 'Y', '"+y', { noremap=true })
 

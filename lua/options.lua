@@ -13,7 +13,7 @@ local function bind_options(k, v)
 end
 
 function options.setup()
-  g.mapleader = ' '
+  -- g.mapleader = ' '
 
   g.loaded_gzip = 1
   g.loaded_tar = 1

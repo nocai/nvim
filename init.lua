@@ -5,7 +5,6 @@ if not vim.g.is_vscode then
 end
 
 require("mappings").setup()
-require("plugin.packer")
 
--- require("plugin.packer")
+require("plugin.packer")
 -- require("plugin.dein")
