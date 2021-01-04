@@ -24,15 +24,15 @@ on_map = { ox = '<Plug>' }
 hook_add = '''
   let g:textobj_indent_no_default_key_mappings=1
 
-  xmap uu <Plug>(textobj-indent-i)
-  omap uu <Plug>(textobj-indent-i)
-  xmap uU <Plug>(textobj-indent-same-i)
-  omap uU <Plug>(textobj-indent-same-i)
+  xmap ll <Plug>(textobj-indent-i)
+  omap ll <Plug>(textobj-indent-i)
+  xmap lL <Plug>(textobj-indent-same-i)
+  omap lL <Plug>(textobj-indent-same-i)
 
-  xmap au <Plug>(textobj-indent-a)
-  omap au <Plug>(textobj-indent-a)
-  xmap aU <Plug>(textobj-indent-same-a)
-  omap aU <Plug>(textobj-indent-same-a)
+  xmap al <Plug>(textobj-indent-a)
+  omap al <Plug>(textobj-indent-a)
+  xmap aL <Plug>(textobj-indent-same-a)
+  omap aL <Plug>(textobj-indent-same-a)
 '''
 
 [[plugins]]

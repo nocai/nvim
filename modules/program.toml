@@ -1,12 +1,20 @@
-# [[plugins]]
-# repo = 'Yggdroot/indentLine'
-# on_event = 'BufReadPre'
-# on_cmd = ['IndentLinesToggle']
-# hook_source = '''
-#     let g:indentLine_fileTypeExclude = ['defx','dbui','vista_kind','vista','dashboard', 'help']
-#     let g:indentLine_concealcursor = 'niv'
-#     " let g:indentLine_showFirstIndentLevel =1
-# '''
+[[plugins]]
+repo = 'luochen1990/rainbow'
+on_ft = ["html", "css", "javascript", "javascriptreact","go","rust","vim","less","sass","json","toml"]
+if = '!exists("g:vscode")'
+hook_add = '''
+    let g:rainbow_active = 1
+'''
+
+[[plugins]]
+repo     = 'tpope/vim-surround'
+on_event = ["BufReadPre","BufNewFile"]
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+on_event = ["BufReadPre","BufNewFile"]
+if = '!exists("g:vscode")'
+
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
@@ -14,9 +22,6 @@ on_ft = ['go', 'java', 'javascript', 'typescript', 'lua', 'scala' ]
 on_cmd = 'QuickRun'
 if = '!exists("g:vscode")'
 hook_add = '''
-    nmap <Leader>rr <Plug>(quickrun)
-'''
-hook_source = '''
     let g:quickrun_config = {
     \   "_" : {
     \       "outputter" : "message",
@@ -24,20 +29,23 @@ hook_source = '''
     \}
     let g:quickrun_no_default_key_mappings = 1
 '''
+hook_source = '''
+    nmap <Leader>rr <Plug>(quickrun)
+'''
 
 [[plugins]]
 repo = 'vim-test/vim-test'
 on_ft = ['go', 'java', 'javascript', 'typescript', 'lua', 'scala' ]
 if = '!exists("g:vscode")'
 hook_add = '''
+    let test#strategy = "neovim"
+'''
+hook_source = '''
     nmap <silent> <leader>tn :TestNearest<CR>
     nmap <silent> <leader>tf :TestFile<CR>
     nmap <silent> <leader>ts :TestSuite<CR>
     nmap <silent> <leader>tl :TestLast<CR>
     nmap <silent> <leader>tg :TestVisit<CR>
-'''
-hook_source = '''
-  let test#strategy = "neovim"
 '''
 
 
@@ -62,28 +70,6 @@ merged = 0
 repo = 'fatih/vim-go'
 on_ft = ['go']
 if = '!exists("g:vscode")'
-
-# [[plugins]]
-# repo = 'nvim-lua/completion-nvim'
-
-# [[plugins]]
-# repo = 'neovim/nvim-lspconfig'
-# hook_add = '''
-# autocmd BufWritePre *.go lua goimports(1000)
-
-# autocmd FileType go setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-# nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-# nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-# nnoremap <silent> gh     <cmd>lua vim.lsp.buf.hover()<CR>
-# nnoremap <silent> gi    <cmd>lua vim.lsp.buf.implementation()<CR>
-# " nnoremap <silent> gh <cmd>lua vim.lsp.buf.signature_help()<CR>
-# nnoremap <silent> gt   <cmd>lua vim.lsp.buf.type_definition()<CR>
-# nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-# nnoremap <silent> gs    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-# nnoremap <silent> gS    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-# nnoremap <silent> gD    <cmd>lua vim.lsp.buf.declaration()<CR>
-# '''
 
 [[plugins]]
 repo = 'neoclide/coc.nvim'
@@ -113,15 +99,10 @@ hook_add = '''
 		\ 'coc-prettier',
 		\ 'coc-diagnostic',
 		\ 'coc-translator',
-        \]
+    \]
 
-	" \ 'coc-pairs',
-    " \ 'coc-metals',
-    " \ 'coc-tabnine',
-    " \ 'coc-lua',
     augroup coc_event
       autocmd!
-      " Highlight the symbol and its references when holding the cursor.
       autocmd CursorHold * silent call CocActionAsync('highlight')
       autocmd ColorScheme * highlight! CocHighlightText guibg=#054c20 ctermbg=023
 
@@ -130,16 +111,13 @@ hook_add = '''
 
     "Use tab for trigger completion with characters ahead and navigate
     inoremap <silent><expr> <TAB>
-          \ <SID>check_right_bracket() ? "\<Right>" :
+          \ <SID>v:lua.is_pairs() ? "\<Right>" :
           \ pumvisible() ? "\<C-n>" :
           \ v:lua.check_back_space() ? "\<TAB>" :
           \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    inoremap <expr><S-TAB> v:lua.is_pairs(v:true)? "\<Right> :
+          \ pumvisible() ? "\<C-p>" : "\<C-h>"
     inoremap <expr><C-e> pumvisible() ? "\<C-p>" : "\<C-e>"
-    function s:check_right_bracket() abort
-      let c = getline('.')[col('.')-1]
-      return c =~ '[\)\]\}]' || c == '"' || c == "'" || c == ';'
-    endf
 
     inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
@@ -187,8 +165,8 @@ hook_add = '''
     nnoremap <silent><nowait> <leader><leader>p  :<C-u>CocListResume<CR>
 
     " Map function and class text objects
-    xmap uf <Plug>(coc-funcobj-i)
-    omap uf <Plug>(coc-funcobj-i)
+    xmap lf <Plug>(coc-funcobj-i)
+    omap lf <Plug>(coc-funcobj-i)
     xmap af <Plug>(coc-funcobj-a)
     omap af <Plug>(coc-funcobj-a) 
 

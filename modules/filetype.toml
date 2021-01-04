@@ -1,6 +1,6 @@
 [[plugins]]
 repo = 'cespare/vim-toml'
-on_ft = 'toml'
+on_ft = [ 'toml' ]
 if = '!exists("g:vscode")'
 
 
@@ -11,5 +11,5 @@ if = '!exists("g:vscode")'
 
 [[plugins]]
 repo = 'vimwiki/vimwiki'
-on_ft = ['markdown', 'wiki']
+on_ft = [ 'markdown', 'wiki' ]
 if = '!exists("g:vscode")'

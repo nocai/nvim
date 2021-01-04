@@ -1,7 +1,10 @@
 require("global")
 
-require("options").setup()
 require("mappings").setup()
 
-require("plugin.packer")
--- require("dein")
+if not vim.g.is_vscode then
+    require("options").setup()
+
+    -- require("plugin.packer")
+    require("plugin.dein")
+end
