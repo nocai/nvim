@@ -1,5 +1,16 @@
 local vim, api = vim, vim.api
 
+local function map(mode, lhs, rhs, opts)
+  local options = {noremap = true, silent = true}
+  -- rewrite options
+  if opts then
+    for k, v in pairs(opts) do
+      options[k] = v
+    end
+  end
+  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
+
 local mappings = {}
 
 function mappings.setup()
@@ -53,23 +64,27 @@ function mappings.setup()
   if vim.g.is_vscode then
     api.nvim_exec(
       [[
-      nnoremap rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
+        nnoremap rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 
-      nnoremap gt <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
-      nnoremap gT <Cmd>call VSCodeNotify('editor.action.peekTypeDefinition')<CR>
+        nnoremap gt <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
+        nnoremap gT <Cmd>call VSCodeNotify('editor.action.peekTypeDefinition')<CR>
 
-      nnoremap gi <Cmd>call VSCodeNotify('editor.action.goToImplementation')<CR>
-      nnoremap gI <Cmd>call VSCodeNotify('editor.action.peekImplementation')<CR>
+        nnoremap gi <Cmd>call VSCodeNotify('editor.action.goToImplementation')<CR>
+        nnoremap gI <Cmd>call VSCodeNotify('editor.action.peekImplementation')<CR>
 
-      nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
+        nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
 
-      nnoremap <Leader>rr <Cmd>call VSCodeNotify('code-runner.run')<CR>
-
-      nnoremap <leader>fr <Cmd>call VSCodeNotify('workbench.action.findInFiles', { 'query': expand('<cword>')})<CR>
+        nnoremap <Leader>rr <Cmd>call VSCodeNotify('code-runner.run')<CR>
       ]],
     false)
   end
 
+  -- buffer
+  map('n', '<Leader>bp', '<cmd>bprevious<CR>')
+  map('n', '<Leader>bn', '<cmd>bnext<CR>')
+  map('n', '<Leader>bf', '<cmd>bfirst<CR>')
+  map('n', '<Leader>bl', '<cmd>blast<CR>')
+  map('n', '<Leader>bd', '<cmd>bdelete<CR>')
 end
 
 return mappings

@@ -383,36 +383,36 @@ return require('packer').startup(function(use)
                 inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
                 inoremap <expr><C-e> pumvisible() ? "<C-p>" : "<C-e>"
                 
-                nmap <silent> [g <Plug>(coc-diagnostic-prev)
-                nmap <silent> ]g <Plug>(coc-diagnostic-next)
+                nmap <silent>[g <Plug>(coc-diagnostic-prev)
+                nmap <silent>]g <Plug>(coc-diagnostic-next)
 
-                nmap <silent> gd <Plug>(coc-definition)
-                nmap <silent> gt <Plug>(coc-type-definition)
-                nmap <silent> gi <Plug>(coc-implementation)
-                nmap <silent> gr <Plug>(coc-references)
+                nmap <silent>gd <Plug>(coc-definition)
+                nmap <silent>gD <Plug>(coc-declaration)
+                nmap <silent>gt <Plug>(coc-type-definition)
+                nmap <silent>gi <Plug>(coc-implementation)
+                nmap <silent>gr <Plug>(coc-references)
                 nmap <silent>rn <Plug>(coc-rename)
 
-                nmap <silent><leader>ac  <Plug>(coc-codeaction)
-                nmap <leader>qf  <Plug>(coc-fix-current)
+                nmap <silent><leader>rf <Plug>(coc-refactor)
+                nmap <silent><leader>ac <Plug>(coc-codeaction)
 
-                nnoremap <silent> <leader><leader>l  :<C-u>CocList<cr>
-                nnoremap <silent> <leader><leader>a  :<C-u>CocList diagnostics<cr>
-                nnoremap <silent> <leader><leader>e  :<C-u>CocList extensions<cr>
-                nnoremap <silent> <leader><leader>c  :<C-u>CocList commands<cr>
-                nnoremap <silent> <leader><leader>o  :<C-u>CocList outline<cr>
-                nnoremap <silent> <leader><leader>s  :<C-u>CocList -I symbols<cr>
-                nnoremap <silent> <leader><leader>n  :<C-u>CocNext<CR>
-                nnoremap <silent> <leader><leader>p  :<C-u>CocPrev<CR>
-                nnoremap <silent> <leader><leader>r  :<C-u>CocListResume<CR>
+                nnoremap <silent><leader><leader>l  :<C-u>CocList<cr>
+                nnoremap <silent><leader><leader>a  :<C-u>CocList diagnostics<cr>
+                nnoremap <silent><leader><leader>e  :<C-u>CocList extensions<cr>
+                nnoremap <silent><leader><leader>c  :<C-u>CocList commands<cr>
+                nnoremap <silent><leader><leader>o  :<C-u>CocList outline<cr>
+                nnoremap <silent><leader><leader>s  :<C-u>CocList -I symbols<cr>
+                nnoremap <silent><leader><leader>n  :<C-u>CocNext<CR>
+                nnoremap <silent><leader><leader>p  :<C-u>CocPrev<CR>
+                nnoremap <silent><leader><leader>r  :<C-u>CocListResume<CR>
 
-                nnoremap <silent> gh :call CocActionAsync('doHover')<CR>
+                nnoremap <silent>gh :call CocActionAsync('doHover')<CR>
 
-                xmap uf <Plug>(coc-funcobj-i)
-                omap uf <Plug>(coc-funcobj-i)
+                xmap lf <Plug>(coc-funcobj-i)
+                omap lf <Plug>(coc-funcobj-i)
                 xmap af <Plug>(coc-funcobj-a)
                 omap af <Plug>(coc-funcobj-a) 
-            ]],
-            false)
+            ]], false)
         end
     }
 
