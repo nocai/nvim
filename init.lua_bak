@@ -6,5 +6,5 @@ end
 
 require("mappings").setup()
 
-require("plugin.packer")
--- require("plugin.dein")
+-- require("plugin.packer")
+require("plugin.dein")

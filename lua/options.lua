@@ -55,7 +55,6 @@ function options.setup()
 
   o.undofile       = false
   o.backupskip     = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim"
-  o.smarttab       = true
   o.ignorecase     = true
   o.incsearch      = true
   o.scrolloff      = 5
@@ -96,10 +95,8 @@ function options.setup()
   o.winminheight = 0
   o.backspace = 'eol,start,indent'
   o.whichwrap = 'b,s,<,>,h,l'
-  o.cursorline = true
   o.fileformats = 'unix,mac,dos'
   o.autoread = true
-  o.cursorcolumn = false
   o.errorbells = false
   o.visualbell = false
   o.t_vb = ''
@@ -127,21 +124,26 @@ function options.setup()
 
   -- ===================================================================================================
 
+  bind_options('cursorline', true)
+  bind_options('cursorcolumn', false)
+
   bind_options('colorcolumn', 88)
   bind_options('signcolumn', 'yes')
   bind_options('synmaxcol', 2500)
   bind_options('formatoptions', '1n2jvcroql')
   bind_options('textwidth', 120)
-  bind_options('expandtab', true)
+
   bind_options('tabstop', 4)
   bind_options('shiftwidth', 4)
   bind_options('softtabstop', 4)
+  bind_options('expandtab', false)
   bind_options('autoindent', true)
   bind_options('smartindent', true)
   bind_options('cindent', true)
+
   bind_options('wrap', true)
+  bind_options('list', true)
   bind_options('number', true)
-  bind_options('list', false)
   bind_options('relativenumber', true)
   bind_options('foldenable', true)
   bind_options('foldtext', 'folds#render()')

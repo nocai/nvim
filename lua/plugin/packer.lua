@@ -172,9 +172,6 @@ return require('packer').startup(function(use)
         branch = 'main',
         config = function()
             require('galaxyline/eviline')
-
-            -- local gl = require('galaxyline/eviline')
-            -- gl.short_line_list = {'NvimTree'}
         end,
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
         cond = function ()
