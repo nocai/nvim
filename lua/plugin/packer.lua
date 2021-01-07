@@ -385,7 +385,7 @@ return require('packer').startup(function(use)
 
                 nmap <silent>gd <Plug>(coc-definition)
                 nmap <silent>gD <Plug>(coc-declaration)
-                nmap <silent>gt <Plug>(coc-type-definition)
+                nmap <silent>gy <Plug>(coc-type-definition)
                 nmap <silent>gi <Plug>(coc-implementation)
                 nmap <silent>gr <Plug>(coc-references)
                 nmap <silent>rn <Plug>(coc-rename)

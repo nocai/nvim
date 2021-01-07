@@ -55,7 +55,7 @@ function mappings.setup()
   -- vim.cmd('noremap <c-w>i <c-w>l')
   api.nvim_set_keymap('', '<c-w>i', '<c-w>l', { noremap=true, silent=true })
 
-  api.nvim_set_keymap('', 'Y', '"+y', { noremap=true })
+  api.nvim_set_keymap('', 'Y', '"+y<CR>', { noremap=true })
 
   if not vim.g.is_vscode then
       api.nvim_set_keymap('', '<leader>lf', ':luafile %<CR>', { noremap=true, silent=true })
@@ -66,8 +66,8 @@ function mappings.setup()
       [[
         nnoremap rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 
-        nnoremap gt <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
-        nnoremap gT <Cmd>call VSCodeNotify('editor.action.peekTypeDefinition')<CR>
+        nnoremap gy <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
+        nnoremap gY <Cmd>call VSCodeNotify('editor.action.peekTypeDefinition')<CR>
 
         nnoremap gi <Cmd>call VSCodeNotify('editor.action.goToImplementation')<CR>
         nnoremap gI <Cmd>call VSCodeNotify('editor.action.peekImplementation')<CR>
