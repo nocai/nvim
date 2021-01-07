@@ -10,7 +10,7 @@ if not packer_exists then
     vim.fn.mkdir(directory, 'p')
 
     local out = vim.fn.system(string.format('git clone %s %s', 
-        'https://github.com/wbthomason/packer.nvim', directory .. '/packer.nvim'))
+        'https://github.com/wbthomason/packer.nvim', directory .. 'packer.nvim'))
 
     print(out)
     print('Downloading packer.nvim...')
@@ -33,13 +33,13 @@ return require('packer').startup(function(use)
 
     use {
         'tpope/vim-surround',
-        event = { 'BufReadPre *', 'BufNewFile *'},
+        -- event = { 'BufReadPre *', 'BufNewFile *'},
         -- TODO: vscode里用不了，不知道为什么？？？
     }
 
     use {
         'tpope/vim-repeat',
-        event = { 'BufReadPre *', 'BufNewFile *'}
+        -- event = { 'BufReadPre *', 'BufNewFile *'}
     }
 
     use { 'kana/vim-textobj-user' }
@@ -372,7 +372,7 @@ return require('packer').startup(function(use)
                 let g:snips_author = 'bucai'
                 let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
 
-                autocmd BufWritePre * silent :call CocAction('runCommand', 'editor.action.organizeImport')
+                autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
                 inoremap <silent><expr><TAB> v:lua.is_pairs() ? "<Right>" : pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
                 inoremap <silent><expr><S-TAB> v:lua.is_pairs(v:true) ? "<Left>" : pumvisible() ? "<C-p>" : "<C-h>"

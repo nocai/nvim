@@ -75,6 +75,11 @@ function mappings.setup()
         nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
 
         nnoremap <Leader>rr <Cmd>call VSCodeNotify('code-runner.run')<CR>
+
+        xmap gc  <Plug>VSCodeCommentary
+        nmap gc  <Plug>VSCodeCommentary
+        omap gc  <Plug>VSCodeCommentary
+        nmap gcc <Plug>VSCodeCommentaryLine
       ]],
     false)
   end
