@@ -14,8 +14,6 @@ end
 local mappings = {}
 
 function mappings.setup()
-  vim.api.nvim_exec([[let mapleader = "\<space>"]], false)
-
   -- New cursor movement (Colmark Layout)
   --     ^
   --     n
@@ -58,6 +56,7 @@ function mappings.setup()
   api.nvim_set_keymap('', 'Y', '"+y<CR>', { noremap=true })
 
   if not vim.g.is_vscode then
+	  vim.api.nvim_exec([[let mapleader = "\<space>"]], false)
       api.nvim_set_keymap('', '<leader>lf', ':luafile %<CR>', { noremap=true, silent=true })
   end
 
@@ -74,12 +73,19 @@ function mappings.setup()
 
         nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
 
-        nnoremap <Leader>rr <Cmd>call VSCodeNotify('code-runner.run')<CR>
-
         xmap gc  <Plug>VSCodeCommentary
         nmap gc  <Plug>VSCodeCommentary
         omap gc  <Plug>VSCodeCommentary
         nmap gcc <Plug>VSCodeCommentaryLine
+
+		nnoremap <C-w>n <Cmd>call VSCodeNotify('workbench.action.focusBelowGroup')<CR>
+		xnoremap <C-w>n <Cmd>call VSCodeNotify('workbench.action.focusBelowGroup')<CR>
+
+		nnoremap <C-w>e <Cmd>call VSCodeNotify('workbench.action.focusAboveGroup')<CR>
+		xnoremap <C-w>e <Cmd>call VSCodeNotify('workbench.action.focusAboveGroup')<CR>
+
+		nnoremap <C-w>i <Cmd>call VSCodeNotify('workbench.action.focusRightGroup')<CR>
+		xnoremap <C-w>i <Cmd>call VSCodeNotify('workbench.action.focusRightGroup')<CR>
       ]],
     false)
   end
