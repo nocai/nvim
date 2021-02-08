@@ -24,20 +24,14 @@ function mappings.setup()
   -- nN => jJ => eE => kK => nN
   api.nvim_set_keymap('', 'n', 'j', { noremap=true, silent=true })
   api.nvim_set_keymap('', 'N', 'J', { noremap=true, silent=true })
-  -- vim.cmd('noremap <c-n> 5j')
-  api.nvim_set_keymap('', '<c-n>', '5j', { noremap=true, silent=true })
   api.nvim_set_keymap('', '<c-w>n', '<c-w>j', { noremap=true, silent=true })
 
   api.nvim_set_keymap('', 'j', 'e', { noremap=true, silent=true })
   api.nvim_set_keymap('', 'J', 'E', { noremap=true, silent=true })
-  -- vim.cmd('noremap <c-j> <c-e>')
   api.nvim_set_keymap('', '<c-j>', '<c-e>', { noremap=true, silent=true })
 
   api.nvim_set_keymap('', 'e', 'k', { noremap=true, silent=true })
   api.nvim_set_keymap('', 'E', 'K', { noremap=true, silent=true })
-  -- vim.cmd('noremap <c-e> 5k')
-  api.nvim_set_keymap('', '<c-e>', '5k', { noremap=true, silent=true })
-  -- vim.cmd('noremap <c-w>e <c-w>k')
   api.nvim_set_keymap('', '<c-w>e', '<c-w>k', { noremap=true, silent=true })
 
   api.nvim_set_keymap('', 'k', 'n', { noremap=true, silent=true })
@@ -50,10 +44,10 @@ function mappings.setup()
 
   api.nvim_set_keymap('', 'i', 'l', { noremap=true, silent=true })
   api.nvim_set_keymap('', 'I', 'L', { noremap=true, silent=true })
-  -- vim.cmd('noremap <c-w>i <c-w>l')
   api.nvim_set_keymap('', '<c-w>i', '<c-w>l', { noremap=true, silent=true })
 
-  api.nvim_set_keymap('', 'Y', '"+y<CR>', { noremap=true })
+  -- api.nvim_set_keymap('i', '<C-h>', '<Left>', { noremap=true, silent=true })
+  -- api.nvim_set_keymap('i', '<C-i>', '<Right>', { noremap=true, silent=true })
 
   if vim.g.is_not_vscode then
     vim.api.nvim_exec([[let mapleader = "\<space>"]], false)

@@ -3,8 +3,6 @@ lua require("mappings").setup()
 lua require("options").setup()
 
 call plug#begin('~/.vim/plugged')
-Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
-
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 let g:textobj_indent_no_default_key_mappings=1
@@ -30,6 +28,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 
 if !exists('g:vscode') 
+    Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+
     Plug 'jiangmiao/auto-pairs'
 
     Plug 'tpope/vim-commentary'
@@ -52,7 +52,7 @@ if !exists('g:vscode')
         \ 'folders': 1,
         \ 'files': 1,
     \ }
-    nnoremap tt :NvimTreeOpen<CR>
+    nnoremap ff :NvimTreeOpen<CR>
     nnoremap q :NvimTreeClose<CR>
 
     Plug 'luochen1990/rainbow'
@@ -125,29 +125,11 @@ if !exists('g:vscode')
     xmap af <Plug>(coc-funcobj-a)
     omap af <Plug>(coc-funcobj-a) 
 
-	" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-	" Plug 'nvim-lua/popup.nvim'
-	" Plug 'nvim-lua/plenary.nvim'
-	" Plug 'nvim-telescope/telescope.nvim'
-	" " Using lua functions
-	" nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-	" nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-	" nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-	" nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-	
 	Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
 	Plug 'junegunn/fzf.vim' " needed for previews
-	Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
-	" mappings
-	nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
-	nnoremap <silent> <space>a       :<C-u>CocFzfList diagnostics<CR>
-	nnoremap <silent> <space>b       :<C-u>CocFzfList diagnostics --current-buf<CR>
-	nnoremap <silent> <space>c       :<C-u>CocFzfList commands<CR>
-	nnoremap <silent> <space>e       :<C-u>CocFzfList extensions<CR>
-	nnoremap <silent> <space>l       :<C-u>CocFzfList location<CR>
-	nnoremap <silent> <space>o       :<C-u>CocFzfList outline<CR>
-	nnoremap <silent> <space>s       :<C-u>CocFzfList symbols<CR>
-	nnoremap <silent> <space>p       :<C-u>CocFzfListResume<CR>
+    nmap <leader>ff :Files<CR>
+    nmap <leader>fb :Buffers<CR>
+    nmap <leader>fr :Rg<CR>
 endif
 
 call plug#end()

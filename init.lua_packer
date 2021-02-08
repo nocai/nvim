@@ -1,8 +1,6 @@
 require("global")
 require("mappings").setup()
-if not vim.g.is_vscode then
-    require("options").setup()
-end
+require("options").setup()
 
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 if not packer_exists then
@@ -31,19 +29,12 @@ vim.cmd [[packadd packer.nvim]]
 -- vim._update_package_paths()
 
 return require('packer').startup(function(use)
--- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true,
-        -- cond = function () return not vim.g.is_vscode end
-        -- 上面cond配置不知道为什么就是不好用
-    }
+	-- Packer can manage itself as an optional plugin
+    use {'wbthomason/packer.nvim', opt = true }
 
-    use {
-        'tpope/vim-surround',
-    }
+    use { 'tpope/vim-surround' }
 
-    use {
-        'tpope/vim-repeat',
-    }
+    use { 'tpope/vim-repeat' }
 
     use { 'kana/vim-textobj-user' }
 
@@ -82,20 +73,12 @@ return require('packer').startup(function(use)
         end,
     }
 
-    if vim.g.is_vscode then
-        print("end")
-        return
-    end
-    print("end 2")
-
     use {
         'norcalli/nvim-colorizer.lua',
         config = function ()
             require'colorizer'.setup()
         end,
     }
-
-    -- use 'euclidianAce/BetterLua.vim'
 
     -- use {
     --     'yggdroot/indentLine',
@@ -108,7 +91,7 @@ return require('packer').startup(function(use)
         ft = { 'wiki', 'markdown', 'md' },
     }
 
-    -- use {  
+    -- use {
     --     'plasticboy/vim-markdown',
     --     ft = { 'md', 'markdown' },
     --     setup = function()
@@ -117,7 +100,7 @@ return require('packer').startup(function(use)
     --     requires = {
     --         'godlygeek/tabular',
     --         ft = { 'md', 'markdown' },
-    --     } 
+    --     }
     -- }
 
     use {
@@ -125,16 +108,15 @@ return require('packer').startup(function(use)
         ft = { 'md', 'markdown' },
     }
 
-    use {
-        'npxbr/glow.nvim',
-        run = ':GlowInstall',
-        -- opt = true,
-        -- cmd = { 'Glow' },
-        config = function()
-            vim.api.nvim_set_keymap('n', '<leader>gl', ':Glow<CR>', { noremap = false, silent = false })
-        end,
-        ft = { 'markdown', 'md' },
-    }
+    -- use {
+    --     'npxbr/glow.nvim',
+    --     run = ':GlowInstall',
+    --     cmd = { 'Glow' },
+    --     ft = { 'markdown', 'md' },
+    --     config = function()
+    --         vim.api.nvim_set_keymap('n', '<leader>gl', ':Glow<CR>', { noremap = false, silent = false })
+    --     end,
+    -- }
 
     -- toml
     use {
@@ -144,7 +126,7 @@ return require('packer').startup(function(use)
 
     use {
         'thinca/vim-quickrun',
-        -- keys = { '<leader>rr' },
+        keys = { '<leader>rr' },
         setup = function()
             vim.g.quickrun_no_default_key_mappings = 1
             vim.g.quickrun_config = { _ = { outputter = "message" }}
@@ -154,97 +136,37 @@ return require('packer').startup(function(use)
         end,
     }
 
-    use {
-        'kyazdani42/nvim-web-devicons',
-    }
+    use { 'kyazdani42/nvim-web-devicons' }
 
     use {
         'glepnir/galaxyline.nvim',
-        branch = 'main',
+        requires = { 'kyazdani42/nvim-web-devicons' },
         config = function()
             require('internal/eviline')
         end,
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-    }
-
-    use {
-        'akinsho/nvim-bufferline.lua',
-        requires = { 'kyazdani42/nvim-web-devicons' },
-        config = function ()
-            require'bufferline'.setup{
-                options = {
-                    view = "multiwindow",-- "multiwindow" | "default",
-                    numbers = "ordinal", -- "none" | "ordinal" | "buffer_id",
-                    number_style = "superscript", -- "superscript" | "",
-                    mappings = true, -- true | false,
-                    buffer_close_icon= '',
-                    modified_icon = '●',
-                    close_icon = '',
-                    left_trunc_marker = '',
-                    right_trunc_marker = '',
-                    max_name_length = 18,
-                    max_prefix_length = 15, -- prefix used when a buffer is deduplicated
-                    tab_size = 18,
-                    show_buffer_close_icons = true, -- true | false,
-                    persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
-                    -- can also be a table containing 2 custom separators
-                    -- [focused and unfocused]. eg: { '|', '|' }
-                    separator_style = "thick", -- "slant" | "thick" | "thin" | { 'any', 'any' },
-                    enforce_regular_tabs = true, --false | true,
-                    always_show_bufferline = true, --true | false,
-                    sort_by = 'extension' --'extension' | 'relative_directory' | 'directory' | function(buffer_a, buffer_b)
-                    -- add custom logic
-                    -- return buffer_a.modified > buffer_b.modified
-                    -- end
-                }
-            }
-
-            vim.api.nvim_exec([[
-                nnoremap <silent>[b :BufferLineCycleNext<CR>
-                nnoremap <silent>]b :BufferLineCyclePrev<CR>
-            ]], false)
-        end
     }
 
     use {
         'kyazdani42/nvim-tree.lua',
+        requires = { 'kyazdani42/nvim-web-devicons' },
         config = function ()
             vim.g.nvim_tree_auto_close = 1
             vim.g.nvim_tree_quit_on_open = 1
             vim.g.nvim_tree_indent_markers = 1
             vim.g.nvim_tree_width_allow_resize  = 1
             vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
-            vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeOpen<CR>', { noremap=true, silent=true })
+
+            vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeFindFile<CR>', { noremap=true, silent=true })
             vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
         end,
-        requires = { 'kyazdani42/nvim-web-devicons' },
     }
-
-    -- use {
-    --     'datwaft/bubbly.nvim',
-    --     config = function()
-    --         vim.g.bubbly_palette = {
-    --             background = "#34343c",
-    --             foreground = "#c5cdd9",
-    --             black = "#3e4249",
-    --             red = "#ec7279",
-    --             green = "#a0c980",
-    --             yellow = "#deb974",
-    --             blue = "#6cb6eb",
-    --             purple = "#d38aea",
-    --             cyan = "#5dbbc1",
-    --             white = "#c5cdd9",
-    --             lightgrey = "#57595e",
-    --             darkgrey = "#404247",
-    --         }
-    --     end
-    -- }
 
     use {
         'morhetz/gruvbox',
         config = function ()
-            -- vim.cmd("set background=dark")
+            vim.cmd("set background=dark")
             vim.cmd("colorscheme gruvbox")
+			vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
         end,
     }
 
@@ -292,29 +214,29 @@ return require('packer').startup(function(use)
         end
     }
 
-    -- use {
-    --     'Yggdroot/LeaderF',
-    --     -- keys = { '<leader>ff', '<leader>fb', '<leader>fm', '<leader>fl', '<leader>fr' },
-    --     setup = function()
-    --         vim.g.Lf_ShortcutF = '<leader>ff'
-    --         vim.g.Lf_WindowPosition = 'popup'
-    --         vim.g.Lf_PreviewInPopup = 1
-    --         vim.g.Lf_CommandMap = {
-    --             ['<c-k>'] = {'<c-e>'},
-    --             ['<c-j>'] = {'<c-n>'}
-    --         }
-    --     end,
-    --     config = function()
-    --         vim.api.nvim_exec(
-    --         [[
-    --             noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-    --             noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-    --             noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
-    --             noremap <leader>fr :<C-U><C-R>=printf("Leaderf rg %s", "")<CR><CR>
-    --         ]],
-    --         false)
-    --     end
-    -- }
+    use {
+        'Yggdroot/LeaderF',
+		keys = { '<leader>ff', '<leader>fb', '<leader>fm', '<leader>fl', '<leader>fr' },
+        setup = function()
+            vim.g.Lf_ShortcutF = '<leader>ff'
+            vim.g.Lf_WindowPosition = 'popup'
+            vim.g.Lf_PreviewInPopup = 1
+            vim.g.Lf_CommandMap = {
+                ['<c-k>'] = {'<c-e>'},
+                ['<c-j>'] = {'<c-n>'}
+            }
+        end,
+        config = function()
+            vim.api.nvim_exec(
+            [[
+                noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+                noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+                noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+                noremap <leader>fr :<C-U><C-R>=printf("Leaderf rg %s", "")<CR><CR>
+            ]],
+            false)
+        end
+    }
 
     use {
         'neoclide/coc.nvim',
@@ -326,7 +248,7 @@ return require('packer').startup(function(use)
                 let g:coc_snippet_next = '<TAB>'
                 let g:coc_snippet_prev = '<S-TAB>'
                 let g:snips_author = 'bucai'
-                let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
+                let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-json', 'coc-lists', 'coc-stylelint', 'coc-yaml', 'coc-actions', 'coc-vimlsp', 'coc-diagnostic' ]
 
                 autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
@@ -368,37 +290,5 @@ return require('packer').startup(function(use)
             ]], false)
         end
     }
-
-    -- use {{
-    --         'neovim/nvim-lspconfig',
-    --         cond = function () return not vim.g.is_vscode end,
-    --         config = function()
-    --             require'lspconfig'.gopls.setup{}
-    --             vim.api.nvim_exec([[
-    --                 autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
-    --             ]])
-    --         end,
-    --     },{
-    --         'nvim-lua/completion-nvim',
-    --         cond = function () return not vim.g.is_vscode end,
-    --         setup = function()
-    --             vim.g.completion_enable_snippet = 'snippets.nvim'
-    --             vim.api.nvim_exec([[
-    --                 set completeopt=menuone,noinsert,noselect
-    --                 set shortmess+=c
-
-    --                 imap <tab> <Plug>(completion_smart_tab)
-    --                 imap <s-tab> <Plug>(completion_smart_s_tab)
-
-    --                 let g:completion_confirm_key = ""
-    --                 imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ? "<Plug>(completion_confirm_completion)"  : "<c-e><CR>" :  "<CR>"
-    --             ]], false)
-    --         end,
-    --         config = function()
-    --             vim.cmd [[ au BufEnter * lua require('completion').on_attach() ]]
-    --         end,
-    --         requires = { 'norcalli/snippets.nvim' }
-    --     }
-    -- }
 end)
 

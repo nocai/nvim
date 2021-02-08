@@ -1,0 +1,16 @@
+# [[plugins]]
+# repo = 'junegunn/fzf'
+# if = '!exists("g:vscode")'
+
+# hook_post_update = '''
+# fzf#install()
+# '''
+
+# [[plugins]]
+# repo = 'junegunn/fzf.vim'
+# if = '!exists("g:vscode")'
+# hook_source = '''
+# nmap <leader>ff :Files<CR>
+# nmap <leader>fb :Buffers<CR>
+# nmap <leader>fr :Rg<CR>
+# '''
