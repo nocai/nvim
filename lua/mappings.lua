@@ -55,12 +55,10 @@ function mappings.setup()
 
   api.nvim_set_keymap('', 'Y', '"+y<CR>', { noremap=true })
 
-  if not vim.g.is_vscode then
-	  vim.api.nvim_exec([[let mapleader = "\<space>"]], false)
-      api.nvim_set_keymap('', '<leader>lf', ':luafile %<CR>', { noremap=true, silent=true })
-  end
-
-  if vim.g.is_vscode then
+  if vim.g.is_not_vscode then
+    vim.api.nvim_exec([[let mapleader = "\<space>"]], false)
+    api.nvim_set_keymap('', '<leader>lf', ':luafile %<CR>', { noremap=true, silent=true })
+  else
     api.nvim_exec(
       [[
         nnoremap rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>

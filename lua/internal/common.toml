@@ -1,0 +1,48 @@
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+if = '!exists("g:vscode")'
+
+[[plugins]]
+repo = 'glepnir/galaxyline.nvim'
+if = '!exists("g:vscode")'
+depends = ['kyazdani42/nvim-web-devicons']
+hook_source = '''
+lua require('internal/eviline')
+'''
+
+[[plugins]]
+repo = 'kyazdani42/nvim-tree.lua'
+if = '!exists("g:vscode")'
+depends = ['kyazdani42/nvim-web-devicons']
+hook_add = '''
+let g:nvim_tree_auto_close = 1
+let g:nvim_tree_quit_on_open = 1
+let g:nvim_tree_indent_markers = 1
+let g:nvim_tree_width_allow_resize  = 1
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 1,
+    \ 'files': 1,
+\ }
+'''
+hook_source = '''
+nnoremap tt :NvimTreeOpen<CR>
+nnoremap q :NvimTreeClose<CR>
+'''
+
+[[plugins]]
+repo = 'luochen1990/rainbow'
+on_ft = ["html", "css", "javascript", "javascriptreact","go","rust","vim","less","sass","json","toml", "lua"]
+if = '!exists("g:vscode")'
+hook_add = '''
+let g:rainbow_active = 1
+'''
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+on_event = ["BufReadPre","BufNewFile"]
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+on_event = ["BufReadPre","BufNewFile"]
+if = '!exists("g:vscode")'

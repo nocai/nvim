@@ -6,11 +6,11 @@ vim.g.is_mac = jit.os == "OSX"
 vim.g.is_linux = jit.os == "Linux"
 vim.g.is_windows = jit.os == "Windows"
 vim.g.is_vscode = vim.fn.exists('g:vscode') == 1
+vim.g.is_not_vscode = vim.fn.exists('g:vscode') ~= 1
 
 vim.g.sep = vim.g.is_windows and [[\]] or '/'
 vim.g.home = os.getenv("HOME")
 vim.g.nvim_home = vim.g.home .. '/.config/nvim'
-vim.g.nvim_modules = vim.g.nvim_home .. '/plugin/modules'
 
 function _G.dump(...)
     local objects = vim.tbl_map(vim.inspect, {...})

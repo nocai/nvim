@@ -1,10 +1,5 @@
 lua require("global")
 lua require("mappings").setup()
-
-" if exists('g:vscode')
-"     finish " vscode暂时不加载插件
-" endif
-
 lua require("options").setup()
 
 call plug#begin('~/.vim/plugged')
@@ -31,7 +26,7 @@ omap la <Plug>(textobj-parameter-i)
 xmap aa <Plug>(textobj-parameter-a)
 omap aa <Plug>(textobj-parameter-a)
 
-Plug 'tpope/vim-surround' ", { 'on': '<Plug>VSurround' }
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 
 if !exists('g:vscode') 
@@ -47,15 +42,15 @@ if !exists('g:vscode')
 
     Plug 'glepnir/galaxyline.nvim'
 
-    Plug 'kyazdani42/nvim-tree.lua' ", { 'on': ['NvimTreeOpen','NvimTreeToggle'] }
+    Plug 'kyazdani42/nvim-tree.lua'
     let g:nvim_tree_auto_close = 1
     let g:nvim_tree_quit_on_open = 1
     let g:nvim_tree_indent_markers = 1
     let g:nvim_tree_width_allow_resize  = 1
     let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 1,
-    \ 'files': 1,
+        \ 'git': 1,
+        \ 'folders': 1,
+        \ 'files': 1,
     \ }
     nnoremap tt :NvimTreeOpen<CR>
     nnoremap q :NvimTreeClose<CR>
@@ -67,6 +62,15 @@ if !exists('g:vscode')
     let g:lazygit_floating_window_winblend = 0 
     let g:lazygit_floating_window_scaling_factor = 0.9
     nnoremap <silent><leader>gg :LazyGit<CR>
+
+	Plug 'thinca/vim-quickrun'
+    let g:quickrun_config = {
+		\   "_" : {
+		\       "outputter" : "message",
+		\   },
+    \}
+	let g:quickrun_no_default_key_mappings = 1
+	nmap <leader>rr <Plug>(quickrun)
 
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     let g:coc_snippet_next = '<TAB>'
@@ -87,7 +91,7 @@ if !exists('g:vscode')
 
     nmap <silent>gd <Plug>(coc-definition)
     nmap <silent>gD <Plug>(coc-declaration)
-    nmap <silent>gt <Plug>(coc-type-definition)
+    nmap <silent>gy <Plug>(coc-type-definition)
     nmap <silent>gi <Plug>(coc-implementation)
     nmap <silent>gr <Plug>(coc-references)
     nmap <silent>rn <Plug>(coc-rename)
@@ -120,6 +124,30 @@ if !exists('g:vscode')
     omap lf <Plug>(coc-funcobj-i)
     xmap af <Plug>(coc-funcobj-a)
     omap af <Plug>(coc-funcobj-a) 
+
+	" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+	" Plug 'nvim-lua/popup.nvim'
+	" Plug 'nvim-lua/plenary.nvim'
+	" Plug 'nvim-telescope/telescope.nvim'
+	" " Using lua functions
+	" nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+	" nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+	" nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+	" nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+	
+	Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
+	Plug 'junegunn/fzf.vim' " needed for previews
+	Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
+	" mappings
+	nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
+	nnoremap <silent> <space>a       :<C-u>CocFzfList diagnostics<CR>
+	nnoremap <silent> <space>b       :<C-u>CocFzfList diagnostics --current-buf<CR>
+	nnoremap <silent> <space>c       :<C-u>CocFzfList commands<CR>
+	nnoremap <silent> <space>e       :<C-u>CocFzfList extensions<CR>
+	nnoremap <silent> <space>l       :<C-u>CocFzfList location<CR>
+	nnoremap <silent> <space>o       :<C-u>CocFzfList outline<CR>
+	nnoremap <silent> <space>s       :<C-u>CocFzfList symbols<CR>
+	nnoremap <silent> <space>p       :<C-u>CocFzfListResume<CR>
 endif
 
 call plug#end()
@@ -127,7 +155,7 @@ call plug#end()
 if !exists('g:vscode') 
     set background=dark
     colorscheme gruvbox
-    lua require('galaxyline/eviline')
+    lua require('internal/eviline')
     lua require'colorizer'.setup()
 endif
 
