@@ -67,7 +67,8 @@ function options.setup()
   o.encoding = 'utf-8'
   o.fileencoding = 'utf-8'
   o.termguicolors = true
-  o.completeopt = 'menu,noinsert,noselect,longest'
+  o.completeopt = 'menuone,noselect'
+  o.jumpoptions = 'stack'
   o.modeline = true
   o.smartcase = true
   o.hidden = true
@@ -95,11 +96,11 @@ function options.setup()
   o.winminheight = 0
   o.backspace = 'eol,start,indent'
   o.whichwrap = 'b,s,<,>,h,l'
-  o.fileformats = 'unix,mac,dos'
+  -- o.fileformats = 'unix,mac,dos'
   o.autoread = true
   o.errorbells = false
   o.visualbell = false
-  o.t_vb = ''
+  -- o.t_vb = ''
   o.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
   o.switchbuf = 'useopen,uselast'
   o.autochdir = false
@@ -130,7 +131,7 @@ function options.setup()
   bind_options('colorcolumn', 88)
   bind_options('signcolumn', 'yes')
   bind_options('synmaxcol', 2500)
-  bind_options('formatoptions', '1n2jvcroql')
+  -- bind_options('formatoptions', '1n2jvcroql')
   bind_options('textwidth', 120)
 
   bind_options('tabstop', 4)

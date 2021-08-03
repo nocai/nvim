@@ -7,7 +7,7 @@
 
   "list.nextKeymap": "<C-n>",
   "list.previousKeymap": "<C-e>",
-  "list.previewHighlightGroup": "Statement",
+  // "list.previewHighlightGroup": "Statement",
 
   //CocList
   "list.source.files.defaultOptions": ["--auto-preview"],
@@ -73,7 +73,7 @@
   "suggest.snippetIndicator": "",
   "suggest.triggerCompletionWait": 100,
   "suggest.echodocSupport": true,
-  "suggest.minTriggerInputLength": 3,
+  "suggest.minTriggerInputLength": 2,
   //  "suggest.completionItemKindLabels": {
   //    "class": "\uf0e8",
   //    "color": "\ue22b",

@@ -30,7 +30,6 @@ end
 
 local ps = {'(',')', '[',']', '{','}', '<', '>', '\'', '"', '`', '.', ',', ';'}
 function _G.is_pairs(shift)
-    print(shift)
     local col = vim.fn.col('.')
 
     if shift then

@@ -5,3 +5,4 @@ t.txt
 
 plugin/packer_compiled.vim
 .vscode/settings.json
+plugin/packer_compiled.lua
