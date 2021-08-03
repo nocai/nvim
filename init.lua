@@ -91,7 +91,7 @@ require('packer').startup(function()
        let g:floaterm_keymap_new    = '<F7>'
        let g:floaterm_keymap_prev   = '<F8>'
        let g:floaterm_keymap_next   = '<F9>'
-       let g:floaterm_keymap_toggle = '<C-T>'
+       let g:floaterm_keymap_toggle = '<F12>'
      ]])
    end
   }
@@ -517,25 +517,17 @@ require('packer').startup(function()
     end
   }
 
-	-- use {
-	-- 	'lukas-reineke/indent-blankline.nvim',
-	-- 	config = function()
-	-- 		vim.g.indent_blankline_char = '┊'
-	-- 		vim.g.indent_blankline_filetype_exclude = { 'help', 'packer', 'nvimtree' }
-	-- 		vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
-	-- 		vim.g.indent_blankline_char_highlight = 'LineNr'
-	-- 		vim.g.indent_blankline_show_trailing_blankline_indent = false
-	-- 	end
-  -- }
-
-  --use {
-  --  'joshdick/onedark.vim', -- Theme inspired by Atom
-  --  config = function ()
-  --    --Set colorscheme (order is important here)
-  --    vim.o.termguicolors = true
-  --    vim.cmd [[colorscheme onedark]]
-  --  end
-  --}
+	use {
+		'lukas-reineke/indent-blankline.nvim',
+		config = function()
+			vim.g.indent_blankline_char = '┊'
+			vim.g.indent_blankline_filetype_exclude = { 'help', 'packer', 'nvimtree' }
+			vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile', 'packer' }
+			vim.g.indent_blankline_show_first_indent_level = false
+			vim.g.indent_blankline_char_highlight = 'LineNr'
+			vim.g.indent_blankline_show_trailing_blankline_indent = false
+		end
+  }
 
 	use {
 		'navarasu/onedark.nvim',
@@ -608,3 +600,7 @@ vim.o.clipboard = 'unnamedplus'
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
+
+-- vim.wo.foldenable = false
+-- vim.wo.foldmethod = 'indent'
+-- vim.wo.foldmethod = 'syntax'
