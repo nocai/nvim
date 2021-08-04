@@ -1,66 +1,76 @@
 {
-  // list
-  "list.nextKeymap": "<C-n>",
-  "list.previousKeymap": "<C-e>",
-  // "list.source.files.defaultOptions": ["--auto-preview"],
-  // "list.source.outline.defaultOptions": ["--auto-preview"],
-
-  // preferences
-  "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.formatOnSaveFiletypes": [
-    "go",
-    "javascript",
-    "typescript",
-    "json",
-    "Markdown"
-  ],
-
-  // diagnostic
-  "diagnostic.errorSign": "\uf467",
-  "diagnostic.warningSign": "\uf071",
-  "diagnostic.infoSign": "\uf129",
-  "diagnostic.hintSign": "\uf864",
-  "diagnostic.refreshOnInsertMode": true,
-  "diagnostic.checkCurrentLine": true,
-  "diagnostic.virtualText": true,
-  "diagnostic.virtualTextPrefix": " ❯❯❯ ",
-  "diagnostic.enableMessage": "never",
-
-  //"suggest.numberSelect": true,
-  //"suggest.maxCompleteItemCount": 9,
-  "suggest.enablePreview": true,
-  "suggest.triggerAfterInsertEnter": true,
-  "suggest.minTriggerInputLength": 2,
-  "suggest.maxPreviewWidth": 60,
-  "suggest.labelMaxLength": 30,
-  "suggest.maxCompleteItemCount": 10,
-  "suggest.snippetIndicator": "",
-
-  "languageserver": {
-    "golang": {
-      "env": { "TMPDIR": "/tmp" },
-      "command": "gopls",
-      "args": ["-remote=auto"],
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "disableWorkspaceFolders": true,
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": true,
-        "completeUnimported": true
-      }
-    },
-
-    "lua": {
-      "cwd": "/home/liujun/lua-language-server",
-      "command": "/home/liujun/lua-language-server/bin/Linux/lua-language-server",
-      "args": [
-        "-E",
-        "-e",
-        "LANG=en",
-        "/home/liujun/lua-language-server/main.lua"
-      ],
-      "filetypes": ["lua"],
-      "rootPatterns": [".git/"]
-    }
-  }
+	// list
+	"list.nextKeymap": "<C-n>",
+	"list.previousKeymap": "<C-e>",
+	// "list.source.files.defaultOptions": ["--auto-preview"],
+	// "list.source.outline.defaultOptions": ["--auto-preview"],
+	// preferences
+	"coc.preferences.extensionUpdateCheck": "daily",
+	"coc.preferences.formatOnSaveFiletypes": [
+		"go",
+		"javascript",
+		"typescript",
+		"json",
+		"Markdown"
+	],
+	// diagnostic
+	"diagnostic.errorSign": "\uf467",
+	"diagnostic.warningSign": "\uf071",
+	"diagnostic.infoSign": "\uf129",
+	"diagnostic.hintSign": "\uf864",
+	"diagnostic.refreshOnInsertMode": true,
+	"diagnostic.checkCurrentLine": true,
+	"diagnostic.virtualText": true,
+	"diagnostic.virtualTextPrefix": " ❯❯❯ ",
+	"diagnostic.enableMessage": "never",
+	//"suggest.numberSelect": true,
+	//"suggest.maxCompleteItemCount": 9,
+	"suggest.enablePreview": true,
+	"suggest.triggerAfterInsertEnter": true,
+	"suggest.minTriggerInputLength": 2,
+	"suggest.maxPreviewWidth": 45,
+	"suggest.labelMaxLength": 30,
+	"suggest.maxCompleteItemCount": 10,
+	"suggest.snippetIndicator": "",
+	"languageserver": {
+		"golang": {
+			"env": {
+				"TMPDIR": "/tmp"
+			},
+			"command": "gopls",
+			"args": [
+				"-remote=auto"
+			],
+			"rootPatterns": [
+				"go.mod",
+				".vim/",
+				".git/",
+				".hg/"
+			],
+			"disableWorkspaceFolders": true,
+			"filetypes": [
+				"go"
+			],
+			"initializationOptions": {
+				"usePlaceholders": true,
+				"completeUnimported": true
+			}
+		},
+		"lua": {
+			"cwd": "/home/liujun/lua-language-server",
+			"command": "/home/liujun/lua-language-server/bin/Linux/lua-language-server",
+			"args": [
+				"-E",
+				"-e",
+				"LANG=en",
+				"/home/liujun/lua-language-server/main.lua"
+			],
+			"filetypes": [
+				"lua"
+			],
+			"rootPatterns": [
+				".git/"
+			]
+		}
+	}
 }

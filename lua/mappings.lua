@@ -53,11 +53,6 @@ function mappings.setup()
 
   -- 保存全部
   api.nvim_set_keymap('', '<C-s>', ':wall<CR>', { noremap=true, silent=true })
-
-  api.nvim_set_keymap('i', '<C-h>', '<NOP>', { noremap=true, silent=true })
-  api.nvim_set_keymap('i', '<C-h>', '<Left>', { noremap=true, silent=true })
-  api.nvim_set_keymap('i', '<C-i>', '<NOP>', { noremap=true, silent=true })
-  api.nvim_set_keymap('i', '<C-i>', '<Right>', { noremap=true, silent=true })
 end
 
 return mappings

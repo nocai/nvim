@@ -1,5 +1,4 @@
-require("global")
-require("mappings").setup()
+require('g')
 
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -65,23 +64,6 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive' -- Git commands in nvim
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
   use {
-     'kyazdani42/nvim-tree.lua',
-     requires = { 'kyazdani42/nvim-web-devicons' },
-     config = function ()
-         vim.g.nvim_tree_auto_close = 1
-         vim.g.nvim_tree_auto_open = 1
-         -- vim.g.nvim_tree_quit_on_open = 1
-				 vim.g.nvim_tree_highlight_opened_files = 3
-         vim.g.nvim_tree_follow = 1
-         vim.g.nvim_tree_width_allow_resize  = 1
-         vim.g.nvim_tree_special_files = { Makefile= 1, AKEFILE= 1 }
-         vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1, folder_arrows = 1 }
-
-         vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeFindFile<CR>', { noremap=true, silent=true })
-         vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
-     end,
-  }
-  use {
    'voldikss/vim-floaterm',
    config = function ()
      vim.cmd([[
@@ -100,7 +82,7 @@ require('packer').startup(function()
 	use {
 		'szw/vim-maximizer',
 		config = function()
-			vim.g.maximizer_default_mapping_key = '<C-w>z'
+			vim.g.maximizer_default_mapping_key = '<M-z>'
 		end
 	}
 
@@ -160,50 +142,6 @@ require('packer').startup(function()
      vim.api.nvim_set_keymap('n', '<leader>fo', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
      vim.api.nvim_set_keymap('n', '<leader>f?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
    end
-  }
-  --use {
-  -- 'itchyny/lightline.vim',  -- Fancier statusline
-		---- require = 'monsonjeremy/onedark.nvim',
-  -- config = function()
-		 ----Set statusbar
-		 --vim.g.lightline = {
-			 --colorscheme = 'onedark',
-			 --active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
-			 --component_function = { gitbranch = 'fugitive#head' },
-		 --}
-  -- end,
-  --}
-	-- use {
-	-- 	'glepnir/galaxyline.nvim',
-	--   requires = 'kyazdani42/nvim-web-devicons',
-	-- 	config = function()
-	-- 		-- require('internal/eviline')
-	-- 	end
-	-- }
-	use {
-		'hoob3rt/lualine.nvim',
-		requires = {'kyazdani42/nvim-web-devicons'},
-		config = function()
-			require('lualine').setup{
-				options = {
-					theme = 'onedark',
-					section_separators = '', component_separators = '',
-				},
-				extensions = {'nvim-tree'},
-			}
-		end
-	}
-
-  use {
-	  'akinsho/nvim-bufferline.lua',
-	  requires = 'kyazdani42/nvim-web-devicons',
-	  config = function ()
-			require("bufferline").setup{
-				options = {
-					offsets = {{filetype = "NvimTree", text = "Press g? for help", text_align = "left"}}
-				}
-			}
-	  end
   }
   -- Add git related info in the signs columns and popups
   use {
@@ -463,15 +401,15 @@ require('packer').startup(function()
     branch = 'release',
     config = function ()
       vim.cmd([[
+				nmap <leader>tb :TagbarToggle<CR>
+
         let g:coc_snippet_next = '<TAB>'
         let g:coc_snippet_prev = '<S-TAB>'
         let g:snips_author = 'bucai'
+
         let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-translator','coc-json', 'coc-lists', 'coc-actions' ]
 
         autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
-
-        " inoremap <silent><expr><TAB> v:lua.is_pairs() ? "<Right>" : pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
-        " inoremap <silent><expr><S-TAB> v:lua.is_pairs(v:true) ? "<Left>" : pumvisible() ? "<C-p>" : "<S-TAB>"
 
         inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
 
@@ -512,11 +450,16 @@ require('packer').startup(function()
 					vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 				endif
 
-				nmap <leader><leader>t :TagbarToggle<CR>
       ]])
     end
   }
 
+	use {
+		'navarasu/onedark.nvim',
+		config = function()
+			vim.cmd [[ colorscheme onedark ]]
+		end
+	}
 	use {
 		'lukas-reineke/indent-blankline.nvim',
 		config = function()
@@ -529,78 +472,67 @@ require('packer').startup(function()
 		end
   }
 
+  use {
+     'kyazdani42/nvim-tree.lua',
+     requires = { 'kyazdani42/nvim-web-devicons' },
+     config = function ()
+         vim.g.nvim_tree_auto_close = 1
+         vim.g.nvim_tree_auto_open = 1
+         -- vim.g.nvim_tree_quit_on_open = 1
+				 vim.g.nvim_tree_highlight_opened_files = 3
+         vim.g.nvim_tree_follow = 1
+         vim.g.nvim_tree_width_allow_resize  = 1
+         vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1, folder_arrows = 1 }
+
+         vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeFindFile<CR>', { noremap=true, silent=true })
+         vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
+     end,
+  }
+  --use {
+  -- 'itchyny/lightline.vim',  -- Fancier statusline
+		---- require = 'monsonjeremy/onedark.nvim',
+  -- config = function()
+		 ----Set statusbar
+		 --vim.g.lightline = {
+			 --colorscheme = 'onedark',
+			 --active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
+			 --component_function = { gitbranch = 'fugitive#head' },
+		 --}
+  -- end,
+  --}
+	-- use {
+	-- 	'glepnir/galaxyline.nvim',
+	--   requires = 'kyazdani42/nvim-web-devicons',
+	-- 	config = function()
+	-- 		-- require('internal/eviline')
+	-- 	end
+	-- }
 	use {
-		'navarasu/onedark.nvim',
+		'hoob3rt/lualine.nvim',
+		requires = {'kyazdani42/nvim-web-devicons'},
 		config = function()
-			vim.cmd [[ colorscheme onedark ]]
+			require('lualine').setup{
+				options = {
+					theme = 'onedark',
+					section_separators = '', component_separators = '',
+				},
+				extensions = {'nvim-tree'},
+			}
 		end
 	}
+
+  use {
+	  'akinsho/nvim-bufferline.lua',
+	  requires = 'kyazdani42/nvim-web-devicons',
+	  config = function ()
+			require("bufferline").setup{
+				options = {
+					offsets = {{filetype = "NvimTree", text = "Press g? for help", text_align = "left"}}
+				}
+			}
+	  end
+  }
 end)
 
 
---Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-vim.api.nvim_set_keymap('', '<leader>rc', ':e ~/.config/nvim/init.lua<CR>', { noremap = true, silent = true })
 
--- Highlight on yank
-vim.cmd([[
-  augroup YankHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-  augroup end
-]])
-
--- ---- 打开文件，光标回到上次编辑的位置
-vim.cmd([[
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-]])
-
-vim.o.termguicolors = true
-
---Incremental live completion
-vim.o.inccommand = 'nosplit'
-vim.o.completeopt = 'menuone,noselect,noinsert'
-
---Set highlight on search
-vim.o.hlsearch = false
-
---Make line numbers default
-vim.wo.number = true
-vim.wo.relativenumber = true
-
---Do not save when switching buffers
-vim.o.hidden = true
-
---Enable mouse mode
-vim.o.mouse = 'a'
-
---Enable break indent
-vim.o.breakindent = true
-
---Save undo history
-vim.cmd [[set undofile]]
-
---Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
---Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
-
-vim.o.cursorline = true
-vim.o.colorcolumn = '88'
-
-vim.o.clipboard = 'unnamedplus'
--- vim.o.list = true
--- vim.o.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
-
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
-
--- vim.wo.foldenable = false
--- vim.wo.foldmethod = 'indent'
--- vim.wo.foldmethod = 'syntax'
