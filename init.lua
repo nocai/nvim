@@ -92,9 +92,11 @@ require('packer').startup(function()
        let g:floaterm_keymap_prev   = '<F8>'
        let g:floaterm_keymap_next   = '<F9>'
        let g:floaterm_keymap_toggle = '<F12>'
+			 nnoremap <silent> <M-t> :FloatermToggle<CR>
+			 tnoremap <silent> <M-t> <C-\><C-n>:FloatermToggle<CR>
      ]])
-   end
-  }
+	 end
+ }
 	use {
 		'szw/vim-maximizer',
 		config = function()
@@ -461,15 +463,15 @@ require('packer').startup(function()
     branch = 'release',
     config = function ()
       vim.cmd([[
-        let g:coc_snippet_next = '<C-n>'
-        let g:coc_snippet_prev = '<C-e>'
+        let g:coc_snippet_next = '<TAB>'
+        let g:coc_snippet_prev = '<S-TAB>'
         let g:snips_author = 'bucai'
         let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-translator','coc-json', 'coc-lists', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
 
         autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
-        inoremap <silent><expr><TAB> v:lua.is_pairs() ? "<Right>" : pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
-        inoremap <silent><expr><S-TAB> v:lua.is_pairs(v:true) ? "<Left>" : pumvisible() ? "<C-p>" : "<S-TAB>"
+        " inoremap <silent><expr><TAB> v:lua.is_pairs() ? "<Right>" : pumvisible() ? "<C-n>" : v:lua.check_back_space() ? "<TAB>" : coc#refresh()
+        " inoremap <silent><expr><S-TAB> v:lua.is_pairs(v:true) ? "<Left>" : pumvisible() ? "<C-p>" : "<S-TAB>"
 
         inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
 
@@ -504,8 +506,6 @@ require('packer').startup(function()
 
 				" Remap <C-f> and <C-b> for scroll float windows/popups.
 				if has('nvim-0.4.0') || has('patch-8.2.0750')
-					nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-					nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 					inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
 					inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 					vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"

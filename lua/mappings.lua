@@ -46,21 +46,18 @@ function mappings.setup()
   api.nvim_set_keymap('i', '<c-e>', '<c-p>', { noremap=true, silent=true })
   api.nvim_set_keymap('i', '<c-j>', '<c-e>', { noremap=true, silent=true })
 
-  -- api.nvim_set_keymap('t', '<c-w>n', '<c-\\><c-n><c-w>j', { noremap=true, silent=true })
-  -- api.nvim_set_keymap('t', '<c-w>e', '<c-\\><c-n><c-w>k', { noremap=true, silent=true })
-  -- api.nvim_set_keymap('t', '<c-w>h', '<c-\\><c-n><c-w>h', { noremap=true, silent=true })
-  -- api.nvim_set_keymap('t', '<c-w>i', '<c-\\><c-n><c-w>l', { noremap=true, silent=true })
+  api.nvim_set_keymap('t', '<m-n>', '<c-\\><c-n><c-w>j', { noremap=true, silent=true })
+  api.nvim_set_keymap('t', '<m-e>', '<c-\\><c-n><c-w>k', { noremap=true, silent=true })
+  api.nvim_set_keymap('t', '<m-h>', '<c-\\><c-n><c-w>h', { noremap=true, silent=true })
+	api.nvim_set_keymap('t', '<m-i>', '<c-\\><c-n><c-w>l', { noremap=true, silent=true })
 
-  -- buffer切换
-  -- api.nvim_set_keymap('', '<C-k>', ':bn<CR>', { noremap=true, silent=true })
-  -- api.nvim_set_keymap('', '<C-p>', ':bp<CR>', { noremap=true, silent=true })
   -- 保存全部
   api.nvim_set_keymap('', '<C-s>', ':wall<CR>', { noremap=true, silent=true })
 
-
-  -- 不知道为什么，nvim不生效。但vim可以
-  -- api.nvim_set_keymap('i', '<C-h>', '<Left>', { noremap=true, silent=true })
-  -- api.nvim_set_keymap('i', '<C-i>', '<Right>', { noremap=true, silent=true })
+  api.nvim_set_keymap('i', '<C-h>', '<NOP>', { noremap=true, silent=true })
+  api.nvim_set_keymap('i', '<C-h>', '<Left>', { noremap=true, silent=true })
+  api.nvim_set_keymap('i', '<C-i>', '<NOP>', { noremap=true, silent=true })
+  api.nvim_set_keymap('i', '<C-i>', '<Right>', { noremap=true, silent=true })
 end
 
 return mappings
