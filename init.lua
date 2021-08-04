@@ -466,7 +466,7 @@ require('packer').startup(function()
         let g:coc_snippet_next = '<TAB>'
         let g:coc_snippet_prev = '<S-TAB>'
         let g:snips_author = 'bucai'
-        let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-translator','coc-json', 'coc-lists', 'coc-actions', 'coc-vimlsp', 'coc-vetur', 'coc-emmet', 'coc-prettier', 'coc-diagnostic' ]
+        let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-translator','coc-json', 'coc-lists', 'coc-actions' ]
 
         autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
 
