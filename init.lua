@@ -396,13 +396,10 @@ require('packer').startup(function()
     'neoclide/coc.nvim',
 		requires = {
 			{ 'honza/vim-snippets' },
-			{ 'preservim/tagbar' },
 		},
     branch = 'release',
     config = function ()
       vim.cmd([[
-				nmap <leader>tb :TagbarToggle<CR>
-
         let g:coc_snippet_next = '<TAB>'
         let g:coc_snippet_prev = '<S-TAB>'
         let g:snips_author = 'bucai'
@@ -532,6 +529,13 @@ require('packer').startup(function()
 			}
 	  end
   }
+
+	use {
+		'preservim/tagbar',
+		config = function()
+			vim.cmd([[ nmap <leader>tb :TagbarToggle<CR> ]])
+		end
+	}
 end)
 
 
