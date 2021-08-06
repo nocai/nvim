@@ -492,7 +492,7 @@ require('packer').startup(function()
          vim.g.nvim_tree_width_allow_resize  = 1
          vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1, folder_arrows = 1 }
 
-         vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeFindFile<CR>', { noremap=true, silent=true })
+         vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
          vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
      end,
   }
@@ -548,7 +548,7 @@ require('packer').startup(function()
 			vim.g.symbols_outline = {
 				auto_preview = false,
 			}
-			vim.api.nvim_set_keymap('n', '<leader>so', ':SymbolsOutline<CR>', { noremap = true, silent = true })
+			vim.api.nvim_set_keymap('n', 'fo', ':SymbolsOutline<CR>', { noremap = true, silent = true })
 		end
 	}
 
