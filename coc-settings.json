@@ -18,8 +18,8 @@
 	"diagnostic.warningSign": "\uf071",
 	"diagnostic.infoSign": "\uf129",
 	"diagnostic.hintSign": "\uf864",
-	"diagnostic.refreshOnInsertMode": true,
-	"diagnostic.checkCurrentLine": true,
+	// "diagnostic.refreshOnInsertMode": true,
+	// "diagnostic.checkCurrentLine": true,
 	"diagnostic.virtualText": true,
 	"diagnostic.virtualTextPrefix": " ❯❯❯ ",
 	"diagnostic.enableMessage": "never",
@@ -30,7 +30,7 @@
 	"suggest.minTriggerInputLength": 2,
 	"suggest.maxPreviewWidth": 45,
 	"suggest.labelMaxLength": 30,
-	"suggest.maxCompleteItemCount": 10,
+	"suggest.maxCompleteItemCount": 15,
 	"suggest.snippetIndicator": "",
 	"languageserver": {
 		"golang": {
