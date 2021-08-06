@@ -82,7 +82,7 @@ require('packer').startup(function()
 	use {
 		'szw/vim-maximizer',
 		config = function()
-			vim.g.maximizer_default_mapping_key = '<M-z>'
+			vim.g.maximizer_default_mapping_key = '<D-z>'
 		end
 	}
 
