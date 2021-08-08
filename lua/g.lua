@@ -119,3 +119,5 @@ vim.cmd([[
 -- 打开文件，光标回到上次编辑的位置
 vim.cmd([[ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]])
 
+vim.g.home = os.getenv("HOME")
+vim.g.nvim_home = vim.g.home .. '/.config/nvim'

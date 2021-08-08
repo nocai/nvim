@@ -7,3 +7,6 @@ plugin/packer_compiled.vim
 .vscode/settings.json
 plugin/packer_compiled.lua
 tags
+lua/test.lua
+.lsp/lua-language-server/
+symbols-outline.nvim/

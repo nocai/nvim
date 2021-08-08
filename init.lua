@@ -92,11 +92,23 @@ require('packer').startup(function()
    requires = {
 		 { 'nvim-lua/popup.nvim' },
 		 { 'nvim-lua/plenary.nvim' },
-			-- Automatic tags management
-		 -- { 'ludovicchabant/vim-gutentags'},
+		 { 'nvim-telescope/telescope-fzf-native.nvim',
+				run = 'make',
+				config = function()
+					require('telescope').setup {
+						extensions = {
+							fzf = {
+								fuzzy = true,                    -- false will only do exact matching
+								override_generic_sorter = false, -- override the generic sorter
+								override_file_sorter = true,     -- override the file sorter
+								case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+							}
+						}
+					}
+				end
+		 },
 	 },
    config = function ()
-     -- Telescope
 	  local actions = require "telescope.actions"
      require('telescope').setup {
        defaults = {
@@ -137,13 +149,13 @@ require('packer').startup(function()
 		vim.api.nvim_set_keymap('n', '<leader>wd', [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics({previewers = true})<CR>]], { noremap = true, silent = true })
 		vim.api.nvim_set_keymap('n', '<leader>wD', [[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics({previewers = true})<CR>]], { noremap = true, silent = true })
 
+		require('telescope').load_extension('fzf')
    end
   }
 
   use 'tpope/vim-fugitive' -- Git commands in nvim
   -- Add git related info in the signs columns and popups
-  use {
-    'lewis6991/gitsigns.nvim',
+  use { 'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
     config = function ()
       -- Gitsigns
@@ -235,17 +247,15 @@ require('packer').startup(function()
 		end
 	}
 
-  use {
-      'thinca/vim-quickrun',
-      -- keys = { '<leader>rr' },
-      config = function ()
-          vim.g.quickrun_no_default_key_mappings = 1
-          vim.g.quickrun_config = { _ = { outputter = "message" }}
-          vim.api.nvim_set_keymap('n', '<leader>rr', '<Plug>(quickrun)', { noremap=false, silent=false })
-      end,
+  use { 'thinca/vim-quickrun',
+		-- keys = { '<leader>rr' },
+		config = function ()
+				vim.g.quickrun_no_default_key_mappings = 1
+				vim.g.quickrun_config = { _ = { outputter = "message" }}
+				vim.api.nvim_set_keymap('n', '<leader>rr', '<Plug>(quickrun)', { noremap=false, silent=false })
+		end,
   }
-  use {
-	  'vim-test/vim-test',
+  use { 'vim-test/vim-test',
 	  config = function ()
       vim.cmd([[
         nmap <silent> <leader>tn :TestNearest -v<CR>
@@ -256,8 +266,7 @@ require('packer').startup(function()
       ]])
 	  end
   }
-  use {
-    'sebdah/vim-delve',
+  use { 'sebdah/vim-delve',
     config = function ()
       vim.cmd([[
         nmap <leader>dd :DlvDebug<CR>
@@ -267,12 +276,11 @@ require('packer').startup(function()
     end
   }
 
-  use {
-    'neovim/nvim-lspconfig', -- Collection of configurations for built-in LSP client
+  use { 'neovim/nvim-lspconfig', -- Collection of configurations for built-in LSP client
     config = function ()
       local nvim_lsp = require('lspconfig')
 
-      local on_attach = function(client, bufnr)
+      local on_attach = function(_, bufnr)
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
         local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -317,13 +325,36 @@ require('packer').startup(function()
           completeUnimported=true,
         }
       }
+
+			nvim_lsp.sumneko_lua.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+				cmd = {
+					vim.g.nvim_home.."/.lsp/lua-language-server/bin/macOS/lua-language-server",
+					"-E",
+					vim.g.nvim_home.."/.lsp/lua-language-server/main.lua"
+				};
+				settings = {
+					Lua = {
+						diagnostics = {
+							enable = true,
+							globals = {"vim","packer_plugins"}
+						},
+						runtime = {version = "LuaJIT"},
+						workspace = {
+							library = vim.list_extend({[vim.fn.expand("$VIMRUNTIME/lua")] = true},{}),
+						},
+					},
+				}
+			}
     end
   }
 
-  use {
-    'hrsh7th/nvim-compe', 
+  use { 'hrsh7th/nvim-compe',
 		requires = { 
-			{ 'hrsh7th/vim-vsnip'},
+			{ 'hrsh7th/vim-vsnip' }, 
+			{'hrsh7th/vim-vsnip-integ'},
+			{ 'L3MON4D3/LuaSnip'}, { 'golang/vscode-go'},
 		},
 		after = 'nvim-lspconfig',
     config = function ()
@@ -346,59 +377,84 @@ require('packer').startup(function()
         },
       }
 
-      -- Utility functions for compe and luasnip
-      local t = function(str)
-        return vim.api.nvim_replace_termcodes(str, true, true, true)
-      end
-
-      local check_back_space = function()
-        local col = vim.fn.col '.' - 1
-        if col == 0 or vim.fn.getline('.'):sub(col, col):match '%s' then
-          return true
-        else
-          return false
-        end
-      end
-			-- Use (s-)tab to:
-			--- move to prev/next item in completion menuone
-			--- jump to prev/next snippet's placeholder
-			_G.tab_complete = function()
-				if vim.fn.pumvisible() == 1 then
-					return t "<C-n>"
-				elseif vim.fn['vsnip#available'](1) == 1 then
-					return t "<Plug>(vsnip-expand-or-jump)"
-				elseif check_back_space() then
-					return t "<Tab>"
-				else
-					return vim.fn['compe#complete']()
-				end
-			end
-			_G.s_tab_complete = function()
-				if vim.fn.pumvisible() == 1 then
-					return t "<C-p>"
-				elseif vim.fn['vsnip#jumpable'](-1) == 1 then
-					return t "<Plug>(vsnip-jump-prev)"
-				else
-					-- If <S-Tab> is not working in your terminal, change it to <C-h>
-					return t "<S-Tab>"
-				end
-			end
-
-			-- Map tab to the above tab complete functiones
-      vim.api.nvim_set_keymap('i', '<Tab>', 'v:lua.tab_complete()', { expr = true })
-      vim.api.nvim_set_keymap('s', '<Tab>', 'v:lua.tab_complete()', { expr = true })
-      vim.api.nvim_set_keymap('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
-      vim.api.nvim_set_keymap('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
+--       -- Utility functions for compe and luasnip
+--       local t = function(str)
+--         return vim.api.nvim_replace_termcodes(str, true, true, true)
+--       end
+-- 
+--       local check_back_space = function()
+--         local col = vim.fn.col '.' - 1
+--         if col == 0 or vim.fn.getline('.'):sub(col, col):match '%s' then
+--           return true
+--         else
+--           return false
+--         end
+--       end
+-- 			-- Use (s-)tab to:
+-- 			--- move to prev/next item in completion menuone
+-- 			--- jump to prev/next snippet's placeholder
+-- 			_G.tab_complete = function()
+-- 				if vim.fn.pumvisible() == 1 then
+-- 					return t "<C-n>"
+-- 				elseif vim.fn['vsnip#available'](1) == 1 then
+-- 					return t "<Plug>(vsnip-expand-or-jump)"
+-- 				elseif check_back_space() then
+-- 					return t "<Tab>"
+-- 				else
+-- 					return vim.fn['compe#complete']()
+-- 				end
+-- 			end
+-- 			_G.s_tab_complete = function()
+-- 				if vim.fn.pumvisible() == 1 then
+-- 					return t "<C-p>"
+-- 				elseif vim.fn['vsnip#jumpable'](-1) == 1 then
+-- 					return t "<Plug>(vsnip-jump-prev)"
+-- 				else
+-- 					-- If <S-Tab> is not working in your terminal, change it to <C-h>
+-- 					return t "<S-Tab>"
+-- 				end
+-- 			end
+-- 
+-- 			-- Map tab to the above tab complete functiones
+--       vim.api.nvim_set_keymap('i', '<Tab>', 'v:lua.tab_complete()', { expr = true })
+--       vim.api.nvim_set_keymap('s', '<Tab>', 'v:lua.tab_complete()', { expr = true })
+--       vim.api.nvim_set_keymap('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
+--       vim.api.nvim_set_keymap('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
 
       -- Map compe confirm and complete functions
-      vim.api.nvim_set_keymap('i', '<cr>', "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
+			vim.api.nvim_set_keymap('i', '<cr>', "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
+
+			vim.cmd([[
+				imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'
+				smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'
+
+				imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+				smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+			]])
     end
   }
 
-	use {
-		'windwp/nvim-autopairs',
+	use { 'windwp/nvim-autopairs',
 		config = function()
 			require('nvim-autopairs').setup()
+		end
+	}
+
+	use { 'mhartington/formatter.nvim',
+		config = function ()
+			require('formatter').setup{
+				lua = {
+					-- luafmt
+					function()
+						return {
+							exe = "luafmt",
+							args = {"--indent-count", 2, "--stdin"},
+							stdin = true
+						}
+					end
+				},
+			}
 		end
 	}
 
@@ -461,14 +517,12 @@ require('packer').startup(function()
     -- end
   -- }
 
-	use {
-		'navarasu/onedark.nvim',
+	use { 'navarasu/onedark.nvim',
 		config = function()
 			vim.cmd [[ colorscheme onedark ]]
 		end
 	}
-	use {
-		'lukas-reineke/indent-blankline.nvim',
+	use { 'lukas-reineke/indent-blankline.nvim',
 		config = function()
 			vim.g.indent_blankline_char = '┊'
 			vim.g.indent_blankline_filetype_exclude = { 'help', 'packer', 'nvimtree' }
@@ -479,21 +533,20 @@ require('packer').startup(function()
 		end
   }
 
-  use {
-     'kyazdani42/nvim-tree.lua',
-     requires = { 'kyazdani42/nvim-web-devicons' },
-     config = function ()
-         vim.g.nvim_tree_auto_close = 1
-         vim.g.nvim_tree_auto_open = 1
-         -- vim.g.nvim_tree_quit_on_open = 1
-				 vim.g.nvim_tree_highlight_opened_files = 3
-         vim.g.nvim_tree_follow = 1
-         vim.g.nvim_tree_width_allow_resize  = 1
-         vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1, folder_arrows = 1 }
+  use { 'kyazdani42/nvim-tree.lua',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function ()
+			 vim.g.nvim_tree_auto_close = 1
+			 vim.g.nvim_tree_auto_open = 1
+			 -- vim.g.nvim_tree_quit_on_open = 1
+			 vim.g.nvim_tree_highlight_opened_files = 3
+			 vim.g.nvim_tree_follow = 1
+			 vim.g.nvim_tree_width_allow_resize  = 1
+			 vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1, folder_arrows = 1 }
 
-         vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
-         vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
-     end,
+			 vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
+			 vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
+    end,
   }
   --use {
   -- 'itchyny/lightline.vim',  -- Fancier statusline
