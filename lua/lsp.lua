@@ -49,7 +49,10 @@ nvim_lsp.gopls.setup {
 vim.cmd([[autocmd BufWritePre *.go lua vim.lsp.buf.formatting()]])
 
 -- sumneko_lua
-local system_name = "Linux" -- (Linux, macOS, or Windows)
+local system_name = "macOS" -- (Linux, macOS, or Windows)
+if jit.os == "Linux" then
+	system_name = "Linux"
+end
 local sumneko_root_path = vim.g.home..'/lua-language-server'
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 nvim_lsp.sumneko_lua.setup {
