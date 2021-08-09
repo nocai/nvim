@@ -1,4 +1,6 @@
 local vim = vim
+vim.g.home = os.getenv("HOME")
+vim.g.nvim_home = vim.g.home..'/.config/nvim'
 
 --Remap space as leader key
 vim.cmd([[let mapleader = "\<space>"]])
@@ -98,6 +100,11 @@ vim.o.clipboard = 'unnamedplus'
 -- vim.o.list = true
 -- vim.o.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
 
+vim.o.scrolloff      = 5
+vim.o.sidescrolloff  = 5
+
+vim.o.pumheight = 10
+
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
@@ -119,5 +126,3 @@ vim.cmd([[
 -- 打开文件，光标回到上次编辑的位置
 vim.cmd([[ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]])
 
-vim.g.home = os.getenv("HOME")
-vim.g.nvim_home = vim.g.home .. '/.config/nvim'

@@ -9,10 +9,24 @@ vim.cmd([[autocmd BufWritePost init.lua PackerCompile]])
 
 local use = require('packer').use
 require('packer').startup(function()
-  use 'wbthomason/packer.nvim' -- Package manager
-  use 'tweekmonster/startuptime.vim'
-  use { 'tpope/vim-surround' }
-  use { 'tpope/vim-repeat' }
+  use { 'wbthomason/packer.nvim' } -- Package manager
+
+  use {
+		{ 'tweekmonster/startuptime.vim', cmd = {'StartupTime'} },
+		{ 'voldikss/vim-translator', keys = { { 'n', '<Leader>tr' }, { 'v', '<Leader>tr' } },
+			config = function ()
+				vim.cmd([[
+					nmap <silent> <Leader>tr <Plug>TranslateW
+					vmap <silent> <Leader>tr <Plug>TranslateWV
+				]])
+			end
+		},
+		{'karb94/neoscroll.nvim', event = "WinScrolled",
+			config = [[require('neoscroll').setup()]]
+		},
+		{ 'tpope/vim-surround' },
+		{ 'tpope/vim-repeat' }
+	}
   -- use { 'jiangmiao/auto-pairs' }
   -- use {
   --   'luochen1990/rainbow',
@@ -22,28 +36,26 @@ require('packer').startup(function()
   -- }
 
 
-  use {
-     'kana/vim-textobj-indent',
-     requires = {'kana/vim-textobj-user'},
-			config = function()
-				vim.cmd([[
-					let g:textobj_indent_no_default_key_mappings=1
-					xmap ll <Plug>(textobj-indent-i)
-					omap ll <Plug>(textobj-indent-i)
-					xmap lL <Plug>(textobj-indent-same-i)
-					omap lL <Plug>(textobj-indent-same-i)
+	use {
+		{'kana/vim-textobj-indent',
+			 requires = {'kana/vim-textobj-user'},
+				config = function()
+					vim.cmd([[
+						let g:textobj_indent_no_default_key_mappings=1
+						xmap ll <Plug>(textobj-indent-i)
+						omap ll <Plug>(textobj-indent-i)
+						xmap lL <Plug>(textobj-indent-same-i)
+						omap lL <Plug>(textobj-indent-same-i)
 
-					xmap al <Plug>(textobj-indent-a)
-					omap al <Plug>(textobj-indent-a)
-					xmap aL <Plug>(textobj-indent-same-a)
-					omap aL <Plug>(textobj-indent-same-a)
-				]])
-			end
-  }
-
-  use {
-     'sgur/vim-textobj-parameter',
-     requires = { 'kana/vim-textobj-user' },
+						xmap al <Plug>(textobj-indent-a)
+						omap al <Plug>(textobj-indent-a)
+						xmap aL <Plug>(textobj-indent-same-a)
+						omap aL <Plug>(textobj-indent-same-a)
+					]])
+				end
+		},
+		{'sgur/vim-textobj-parameter',
+			requires = { 'kana/vim-textobj-user' },
 			config = function()
 				vim.cmd([[
 					let g:vim_textobj_parameter_mapping = 'a'
@@ -53,24 +65,24 @@ require('packer').startup(function()
 					omap aa <Plug>(textobj-parameter-a)
 				]])
 			end
-  }
+		},
+		{'voldikss/vim-floaterm',
+		  config = function ()
+				vim.cmd([[
+					 hi FloatermBorder guifg=gray
+					 let g:floaterm_width=0.8
+					 let g:floaterm_height=0.8
+					 let g:floaterm_keymap_new    = '<F7>'
+					 let g:floaterm_keymap_prev   = '<F8>'
+					 let g:floaterm_keymap_next   = '<F9>'
+					 let g:floaterm_keymap_toggle = '<F12>'
+					 nnoremap <silent> <M-t> :FloatermToggle<CR>
+					 tnoremap <silent> <M-t> <C-\><C-n>:FloatermToggle<CR>
+				 ]])
+			 end
+		 }
+	}
 
-  use {
-   'voldikss/vim-floaterm',
-   config = function ()
-     vim.cmd([[
-       hi FloatermBorder guifg=gray
-       let g:floaterm_width=0.8
-       let g:floaterm_height=0.8
-       let g:floaterm_keymap_new    = '<F7>'
-       let g:floaterm_keymap_prev   = '<F8>'
-       let g:floaterm_keymap_next   = '<F9>'
-       let g:floaterm_keymap_toggle = '<F12>'
-			 nnoremap <silent> <M-t> :FloatermToggle<CR>
-			 tnoremap <silent> <M-t> <C-\><C-n>:FloatermToggle<CR>
-     ]])
-	 end
- }
 	use {
 		'szw/vim-maximizer',
 		config = function()
@@ -109,10 +121,10 @@ require('packer').startup(function()
 		 },
 	 },
    config = function ()
-	  local actions = require "telescope.actions"
+	   local actions = require "telescope.actions"
      require('telescope').setup {
        defaults = {
-				selection_strategy = "closest",
+				 selection_strategy = "follow",
          mappings = {
            i = {
              ["<C-k>"] = false,
@@ -140,7 +152,7 @@ require('packer').startup(function()
      vim.api.nvim_set_keymap('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
      vim.api.nvim_set_keymap('n', '<leader>f/', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
      vim.api.nvim_set_keymap('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
-     vim.api.nvim_set_keymap('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
+     -- vim.api.nvim_set_keymap('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
      vim.api.nvim_set_keymap('n', '<leader>fr', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
      vim.api.nvim_set_keymap('n', '<leader>fo', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
 
@@ -152,24 +164,28 @@ require('packer').startup(function()
 		require('telescope').load_extension('fzf')
    end
   }
+	use {
+		"nvim-telescope/telescope-frecency.nvim",
+    requires = {"tami5/sql.nvim"},
+		config = function()
+			require"telescope".load_extension("frecency")
+		end
+	}
 
   use 'tpope/vim-fugitive' -- Git commands in nvim
   -- Add git related info in the signs columns and popups
   use { 'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
-    config = function ()
-      -- Gitsigns
-      require('gitsigns').setup {
-        current_line_blame = true,
-        signs = {
-          add = { text = '+' },
-          change = { text = '~' },
-          delete = { text = '_' },
-          topdelete = { text = '‾' },
-          changedelete = { text = '~' },
-        },
-      }
-    end
+    config = require('gitsigns').setup {
+			current_line_blame = true,
+			signs = {
+				add = { text = '+' },
+				change = { text = '~' },
+				delete = { text = '_' },
+				topdelete = { text = '‾' },
+				changedelete = { text = '~' },
+			},
+		}
   }
 
   -- Highlight, edit, and navigate code using a fast incremental parsing library
@@ -276,82 +292,43 @@ require('packer').startup(function()
     end
   }
 
-  use { 'neovim/nvim-lspconfig', -- Collection of configurations for built-in LSP client
-    config = function ()
-      local nvim_lsp = require('lspconfig')
-
-      local on_attach = function(_, bufnr)
-        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-        -- Mappings.
-        local opts = { noremap=true, silent=true }
-        buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-        buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-        buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-        -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-        buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-        buf_set_keymap('n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-
-        buf_set_keymap('n', 'E', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-        buf_set_keymap('n', '<C-e>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-
-        buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-
-        buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-        buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-
-        buf_set_keymap("n", "<leader>fm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-      end
-
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-			capabilities.textDocument.completion.completionItem.resolveSupport = {
-				properties = {
-					'documentation',
-					'detail',
-					'additionalTextEdits',
-				}
-			}
-
-      nvim_lsp.gopls.setup {
-        cmd = {"gopls","--remote=auto"},
-        on_attach = on_attach,
-        capabilities = capabilities,
-        init_options = {
-          usePlaceholders=true,
-          completeUnimported=true,
+  use { 'neovim/nvim-lspconfig', config = [[require('lsp')]] }
+	use { 'onsails/lspkind-nvim',
+		config = require('lspkind').init({
+        -- enables text annotations
+        with_text = true,
+        -- can be either 'default' or
+        -- 'codicons' for codicon preset (requires vscode-codicons font installed)
+        -- default: 'default'
+        preset = 'codicons',
+        -- override preset symbols
+        symbol_map = {
+            Text = '',
+            Method = 'ƒ',
+            Function = '',
+            Constructor = '',
+            Variable = '',
+            Class = '',
+            Interface = 'ﰮ',
+            Module = '',
+            Property = '',
+            Unit = '',
+            Value = '',
+            Enum = '',
+            Keyword = '',
+            Snippet = '﬌',
+            Color = '',
+            File = '',
+            Folder = '',
+            EnumMember = '',
+            Constant = '',
+            Struct = ''
         }
-      }
-
-			nvim_lsp.sumneko_lua.setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-				cmd = {
-					vim.g.nvim_home.."/.lsp/lua-language-server/bin/macOS/lua-language-server",
-					"-E",
-					vim.g.nvim_home.."/.lsp/lua-language-server/main.lua"
-				};
-				settings = {
-					Lua = {
-						diagnostics = {
-							enable = true,
-							globals = {"vim","packer_plugins"}
-						},
-						runtime = {version = "LuaJIT"},
-						workspace = {
-							library = vim.list_extend({[vim.fn.expand("$VIMRUNTIME/lua")] = true},{}),
-						},
-					},
-				}
-			}
-    end
-  }
+    })
+	}
 
   use { 'hrsh7th/nvim-compe',
-		requires = { 
+		requires = {
 			{ 'hrsh7th/vim-vsnip' }, {'hrsh7th/vim-vsnip-integ'}, { 'golang/vscode-go'},
 			{ 'L3MON4D3/LuaSnip'},
 		},
@@ -370,66 +347,23 @@ require('packer').startup(function()
           nvim_lua = true,
 
           vsnip = true,
-					luasnip = false,
+					luasnip = true,
           ultisnips = false,
           calc = false,
         },
       }
 
---       -- Utility functions for compe and luasnip
---       local t = function(str)
---         return vim.api.nvim_replace_termcodes(str, true, true, true)
---       end
--- 
---       local check_back_space = function()
---         local col = vim.fn.col '.' - 1
---         if col == 0 or vim.fn.getline('.'):sub(col, col):match '%s' then
---           return true
---         else
---           return false
---         end
---       end
--- 			-- Use (s-)tab to:
--- 			--- move to prev/next item in completion menuone
--- 			--- jump to prev/next snippet's placeholder
--- 			_G.tab_complete = function()
--- 				if vim.fn.pumvisible() == 1 then
--- 					return t "<C-n>"
--- 				elseif vim.fn['vsnip#available'](1) == 1 then
--- 					return t "<Plug>(vsnip-expand-or-jump)"
--- 				elseif check_back_space() then
--- 					return t "<Tab>"
--- 				else
--- 					return vim.fn['compe#complete']()
--- 				end
--- 			end
--- 			_G.s_tab_complete = function()
--- 				if vim.fn.pumvisible() == 1 then
--- 					return t "<C-p>"
--- 				elseif vim.fn['vsnip#jumpable'](-1) == 1 then
--- 					return t "<Plug>(vsnip-jump-prev)"
--- 				else
--- 					-- If <S-Tab> is not working in your terminal, change it to <C-h>
--- 					return t "<S-Tab>"
--- 				end
--- 			end
--- 
--- 			-- Map tab to the above tab complete functiones
---       vim.api.nvim_set_keymap('i', '<Tab>', 'v:lua.tab_complete()', { expr = true })
---       vim.api.nvim_set_keymap('s', '<Tab>', 'v:lua.tab_complete()', { expr = true })
---       vim.api.nvim_set_keymap('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
---       vim.api.nvim_set_keymap('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
-
-      -- Map compe confirm and complete functions
-			vim.api.nvim_set_keymap('i', '<cr>', "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
-
+			require("nvim-autopairs.completion.compe").setup({
+				map_cr = true, --  map <CR> on insert mode
+				map_complete = true, -- it will auto insert `(` after select function or method item
+				auto_select = true,  -- auto select first item
+			})
 			vim.cmd([[
 				imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'
 				smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'
 
 				imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 				smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-
 			]])
     end
   }
@@ -517,10 +451,9 @@ require('packer').startup(function()
   -- }
 
 	use { 'navarasu/onedark.nvim',
-		config = function()
-			vim.cmd [[ colorscheme onedark ]]
-		end
+		config = vim.cmd [[ colorscheme onedark ]]
 	}
+
 	use { 'lukas-reineke/indent-blankline.nvim',
 		config = function()
 			vim.g.indent_blankline_char = '┊'
@@ -535,16 +468,17 @@ require('packer').startup(function()
   use { 'kyazdani42/nvim-tree.lua',
     requires = { 'kyazdani42/nvim-web-devicons' },
     config = function ()
-			 vim.g.nvim_tree_auto_close = 1
-			 vim.g.nvim_tree_auto_open = 1
+			vim.g.nvim_tree_auto_close = 1
+			vim.g.nvim_tree_auto_open = 1
 			 -- vim.g.nvim_tree_quit_on_open = 1
-			 vim.g.nvim_tree_highlight_opened_files = 3
-			 vim.g.nvim_tree_follow = 1
-			 vim.g.nvim_tree_width_allow_resize  = 1
-			 vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1, folder_arrows = 1 }
+			vim.g.nvim_tree_highlight_opened_files = 3
+			vim.g.nvim_tree_follow = 1
+			vim.g.nvim_tree_width_allow_resize  = 1
+			-- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', 'logs'}
+			vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1, folder_arrows = 1 }
 
-			 vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
-			 vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
+			vim.api.nvim_set_keymap('n', 'ff', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
+			vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
     end,
   }
   --use {
@@ -570,11 +504,43 @@ require('packer').startup(function()
 		'hoob3rt/lualine.nvim',
 		requires = {'kyazdani42/nvim-web-devicons'},
 		config = function()
+			local function lsp()
+        local icon = [[ LSP: ]]
+        local msg = 'No Active LSP'
+        local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+        local clients = vim.lsp.get_active_clients()
+        if next(clients) == nil then return icon .. msg end
+        for _, client in ipairs(clients) do
+            local filetypes = client.config.filetypes
+            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                return icon .. client.name
+            end
+        end
+        return icon .. msg
+			end
 			require('lualine').setup{
 				options = {
 					theme = 'onedark',
 					section_separators = '', component_separators = '',
 				},
+        sections = {
+            lualine_a = {'mode'},
+            lualine_b = {{'branch'}, {'diff'}},
+            lualine_c = {
+                {'filename'}, {
+									'diagnostics',
+									sources = {'nvim_lsp'},
+									color_error = "#BF616A",
+									color_warn = "#EBCB8B",
+									color_info = "#81A1AC",
+									color_hint = "#88C0D0",
+									symbols = {error = ' ', warn = ' ', info = ' '}
+                }
+            },
+            lualine_x = {{lsp}, {'encoding'}, {'fileformat'}, 'filetype'},
+            lualine_y = {'progress'},
+            lualine_z = {'location'}
+        },
 				extensions = {'nvim-tree'},
 			}
 		end
@@ -594,7 +560,7 @@ require('packer').startup(function()
 
 	use {
 		'simrat39/symbols-outline.nvim',
-		requires = 'neovim/nvim-lspconfig',
+		requires = {'neovim/nvim-lspconfig'},
 		config = function()
 			vim.g.symbols_outline = {
 				auto_preview = false,
@@ -606,11 +572,15 @@ require('packer').startup(function()
   -- use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
 	use {
 		'terrortylor/nvim-comment',
-		config = function()
-			require('nvim_comment').setup()
-		end
+		config = require('nvim_comment').setup()
 	}
 
+	use { 'xiyaowong/nvim-transparent',
+		config = require("transparent").setup({
+			enable = true,
+			extra_groups = {"NvimTreeNormal", "NvimTreeEndOfBuffer" }
+		})
+	}
 end)
 
 
