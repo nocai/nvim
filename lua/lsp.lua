@@ -71,6 +71,7 @@ nvim_lsp.sumneko_lua.setup {
 				library = {
 					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
 					[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+					[vim.fn.expand(vim.g.home..'/.local/share/nvim/site/pack/packer')] = true,
 				},
 			},
 		},
