@@ -176,16 +176,18 @@ require('packer').startup(function()
   -- Add git related info in the signs columns and popups
   use { 'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
-    config = require('gitsigns').setup {
-			current_line_blame = true,
-			signs = {
-				add = { text = '+' },
-				change = { text = '~' },
-				delete = { text = '_' },
-				topdelete = { text = '‾' },
-				changedelete = { text = '~' },
-			},
-		}
+    config = function()
+			require('gitsigns').setup {
+  			current_line_blame = true,
+  			signs = {
+  				add = { text = '+' },
+  				change = { text = '~' },
+  				delete = { text = '_' },
+  				topdelete = { text = '‾' },
+  				changedelete = { text = '~' },
+  			},
+  		}
+		end
   }
 
   -- Highlight, edit, and navigate code using a fast incremental parsing library
@@ -294,7 +296,8 @@ require('packer').startup(function()
 
   use { 'neovim/nvim-lspconfig', config = [[require('lsp')]] }
 	use { 'onsails/lspkind-nvim',
-		config = require('lspkind').init({
+		config = function()
+			require('lspkind').init({
         -- enables text annotations
         with_text = true,
         -- can be either 'default' or
@@ -325,6 +328,7 @@ require('packer').startup(function()
             Struct = ''
         }
     })
+			end
 	}
 
   use { 'hrsh7th/nvim-compe',
@@ -576,10 +580,12 @@ require('packer').startup(function()
 	}
 
 	use { 'xiyaowong/nvim-transparent',
-		config = require("transparent").setup({
-			enable = true,
-			extra_groups = {"NvimTreeNormal", "NvimTreeEndOfBuffer" }
-		})
+		config = function()
+			require("transparent").setup({
+				enable = true,
+				extra_groups = {"NvimTreeNormal", "NvimTreeEndOfBuffer" }
+			})
+		end
 	}
 end)
 
