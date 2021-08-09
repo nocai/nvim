@@ -575,8 +575,8 @@ require('packer').startup(function()
 
   -- use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
 	use {
-		'terrortylor/nvim-comment',
-		config = require('nvim_comment').setup()
+	 	'terrortylor/nvim-comment',
+	 	config = function () require('nvim_comment').setup() end
 	}
 
 	use { 'xiyaowong/nvim-transparent',
