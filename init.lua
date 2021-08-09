@@ -352,9 +352,8 @@ require('packer').startup(function()
 
   use { 'hrsh7th/nvim-compe',
 		requires = { 
-			{ 'hrsh7th/vim-vsnip' }, 
-			{'hrsh7th/vim-vsnip-integ'},
-			{ 'L3MON4D3/LuaSnip'}, { 'golang/vscode-go'},
+			{ 'hrsh7th/vim-vsnip' }, {'hrsh7th/vim-vsnip-integ'}, { 'golang/vscode-go'},
+			{ 'L3MON4D3/LuaSnip'},
 		},
 		after = 'nvim-lspconfig',
     config = function ()
