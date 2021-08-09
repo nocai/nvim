@@ -36,6 +36,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 
 local nvim_lsp = require('lspconfig')
 
+-- gopls
 nvim_lsp.gopls.setup {
 	cmd = {"gopls","--remote=auto"},
 	on_attach = on_attach,
@@ -47,14 +48,14 @@ nvim_lsp.gopls.setup {
 }
 vim.cmd([[autocmd BufWritePre *.go lua vim.lsp.buf.formatting()]])
 
+-- sumneko_lua
+local system_name = "Linux" -- (Linux, macOS, or Windows)
+local sumneko_root_path = vim.g.home..'/lua-language-server'
+local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 nvim_lsp.sumneko_lua.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = {
-		vim.g.home.."/lua-language-server/bin/Linux/lua-language-server",
-		"-E",
-		vim.g.home.."/lua-language-server/main.lua"
-	};
+	cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -63,7 +64,11 @@ nvim_lsp.sumneko_lua.setup {
 			},
 			runtime = {version = "LuaJIT"},
 			workspace = {
-				library = vim.list_extend({[vim.fn.expand(vim.g.nvim_home.."/lua")] = true},{}),
+				-- Make the server aware of Neovim runtime files
+				library = {
+					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
+					[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+				},
 			},
 		},
 	}
