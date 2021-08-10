@@ -96,7 +96,7 @@ require('packer').startup(function()
 		"npxbr/glow.nvim",
 		run = "GlowInstall",
 		config = function()
-			vim.cmd([[ noremap <leader>gl :Glow<CR> ]])
+			vim.cmd([[ nnoremap <leader>gl :Glow<CR> ]])
 		end
 	}
 
@@ -340,6 +340,12 @@ require('packer').startup(function()
 		},
 		after = 'nvim-lspconfig',
     config = function ()
+			require("nvim-autopairs.completion.compe").setup({
+				map_cr = true, --  map <CR> on insert mode
+				map_complete = true, -- it will auto insert `(` after select function or method item
+				auto_select = true,  -- auto select first item
+			})
+
       require('compe').setup {
 				min_length = 2;
 				max_menu_width = 30;
@@ -359,18 +365,38 @@ require('packer').startup(function()
         },
       }
 
-			require("nvim-autopairs.completion.compe").setup({
-				map_cr = true, --  map <CR> on insert mode
-				map_complete = true, -- it will auto insert `(` after select function or method item
-				auto_select = true,  -- auto select first item
-			})
-			vim.cmd([[
-				imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'
-				smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'
-
-				imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-				smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-			]])
+			local t = function(str)
+				return vim.api.nvim_replace_termcodes(str, true, true, true)
+			end
+			-- Use (s-)tab to:
+			--- move to prev/next item in completion menuone
+			--- jump to prev/next snippet's placeholder
+			_G.tab_complete = function()
+				if vim.fn['vsnip#available'](1) == 1 then
+					return t "<Plug>(vsnip-expand-or-jump)"
+				elseif is_pairs() then
+					return t "<Right>"
+				elseif check_back_space() then
+					return t "<Tab>"
+				else
+					return vim.fn['compe#complete']()
+				end
+			end
+			_G.s_tab_complete = function()
+				if vim.fn['vsnip#jumpable'](-1) == 1 then
+					return t "<Plug>(vsnip-jump-prev)"
+				elseif is_pairs(true) then
+					return t "<Left>"
+				elseif check_back_space() then
+					return t "<S-Tab>"
+				else
+					return vim.fn['compe#complete']()
+				end
+			end
+			vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+			vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+			vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+			vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
     end
   }
 
