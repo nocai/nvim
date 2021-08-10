@@ -3,8 +3,8 @@ require("global")
 --Remap space as leader key
 vim.cmd([[let mapleader = "\<space>"]])
 
-vim.api.nvim_set_keymap('', '<leader>rc', ':e ~/.config/nvim/init.lua<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('', '<leader>lf', ':luafile %<CR>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>rc', ':e ~/.config/nvim/init.lua<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>lf', ':luafile %<CR>', { noremap=true, silent=true })
 
 ----------------------------------------------------------------------------------------
 -- New cursor movement (Colmark Layout)
@@ -15,33 +15,39 @@ vim.api.nvim_set_keymap('', '<leader>lf', ':luafile %<CR>', { noremap=true, sile
 --     v
 
 -- nN => jJ => eE => kK => nN
-vim.api.nvim_set_keymap('', 'n', 'j', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', 'N', 'J', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', '<c-n>', '<c-j>', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', '<c-w>n', '<c-w>j', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'n', 'j', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('x', 'n', 'j', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'N', 'J', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<c-n>', '<c-j>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<c-w>n', '<c-w>j', { noremap=true, silent=true })
 
-vim.api.nvim_set_keymap('', 'j', 'e', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', 'J', 'E', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', '<c-j>', '<c-e>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'j', 'e', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('x', 'j', 'e', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'J', 'E', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<c-j>', '<c-e>', { noremap=true, silent=true })
 
-vim.api.nvim_set_keymap('', 'e', 'k', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', 'E', 'K', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', '<c-e>', '<c-k>', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', '<c-w>e', '<c-w>k', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'e', 'k', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('x', 'e', 'k', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'E', 'K', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<c-e>', '<c-k>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<c-w>e', '<c-w>k', { noremap=true, silent=true })
 
-vim.api.nvim_set_keymap('', 'k', 'n', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', 'K', 'N', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', '<c-k>', '<c-n>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'k', 'n', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('x', 'k', 'n', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'K', 'N', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<c-k>', '<c-n>', { noremap=true, silent=true })
 
 -- iI => lL => iI
-vim.api.nvim_set_keymap('', 'l', 'i', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', 'L', 'I', { noremap=true, silent=true })
--- api.nvim_set_keymap('', '<c-l>', '<c-i>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'l', 'i', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('x', 'l', 'i', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'L', 'I', { noremap=true, silent=true })
+-- api.nvim_set_keymap('n', '<c-l>', '<c-i>', { noremap=true, silent=true })
 
-vim.api.nvim_set_keymap('', 'i', 'l', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', 'I', 'L', { noremap=true, silent=true })
--- api.nvim_set_keymap('', '<c-i>', '<c-l>', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('', '<c-w>i', '<c-w>l', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'i', 'l', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('x', 'i', 'l', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'I', 'L', { noremap=true, silent=true })
+-- api.nvim_set_keymap('n', '<c-i>', '<c-l>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<c-w>i', '<c-w>l', { noremap=true, silent=true })
 
 vim.api.nvim_set_keymap('i', '<c-k>', '<c-n>', { noremap=true, silent=true })
 vim.api.nvim_set_keymap('i', '<c-e>', '<c-p>', { noremap=true, silent=true })
@@ -53,5 +59,5 @@ vim.api.nvim_set_keymap('t', '<m-h>', '<c-\\><c-n><c-w>h', { noremap=true, silen
 vim.api.nvim_set_keymap('t', '<m-i>', '<c-\\><c-n><c-w>l', { noremap=true, silent=true })
 
 -- 保存全部
-vim.api.nvim_set_keymap('', '<C-s>', ':wall<CR>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<C-s>', ':wall<CR>', { noremap=true, silent=true })
 

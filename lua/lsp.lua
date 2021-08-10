@@ -36,10 +36,10 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 	}
 }
 
-local nvim_lsp = require('lspconfig')
+local lspconfig = require('lspconfig')
 
 -- gopls
-nvim_lsp.gopls.setup {
+lspconfig.gopls.setup {
 	cmd = {"gopls","--remote=auto"},
 	on_attach = on_attach,
 	capabilities = capabilities,
@@ -61,7 +61,7 @@ if jit.os == "Linux" then
 end
 
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
-nvim_lsp.sumneko_lua.setup {
+lspconfig.sumneko_lua.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
@@ -84,3 +84,9 @@ nvim_lsp.sumneko_lua.setup {
 	}
 }
 
+-- rust-analyzer
+lspconfig.rust_analyzer.setup{
+	on_attach = on_attach,
+	capabilities = capabilities,
+	-- cmd = {vim.g.home.."/.local/bin/rust-analyzer-linux"}
+}
