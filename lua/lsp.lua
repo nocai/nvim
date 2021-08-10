@@ -1,3 +1,5 @@
+require("global")
+
 local on_attach = function(_, bufnr)
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -49,11 +51,15 @@ nvim_lsp.gopls.setup {
 vim.cmd([[autocmd BufWritePre *.go lua vim.lsp.buf.formatting()]])
 
 -- sumneko_lua
+local sumneko_root_path = vim.g.home..'/lua-language-server'
+if vim.g.is_macOS then
+	sumneko_root_path = vim.g.nvim_home..'/.lsp/lua-language-server'
+end
 local system_name = "macOS" -- (Linux, macOS, or Windows)
 if jit.os == "Linux" then
 	system_name = "Linux"
 end
-local sumneko_root_path = vim.g.home..'/lua-language-server'
+
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 nvim_lsp.sumneko_lua.setup {
 	on_attach = on_attach,

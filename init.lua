@@ -1,4 +1,6 @@
-require('g')
+require('mapping')
+require('option')
+require('autocmd')
 
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -294,7 +296,7 @@ require('packer').startup(function()
     end
   }
 
-  use { 'neovim/nvim-lspconfig', config = [[require('lsp')]] }
+  use { 'neovim/nvim-lspconfig', config = function() require('lsp') end }
 	use { 'onsails/lspkind-nvim',
 		config = function()
 			require('lspkind').init({
