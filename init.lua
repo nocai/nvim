@@ -39,23 +39,23 @@ require('packer').startup(function()
 
 
 	use {
-		{'kana/vim-textobj-indent',
-			 requires = {'kana/vim-textobj-user'},
-				config = function()
-					vim.cmd([[
-						let g:textobj_indent_no_default_key_mappings=1
-						xmap ll <Plug>(textobj-indent-i)
-						omap ll <Plug>(textobj-indent-i)
-						xmap lL <Plug>(textobj-indent-same-i)
-						omap lL <Plug>(textobj-indent-same-i)
-
-						xmap al <Plug>(textobj-indent-a)
-						omap al <Plug>(textobj-indent-a)
-						xmap aL <Plug>(textobj-indent-same-a)
-						omap aL <Plug>(textobj-indent-same-a)
-					]])
-				end
-		},
+-- 		{'kana/vim-textobj-indent',
+-- 			 requires = {'kana/vim-textobj-user'},
+-- 				config = function()
+-- 					vim.cmd([[
+-- 						let g:textobj_indent_no_default_key_mappings=1
+-- 						xmap ll <Plug>(textobj-indent-i)
+-- 						omap ll <Plug>(textobj-indent-i)
+-- 						xmap lL <Plug>(textobj-indent-same-i)
+-- 						omap lL <Plug>(textobj-indent-same-i)
+-- 
+-- 						xmap al <Plug>(textobj-indent-a)
+-- 						omap al <Plug>(textobj-indent-a)
+-- 						xmap aL <Plug>(textobj-indent-same-a)
+-- 						omap aL <Plug>(textobj-indent-same-a)
+-- 					]])
+-- 				end
+-- 		},
 		{'sgur/vim-textobj-parameter',
 			requires = { 'kana/vim-textobj-user' },
 			config = function()
@@ -101,12 +101,11 @@ require('packer').startup(function()
 	}
 
   -- UI to select things (files, grep results, open buffers...)
-  use {
-   'nvim-telescope/telescope.nvim',
-   requires = {
-		 { 'nvim-lua/popup.nvim' },
-		 { 'nvim-lua/plenary.nvim' },
-		 { 'nvim-telescope/telescope-fzf-native.nvim',
+  use { 'nvim-telescope/telescope.nvim',
+		requires = {
+		  { 'nvim-lua/popup.nvim' },
+		  { 'nvim-lua/plenary.nvim' },
+		  { 'nvim-telescope/telescope-fzf-native.nvim',
 				run = 'make',
 				config = function()
 					require('telescope').setup {
@@ -120,9 +119,9 @@ require('packer').startup(function()
 						}
 					}
 				end
-		 },
-	 },
-   config = function ()
+			},
+		},
+    config = function ()
 	   local actions = require "telescope.actions"
      require('telescope').setup {
        defaults = {
@@ -610,7 +609,7 @@ require('packer').startup(function()
 	use { 'xiyaowong/nvim-transparent',
 		config = function()
 			require("transparent").setup({
-				enable = true,
+				-- enable = true,
 				extra_groups = {"NvimTreeNormal", "NvimTreeEndOfBuffer" }
 			})
 		end

@@ -40,6 +40,7 @@ vim.api.nvim_set_keymap('n', '<c-k>', '<c-n>', { noremap=true, silent=true })
 -- iI => lL => iI
 vim.api.nvim_set_keymap('n', 'l', 'i', { noremap=true, silent=true })
 vim.api.nvim_set_keymap('x', 'l', 'i', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('o', 'l', 'i', { noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'L', 'I', { noremap=true, silent=true })
 -- api.nvim_set_keymap('n', '<c-l>', '<c-i>', { noremap=true, silent=true })
 
