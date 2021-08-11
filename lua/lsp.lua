@@ -1,6 +1,6 @@
 require("global")
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -23,7 +23,14 @@ local on_attach = function(_, bufnr)
 	buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 	buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
+  -- formatting
 	buf_set_keymap("n", "<leader>fm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  if client.resolved_capabilities.document_formatting then
+    vim.api.nvim_command [[augroup Format]]
+    vim.api.nvim_command [[autocmd! * <buffer>]]
+    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
+    vim.api.nvim_command [[augroup END]]
+  end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -46,9 +53,17 @@ lspconfig.gopls.setup {
 	init_options = {
 		usePlaceholders=true,
 		completeUnimported=true,
+		analyses = {
+			unreachable= true,
+			unusedparams= true,
+		},
+		staticcheck = true,
+		codelenses = {
+			generate = true,
+			tidy = true,
+		}
 	}
 }
-vim.cmd([[autocmd BufWritePre *.go lua vim.lsp.buf.formatting()]])
 
 -- sumneko_lua
 local sumneko_root_path = vim.g.home..'/lua-language-server'
