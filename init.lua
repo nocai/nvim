@@ -333,7 +333,6 @@ require('packer').startup(function()
 		{'hrsh7th/nvim-compe',
 			requires = {{'hrsh7th/vim-vsnip' }, {'hrsh7th/vim-vsnip-integ'}, {'golang/vscode-go'}, -- {'L3MON4D3/LuaSnip'}
 			},
-			after = 'nvim-lspconfig',
 			config = function ()
 				require("nvim-autopairs.completion.compe").setup({
 					map_cr = true, --  map <CR> on insert mode
@@ -341,20 +340,20 @@ require('packer').startup(function()
 					auto_select = true,  -- auto select first item
 				})
 				require('compe').setup {
-					min_length = 2;
-					max_menu_width = 30;
-					max_abbr_width = 30;
-					max_kind_width = 30;
+					min_length = 2,
+					max_menu_width = 20,
+					max_abbr_width = 20,
+					max_kind_width = 20,
 					source = {
-						path = true,
+						path = false,
 						buffer = true,
-						tags = true,
+						tags = false,
 
 						nvim_lsp = true,
 						nvim_lua = true,
 
 						vsnip = true,
-						luasnip = true,
+						luasnip = false,
 						ultisnips = false,
 						calc = false,
 					},
@@ -552,7 +551,7 @@ require('packer').startup(function()
 						lualine_c = {{'filename'}, {
 							'diagnostics',
 							sources = {'nvim_lsp'},
-							symbols = {error = ' ', warn = ' ', info = ' '}
+							-- symbols = {error = ' ', warn = ' ', info = ' '}
 						}},
 						lualine_x = {{lsp}, {'encoding'}, {'fileformat'}, 'filetype'},
 						lualine_y = {'progress'},
