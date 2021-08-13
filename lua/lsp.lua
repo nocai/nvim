@@ -1,5 +1,11 @@
 require("global")
 
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    update_in_insert = true,
+})
+
 local on_attach = function(client, bufnr)
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -58,10 +64,10 @@ lspconfig.gopls.setup {
 			unusedparams= true,
 		},
 		staticcheck = true,
-		codelenses = {
-			generate = true,
-			tidy = true,
-		}
+		-- codelenses = {
+		-- 	generate = true,
+		-- 	tidy = true,
+		-- }
 	}
 }
 

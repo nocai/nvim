@@ -1,7 +1,7 @@
 require('mapping')
 require('option')
 require('autocmd')
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -52,45 +52,46 @@ require('packer').startup(function()
 		},
 		{'npxbr/glow.nvim',
 			run = "GlowInstall",
-			config = function()
-				vim.cmd([[ nnoremap <leader>gl :Glow<CR> ]])
-			end
+			cmd = 'Glow',
+			-- config = function()
+			-- 	vim.cmd([[ nnoremap <leader>gl :Glow<CR> ]])
+			-- end
 		}
 	}
 
 	-- textobject
-	use {
-		{'kana/vim-textobj-user'},
-		{'kana/vim-textobj-indent',
-			requires = {'kana/vim-textobj-user'},
-			config = function()
-				vim.cmd([[
-					let g:textobj_indent_no_default_key_mappings=1
-					xmap ll <Plug>(textobj-indent-i)
-					omap ll <Plug>(textobj-indent-i)
-					xmap lL <Plug>(textobj-indent-same-i)
-					omap lL <Plug>(textobj-indent-same-i)
-
-					xmap al <Plug>(textobj-indent-a)
-					omap al <Plug>(textobj-indent-a)
-					xmap aL <Plug>(textobj-indent-same-a)
-					omap aL <Plug>(textobj-indent-same-a)
-				]])
-			end
-		},
-		{'sgur/vim-textobj-parameter',
-			requires = { 'kana/vim-textobj-user' },
-			config = function()
-				vim.cmd([[
-					let g:vim_textobj_parameter_mapping = 'a'
-					xmap la <Plug>(textobj-parameter-i)
-					omap la <Plug>(textobj-parameter-i)
-					xmap aa <Plug>(textobj-parameter-a)
-					omap aa <Plug>(textobj-parameter-a)
-				]])
-			end
-		},
-	}
+	-- use {
+	-- 	{'kana/vim-textobj-user'},
+-- 		{'kana/vim-textobj-indent',
+-- 			requires = {'kana/vim-textobj-user'},
+-- 			config = function()
+-- 				vim.cmd([[
+-- 					let g:textobj_indent_no_default_key_mappings=1
+-- 					xmap ll <Plug>(textobj-indent-i)
+-- 					omap ll <Plug>(textobj-indent-i)
+-- 					xmap lL <Plug>(textobj-indent-same-i)
+-- 					omap lL <Plug>(textobj-indent-same-i)
+-- 
+-- 					xmap al <Plug>(textobj-indent-a)
+-- 					omap al <Plug>(textobj-indent-a)
+-- 					xmap aL <Plug>(textobj-indent-same-a)
+-- 					omap aL <Plug>(textobj-indent-same-a)
+-- 				]])
+-- 			end
+-- 		},
+	-- 	{'sgur/vim-textobj-parameter',
+	-- 		requires = { 'kana/vim-textobj-user' },
+	-- 		config = function()
+	-- 			vim.cmd([[
+	-- 				let g:vim_textobj_parameter_mapping = 'a'
+	-- 				xmap la <Plug>(textobj-parameter-i)
+	-- 				omap la <Plug>(textobj-parameter-i)
+	-- 				xmap aa <Plug>(textobj-parameter-a)
+	-- 				omap aa <Plug>(textobj-parameter-a)
+	-- 			]])
+	-- 		end
+	-- 	},
+	-- }
 
 	-- telescope
 	use {
@@ -98,27 +99,13 @@ require('packer').startup(function()
 			requires = {
 				{'nvim-lua/popup.nvim' },
 				{'nvim-lua/plenary.nvim' },
-				{'nvim-telescope/telescope-fzf-native.nvim',
-					run = 'make',
-					config = function()
-						require('telescope').setup {
-							extensions = {
-								fzf = {
-									fuzzy = true,                    -- false will only do exact matching
-									override_generic_sorter = false, -- override the generic sorter
-									override_file_sorter = true,     -- override the file sorter
-									case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-								}
-							}
-						}
-					end
-				},
 			},
 			config = function ()
 				local actions = require "telescope.actions"
 				require('telescope').setup {
 					defaults = {
-						selection_strategy = "follow",
+						prompt_prefix='🔍',
+						previewers = true,
 						mappings = {
 							i = {
 								["<C-k>"] = false,
@@ -142,34 +129,47 @@ require('packer').startup(function()
 					},
 				}
 			 --Add leader shortcuts
-			 vim.api.nvim_set_keymap('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files({previewers = true})<CR>]], { noremap = true, silent = true })
+			 vim.api.nvim_set_keymap('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<CR>]], { noremap = true, silent = true })
 			 vim.api.nvim_set_keymap('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
 			 vim.api.nvim_set_keymap('n', '<leader>f/', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
 			 vim.api.nvim_set_keymap('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
 			 -- vim.api.nvim_set_keymap('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
 			 vim.api.nvim_set_keymap('n', '<leader>fr', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
-			 vim.api.nvim_set_keymap('n', '<leader>fo', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
+			 -- vim.api.nvim_set_keymap('n', '<leader>fo', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
 
-			vim.api.nvim_set_keymap('n', 'gr', [[<cmd>lua require('telescope.builtin').lsp_references({previewers = true})<CR>]], { noremap = true, silent = true })
-			vim.api.nvim_set_keymap('n', 'gI', [[<cmd>lua require('telescope.builtin').lsp_implementations({previewers = true})<CR>]], { noremap = true, silent = true })
-			vim.api.nvim_set_keymap('n', '<leader>wd', [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics({previewers = true})<CR>]], { noremap = true, silent = true })
-			vim.api.nvim_set_keymap('n', '<leader>wD', [[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics({previewers = true})<CR>]], { noremap = true, silent = true })
-
-			require('telescope').load_extension('fzf')
+			vim.api.nvim_set_keymap('n', 'gr', [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]], { noremap = true, silent = true })
+			vim.api.nvim_set_keymap('n', 'gI', [[<cmd>lua require('telescope.builtin').lsp_implementations()<CR>]], { noremap = true, silent = true })
+			vim.api.nvim_set_keymap('n', '<leader>wd', [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>]], { noremap = true, silent = true })
+			vim.api.nvim_set_keymap('n', '<leader>wD', [[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>]], { noremap = true, silent = true })
 		 end
 		},
-		{
-			"nvim-telescope/telescope-frecency.nvim",
-			requires = {"tami5/sql.nvim"},
+		{'nvim-telescope/telescope-fzf-native.nvim', run = 'make',
 			config = function()
-				require"telescope".load_extension("frecency")
+				require('telescope').setup {
+					extensions = {
+						fzf = {
+							fuzzy = true,                    -- false will only do exact matching
+							override_generic_sorter = true, -- override the generic sorter
+							override_file_sorter = true,     -- override the file sorter
+							case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+						}
+					}
+				}
+				require('telescope').load_extension('fzf')
 			end
 		}
+	 -- {
+	 -- 		"nvim-telescope/telescope-frecency.nvim",
+	 -- 		requires = {"tami5/sql.nvim"},
+	 -- 		config = function()
+	 -- 			require"telescope".load_extension("frecency")
+	 -- 		end
+	 -- }
 	}
 
 	-- git
 	use {
-		{'tpope/vim-fugitive'},
+		{'tpope/vim-fugitive', cmd = 'G'},
 		{'lewis6991/gitsigns.nvim',
 			requires = {'nvim-lua/plenary.nvim'},
 			config = function()
@@ -190,14 +190,12 @@ require('packer').startup(function()
 	-- treesitter
 	use {
 		{'nvim-treesitter/nvim-treesitter',
+			run = 'TSUpdate',
 			config = function ()
-				-- Treesitter configuration
-				-- Parsers must be installed manually via :TSInstall
+				-- :TSInstall
 				require('nvim-treesitter.configs').setup {
-					highlight = {
-						enable = true, -- false will disable the whole extension
-						additional_vim_regex_highlighting = false,
-					},
+					indent = { enable = true },
+					highlight = { enable = true },
 					incremental_selection = {
 						enable = true,
 						keymaps = {
@@ -207,10 +205,9 @@ require('packer').startup(function()
 							node_decremental = 'grm',
 						},
 					},
-					indent = {
-						enable = true,
-					},
 				}
+				-- vim.api.nvim_command('set foldmethod=expr')
+				-- vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
 			end
 		},
 		{'p00f/nvim-ts-rainbow',
@@ -243,16 +240,60 @@ require('packer').startup(function()
 							lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
 							keymaps = {
 								-- You can use the capture groups defined in textobjects.scm
-								['af'] = '@function.outer',
 								['lf'] = '@function.inner',
-
-								['ac'] = '@class.outer',
+								['af'] = '@function.outer',
 								['lc'] = '@class.inner',
+								['ac'] = '@class.outer',
+
+								['ll'] = '@loop.inner',
+								['al'] = '@loop.outer',
 
 								['li'] = '@conditional.inner',
 								['ai'] = '@conditional.outer',
+
+								['l.'] = '@call.inner',
+								['a.'] = '@call.outer',
+								['l,'] = '@parameter.inner',
+								['a,'] = '@parameter.outer',
 							},
 						},
+						move = {
+							enable = true,
+							set_jumps = true, -- whether to set jumps in the jumplist
+							goto_next_start = {
+								["]f"] = "@function.outer",
+								["]c"] = "@class.outer",
+								[']l'] = '@loop.outer',
+								[']i'] = '@conditional.outer',
+								['],'] = '@parameter.outer',
+								['].'] = '@call.outer',
+							},
+							goto_previous_start = {
+								["[f"] = "@function.outer",
+								["[c"] = "@class.outer",
+								['[l'] = '@loop.outer',
+								['[i'] = '@conditional.outer',
+								['[,'] = '@parameter.outer',
+								['[.'] = '@call.outer',
+							},
+						},
+						swap = {
+							enable = true,
+							swap_next = {
+								["sn,"] = "@parameter.inner",
+							},
+							swap_previous = {
+								["sp,"] = "@parameter.inner",
+							},
+						},
+						-- lsp_interop = {
+						-- 	enable = true,
+						-- 	border = 'none',
+						-- 	peek_definition_code = {
+						-- 		["gpf"] = "@function.outer",
+						-- 		["gpc"] = "@class.outer",
+						-- 	},
+						-- },
 					},
 				}
 			end
@@ -306,8 +347,10 @@ require('packer').startup(function()
 					-- override preset symbols
 					symbol_map = {
 						Text = '',
-						Method = 'ƒ',
-						Function = '',
+						-- Method = 'ƒ',
+						-- Function = '',
+						Method = '',
+						Function = '',
 						Constructor = '',
 						Variable = '',
 						Field = '',
@@ -331,16 +374,14 @@ require('packer').startup(function()
 			end
 		},
 		{'hrsh7th/nvim-compe',
-			requires = {{'hrsh7th/vim-vsnip' }, {'hrsh7th/vim-vsnip-integ'}, {'golang/vscode-go'}, -- {'L3MON4D3/LuaSnip'}
+			requires = {{'hrsh7th/vim-vsnip' },
+			-- {'hrsh7th/vim-vsnip-integ'} -- , 
+				{'golang/vscode-go'} --, {'L3MON4D3/LuaSnip'}
 			},
 			config = function ()
-				require("nvim-autopairs.completion.compe").setup({
-					map_cr = true, --  map <CR> on insert mode
-					map_complete = true, -- it will auto insert `(` after select function or method item
-					auto_select = true,  -- auto select first item
-				})
 				require('compe').setup {
 					min_length = 2,
+					preselect = 'disable',
 					max_menu_width = 20,
 					max_abbr_width = 20,
 					max_kind_width = 20,
@@ -366,10 +407,10 @@ require('packer').startup(function()
 				--- move to prev/next item in completion menuone
 				--- jump to prev/next snippet's placeholder
 				_G.tab_complete = function()
-					if vim.fn['vsnip#available'](1) == 1 then
-						return t "<Plug>(vsnip-expand-or-jump)"
-					elseif is_pairs() then
+					if is_pairs() then
 						return t "<Right>"
+					elseif vim.fn['vsnip#available'](1) == 1 then
+						return t "<Plug>(vsnip-expand-or-jump)"
 					elseif check_back_space() then
 						return t "<Tab>"
 					else
@@ -377,10 +418,10 @@ require('packer').startup(function()
 					end
 				end
 				_G.s_tab_complete = function()
-					if vim.fn['vsnip#jumpable'](-1) == 1 then
-						return t "<Plug>(vsnip-jump-prev)"
-					elseif is_pairs(true) then
+					if is_pairs(true) then
 						return t "<Left>"
+					elseif vim.fn['vsnip#jumpable'](-1) == 1 then
+						return t "<Plug>(vsnip-jump-prev)"
 					elseif check_back_space() then
 						return t "<S-Tab>"
 					else
@@ -391,13 +432,22 @@ require('packer').startup(function()
 				vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 				vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 				vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
+				-- vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
 			end
-		}, {
+		},
+		{
 			'windwp/nvim-autopairs',
 			config = function()
 				require('nvim-autopairs').setup()
+				require("nvim-autopairs.completion.compe").setup({
+					map_cr = true, --  map <CR> on insert mode
+					map_complete = true, -- it will auto insert `(` after select function or method item
+					auto_select = true,  -- auto select first item
+				})
 			end
-		}, {
+		},
+		{
 			'mhartington/formatter.nvim',
 			config = function ()
 				require('formatter').setup{
@@ -426,6 +476,7 @@ require('packer').startup(function()
 			'terrortylor/nvim-comment',
 			config = function () require('nvim_comment').setup() end
 		},
+		-- { 'yamatsum/nvim-cursorline' },
 		-- {
 		-- 	'fatih/vim-go',
 		-- 	run = 'GoUpdateBinaries',
@@ -498,7 +549,8 @@ require('packer').startup(function()
 			config = vim.cmd [[ colorscheme onedark ]]
 		},{
 			'lukas-reineke/indent-blankline.nvim',
-			config = function()
+			cmd = 'IndentBlanklineToggle',
+			setup = function()
 				vim.g.indent_blankline_char = '┊'
 				vim.g.indent_blankline_filetype_exclude = { 'help', 'packer', 'nvimtree' }
 				vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile', 'packer' }

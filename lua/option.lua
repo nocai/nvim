@@ -2,7 +2,7 @@ vim.o.termguicolors = true
 
 --Incremental live completion
 vim.o.inccommand = 'nosplit'
-vim.o.completeopt = 'menuone,noselect,noinsert'
+vim.o.completeopt = 'menuone,noselect'
 
 --Set highlight on search
 vim.o.hlsearch = false
@@ -47,7 +47,7 @@ vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 
--- vim.wo.foldenable = false
+vim.wo.foldenable = false
 -- vim.wo.foldmethod = 'indent'
 -- vim.wo.foldmethod = 'syntax'
 
