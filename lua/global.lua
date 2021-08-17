@@ -14,7 +14,7 @@ function _G.check_back_space()
   end
 end
 
-local ps = {'(',')', '[',']', '{','}', '<', '>', '\'', '"', '`', '.', ',', ';'}
+local ps = {'(',')', '[',']', '{','}', '<', '>', '\'', '"', '`'} -- , '.', ',', ';'}
 function _G.is_pairs(shift)
 	local col = vim.fn.col('.')
 

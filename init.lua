@@ -26,10 +26,11 @@ require('packer').startup(function()
 			end
 		},
 		{'karb94/neoscroll.nvim', event = "WinScrolled",
-			config = [[require('neoscroll').setup()]]
+			config = function () require('neoscroll').setup() end
 		},
-		{ 'tpope/vim-surround' },
-		{ 'tpope/vim-repeat' },
+		-- { "tpope/vim-surround" },
+		-- { 'tpope/vim-repeat' },
+		{ 'machakann/vim-sandwich' },
 		{'voldikss/vim-floaterm',
 		  config = function ()
 				vim.cmd([[
@@ -60,8 +61,8 @@ require('packer').startup(function()
 	}
 
 	-- textobject
-	-- use {
-	-- 	{'kana/vim-textobj-user'},
+	use {
+		{'kana/vim-textobj-user'},
 -- 		{'kana/vim-textobj-indent',
 -- 			requires = {'kana/vim-textobj-user'},
 -- 			config = function()
@@ -79,19 +80,19 @@ require('packer').startup(function()
 -- 				]])
 -- 			end
 -- 		},
-	-- 	{'sgur/vim-textobj-parameter',
-	-- 		requires = { 'kana/vim-textobj-user' },
-	-- 		config = function()
-	-- 			vim.cmd([[
-	-- 				let g:vim_textobj_parameter_mapping = 'a'
-	-- 				xmap la <Plug>(textobj-parameter-i)
-	-- 				omap la <Plug>(textobj-parameter-i)
-	-- 				xmap aa <Plug>(textobj-parameter-a)
-	-- 				omap aa <Plug>(textobj-parameter-a)
-	-- 			]])
-	-- 		end
-	-- 	},
-	-- }
+		{'sgur/vim-textobj-parameter',
+			requires = { 'kana/vim-textobj-user' },
+			config = function()
+				vim.cmd([[
+					let g:vim_textobj_parameter_mapping = 'a'
+					xmap la <Plug>(textobj-parameter-i)
+					omap la <Plug>(textobj-parameter-i)
+					xmap aa <Plug>(textobj-parameter-a)
+					omap aa <Plug>(textobj-parameter-a)
+				]])
+			end
+		},
+	}
 
 	-- telescope
 	use {
@@ -129,18 +130,19 @@ require('packer').startup(function()
 					},
 				}
 			 --Add leader shortcuts
-			 vim.api.nvim_set_keymap('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<CR>]], { noremap = true, silent = true })
+			 vim.api.nvim_set_keymap('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], { noremap = true, silent = true })
+			 vim.api.nvim_set_keymap('n', '<leader>fr', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
 			 vim.api.nvim_set_keymap('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
-			 vim.api.nvim_set_keymap('n', '<leader>f/', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
+			 -- vim.api.nvim_set_keymap('n', '<leader>f/', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
 			 vim.api.nvim_set_keymap('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
 			 -- vim.api.nvim_set_keymap('n', '<leader>fl', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
-			 vim.api.nvim_set_keymap('n', '<leader>fr', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
 			 -- vim.api.nvim_set_keymap('n', '<leader>fo', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
 
-			vim.api.nvim_set_keymap('n', 'gr', [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]], { noremap = true, silent = true })
-			vim.api.nvim_set_keymap('n', 'gI', [[<cmd>lua require('telescope.builtin').lsp_implementations()<CR>]], { noremap = true, silent = true })
-			vim.api.nvim_set_keymap('n', '<leader>wd', [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>]], { noremap = true, silent = true })
-			vim.api.nvim_set_keymap('n', '<leader>wD', [[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>]], { noremap = true, silent = true })
+			 vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], { noremap = true, silent = true })
+			 vim.api.nvim_set_keymap('n', '<leader>gr', [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]], { noremap = true, silent = true })
+			 vim.api.nvim_set_keymap('n', '<leader>gi', [[<cmd>lua require('telescope.builtin').lsp_implementations()<CR>]], { noremap = true, silent = true })
+			 vim.api.nvim_set_keymap('n', '<leader>wd', [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>]], { noremap = true, silent = true })
+			 vim.api.nvim_set_keymap('n', '<leader>wD', [[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>]], { noremap = true, silent = true })
 		 end
 		},
 		{'nvim-telescope/telescope-fzf-native.nvim', run = 'make',
@@ -150,7 +152,7 @@ require('packer').startup(function()
 						fzf = {
 							fuzzy = true,                    -- false will only do exact matching
 							override_generic_sorter = true, -- override the generic sorter
-							override_file_sorter = true,     -- override the file sorter
+							override_file_sorter = false,     -- override the file sorter
 							case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
 						}
 					}
@@ -262,19 +264,27 @@ require('packer').startup(function()
 							set_jumps = true, -- whether to set jumps in the jumplist
 							goto_next_start = {
 								["]f"] = "@function.outer",
-								["]c"] = "@class.outer",
+								["]]"] = "@class.outer",
 								[']l'] = '@loop.outer',
 								[']i'] = '@conditional.outer',
 								['],'] = '@parameter.outer',
 								['].'] = '@call.outer',
 							},
+							goto_next_end = {
+								["]F"] = "@function.outer",
+								["]["] = "@class.outer",
+							},
 							goto_previous_start = {
 								["[f"] = "@function.outer",
-								["[c"] = "@class.outer",
+								["[["] = "@class.outer",
 								['[l'] = '@loop.outer',
 								['[i'] = '@conditional.outer',
 								['[,'] = '@parameter.outer',
 								['[.'] = '@call.outer',
+							},
+							goto_previous_end = {
+								["[F"] = "@function.outer",
+								["[]"] = "@class.outer",
 							},
 						},
 						swap = {
@@ -347,10 +357,8 @@ require('packer').startup(function()
 					-- override preset symbols
 					symbol_map = {
 						Text = '',
-						-- Method = 'ƒ',
-						-- Function = '',
-						Method = '',
-						Function = '',
+						Method = 'ƒ',
+						Function = '',
 						Constructor = '',
 						Variable = '',
 						Field = '',
@@ -376,27 +384,27 @@ require('packer').startup(function()
 		{'hrsh7th/nvim-compe',
 			requires = {{'hrsh7th/vim-vsnip' },
 			-- {'hrsh7th/vim-vsnip-integ'} -- , 
-				{'golang/vscode-go'} --, {'L3MON4D3/LuaSnip'}
+				-- {'golang/vscode-go'} --, {'L3MON4D3/LuaSnip'}
 			},
 			config = function ()
 				require('compe').setup {
-					min_length = 2,
-					preselect = 'disable',
-					max_menu_width = 20,
-					max_abbr_width = 20,
-					max_kind_width = 20,
+					min_length = 3;
+					preselect = 'disable';
+					max_menu_width = 20;
+					max_abbr_width = 20;
+					max_kind_width = 20;
 					source = {
-						path = false,
-						buffer = true,
-						tags = false,
+						path = false;
+						buffer = true;
+						tags = false;
 
-						nvim_lsp = true,
-						nvim_lua = true,
+						nvim_lsp = true;
+						nvim_lua = true;
 
-						vsnip = true,
-						luasnip = false,
-						ultisnips = false,
-						calc = false,
+						vsnip = true;
+						luasnip = false;
+						ultisnips = false;
+						calc = false;
 					},
 				}
 
@@ -411,6 +419,8 @@ require('packer').startup(function()
 						return t "<Right>"
 					elseif vim.fn['vsnip#available'](1) == 1 then
 						return t "<Plug>(vsnip-expand-or-jump)"
+					elseif vim.fn.pumvisible() == 1 then
+						return vim.fn['compe#confirm']({ keys = '<CR>', select = true })
 					elseif check_back_space() then
 						return t "<Tab>"
 					else
@@ -470,7 +480,7 @@ require('packer').startup(function()
 				vim.g.symbols_outline = {
 					auto_preview = false,
 				}
-				vim.api.nvim_set_keymap('n', 'fo', ':SymbolsOutline<CR>', { noremap = true, silent = true })
+				vim.api.nvim_set_keymap('n', '<leader>so', ':SymbolsOutline<CR>', { noremap = true })
 			end
 		}, {
 			'terrortylor/nvim-comment',
@@ -483,64 +493,6 @@ require('packer').startup(function()
 		-- }
 
 	}
-  -- use {
-    -- 'neoclide/coc.nvim',
-		-- requires = {
-			-- { 'honza/vim-snippets' },
-		-- },
-    -- branch = 'release',
-    -- config = function ()
-    --   vim.cmd([[
-    --     let g:coc_snippet_next = '<TAB>'
-    --     let g:coc_snippet_prev = '<S-TAB>'
-    --     let g:snips_author = 'bucai'
-
-    --     let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-translator','coc-json', 'coc-lists', 'coc-actions' ]
-
-    --     autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
-
-    --     inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
-
-    --     nmap <silent>[g <Plug>(coc-diagnostic-prev)
-    --     nmap <silent>]g <Plug>(coc-diagnostic-next)
-
-    --     nmap <silent>gd <Plug>(coc-definition)
-    --     nmap <silent>gD <Plug>(coc-declaration)
-    --     nmap <silent>gy <Plug>(coc-type-definition)
-    --     nmap <silent>gi <Plug>(coc-implementation)
-    --     nmap <silent>gr <Plug>(coc-references)
-    --     nmap <silent>rn <Plug>(coc-rename)
-
-    --     nmap <silent><leader>fc <Plug>(coc-fix-current)
-    --     nmap <silent><leader>rf <Plug>(coc-refactor)
-
-    --     nmap <silent><leader>ca <Plug>(coc-codeaction)
-
-    --     nnoremap <silent><leader><leader>l :<C-u>CocList<cr>
-    --     nnoremap <silent><leader><leader>a :<C-u>CocList diagnostics<cr>
-    --     nnoremap <silent><leader><leader>o :<C-u>CocList outline<cr>
-    --     " nnoremap <silent><leader><leader>s :<C-u>CocList -I symbols<cr>
-    --     nnoremap <silent><leader><leader>n :<C-u>CocNext<CR>
-    --     nnoremap <silent><leader><leader>p :<C-u>CocPrev<CR>
-    --     nnoremap <silent><leader><leader>r :<C-u>CocListResume<CR>
-
-				-- " Use K to show documentation in preview window
-    --     nnoremap <silent>E :call CocActionAsync('doHover')<CR>
-
-				-- nmap <Leader>tr <Plug>(coc-translator-p)
-				-- vmap <Leader>tr <Plug>(coc-translator-pv)
-
-				-- " Remap <C-f> and <C-b> for scroll float windows/popups.
-				-- if has('nvim-0.4.0') || has('patch-8.2.0750')
-					-- inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-					-- inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-					-- vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-					-- vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-				-- endif
-
-    --   ]])
-    -- end
-  -- }
 
 
 	-- UI
@@ -564,7 +516,7 @@ require('packer').startup(function()
 			config = function ()
 				vim.g.nvim_tree_auto_close = 1
 				vim.g.nvim_tree_auto_open = 1
-				 -- vim.g.nvim_tree_quit_on_open = 1
+				-- vim.g.nvim_tree_quit_on_open = 1
 				vim.g.nvim_tree_highlight_opened_files = 3
 				vim.g.nvim_tree_follow = 1
 				vim.g.nvim_tree_width_allow_resize  = 1
@@ -621,6 +573,10 @@ require('packer').startup(function()
 						offsets = {{filetype = "NvimTree", text = "Press g? for help", text_align = "left"}}
 					}
 				}
+				vim.cmd([[
+					nnoremap <silent>]b :BufferLineCycleNext<CR>
+					nnoremap <silent>[b :BufferLineCyclePrev<CR>
+				]])
 			end
 		},{
 			'xiyaowong/nvim-transparent',
@@ -632,9 +588,56 @@ require('packer').startup(function()
 			end
 		},
  	}
-
-
 end)
 
 
 
+--   use {
+--     'neoclide/coc.nvim',
+-- 		requires = {
+-- 			{ 'honza/vim-snippets' },
+-- 		},
+--     branch = 'release',
+--     config = function ()
+--       vim.cmd([[
+--         let g:coc_snippet_next = '<Tab>'
+--         let g:coc_snippet_prev = '<S-Tab>'
+--         let g:snips_author = 'bucai'
+ 
+--         let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-json' ]
+-- 
+--         autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
+ 
+--         inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
+ 
+--         nmap <silent>[g <Plug>(coc-diagnostic-prev)
+--         nmap <silent>]g <Plug>(coc-diagnostic-next)
+ 
+--         nmap <silent>gd <Plug>(coc-definition)
+--         nmap <silent>gD <Plug>(coc-declaration)
+--         nmap <silent>gy <Plug>(coc-type-definition)
+--         nmap <silent>gi <Plug>(coc-implementation)
+--         nmap <silent>gr <Plug>(coc-references)
+--         nmap <silent>rn <Plug>(coc-rename)
+ 
+--         nmap <silent><leader>fc <Plug>(coc-fix-current)
+--         nmap <silent><leader>rf <Plug>(coc-refactor)
+ 
+--         nmap <silent><leader>ca <Plug>(coc-codeaction)
+ 
+--         nnoremap <silent><leader><leader>l :<C-u>CocList<cr>
+--         nnoremap <silent><leader><leader>a :<C-u>CocList diagnostics<cr>
+--         nnoremap <silent><leader><leader>o :<C-u>CocList outline<cr>
+--         " nnoremap <silent><leader><leader>s :<C-u>CocList -I symbols<cr>
+--         nnoremap <silent><leader><leader>n :<C-u>CocNext<CR>
+--         nnoremap <silent><leader><leader>p :<C-u>CocPrev<CR>
+--         nnoremap <silent><leader><leader>r :<C-u>CocListResume<CR>
+ 
+-- 				" Use K to show documentation in preview window
+--         nnoremap <silent>E :call CocActionAsync('doHover')<CR>
+ 
+-- 				nmap <Leader>tr <Plug>(coc-translator-p)
+-- 				vmap <Leader>tr <Plug>(coc-translator-pv)
+--			 ]])
+--     end
+--   }
