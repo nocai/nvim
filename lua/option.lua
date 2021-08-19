@@ -36,7 +36,7 @@ vim.o.colorcolumn = '88'
 
 vim.o.clipboard = 'unnamedplus'
 -- vim.o.list = true
--- vim.o.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
+vim.o.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
 
 vim.o.scrolloff      = 5
 vim.o.sidescrolloff  = 5
