@@ -1,5 +1,4 @@
 require('global')
-require('mapping')
 require('option')
 require('autocmd')
 -- vim.lsp.set_log_level("debug")
@@ -22,7 +21,7 @@ use {
 	-- { 'tpope/vim-repeat' },
 	{ 'tweekmonster/startuptime.vim', cmd = {'StartupTime'} },
 	{ 'npxbr/glow.nvim', run = "GlowInstall", cmd = 'Glow', },
-	{ 'voldikss/vim-translator', cmd = { 'Translate', 'TranslateW' }, },
+	{ 'voldikss/vim-translator', cmd = { 'TranslateW' }, },
 	{'karb94/neoscroll.nvim', event = "WinScrolled", config = function () require('neoscroll').setup() end },
 	{ 'machakann/vim-sandwich',
 		config = function ()
@@ -466,7 +465,6 @@ use {
 			vim.g.symbols_outline = {
 				auto_preview = false,
 			}
-			vim.api.nvim_set_keymap('n', '<leader><leader>s', ':SymbolsOutline<CR>', { noremap = true })
 		end
 	},
 	{ 'terrortylor/nvim-comment',
@@ -482,7 +480,10 @@ use {
 -- UI
 use {{
 	'navarasu/onedark.nvim',
-		config = vim.cmd [[ colorscheme onedark ]]
+		config = function ()
+			-- vim.g.onedark_transparent_background = true
+			vim.cmd [[ colorscheme onedark ]]
+		end
 	},{
 		'lukas-reineke/indent-blankline.nvim',
 		cmd = 'IndentBlanklineToggle',
@@ -507,7 +508,7 @@ use {{
 			-- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', 'logs'}
 			vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 1, folder_arrows = 1 }
 
-			vim.api.nvim_set_keymap('n', '<leader><leader>f', ':NvimTreeFindFile<CR>', { noremap=true, silent=true })
+			vim.api.nvim_set_keymap('n', '<leader><leader>', ':NvimTreeFindFile<CR>', { noremap=true, silent=true })
 			vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
 		end,
 	},{
