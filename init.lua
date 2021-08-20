@@ -19,6 +19,7 @@ use { 'wbthomason/packer.nvim' } -- Package manager
 use {
 	-- { "tpope/vim-surround" },
 	-- { 'tpope/vim-repeat' },
+	{ 'jiangmiao/auto-pairs' },
 	{ 'tweekmonster/startuptime.vim', cmd = {'StartupTime'} },
 	{ 'npxbr/glow.nvim', run = "GlowInstall", cmd = 'Glow', },
 	{ 'voldikss/vim-translator', cmd = { 'TranslateW' }, },
@@ -383,11 +384,19 @@ use {
 			})
 		end
 	},
+  -- { 'mfussenegger/nvim-lsp-compl',
+  -- 		requires = {
+  -- 			{'hrsh7th/vim-vsnip' },
+  -- 			{'rafamadriz/friendly-snippets'},
+  -- 		},
+  --   config = function()
+  -- 			require('lsp_compl').expand_snippet = vim.fn['vsnip#anonymous']
+  -- 		end
+  -- },
 	{'hrsh7th/nvim-compe',
-		requires = {{'hrsh7th/vim-vsnip' },
+		requires = {
+			{'hrsh7th/vim-vsnip' },
 			{'rafamadriz/friendly-snippets'},
-		-- {'hrsh7th/vim-vsnip-integ'} -- , 
-			-- {'golang/vscode-go'} --, {'L3MON4D3/LuaSnip'}
 		},
 		config = function ()
 			require('compe').setup {
@@ -470,12 +479,7 @@ use {
 	{ 'terrortylor/nvim-comment',
 		config = function () require('nvim_comment').setup() end
 	},
-	-- 	'fatih/vim-go',
-	-- 	run = 'GoUpdateBinaries',
-	-- }
-
 }
-
 
 -- UI
 use {{
@@ -484,9 +488,8 @@ use {{
 			-- vim.g.onedark_transparent_background = true
 			vim.cmd [[ colorscheme onedark ]]
 		end
-	},{
-		'lukas-reineke/indent-blankline.nvim',
-		cmd = 'IndentBlanklineToggle',
+	},
+	{ 'lukas-reineke/indent-blankline.nvim', cmd = 'IndentBlanklineToggle', ft = 'lua',
 		setup = function()
 			vim.g.indent_blankline_char = '┊'
 			vim.g.indent_blankline_filetype_exclude = { 'help', 'packer', 'nvimtree' }
@@ -495,13 +498,13 @@ use {{
 			vim.g.indent_blankline_char_highlight = 'LineNr'
 			vim.g.indent_blankline_show_trailing_blankline_indent = false
 		end
-	},{
-		'kyazdani42/nvim-tree.lua',
+	},
+	{ 'kyazdani42/nvim-tree.lua',
 		requires = { 'kyazdani42/nvim-web-devicons' },
 		config = function ()
 			vim.g.nvim_tree_auto_close = 1
 			vim.g.nvim_tree_auto_open = 1
-			-- vim.g.nvim_tree_quit_on_open = 1
+			vim.g.nvim_tree_quit_on_open = 1
 			vim.g.nvim_tree_highlight_opened_files = 3
 			vim.g.nvim_tree_follow = 1
 			vim.g.nvim_tree_width_allow_resize  = 1
@@ -511,8 +514,8 @@ use {{
 			vim.api.nvim_set_keymap('n', '<leader><leader>', ':NvimTreeFindFile<CR>', { noremap=true, silent=true })
 			vim.api.nvim_set_keymap('n', 'q', ':NvimTreeClose<CR>', { noremap=true, silent=true })
 		end,
-	},{
-		'hoob3rt/lualine.nvim',
+	},
+	{ 'hoob3rt/lualine.nvim',
 		requires = {'kyazdani42/nvim-web-devicons'},
 		config = function()
 			local function lsp()
@@ -549,8 +552,8 @@ use {{
 				extensions = {'nvim-tree'},
 			}
 		end
-	},{
-		'akinsho/nvim-bufferline.lua',
+	},
+	{ 'akinsho/nvim-bufferline.lua',
 		requires = 'kyazdani42/nvim-web-devicons',
 		config = function ()
 			require("bufferline").setup{
@@ -558,20 +561,16 @@ use {{
 					offsets = {{filetype = "NvimTree", text = "Press g? for help", text_align = "left"}}
 				}
 			}
-			vim.cmd([[
-				nnoremap <silent>]b :BufferLineCycleNext<CR>
-				nnoremap <silent>[b :BufferLineCyclePrev<CR>
-			]])
-		end
-	},{
-		'xiyaowong/nvim-transparent',
-		config = function()
-			require("transparent").setup({
-				-- enable = true,
-				extra_groups = {"NvimTreeNormal", "NvimTreeEndOfBuffer" }
-			})
 		end
 	},
+	-- { 'xiyaowong/nvim-transparent',
+	-- 	config = function()
+	-- 		require("transparent").setup({
+	-- 			enable = true,
+	-- 			extra_groups = {"NvimTreeNormal", "NvimTreeEndOfBuffer" }
+	-- 		})
+	-- 	end
+	-- },
 }
 end)
 

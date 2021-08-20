@@ -10,3 +10,4 @@ tags
 lua/test.lua
 .lsp/lua-language-server/
 symbols-outline.nvim/
+coc-settings.json
