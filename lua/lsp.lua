@@ -2,9 +2,17 @@ require("global")
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    update_in_insert = true,
+    underline = false,
+    update_in_insert = false,
+		virtual_text = { spacing = 4, prefix = "❯❯❯ " },
+		severity_sort = true,
 })
+
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
 
 local on_attach = function(client, bufnr)
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -57,6 +65,12 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.preselectSupport = true
+capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
 capabilities.textDocument.completion.completionItem.resolveSupport = {
 	properties = {
 		'documentation',
@@ -80,10 +94,6 @@ lspconfig.gopls.setup {
 			unusedparams= true,
 		},
 		staticcheck = true,
-		-- codelenses = {
-		-- 	generate = true,
-		-- 	tidy = true,
-		-- }
 	}
 }
 
@@ -135,3 +145,13 @@ lspconfig.rust_analyzer.setup{
 	capabilities = capabilities,
 	-- cmd = {vim.g.home.."/.local/bin/rust-analyzer-linux"}
 }
+
+-- python
+require'lspconfig'.jedi_language_server.setup{
+	on_attach = on_attach,
+	capabilities = capabilities,
+}
+-- require'lspconfig'.pyright.setup{
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- }

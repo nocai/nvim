@@ -1,7 +1,7 @@
 require('global')
 require('option')
 require('autocmd')
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -43,9 +43,6 @@ use {
 	{'voldikss/vim-floaterm',
 		config = function ()
 			vim.cmd([[
-				 hi FloatermBorder guifg=gray
-				 let g:floaterm_width=0.8
-				 let g:floaterm_height=0.8
 				 let g:floaterm_keymap_new    = '<F7>'
 				 let g:floaterm_keymap_prev   = '<F8>'
 				 let g:floaterm_keymap_next   = '<F9>'
@@ -201,7 +198,7 @@ use {
 -- treesitter
 use {
 	{'nvim-treesitter/nvim-treesitter',
-		run = 'TSUpdate',
+		run = ':TSUpdate',
 		config = function ()
 			-- :TSInstall
 			require('nvim-treesitter.configs').setup {
@@ -348,126 +345,209 @@ use {
 -- auto complete
 use {
 	{'neovim/nvim-lspconfig', config = function() require('lsp') end},
-	{'onsails/lspkind-nvim',
-		config = function()
-			require('lspkind').init({
-				-- enables text annotations
-				with_text = true,
-				-- can be either 'default' or
-				-- 'codicons' for codicon preset (requires vscode-codicons font installed)
-				-- default: 'default'
-				preset = 'codicons',
-				-- override preset symbols
-				symbol_map = {
-					Text = '',
-					Method = 'ƒ',
-					Function = '',
-					Constructor = '',
-					Variable = '',
-					Field = '',
-					Class = '',
-					Interface = 'ﰮ',
-					Module = '',
-					Property = '',
-					Unit = '',
-					Value = '',
-					Enum = '',
-					Keyword = '',
-					Snippet = '﬌',
-					Color = '',
-					File = '',
-					Folder = '',
-					EnumMember = '',
-					Constant = '',
-					Struct = ''
-				}
-			})
-		end
-	},
-  -- { 'mfussenegger/nvim-lsp-compl',
-  -- 		requires = {
-  -- 			{'hrsh7th/vim-vsnip' },
-  -- 			{'rafamadriz/friendly-snippets'},
-  -- 		},
-  --   config = function()
-  -- 			require('lsp_compl').expand_snippet = vim.fn['vsnip#anonymous']
-  -- 		end
-  -- },
-	{'hrsh7th/nvim-compe',
-		requires = {
-			{'hrsh7th/vim-vsnip' },
-			{'rafamadriz/friendly-snippets'},
+	{ 'hrsh7th/nvim-cmp',
+		requires = { {'onsails/lspkind-nvim'},
+			{'hrsh7th/cmp-vsnip'}, {'hrsh7th/vim-vsnip' }, {'rafamadriz/friendly-snippets'},
+
+			{'hrsh7th/cmp-buffer'},
+			{'hrsh7th/cmp-nvim-lsp'},
+			{'hrsh7th/cmp-nvim-lua'},
 		},
 		config = function ()
-			require('compe').setup {
-				min_length = 2;
-				preselect = 'disable';
-				max_menu_width = 20;
-				max_abbr_width = 20;
-				max_kind_width = 20;
-				source = {
-					path = true;
-					buffer = true;
-					tags = false;
+			local cmp = require('cmp')
+			local lspkind = require('lspkind')
+			local compare = require('cmp.config.compare')
 
-					nvim_lsp = true;
-					nvim_lua = true;
+			local preselect = function (entry1, entry2)
+				if entry1.preselect and not entry2.preselect then
+					return true
+				end
+				return false
+			end
+			cmp.setup {
+				snippet = {
+					expand = function(args)
+						vim.fn['vsnip#anonymous'](args.body)
+					end
+				},
+				completion = { 
+					keyword_length = 2,
+				},
+				sorting = {
+					priority_weight = 2.,
+					comparators = {
+						preselect,
+						compare.offset,
+						compare.exact,
+						compare.score,
+						compare.kind,
+						compare.sort_text,
+						compare.length,
+						compare.order,
+					},
+				},
+				formatting = {
+					format = function(entry, vim_item)
+						vim_item.kind = lspkind.presets.default[vim_item.kind] ..' '..string.sub(vim_item.kind,1,4)
+						return vim_item
+					end
+				},
+				-- You must set mapping.
+				mapping = {
+					['<C-n>'] = cmp.mapping.next_item(),
+					['<C-k>'] = cmp.mapping.next_item(),
+					['<C-p>'] = cmp.mapping.prev_item(),
+					['<C-e>'] = cmp.mapping.prev_item(),
+					['<C-d>'] = cmp.mapping.scroll(-4),
+					['<C-f>'] = cmp.mapping.scroll(4),
+					['<C-Space>'] = cmp.mapping.complete(),
+					['<C-j>'] = cmp.mapping.close(),
+					['<CR>'] = cmp.mapping.confirm({
+						behavior = cmp.ConfirmBehavior.Insert,
+						select = true,
+					}),
+					['<Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
+						if is_pairs() then
+							return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Right>', true, true, true), '')
+						elseif vim.fn['vsnip#available'](1) == 1 then
+							vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(vsnip-expand-or-jump)', true, true, true), '')
+						else
+							fallback()
+						end
+					end),
+					['<S-Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
+						if is_pairs(true) then
+							vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Left>', true, true, true), 'n')
+						elseif vim.fn['vsnip#jumpable'](-1) == 1 then
+							vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(vsnip-jump-prev)', true, true, true), '')
+						else
+							fallback()
+						end
+					end)
+				},
 
-					vsnip = true;
-					luasnip = false;
-					ultisnips = false;
-					calc = false;
+				-- You should specify your *installed* sources.
+				sources = {
+					{ name = 'nvim_lsp' },
+					{ name = 'vsnip' },
+					{ name = 'buffer' },
 				},
 			}
-
-			local t = function(str)
-				return vim.api.nvim_replace_termcodes(str, true, true, true)
-			end
-			-- Use (s-)tab to:
-			--- move to prev/next item in completion menuone
-			--- jump to prev/next snippet's placeholder
-			_G.tab_complete = function()
-				if is_pairs() then
-					return t "<Right>"
-				elseif vim.fn['vsnip#available'](1) == 1 then
-					return t "<Plug>(vsnip-expand-or-jump)"
-				elseif vim.fn.pumvisible() == 1 then
-					return vim.fn['compe#confirm']({ keys = '<CR>', select = true })
-				elseif check_back_space() then
-					return t "<Tab>"
-				else
-					return vim.fn['compe#complete']()
-				end
-			end
-			_G.s_tab_complete = function()
-				if is_pairs(true) then
-					return t "<Left>"
-				elseif vim.fn['vsnip#jumpable'](-1) == 1 then
-					return t "<Plug>(vsnip-jump-prev)"
-				elseif check_back_space() then
-					return t "<S-Tab>"
-				else
-					return vim.fn['compe#complete']()
-				end
-			end
-			vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-			vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-			vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-			vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
-			-- vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
+			vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
 		end
 	},
-	{ 'windwp/nvim-autopairs',
-		config = function()
-			require('nvim-autopairs').setup()
-			require("nvim-autopairs.completion.compe").setup({
-				map_cr = true, --  map <CR> on insert mode
-				map_complete = true, -- it will auto insert `(` after select function or method item
-				auto_select = true,  -- auto select first item
-			})
-		end
-	},
+-- 	{'hrsh7th/nvim-compe',
+-- 		requires = {
+-- 			{'hrsh7th/vim-vsnip' },
+-- 			{'rafamadriz/friendly-snippets'},
+-- 			{'windwp/nvim-autopairs'},
+-- 			{'onsails/lspkind-nvim',
+-- 				config = function () 
+-- 					require('lspkind').init({
+-- 						-- enables text annotations
+-- 						with_text = true,
+-- 						-- can be either 'default' or
+-- 						-- 'codicons' for codicon preset (requires vscode-codicons font installed)
+-- 						-- default: 'default'
+-- 						preset = 'codicons',
+-- 						-- override preset symbols
+-- 						symbol_map = {
+-- 							Text = "",
+-- 							Method = "",
+-- 							Function = "",
+-- 							Constructor = "",
+-- 							Field = "ﰠ",
+-- 							Variable = "",
+-- 							Class = "ﴯ",
+-- 							Interface = "",
+-- 							Module = "",
+-- 							Property = "ﰠ",
+-- 							Unit = "塞",
+-- 							Value = "",
+-- 							Enum = "",
+-- 							Keyword = "",
+-- 							Snippet = "",
+-- 							Color = "",
+-- 							File = "",
+-- 							Reference = "",
+-- 							Folder = "",
+-- 							EnumMember = "",
+-- 							Constant = "",
+-- 							Struct = "פּ",
+-- 							Event = "",
+-- 							Operator = "",
+-- 							TypeParameter = ""
+-- 						},
+-- 					}) 
+-- 				end
+-- 			},
+-- 		},
+-- 		config = function ()
+-- 			require('compe').setup {
+-- 				min_length = 2;
+-- 				preselect = 'disable';
+-- 				max_menu_width = 20;
+-- 				max_abbr_width = 20;
+-- 				max_kind_width = 20;
+-- 				source = {
+-- 					path = true;
+-- 					buffer = true;
+-- 					tags = false;
+-- 
+-- 					nvim_lsp = true;
+-- 					nvim_lua = true;
+-- 
+-- 					vsnip = true;
+-- 					luasnip = false;
+-- 					ultisnips = false;
+-- 					calc = false;
+-- 				},
+-- 			}
+-- 
+-- 			local t = function(str)
+-- 				return vim.api.nvim_replace_termcodes(str, true, true, true)
+-- 			end
+-- 			-- Use (s-)tab to:
+-- 			--- move to prev/next item in completion menuone
+-- 			--- jump to prev/next snippet's placeholder
+-- 			_G.tab_complete = function()
+-- 				if is_pairs() then
+-- 					return t "<Right>"
+-- 				elseif vim.fn['vsnip#available'](1) == 1 then
+-- 					return t "<Plug>(vsnip-expand-or-jump)"
+-- 				elseif vim.fn.pumvisible() == 1 then
+-- 					return vim.fn['compe#confirm']({ keys = '<CR>', select = true })
+-- 				elseif check_back_space() then
+-- 					return t "<Tab>"
+-- 				else
+-- 					return vim.fn['compe#complete']()
+-- 				end
+-- 			end
+-- 			_G.s_tab_complete = function()
+-- 				if is_pairs(true) then
+-- 					return t "<Left>"
+-- 				elseif vim.fn['vsnip#jumpable'](-1) == 1 then
+-- 					return t "<Plug>(vsnip-jump-prev)"
+-- 				elseif check_back_space() then
+-- 					return t "<S-Tab>"
+-- 				else
+-- 					return vim.fn['compe#complete']()
+-- 				end
+-- 			end
+-- 			vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+-- 			vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+-- 			vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- 			vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- 
+-- 			-- vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
+-- 			require('nvim-autopairs').setup()
+-- 			require("nvim-autopairs.completion.compe").setup({
+-- 				map_cr = true, --  map <CR> on insert mode
+-- 				map_complete = true, -- it will auto insert `(` after select function or method item
+-- 				auto_select = true,  -- auto select first item
+-- 			})
+-- 		end
+-- 	},
 	{ 'simrat39/symbols-outline.nvim',
 		requires = {'neovim/nvim-lspconfig'},
 		config = function()
@@ -479,6 +559,55 @@ use {
 	{ 'terrortylor/nvim-comment',
 		config = function () require('nvim_comment').setup() end
 	},
+	{ 'folke/trouble.nvim', cmd = 'Trouble',
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function ()
+			require("trouble").setup {
+				position = "bottom", -- position of the list can be: bottom, top, left, right
+				height = 10, -- height of the trouble list when position is top or bottom
+				width = 50, -- width of the list when position is left or right
+				icons = true, -- use devicons for filenames
+				mode = "lsp_workspace_diagnostics", -- "lsp_workspace_diagnostics", "lsp_document_diagnostics", "quickfix", "lsp_references", "loclist"
+				fold_open = "", -- icon used for open folds
+				fold_closed = "", -- icon used for closed folds
+				action_keys = { -- key mappings for actions in the trouble list
+						-- map to {} to remove a mapping, for example:
+						-- close = {},
+						close = "q", -- close the list
+						cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+						refresh = "r", -- manually refresh
+						jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
+						open_split = { "<c-x>" }, -- open buffer in new split
+						open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
+						open_tab = { "<c-t>" }, -- open buffer in new tab
+						jump_close = {"o"}, -- jump to the diagnostic and close the list
+						toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+						toggle_preview = "P", -- toggle auto_preview
+						hover = "E", -- opens a small popup with the full multiline message
+						preview = "p", -- preview the diagnostic location
+						close_folds = {"zM", "zm"}, -- close all folds
+						open_folds = {"zR", "zr"}, -- open all folds
+						toggle_fold = {"zA", "za"}, -- toggle fold of current file
+						previous = "e", -- preview item
+						next = "n" -- next item
+				},
+				indent_lines = true, -- add an indent guide below the fold icons
+				auto_open = false, -- automatically open the list when you have diagnostics
+				auto_close = false, -- automatically close the list when you have no diagnostics
+				auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+				auto_fold = false, -- automatically fold a file trouble list at creation
+				signs = {
+						-- icons / text used for a diagnostic
+						error = "",
+						warning = "",
+						hint = "",
+						information = "",
+						other = "﫠"
+				},
+				use_lsp_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
+			}
+		end
+	}
 }
 
 -- UI
