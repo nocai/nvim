@@ -64,6 +64,7 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown', 'plaintext' }
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
@@ -127,7 +128,6 @@ lspconfig.sumneko_lua.setup {
 				-- Make the server aware of Neovim runtime files
 				library = {
 					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
-					[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
 					[vim.fn.expand(vim.g.home..'/.local/share/nvim/site/pack/packer')] = true,
 				},
 			},

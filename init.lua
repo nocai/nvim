@@ -349,7 +349,6 @@ use {
 		requires = { {'onsails/lspkind-nvim'},
 			{'hrsh7th/cmp-vsnip'}, {'hrsh7th/vim-vsnip' }, {'rafamadriz/friendly-snippets'},
 
-			{'hrsh7th/cmp-buffer'},
 			{'hrsh7th/cmp-nvim-lsp'},
 			{'hrsh7th/cmp-nvim-lua'},
 		},
@@ -370,7 +369,7 @@ use {
 						vim.fn['vsnip#anonymous'](args.body)
 					end
 				},
-				completion = { 
+				completion = {
 					keyword_length = 2,
 				},
 				sorting = {
@@ -430,7 +429,6 @@ use {
 				sources = {
 					{ name = 'nvim_lsp' },
 					{ name = 'vsnip' },
-					{ name = 'buffer' },
 				},
 			}
 			vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
