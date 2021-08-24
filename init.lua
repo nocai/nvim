@@ -363,6 +363,7 @@ use {
 				end
 				return false
 			end
+
 			cmp.setup {
 				snippet = {
 					expand = function(args)
@@ -393,19 +394,19 @@ use {
 				},
 				-- You must set mapping.
 				mapping = {
-					['<C-n>'] = cmp.mapping.next_item(),
-					['<C-k>'] = cmp.mapping.next_item(),
-					['<C-p>'] = cmp.mapping.prev_item(),
-					['<C-e>'] = cmp.mapping.prev_item(),
-					['<C-d>'] = cmp.mapping.scroll(-4),
-					['<C-f>'] = cmp.mapping.scroll(4),
+					['<C-n>'] = cmp.mapping.select_next_item(),
+					['<C-k>'] = cmp.mapping.select_next_item(),
+					['<C-p>'] = cmp.mapping.select_prev_item(),
+					['<C-e>'] = cmp.mapping.select_prev_item(),
+					['<C-d>'] = cmp.mapping.scroll_docs(-4),
+					['<C-f>'] = cmp.mapping.scroll_docs(4),
 					['<C-Space>'] = cmp.mapping.complete(),
 					['<C-j>'] = cmp.mapping.close(),
 					['<CR>'] = cmp.mapping.confirm({
 						behavior = cmp.ConfirmBehavior.Insert,
 						select = true,
 					}),
-					['<Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
+					['<Tab>'] = cmp.mapping(function(fallback)
 						if is_pairs() then
 							return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Right>', true, true, true), '')
 						elseif vim.fn['vsnip#available'](1) == 1 then
@@ -413,8 +414,8 @@ use {
 						else
 							fallback()
 						end
-					end),
-					['<S-Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
+					end, { 'i', 's' }),
+					['<S-Tab>'] = cmp.mapping(function(fallback)
 						if is_pairs(true) then
 							vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Left>', true, true, true), 'n')
 						elseif vim.fn['vsnip#jumpable'](-1) == 1 then
@@ -422,7 +423,7 @@ use {
 						else
 							fallback()
 						end
-					end)
+					end, { 'i', 's' })
 				},
 
 				-- You should specify your *installed* sources.
