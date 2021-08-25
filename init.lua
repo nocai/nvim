@@ -349,6 +349,7 @@ use {
 		requires = { {'onsails/lspkind-nvim'},
 			{'hrsh7th/cmp-vsnip'}, {'hrsh7th/vim-vsnip' }, {'rafamadriz/friendly-snippets'},
 
+			-- {'hrsh7th/cmp-buffer'},
 			{'hrsh7th/cmp-nvim-lsp'},
 			{'hrsh7th/cmp-nvim-lua'},
 		},
@@ -371,21 +372,21 @@ use {
 					end
 				},
 				completion = {
-					keyword_length = 2,
+					keyword_length = 3,
 				},
-				sorting = {
-					priority_weight = 2.,
-					comparators = {
-						preselect,
-						compare.offset,
-						compare.exact,
-						compare.score,
-						compare.kind,
-						compare.sort_text,
-						compare.length,
-						compare.order,
-					},
-				},
+				-- sorting = {
+				-- 	priority_weight = 2.,
+				-- 	comparators = {
+				-- 		-- preselect,
+				-- 		compare.score,
+				-- 		compare.offset,
+				-- 		compare.exact,
+				-- 		compare.kind,
+				-- 		compare.sort_text,
+				-- 		compare.length,
+				-- 		compare.order,
+				-- 	},
+				-- },
 				formatting = {
 					format = function(entry, vim_item)
 						vim_item.kind = lspkind.presets.default[vim_item.kind] ..' '..string.sub(vim_item.kind,1,4)
@@ -408,9 +409,9 @@ use {
 					}),
 					['<Tab>'] = cmp.mapping(function(fallback)
 						if is_pairs() then
-							return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Right>', true, true, true), '')
-						elseif vim.fn['vsnip#available'](1) == 1 then
-							vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(vsnip-expand-or-jump)', true, true, true), '')
+							return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Right>', true, true, true), 'n')
+						elseif vim.fn['vsnip#jumpable'](1) == 1 then
+							vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(vsnip-jump-next)', true, true, true), '')
 						else
 							fallback()
 						end
@@ -428,6 +429,7 @@ use {
 
 				-- You should specify your *installed* sources.
 				sources = {
+					-- { name = 'buffer' },
 					{ name = 'nvim_lsp' },
 					{ name = 'vsnip' },
 				},

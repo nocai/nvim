@@ -2,7 +2,7 @@ vim.o.termguicolors = true
 
 --Incremental live completion
 vim.o.inccommand = 'nosplit'
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = 'menu,menuone,noinsert'
 
 --Set highlight on search
 vim.o.hlsearch = false
