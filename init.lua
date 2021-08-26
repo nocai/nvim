@@ -1,7 +1,7 @@
 require('global')
 require('option')
 require('autocmd')
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -19,7 +19,7 @@ use { 'wbthomason/packer.nvim' } -- Package manager
 use {
 	-- { "tpope/vim-surround" },
 	-- { 'tpope/vim-repeat' },
-	{ 'jiangmiao/auto-pairs' },
+	-- { 'jiangmiao/auto-pairs' },
 	{ 'tweekmonster/startuptime.vim', cmd = {'StartupTime'} },
 	{ 'npxbr/glow.nvim', run = "GlowInstall", cmd = 'Glow', },
 	{ 'voldikss/vim-translator', cmd = { 'TranslateW' }, },
@@ -349,23 +349,18 @@ use {
 		requires = { {'onsails/lspkind-nvim'},
 			{'hrsh7th/cmp-vsnip'}, {'hrsh7th/vim-vsnip' }, {'rafamadriz/friendly-snippets'},
 
+			{'windwp/nvim-autopairs'},
 			-- {'hrsh7th/cmp-buffer'},
 			{'hrsh7th/cmp-nvim-lsp'},
-			{'hrsh7th/cmp-nvim-lua'},
+			-- {'hrsh7th/cmp-nvim-lua', ft='lua'},
+
 		},
 		config = function ()
 			local cmp = require('cmp')
 			local lspkind = require('lspkind')
-			local compare = require('cmp.config.compare')
-
-			local preselect = function (entry1, entry2)
-				if entry1.preselect and not entry2.preselect then
-					return true
-				end
-				return false
-			end
 
 			cmp.setup {
+				preselect = cmp.PreselectMode.None,
 				snippet = {
 					expand = function(args)
 						vim.fn['vsnip#anonymous'](args.body)
@@ -374,19 +369,6 @@ use {
 				completion = {
 					keyword_length = 3,
 				},
-				-- sorting = {
-				-- 	priority_weight = 2.,
-				-- 	comparators = {
-				-- 		-- preselect,
-				-- 		compare.score,
-				-- 		compare.offset,
-				-- 		compare.exact,
-				-- 		compare.kind,
-				-- 		compare.sort_text,
-				-- 		compare.length,
-				-- 		compare.order,
-				-- 	},
-				-- },
 				formatting = {
 					format = function(entry, vim_item)
 						vim_item.kind = lspkind.presets.default[vim_item.kind] ..' '..string.sub(vim_item.kind,1,4)
@@ -403,10 +385,10 @@ use {
 					['<C-f>'] = cmp.mapping.scroll_docs(4),
 					['<C-Space>'] = cmp.mapping.complete(),
 					['<C-j>'] = cmp.mapping.close(),
-					['<CR>'] = cmp.mapping.confirm({
-						behavior = cmp.ConfirmBehavior.Insert,
-						select = true,
-					}),
+					-- ['<CR>'] = cmp.mapping.confirm({
+					-- 	behavior = cmp.ConfirmBehavior.Insert,
+					-- 	select = true,
+					-- }),
 					['<Tab>'] = cmp.mapping(function(fallback)
 						if is_pairs() then
 							return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Right>', true, true, true), 'n')
@@ -425,6 +407,7 @@ use {
 							fallback()
 						end
 					end, { 'i', 's' })
+
 				},
 
 				-- You should specify your *installed* sources.
@@ -434,7 +417,12 @@ use {
 					{ name = 'vsnip' },
 				},
 			}
-			vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
+			-- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
+			require('nvim-autopairs').setup{}
+			require("nvim-autopairs.completion.cmp").setup({
+				map_cr = true, --  map <CR> on insert mode
+				map_complete = true, -- it will auto insert `(` after select function or method item
+			})
 		end
 	},
 -- 	{'hrsh7th/nvim-compe',

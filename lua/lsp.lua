@@ -31,6 +31,7 @@ local on_attach = function(client, bufnr)
 
 	buf_set_keymap('n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 	buf_set_keymap('n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+	-- buf_set_keymap('n', 'ca', '<cmd>lua require"telescope.builtin".lsp_code_actions(require("telescope.themes").get_cursor({}))<CR>', opts)
 
 	buf_set_keymap('n', 'E', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 	buf_set_keymap('n', '<C-e>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -99,10 +100,7 @@ lspconfig.gopls.setup {
 }
 
 -- sumneko_lua
-local sumneko_root_path = vim.g.home..'/lua-language-server'
-if vim.g.is_macOS then
-	sumneko_root_path = vim.g.nvim_home..'/.lsp/lua-language-server'
-end
+local sumneko_root_path = vim.g.nvim_home..'/.lsp/lua-language-server'
 local system_name = "macOS" -- (Linux, macOS, or Windows)
 if jit.os == "Linux" then
 	system_name = "Linux"
