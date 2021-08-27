@@ -126,6 +126,7 @@ lspconfig.sumneko_lua.setup {
 				-- Make the server aware of Neovim runtime files
 				library = {
 					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
+					[vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true,
 					[vim.fn.expand(vim.g.home..'/.local/share/nvim/site/pack/packer')] = true,
 				},
 			},
