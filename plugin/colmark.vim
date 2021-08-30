@@ -30,6 +30,7 @@ nnoremap J E
 xnoremap J E
 onoremap J E
 nnoremap <C-J>      <C-E>
+inoremap <C-J>      <C-E>
 nnoremap <C-W>j     <C-W>e
 nnoremap <C-W><C-J> <C-W><C-E>
 
@@ -40,6 +41,7 @@ nnoremap E K
 xnoremap E K
 onoremap E K
 nnoremap <C-E>      <C-K>
+inoremap <C-E>      <C-K>
 nnoremap <C-W>e     <C-W>k
 nnoremap <C-W><C-E> <C-W><C-K>
 
@@ -74,9 +76,8 @@ nnoremap <C-W>l     <C-W>i
 nnoremap <C-W><C-L> <C-W><C-I>
 
 " insert mode
-inoremap <C-K> <C-N>
-inoremap <C-E> <C-P>
-inoremap <C-J> <C-E>
+" inoremap <C-K> <C-N>
+" inoremap <C-E> <C-P>
 
 " normal mode
 nnoremap ]b :bnext<CR>
