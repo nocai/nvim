@@ -6,9 +6,12 @@ require("autocmd")
 -- Install packer
 local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  vim.fn.execute("!git clone git@github.com/wbthomason/packer.nvim " .. install_path)
 end
 vim.cmd([[autocmd BufWritePost init.lua PackerCompile]])
+
+local packer = require("packer")
+packer.init {git = {default_url_format = "git@github.com:/%s"}}
 
 local use = require("packer").use
 require("packer").startup(
