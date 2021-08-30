@@ -11,11 +11,14 @@ noremap <Space> <Nop>
 let mapleader=' '
 let maplocalleader = ' '
 
-nnoremap n j
+" nnoremap n j
+" nnoremap gn gj
+nnoremap n gj
 xnoremap n j
 onoremap n j
 
 nnoremap N J
+nnoremap gN gJ
 xnoremap N J
 onoremap N J
 
@@ -24,7 +27,9 @@ nnoremap <C-W>n     <C-W>j
 nnoremap <C-W><C-N> <C-W><C-J>
 
 nnoremap j e
+nnoremap gj ge
 xnoremap j e
+xnoremap gj ge
 onoremap j e
 nnoremap J E
 xnoremap J E
@@ -34,7 +39,9 @@ inoremap <C-J>      <C-E>
 nnoremap <C-W>j     <C-W>e
 nnoremap <C-W><C-J> <C-W><C-E>
 
-nnoremap e k
+" nnoremap e k
+" nnoremap ge gk
+nnoremap e gk
 xnoremap e k
 onoremap e k
 nnoremap E K
@@ -46,7 +53,9 @@ nnoremap <C-W>e     <C-W>k
 nnoremap <C-W><C-E> <C-W><C-K>
 
 nnoremap k n
+nnoremap gk gn
 xnoremap k n
+xnoremap gk gn
 onoremap k n
 nnoremap K N
 xnoremap K N
