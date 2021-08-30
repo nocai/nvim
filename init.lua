@@ -14,6 +14,12 @@ local use = require("packer").use
 require("packer").startup(
   function()
     use {"wbthomason/packer.nvim"} -- Package manager
+		use {"nanotee/nvim-lua-guide"}
+		use {'norcalli/nvim-colorizer.lua',
+			config = function()
+				require'colorizer'.setup()
+			end
+		}
 
     -- misc
     use {
@@ -116,8 +122,6 @@ require("packer").startup(
               previewers = true,
               mappings = {
                 i = {
-                  ["<C-k>"] = false,
-                  ["<C-e>"] = false,
                   ["<C-k>"] = actions.move_selection_next,
                   ["<C-e>"] = actions.move_selection_previous,
                   ["<C-l>"] = false,
@@ -125,7 +129,6 @@ require("packer").startup(
                 },
                 n = {
                   ["j"] = false,
-                  ["k"] = false,
                   ["L"] = false,
                   ["n"] = actions.move_selection_next,
                   ["k"] = actions.move_selection_next,
@@ -209,13 +212,13 @@ require("packer").startup(
           )
           vim.api.nvim_set_keymap(
             "n",
-            "<c-p>wd",
+            "<c-p>dd",
             [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>]],
             {noremap = true, silent = true}
           )
           vim.api.nvim_set_keymap(
             "n",
-            "<c-p>wD",
+            "<c-p>wd",
             [[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>]],
             {noremap = true, silent = true}
           )
@@ -447,7 +450,17 @@ require("packer").startup(
           {"hrsh7th/cmp-vsnip"},
           {"hrsh7th/vim-vsnip"},
           {"rafamadriz/friendly-snippets"},
-          {"windwp/nvim-autopairs"},
+          {
+            "windwp/nvim-autopairs",
+            config = function()
+              require("nvim-autopairs").setup {}
+              require("nvim-autopairs.completion.cmp").setup {
+                map_cr = true, --  map <CR> on insert mode
+                map_complete = true, -- it will auto insert `(` after select function or method item
+                auto_select = true
+              }
+            end
+          },
           -- {'hrsh7th/cmp-buffer'},
           {"hrsh7th/cmp-nvim-lsp"}
           -- {'hrsh7th/cmp-nvim-lua', ft='lua'},
@@ -484,7 +497,6 @@ require("packer").startup(
               ["<C-Space>"] = cmp.mapping.complete(),
               ["<C-j>"] = cmp.mapping.close(),
               -- ['<CR>'] = cmp.mapping.confirm({
-              -- 	behavior = cmp.ConfirmBehavior.Insert,
               -- 	select = true,
               -- }),
               ["<Tab>"] = cmp.mapping(
@@ -520,12 +532,6 @@ require("packer").startup(
             }
           }
           -- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
-          require("nvim-autopairs").setup {}
-          require("nvim-autopairs.completion.cmp").setup {
-            map_cr = true, --  map <CR> on insert mode
-            map_complete = true, -- it will auto insert `(` after select function or method item
-            auto_select = true
-          }
         end
       },
       {
@@ -557,11 +563,12 @@ require("packer").startup(
           }
 
           vim.api.nvim_exec(
-            [[ augroup FormatAutogroup
-								autocmd!
-								autocmd BufWritePost *.rs,*.lua FormatWrite
-							augroup END
-							]],
+            [[ 
+						augroup FormatAutogroup
+							autocmd!
+							autocmd BufWritePost *.rs,*.lua FormatWrite
+						augroup END 
+						]],
             true
           )
         end
@@ -680,12 +687,16 @@ require("packer").startup(
       -- 	},
       {
         "simrat39/symbols-outline.nvim",
-        -- cmd = 'SymbolsOutline',
+        cmd = "SymbolsOutline",
+        keys = "gO",
         requires = {"neovim/nvim-lspconfig"},
-        config = function()
+        setup = function()
           vim.g.symbols_outline = {
             auto_preview = false
           }
+        end,
+        config = function()
+          vim.api.nvim_set_keymap("n", "gO", ":SymbolsOutline<CR>", {noremap = true, silent = true})
         end
       },
       {
@@ -696,7 +707,6 @@ require("packer").startup(
       },
       {
         "folke/trouble.nvim",
-        cmd = "Trouble",
         requires = "kyazdani42/nvim-web-devicons",
         config = function()
           require("trouble").setup {
@@ -731,7 +741,7 @@ require("packer").startup(
             },
             indent_lines = true, -- add an indent guide below the fold icons
             auto_open = false, -- automatically open the list when you have diagnostics
-            auto_close = false, -- automatically close the list when you have no diagnostics
+            auto_close = true, -- automatically close the list when you have no diagnostics
             auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
             auto_fold = false, -- automatically fold a file trouble list at creation
             signs = {
@@ -744,6 +754,22 @@ require("packer").startup(
             },
             use_lsp_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
           }
+
+					vim.api.nvim_set_keymap("n", "<leader>tn", "<cmd>lua require('trouble').next({skip_groups = true, jump = true})<cr>",
+						{silent = true, noremap = true}
+					)
+					vim.api.nvim_set_keymap("n", "<leader>tp", "<cmd>lua require('trouble').previous({skip_groups = true, jump = true})<cr>",
+						{silent = true, noremap = true}
+					)
+					vim.api.nvim_set_keymap("n", "<leader>gr", "<cmd>Trouble lsp_references<cr>",
+						{silent = true, noremap = true}
+					)
+					vim.api.nvim_set_keymap("n", "<leader>dd", "<cmd>Trouble lsp_document_diagnostics<cr>",
+						{silent = true, noremap = true}
+					)
+					vim.api.nvim_set_keymap("n", "<leader>wd", "<cmd>Trouble lsp_workspace_diagnostics<cr>",
+						{silent = true, noremap = true}
+					)
         end
       }
     }
@@ -754,9 +780,18 @@ require("packer").startup(
         "navarasu/onedark.nvim",
         config = function()
           -- vim.g.onedark_transparent_background = true
-          vim.cmd [[ colorscheme onedark ]]
+          -- vim.cmd [[ colorscheme onedark ]]
         end
       },
+			{"folke/tokyonight.nvim",
+				config = function ()
+					vim.g.tokyonight_style = "night"  -- storm, night, day
+					-- vim.g.tokyonight_transparent = true
+					vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "NvimTree" }
+					vim.g.tokyonight_italic_functions = true
+					vim.cmd[[colorscheme tokyonight]]
+				end
+			},
       {
         "lukas-reineke/indent-blankline.nvim",
         cmd = "IndentBlanklineToggle",
@@ -774,6 +809,42 @@ require("packer").startup(
         "kyazdani42/nvim-tree.lua",
         requires = {"kyazdani42/nvim-web-devicons"},
         config = function()
+          local tree_cb = require "nvim-tree.config".nvim_tree_callback
+          vim.g.nvim_tree_disable_default_keybindings = 1
+          vim.g.nvim_tree_bindings = {
+            {key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit")},
+            {key = {"<2-RightMouse>", "<C-]>"}, cb = tree_cb("cd")},
+            {key = "<C-v>", cb = tree_cb("vsplit")},
+            {key = "<C-x>", cb = tree_cb("split")},
+            {key = "<C-t>", cb = tree_cb("tabnew")},
+            {key = "<", cb = tree_cb("prev_sibling")},
+            {key = ">", cb = tree_cb("next_sibling")},
+            {key = "P", cb = tree_cb("parent_node")},
+            {key = "<BS>", cb = tree_cb("close_node")},
+            {key = "<S-CR>", cb = tree_cb("close_node")},
+            {key = "<Tab>", cb = tree_cb("preview")},
+            {key = "E", cb = tree_cb("first_sibling")},
+            {key = "N", cb = tree_cb("last_sibling")},
+            {key = "I", cb = tree_cb("toggle_ignored")},
+            {key = "H", cb = tree_cb("toggle_dotfiles")},
+            {key = "R", cb = tree_cb("refresh")},
+            {key = "a", cb = tree_cb("create")},
+            {key = "d", cb = tree_cb("remove")},
+            {key = "r", cb = tree_cb("rename")},
+            {key = "<C-r>", cb = tree_cb("full_rename")},
+            {key = "x", cb = tree_cb("cut")},
+            {key = "c", cb = tree_cb("copy")},
+            {key = "p", cb = tree_cb("paste")},
+            {key = "y", cb = tree_cb("copy_name")},
+            {key = "Y", cb = tree_cb("copy_path")},
+            {key = "gy", cb = tree_cb("copy_absolute_path")},
+            {key = "[c", cb = tree_cb("prev_git_item")},
+            {key = "]c", cb = tree_cb("next_git_item")},
+            {key = "-", cb = tree_cb("dir_up")},
+            {key = "s", cb = tree_cb("system_open")},
+            {key = "q", cb = tree_cb("close")},
+            {key = "g?", cb = tree_cb("toggle_help")}
+          }
           vim.g.nvim_tree_auto_close = 1
           vim.g.nvim_tree_auto_open = 1
           vim.g.nvim_tree_quit_on_open = 1
@@ -781,10 +852,9 @@ require("packer").startup(
           vim.g.nvim_tree_follow = 1
           vim.g.nvim_tree_width_allow_resize = 1
           -- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', 'logs'}
-          vim.g.nvim_tree_show_icons = {git = 0, folders = 1, files = 1, folder_arrows = 1}
+          vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1, folder_arrows = 1}
 
           vim.api.nvim_set_keymap("n", "<leader><leader>", ":NvimTreeFindFile<CR>", {noremap = true, silent = true})
-          vim.api.nvim_set_keymap("n", "q", ":NvimTreeClose<CR>", {noremap = true, silent = true})
         end
       },
       {
@@ -809,7 +879,8 @@ require("packer").startup(
           end
           require("lualine").setup {
             options = {
-              theme = "onedark",
+              -- theme = "onedark",
+              theme = "tokyonight",
               section_separators = "",
               component_separators = ""
             },
