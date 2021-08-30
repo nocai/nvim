@@ -14,12 +14,6 @@ local use = require("packer").use
 require("packer").startup(
   function()
     use {"wbthomason/packer.nvim"} -- Package manager
-		use {"nanotee/nvim-lua-guide"}
-		use {'norcalli/nvim-colorizer.lua',
-			config = function()
-				require'colorizer'.setup()
-			end
-		}
 
     -- misc
     use {
@@ -27,6 +21,13 @@ require("packer").startup(
       -- { 'tpope/vim-repeat' },
       -- { 'jiangmiao/auto-pairs' },
       {"tweekmonster/startuptime.vim", cmd = {"StartupTime"}},
+			{"nanotee/nvim-lua-guide"},
+			{'norcalli/nvim-colorizer.lua',
+				config = function()
+					require'colorizer'.setup()
+				end
+			},
+			{"kshenoy/vim-signature"},
       {"npxbr/glow.nvim", run = "GlowInstall", cmd = "Glow"},
       {"voldikss/vim-translator", cmd = {"TranslateW"}},
       {
@@ -113,7 +114,7 @@ require("packer").startup(
     use {
       {
         "nvim-telescope/telescope.nvim",
-        requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}},
+        requires = {{"nvim-lua/plenary.nvim"}},
         config = function()
           local actions = require "telescope.actions"
           require("telescope").setup {
