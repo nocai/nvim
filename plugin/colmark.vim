@@ -11,84 +11,100 @@ noremap <Space> <Nop>
 let mapleader=' '
 let maplocalleader = ' '
 
+" nN => jJ {{{
 " nnoremap n j
 " nnoremap gn gj
-nnoremap n gj
-xnoremap n j
-onoremap n j
-
-nnoremap N J
-nnoremap gN gJ
-xnoremap N J
-onoremap N J
-
+nnoremap n          gj
+nnoremap N			J
+nnoremap gN			gJ
 nnoremap <C-N>      <C-J>
 nnoremap <C-W>n     <C-W>j
 nnoremap <C-W><C-N> <C-W><C-J>
 
-nnoremap j e
-nnoremap gj ge
-xnoremap j e
-xnoremap gj ge
-onoremap j e
-nnoremap J E
-xnoremap J E
-onoremap J E
+xnoremap n j
+xnoremap N J
+
+onoremap n j
+onoremap N J
+" }}}
+
+" jJ => eE {{{
+nnoremap j			e
+nnoremap J			E
+nnoremap gj			ge
 nnoremap <C-J>      <C-E>
-inoremap <C-J>      <C-E>
 nnoremap <C-W>j     <C-W>e
 nnoremap <C-W><C-J> <C-W><C-E>
 
+xnoremap j  e
+xnoremap J  E
+xnoremap gj ge
+
+onoremap j e
+onoremap J E
+" }}}
+
+" eE => kK {{{
 " nnoremap e k
 " nnoremap ge gk
-nnoremap e gk
-xnoremap e k
-onoremap e k
-nnoremap E K
-xnoremap E K
-onoremap E K
+nnoremap e			gk
+nnoremap E			K
 nnoremap <C-E>      <C-K>
-inoremap <C-E>      <C-K>
 nnoremap <C-W>e     <C-W>k
 nnoremap <C-W><C-E> <C-W><C-K>
 
-nnoremap k n
-nnoremap gk gn
-xnoremap k n
-xnoremap gk gn
-onoremap k n
-nnoremap K N
-xnoremap K N
-onoremap K N
+xnoremap e k
+xnoremap E K
+
+onoremap e k
+onoremap E K
+" }}}
+
+" kK => nN {{{
+nnoremap k			n
+nnoremap K			N
+nnoremap gk			gn
 nnoremap <C-K>      <C-N>
 nnoremap <C-W>k     <C-W>n
 nnoremap <C-W><C-K> <C-W><C-N>
 
-nnoremap i l
-xnoremap i l
-onoremap i l
-nnoremap I L
-xnoremap I L
-onoremap I L
+xnoremap k	n
+xnoremap K	N
+xnoremap gk gn
+
+onoremap k n
+onoremap K N
+" }}}
+
+" iL => lL {{{
+nnoremap i			l
+nnoremap I			L
 nnoremap <C-I>      <C-L>
 nnoremap <C-W>i     <C-W>l
 nnoremap <C-W><C-I> <C-W><C-L>
 
-nnoremap l i
-xnoremap l i
-onoremap l i
-nnoremap L I
-xnoremap L I
-onoremap L I
+xnoremap i l
+xnoremap I L
+
+onoremap i l
+onoremap I L
+" }}}
+
+" lL => iI {{{
+nnoremap l			i
+nnoremap L			I
 nnoremap <C-L>      <C-I>
 nnoremap <C-W>l     <C-W>i
 nnoremap <C-W><C-L> <C-W><C-I>
 
-" insert mode
-" inoremap <C-K> <C-N>
-" inoremap <C-E> <C-P>
+xnoremap l i
+xnoremap L I
 
-" normal mode
+onoremap l i
+onoremap L I
+" }}}
+
+" buffers
 nnoremap ]b :bnext<CR>
 nnoremap ]B :blast<CR>
 nnoremap [b :bprevious<CR>

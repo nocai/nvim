@@ -70,6 +70,7 @@ local on_attach = function(client, bufnr)
 		]]
     )
   end
+	-- require'lsp_compl'.attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -24,24 +24,47 @@ require("packer").startup(
       -- { 'tpope/vim-repeat' },
       -- { 'jiangmiao/auto-pairs' },
       {"tweekmonster/startuptime.vim", cmd = {"StartupTime"}},
-			{"nanotee/nvim-lua-guide"},
-			{'norcalli/nvim-colorizer.lua',
-				config = function()
-					require'colorizer'.setup()
-				end
-			},
-			{"kshenoy/vim-signature"},
+      {"nanotee/nvim-lua-guide"},
+      {
+        "norcalli/nvim-colorizer.lua",
+        config = function()
+          require "colorizer".setup()
+        end
+      },
+      {"kshenoy/vim-signature"},
       {"npxbr/glow.nvim", run = "GlowInstall", cmd = "Glow"},
-      {"voldikss/vim-translator", cmd = {"TranslateW"}},
+      {
+        "voldikss/vim-translator",
+        cmd = {"TranslateW"},
+        keys = {"<leader>tr"},
+        config = function()
+          vim.api.nvim_set_keymap("n", "<leader>tr", "<cmd>TranslateW<cr>", {silent = true, noremap = true})
+        end
+      },
       {
         "karb94/neoscroll.nvim",
         event = "WinScrolled",
         config = function()
-          require("neoscroll").setup()
+          require("neoscroll").setup(
+            {
+              mappings = {
+                "<C-u>",
+                "<C-d>",
+                "<C-b>",
+                "<C-f>",
+                "<C-y>",
+                "zt",
+                "zz",
+                "zb"
+              }
+            }
+          )
+          require("neoscroll.config").set_mappings({["<C-j>"] = {"scroll", {"0.10", "false", "100"}}})
         end
       },
       {
         "machakann/vim-sandwich",
+        event = {"BufRead"},
         config = function()
           vim.g.textobj_sandwich_no_default_key_mappings = 1
           vim.cmd(
@@ -61,16 +84,18 @@ require("packer").startup(
       },
       {
         "voldikss/vim-floaterm",
+        cmd = {"FloatermToggle", "FloatermNew"},
+        keys = {"<F7>", "<F8>", "<F9>", "<F12>", "<M-t>"},
         config = function()
           vim.cmd(
             [[
-				 let g:floaterm_keymap_new    = '<F7>'
-				 let g:floaterm_keymap_prev   = '<F8>'
-				 let g:floaterm_keymap_next   = '<F9>'
-				 let g:floaterm_keymap_toggle = '<F12>'
-				 nnoremap <silent> <M-t> :FloatermToggle<CR>
-				 tnoremap <silent> <M-t> <C-\><C-n>:FloatermToggle<CR>
-			 ]]
+						 let g:floaterm_keymap_new    = '<F7>'
+						 let g:floaterm_keymap_prev   = '<F8>'
+						 let g:floaterm_keymap_next   = '<F9>'
+						 let g:floaterm_keymap_toggle = '<F12>'
+						 nnoremap <silent> <M-t> :FloatermToggle<CR>
+						 tnoremap <silent> <M-t> <C-\><C-n>:FloatermToggle<CR>
+					 ]]
           )
         end
       }
@@ -78,7 +103,10 @@ require("packer").startup(
 
     -- textobject
     use {
-      {"kana/vim-textobj-user"},
+      {
+        "kana/vim-textobj-user",
+        event = {"BufRead"}
+      },
       -- 		{'kana/vim-textobj-indent',
       -- 			requires = {'kana/vim-textobj-user'},
       -- 			config = function()
@@ -98,6 +126,7 @@ require("packer").startup(
       -- 		},
       {
         "sgur/vim-textobj-parameter",
+        after = {"vim-textobj-user"},
         requires = {"kana/vim-textobj-user"},
         config = function()
           vim.cmd(
@@ -117,6 +146,7 @@ require("packer").startup(
     use {
       {
         "nvim-telescope/telescope.nvim",
+        keys = {"<c-p>"},
         requires = {{"nvim-lua/plenary.nvim"}},
         config = function()
           local actions = require "telescope.actions"
@@ -230,6 +260,7 @@ require("packer").startup(
       },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
+        after = "telescope.nvim",
         run = "make",
         config = function()
           require("telescope").setup {
@@ -252,6 +283,7 @@ require("packer").startup(
       {"tpope/vim-fugitive", cmd = "G"},
       {
         "lewis6991/gitsigns.nvim",
+				event = {'BufRead'},
         requires = {"nvim-lua/plenary.nvim"},
         config = function()
           require("gitsigns").setup {
@@ -288,6 +320,7 @@ require("packer").startup(
     use {
       {
         "nvim-treesitter/nvim-treesitter",
+        event = {"BufRead"},
         run = "TSUpdate",
         config = function()
           -- :TSInstall
@@ -310,6 +343,7 @@ require("packer").startup(
       },
       {
         "p00f/nvim-ts-rainbow",
+        after = "nvim-treesitter",
         requires = {"nvim-treesitter/nvim-treesitter"},
         config = function()
           require "nvim-treesitter.configs".setup {
@@ -325,13 +359,16 @@ require("packer").startup(
       },
       {
         "windwp/nvim-ts-autotag",
+        after = "nvim-treesitter",
         requires = {"nvim-treesitter/nvim-treesitter"},
+        ft = {"html", "xml"},
         config = function()
           require("nvim-ts-autotag").setup()
         end
       },
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
+        after = "nvim-treesitter",
         requires = {"nvim-treesitter/nvim-treesitter"},
         config = function()
           require("nvim-treesitter.configs").setup {
@@ -410,7 +447,7 @@ require("packer").startup(
     use {
       {
         "thinca/vim-quickrun",
-        -- cmd = 'QuickRun',
+        cmd = 'QuickRun',
         keys = "<leader>rr",
         config = function()
           vim.g.quickrun_no_default_key_mappings = 1
@@ -443,19 +480,23 @@ require("packer").startup(
     use {
       {
         "neovim/nvim-lspconfig",
+        event = "BufReadPre",
         config = function()
           require("lsp")
         end
       },
       {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         requires = {
-          {"onsails/lspkind-nvim"},
-          {"hrsh7th/cmp-vsnip"},
-          {"hrsh7th/vim-vsnip"},
-          {"rafamadriz/friendly-snippets"},
+          {
+            "hrsh7th/vim-vsnip",
+            after = "nvim-cmp",
+            requires = {{"rafamadriz/friendly-snippets", after = "vim-vsnip"}}
+          },
           {
             "windwp/nvim-autopairs",
+            after = "nvim-cmp",
             config = function()
               require("nvim-autopairs").setup {}
               require("nvim-autopairs.completion.cmp").setup {
@@ -465,14 +506,38 @@ require("packer").startup(
               }
             end
           },
-          -- {'hrsh7th/cmp-buffer'},
-          {"hrsh7th/cmp-nvim-lsp"}
-          -- {'hrsh7th/cmp-nvim-lua', ft='lua'},
+          {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
+          {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"}
         },
         config = function()
+          local lspkind_icons = {
+            Text = "",
+            Method = "",
+            Function = "",
+            Constructor = "",
+            Field = "ﰠ",
+            Variable = "",
+            Class = "ﴯ",
+            Interface = "",
+            Module = "",
+            Property = "ﰠ",
+            Unit = "塞",
+            Value = "",
+            Enum = "",
+            Keyword = "",
+            Snippet = "",
+            Color = "",
+            File = "",
+            Reference = "",
+            Folder = "",
+            EnumMember = "",
+            Constant = "",
+            Struct = "פּ",
+            Event = "",
+            Operator = "",
+            TypeParameter = ""
+          }
           local cmp = require("cmp")
-          local lspkind = require("lspkind")
-
           cmp.setup {
             preselect = cmp.PreselectMode.None,
             snippet = {
@@ -485,8 +550,8 @@ require("packer").startup(
               -- completeopt = 'menu,menuone,noinsert',
             },
             formatting = {
-              format = function(entry, vim_item)
-                vim_item.kind = lspkind.presets.default[vim_item.kind] .. " " .. string.sub(vim_item.kind, 1, 4)
+              format = function(_, vim_item)
+                vim_item.kind = lspkind_icons[vim_item.kind] .. " " .. vim_item.kind -- string.sub(vim_item.kind, 1, 4)
                 return vim_item
               end
             },
@@ -540,6 +605,7 @@ require("packer").startup(
       },
       {
         "mhartington/formatter.nvim",
+        cmd = {"Format", "FormatWrite"},
         config = function()
           require("formatter").setup {
             filetype = {
@@ -577,118 +643,6 @@ require("packer").startup(
           )
         end
       },
-      -- 	{'hrsh7th/nvim-compe',
-      -- 		requires = {
-      -- 			{'hrsh7th/vim-vsnip' },
-      -- 			{'rafamadriz/friendly-snippets'},
-      -- 			{'windwp/nvim-autopairs'},
-      -- 			{'onsails/lspkind-nvim',
-      -- 				config = function ()
-      -- 					require('lspkind').init({
-      -- 						-- enables text annotations
-      -- 						with_text = true,
-      -- 						-- can be either 'default' or
-      -- 						-- 'codicons' for codicon preset (requires vscode-codicons font installed)
-      -- 						-- default: 'default'
-      -- 						preset = 'codicons',
-      -- 						-- override preset symbols
-      -- 						symbol_map = {
-      -- 							Text = "",
-      -- 							Method = "",
-      -- 							Function = "",
-      -- 							Constructor = "",
-      -- 							Field = "ﰠ",
-      -- 							Variable = "",
-      -- 							Class = "ﴯ",
-      -- 							Interface = "",
-      -- 							Module = "",
-      -- 							Property = "ﰠ",
-      -- 							Unit = "塞",
-      -- 							Value = "",
-      -- 							Enum = "",
-      -- 							Keyword = "",
-      -- 							Snippet = "",
-      -- 							Color = "",
-      -- 							File = "",
-      -- 							Reference = "",
-      -- 							Folder = "",
-      -- 							EnumMember = "",
-      -- 							Constant = "",
-      -- 							Struct = "פּ",
-      -- 							Event = "",
-      -- 							Operator = "",
-      -- 							TypeParameter = ""
-      -- 						},
-      -- 					})
-      -- 				end
-      -- 			},
-      -- 		},
-      -- 		config = function ()
-      -- 			require('compe').setup {
-      -- 				min_length = 2;
-      -- 				preselect = 'disable';
-      -- 				max_menu_width = 20;
-      -- 				max_abbr_width = 20;
-      -- 				max_kind_width = 20;
-      -- 				source = {
-      -- 					path = true;
-      -- 					buffer = true;
-      -- 					tags = false;
-      --
-      -- 					nvim_lsp = true;
-      -- 					nvim_lua = true;
-      --
-      -- 					vsnip = true;
-      -- 					luasnip = false;
-      -- 					ultisnips = false;
-      -- 					calc = false;
-      -- 				},
-      -- 			}
-      --
-      -- 			local t = function(str)
-      -- 				return vim.api.nvim_replace_termcodes(str, true, true, true)
-      -- 			end
-      -- 			-- Use (s-)tab to:
-      -- 			--- move to prev/next item in completion menuone
-      -- 			--- jump to prev/next snippet's placeholder
-      -- 			_G.tab_complete = function()
-      -- 				if is_pairs() then
-      -- 					return t "<Right>"
-      -- 				elseif vim.fn['vsnip#available'](1) == 1 then
-      -- 					return t "<Plug>(vsnip-expand-or-jump)"
-      -- 				elseif vim.fn.pumvisible() == 1 then
-      -- 					return vim.fn['compe#confirm']({ keys = '<CR>', select = true })
-      -- 				elseif check_back_space() then
-      -- 					return t "<Tab>"
-      -- 				else
-      -- 					return vim.fn['compe#complete']()
-      -- 				end
-      -- 			end
-      -- 			_G.s_tab_complete = function()
-      -- 				if is_pairs(true) then
-      -- 					return t "<Left>"
-      -- 				elseif vim.fn['vsnip#jumpable'](-1) == 1 then
-      -- 					return t "<Plug>(vsnip-jump-prev)"
-      -- 				elseif check_back_space() then
-      -- 					return t "<S-Tab>"
-      -- 				else
-      -- 					return vim.fn['compe#complete']()
-      -- 				end
-      -- 			end
-      -- 			vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-      -- 			vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-      -- 			vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-      -- 			vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-      --
-      -- 			-- vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
-      -- 			require('nvim-autopairs').setup()
-      -- 			require("nvim-autopairs.completion.compe").setup({
-      -- 				map_cr = true, --  map <CR> on insert mode
-      -- 				map_complete = true, -- it will auto insert `(` after select function or method item
-      -- 				auto_select = true,  -- auto select first item
-      -- 			})
-      -- 		end
-      -- 	},
       {
         "simrat39/symbols-outline.nvim",
         cmd = "SymbolsOutline",
@@ -705,13 +659,16 @@ require("packer").startup(
       },
       {
         "terrortylor/nvim-comment",
+        keys = {"gc", "gcc"},
         config = function()
           require("nvim_comment").setup()
         end
       },
       {
         "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
+        cmd = {"Trouble"},
+        keys = {"<leader>tn", "<leader>tp", "<leader>dd", "<leader>wd"},
+        requires = {"kyazdani42/nvim-web-devicons", opt = true},
         config = function()
           require("trouble").setup {
             position = "bottom", -- position of the list can be: bottom, top, left, right
@@ -759,43 +716,54 @@ require("packer").startup(
             use_lsp_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
           }
 
-					vim.api.nvim_set_keymap("n", "<leader>tn", "<cmd>lua require('trouble').next({skip_groups = true, jump = true})<cr>",
-						{silent = true, noremap = true}
-					)
-					vim.api.nvim_set_keymap("n", "<leader>tp", "<cmd>lua require('trouble').previous({skip_groups = true, jump = true})<cr>",
-						{silent = true, noremap = true}
-					)
-					vim.api.nvim_set_keymap("n", "<leader>gr", "<cmd>Trouble lsp_references<cr>",
-						{silent = true, noremap = true}
-					)
-					vim.api.nvim_set_keymap("n", "<leader>dd", "<cmd>Trouble lsp_document_diagnostics<cr>",
-						{silent = true, noremap = true}
-					)
-					vim.api.nvim_set_keymap("n", "<leader>wd", "<cmd>Trouble lsp_workspace_diagnostics<cr>",
-						{silent = true, noremap = true}
-					)
+          vim.api.nvim_set_keymap(
+            "n",
+            "<leader>tn",
+            "<cmd>lua require('trouble').next({skip_groups = true, jump = true})<cr>",
+            {silent = true, noremap = true}
+          )
+          vim.api.nvim_set_keymap(
+            "n",
+            "<leader>tp",
+            "<cmd>lua require('trouble').previous({skip_groups = true, jump = true})<cr>",
+            {silent = true, noremap = true}
+          )
+          vim.api.nvim_set_keymap("n", "<leader>gr", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
+          vim.api.nvim_set_keymap(
+            "n",
+            "<leader>dd",
+            "<cmd>Trouble lsp_document_diagnostics<cr>",
+            {silent = true, noremap = true}
+          )
+          vim.api.nvim_set_keymap(
+            "n",
+            "<leader>wd",
+            "<cmd>Trouble lsp_workspace_diagnostics<cr>",
+            {silent = true, noremap = true}
+          )
         end
       }
     }
 
     -- UI
     use {
+      -- {
+      --   "navarasu/onedark.nvim",
+      --   config = function()
+      --     -- vim.g.onedark_transparent_background = true
+      --     -- vim.cmd [[ colorscheme onedark ]]
+      --   end
+      -- },
       {
-        "navarasu/onedark.nvim",
+        "folke/tokyonight.nvim",
         config = function()
-          -- vim.g.onedark_transparent_background = true
-          -- vim.cmd [[ colorscheme onedark ]]
+          vim.g.tokyonight_style = "night" -- storm, night, day
+          -- vim.g.tokyonight_transparent = true
+          vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer", "NvimTree"}
+          vim.g.tokyonight_italic_functions = true
+          vim.cmd [[colorscheme tokyonight]]
         end
       },
-			{"folke/tokyonight.nvim",
-				config = function ()
-					vim.g.tokyonight_style = "night"  -- storm, night, day
-					-- vim.g.tokyonight_transparent = true
-					vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "NvimTree" }
-					vim.g.tokyonight_italic_functions = true
-					vim.cmd[[colorscheme tokyonight]]
-				end
-			},
       {
         "lukas-reineke/indent-blankline.nvim",
         cmd = "IndentBlanklineToggle",
@@ -811,10 +779,21 @@ require("packer").startup(
       },
       {
         "kyazdani42/nvim-tree.lua",
-        requires = {"kyazdani42/nvim-web-devicons"},
+        keys = {"<leader><leader>"},
+        cmd = {"NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile"},
+        requires = {"kyazdani42/nvim-web-devicons", opt = true},
         config = function()
-          local tree_cb = require "nvim-tree.config".nvim_tree_callback
           vim.g.nvim_tree_disable_default_keybindings = 1
+          vim.g.nvim_tree_auto_close = 1
+          vim.g.nvim_tree_auto_open = 1
+          vim.g.nvim_tree_quit_on_open = 1
+          vim.g.nvim_tree_highlight_opened_files = 3
+          vim.g.nvim_tree_follow = 1
+          vim.g.nvim_tree_width_allow_resize = 1
+          -- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', 'logs'}
+          vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1, folder_arrows = 1}
+
+          local tree_cb = require "nvim-tree.config".nvim_tree_callback
           vim.g.nvim_tree_bindings = {
             {key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit")},
             {key = {"<2-RightMouse>", "<C-]>"}, cb = tree_cb("cd")},
@@ -849,21 +828,13 @@ require("packer").startup(
             {key = "q", cb = tree_cb("close")},
             {key = "g?", cb = tree_cb("toggle_help")}
           }
-          vim.g.nvim_tree_auto_close = 1
-          vim.g.nvim_tree_auto_open = 1
-          vim.g.nvim_tree_quit_on_open = 1
-          vim.g.nvim_tree_highlight_opened_files = 3
-          vim.g.nvim_tree_follow = 1
-          vim.g.nvim_tree_width_allow_resize = 1
-          -- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', 'logs'}
-          vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1, folder_arrows = 1}
-
           vim.api.nvim_set_keymap("n", "<leader><leader>", ":NvimTreeFindFile<CR>", {noremap = true, silent = true})
-        end
+				end
       },
       {
         "hoob3rt/lualine.nvim",
-        requires = {"kyazdani42/nvim-web-devicons"},
+        event = {"BufRead", "BufNewFile"},
+        requires = {"kyazdani42/nvim-web-devicons", opt = true},
         config = function()
           local function lsp()
             local icon = [[ ]]
@@ -909,7 +880,8 @@ require("packer").startup(
       },
       {
         "akinsho/nvim-bufferline.lua",
-        requires = "kyazdani42/nvim-web-devicons",
+        event = {"BufRead"},
+        requires = {"kyazdani42/nvim-web-devicons", opt = true},
         config = function()
           require("bufferline").setup {
             options = {

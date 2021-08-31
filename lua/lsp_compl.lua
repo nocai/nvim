@@ -51,7 +51,7 @@ function M.text_document_completion_list_to_complete_items(result, prefix, fuzzy
   if #items == 0 then
     return {}
   end
-print('items:', vim.inspect(items))
+-- print('items:', vim.inspect(items))
   local matches = {}
   for _, item in pairs(items) do
     local info = get_documentation(item)
@@ -122,6 +122,7 @@ end
 
 
 function M.trigger_completion()
+print('>>> trigger_completion')
   reset_timer()
   completion_ctx.cancel_pending()
   local cursor_pos = api.nvim_win_get_cursor(0)[2]
@@ -132,7 +133,7 @@ function M.trigger_completion()
   local prefix = line:sub(col, cursor_pos)
 print('prefix:', prefix)
   local params = lsp.util.make_position_params()
-print('params:', vim.inspect(params))
+-- print('params:', vim.inspect(params))
   local _, cancel_req = request('textDocument/completion', params, function(err, _, result, client_id)
     completion_ctx.pending_requests = {}
     assert(not err, vim.inspect(err))
@@ -158,10 +159,12 @@ end
 
 
 function M._InsertCharPre(server_side_fuzzy_completion)
+	print('>>> InsertCharPre')
   if timer then
     return
   end
   local char = api.nvim_get_vvar('char')
+	print('char:', char)
   local pumvisible = tonumber(vim.fn.pumvisible()) == 1
   if pumvisible then
     if completion_ctx.isIncomplete or server_side_fuzzy_completion then
@@ -173,12 +176,15 @@ function M._InsertCharPre(server_side_fuzzy_completion)
     end
     return
   end
+	print('triggers_by_buf:', vim.inspect(triggers_by_buf))
   local triggers = triggers_by_buf[api.nvim_get_current_buf()] or {}
-	print(vim.inspect(triggers))
+	print('current triggers:', vim.inspect(triggers))
 
   for _, entry in pairs(triggers) do
     local chars, fn = unpack(entry)
+		print('chars:', vim.inspect(chars), 'char:', char)
     if vim.tbl_contains(chars, char) then
+			print('triggering ...')
       timer = vim.loop.new_timer()
       timer:start(50, 0, function()
         reset_timer()
@@ -191,11 +197,14 @@ end
 
 
 function M._TextChangedP()
+	print('>>> TextChangedP')
   completion_ctx.cursor = api.nvim_win_get_cursor(0)
+	print('>>> TextChangedP, ctx:', completion_ctx)
 end
 
 
 function M._TextChangedI()
+	print('>>> TextChangedI')
   local cursor = completion_ctx.cursor
   if not cursor or timer then
     return
@@ -244,7 +253,7 @@ end
 
 
 function M._CompleteDone(resolveEdits)
-print('completeDone:', resolveEdits)
+print('>>> CompleteDone:', resolveEdits)
   if completion_ctx.suppress_completeDone then
     completion_ctx.suppress_completeDone = false
     return
@@ -323,6 +332,7 @@ end
 
 
 function M.attach(client, bufnr, opts)
+	print('>>> attach')
   opts = opts or {}
   client_settings[client.id] = opts
   vim.cmd(string.format('augroup lsp_compl_%d_%d', client.id, bufnr))
@@ -344,7 +354,7 @@ function M.attach(client, bufnr, opts)
   ))
   vim.cmd('augroup end')
 
-	print('triggers:', vim.inspect(triggers_by_buf))
+	print('triggers_by_buf:', vim.inspect(triggers_by_buf))
   local triggers = triggers_by_buf[bufnr]
 	print('triggers:', triggers)
   if not triggers then
@@ -356,17 +366,18 @@ function M.attach(client, bufnr, opts)
       end
     })
   end
+	print('triggers_by_buf init:', vim.inspect(triggers_by_buf))
   local signature_triggers = client.resolved_capabilities.signature_help_trigger_characters
-	print(vim.inspect(signature_triggers))
   if signature_triggers and #signature_triggers > 0 then
     table.insert(triggers, { signature_triggers, signature_help })
   end
   local completionProvider = client.server_capabilities.completionProvider or {}
-	print(vim.inspect(completionProvider))
   local completion_triggers = completionProvider.triggerCharacters
   if completion_triggers and #completion_triggers > 0 then
     table.insert(triggers, { completion_triggers, M.trigger_completion })
   end
+	print('triggers init:', vim.inspect(triggers))
+	print('triggers_by_buf init2:', vim.inspect(triggers_by_buf))
 end
 
 return M
