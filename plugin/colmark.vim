@@ -116,3 +116,4 @@ tnoremap <M-E> <C-\><C-N><C-W>K
 tnoremap <M-H> <C-\><C-N><C-W>H
 tnoremap <M-I> <C-\><C-N><C-W>L
 
+nnoremap <leader>lf <cmd>luafile %<cr>

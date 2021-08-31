@@ -779,8 +779,8 @@ require("packer").startup(
       },
       {
         "kyazdani42/nvim-tree.lua",
-        keys = {"<leader><leader>"},
-        cmd = {"NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile"},
+        -- keys = {"<leader><leader>"},
+        -- cmd = {"NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile"},
         requires = {"kyazdani42/nvim-web-devicons", opt = true},
         config = function()
           vim.g.nvim_tree_disable_default_keybindings = 1
@@ -792,6 +792,7 @@ require("packer").startup(
           vim.g.nvim_tree_width_allow_resize = 1
           -- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', 'logs'}
           vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1, folder_arrows = 1}
+          vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFile<CR>", {noremap = true, silent = true})
 
           local tree_cb = require "nvim-tree.config".nvim_tree_callback
           vim.g.nvim_tree_bindings = {
@@ -828,7 +829,6 @@ require("packer").startup(
             {key = "q", cb = tree_cb("close")},
             {key = "g?", cb = tree_cb("toggle_help")}
           }
-          vim.api.nvim_set_keymap("n", "<leader><leader>", ":NvimTreeFindFile<CR>", {noremap = true, silent = true})
 				end
       },
       {
