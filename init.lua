@@ -779,6 +779,7 @@ require("packer").startup(
       },
       {
         "kyazdani42/nvim-tree.lua",
+				events = {'VimEnter'},
         -- keys = {"<leader><leader>"},
         -- cmd = {"NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile"},
         requires = {"kyazdani42/nvim-web-devicons", opt = true},

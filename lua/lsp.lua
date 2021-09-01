@@ -111,7 +111,7 @@ lspconfig.gopls.setup {
 -- sumneko_lua
 local sumneko_root_path = vim.g.nvim_home .. "/.lsp/lua-language-server"
 local system_name = "macOS" -- (Linux, macOS, or Windows)
-if jit.os == "Linux" then
+if vim.g.is_linux then
   system_name = "Linux"
 end
 -- Make runtime files discoverable to the server
