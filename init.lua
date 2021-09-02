@@ -507,7 +507,8 @@ require("packer").startup(
             end
           },
           {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
-          {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"}
+          {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"},
+					{"hrsh7th/cmp-buffer", after = "nvim-cmp"},
         },
         config = function()
           local lspkind_icons = {
@@ -546,7 +547,8 @@ require("packer").startup(
               end
             },
             completion = {
-              keyword_length = 3
+              keyword_length = 3,
+							-- autocomplete = false
               -- completeopt = 'menu,menuone,noinsert',
             },
             formatting = {
@@ -595,7 +597,7 @@ require("packer").startup(
             },
             -- You should specify your *installed* sources.
             sources = {
-              -- { name = 'buffer' },
+              { name = 'buffer' },
               {name = "nvim_lsp"},
               {name = "vsnip"}
             }
@@ -779,6 +781,7 @@ require("packer").startup(
       },
       {
         "kyazdani42/nvim-tree.lua",
+				events = {'VimEnter'},
         -- keys = {"<leader><leader>"},
         -- cmd = {"NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile"},
         requires = {"kyazdani42/nvim-web-devicons", opt = true},
@@ -833,7 +836,7 @@ require("packer").startup(
       },
       {
         "hoob3rt/lualine.nvim",
-        event = {"BufRead", "BufNewFile"},
+        event = {"VimEnter"},
         requires = {"kyazdani42/nvim-web-devicons", opt = true},
         config = function()
           local function lsp()
