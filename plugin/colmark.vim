@@ -15,8 +15,8 @@ let maplocalleader = ' '
 " nnoremap n j
 " nnoremap gn gj
 nnoremap n          gj
-nnoremap N			J
-nnoremap gN			gJ
+nnoremap N          J
+nnoremap gN         gJ
 nnoremap <C-N>      <C-J>
 nnoremap <C-W>n     <C-W>j
 nnoremap <C-W><C-N> <C-W><C-J>
@@ -29,9 +29,9 @@ onoremap N J
 " }}}
 
 " jJ => eE {{{
-nnoremap j			e
-nnoremap J			E
-nnoremap gj			ge
+nnoremap j          e
+nnoremap J          E
+nnoremap gj         ge
 nnoremap <C-J>      <C-E>
 nnoremap <C-W>j     <C-W>e
 nnoremap <C-W><C-J> <C-W><C-E>
@@ -47,8 +47,8 @@ onoremap J E
 " eE => kK {{{
 " nnoremap e k
 " nnoremap ge gk
-nnoremap e			gk
-nnoremap E			K
+nnoremap e          gk
+nnoremap E          K
 nnoremap <C-E>      <C-K>
 nnoremap <C-W>e     <C-W>k
 nnoremap <C-W><C-E> <C-W><C-K>
@@ -61,15 +61,15 @@ onoremap E K
 " }}}
 
 " kK => nN {{{
-nnoremap k			n
-nnoremap K			N
-nnoremap gk			gn
+nnoremap k          n
+nnoremap K          N
+nnoremap gk         gn
 nnoremap <C-K>      <C-N>
 nnoremap <C-W>k     <C-W>n
 nnoremap <C-W><C-K> <C-W><C-N>
 
-xnoremap k	n
-xnoremap K	N
+xnoremap k  n
+xnoremap K  N
 xnoremap gk gn
 
 onoremap k n
@@ -77,8 +77,8 @@ onoremap K N
 " }}}
 
 " iL => lL {{{
-nnoremap i			l
-nnoremap I			L
+nnoremap i          l
+nnoremap I          L
 nnoremap <C-I>      <C-L>
 nnoremap <C-W>i     <C-W>l
 nnoremap <C-W><C-I> <C-W><C-L>
@@ -91,8 +91,8 @@ onoremap I L
 " }}}
 
 " lL => iI {{{
-nnoremap l			i
-nnoremap L			I
+nnoremap l          i
+nnoremap L          I
 nnoremap <C-L>      <C-I>
 nnoremap <C-W>l     <C-W>i
 nnoremap <C-W><C-L> <C-W><C-I>
@@ -102,6 +102,13 @@ xnoremap L I
 
 onoremap l i
 onoremap L I
+" }}}
+
+" {{{Resize splits with arrow keys
+noremap <silent><up>    :res +5<CR>
+noremap <silent><down>  :res -5<CR>
+noremap <silent><left>  :vertical resize-5<CR>
+noremap <silent><right> :vertical resize+5<CR>
 " }}}
 
 " buffers
@@ -116,4 +123,5 @@ tnoremap <M-E> <C-\><C-N><C-W>K
 tnoremap <M-H> <C-\><C-N><C-W>H
 tnoremap <M-I> <C-\><C-N><C-W>L
 
+nnoremap <c-s>      <cmd>wall<cr>
 nnoremap <leader>lf <cmd>luafile %<cr>

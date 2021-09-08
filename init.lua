@@ -283,7 +283,7 @@ require("packer").startup(
       {"tpope/vim-fugitive", cmd = "G"},
       {
         "lewis6991/gitsigns.nvim",
-				event = {'BufRead'},
+        event = {"BufRead"},
         requires = {"nvim-lua/plenary.nvim"},
         config = function()
           require("gitsigns").setup {
@@ -321,7 +321,7 @@ require("packer").startup(
       {
         "nvim-treesitter/nvim-treesitter",
         event = {"BufRead"},
-        run = "TSUpdate",
+        run = ":TSUpdate<cr>",
         config = function()
           -- :TSInstall
           require("nvim-treesitter.configs").setup {
@@ -447,7 +447,7 @@ require("packer").startup(
     use {
       {
         "thinca/vim-quickrun",
-        cmd = 'QuickRun',
+        cmd = "QuickRun",
         keys = "<leader>rr",
         config = function()
           vim.g.quickrun_no_default_key_mappings = 1
@@ -508,7 +508,7 @@ require("packer").startup(
           },
           {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
           {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"},
-					{"hrsh7th/cmp-buffer", after = "nvim-cmp"},
+          {"hrsh7th/cmp-buffer", after = "nvim-cmp"}
         },
         config = function()
           local lspkind_icons = {
@@ -547,13 +547,21 @@ require("packer").startup(
               end
             },
             completion = {
-              keyword_length = 3,
-							-- autocomplete = false
+              keyword_length = 3
+              -- autocomplete = false
               -- completeopt = 'menu,menuone,noinsert',
             },
             formatting = {
-              format = function(_, vim_item)
+              format = function(entry, vim_item)
                 vim_item.kind = lspkind_icons[vim_item.kind] .. " " .. vim_item.kind -- string.sub(vim_item.kind, 1, 4)
+								-- set a name for each source
+								vim_item.menu = ({
+									buffer = "[Buffer]",
+									nvim_lsp = "[LSP]",
+									luasnip = "[LuaSnip]",
+									nvim_lua = "[Lua]",
+									latex_symbols = "[Latex]",
+								})[entry.source.name]
                 return vim_item
               end
             },
@@ -597,9 +605,9 @@ require("packer").startup(
             },
             -- You should specify your *installed* sources.
             sources = {
-              { name = 'buffer' },
               {name = "nvim_lsp"},
-              {name = "vsnip"}
+              {name = "vsnip"},
+              {name = "buffer"}
             }
           }
           -- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
@@ -607,7 +615,8 @@ require("packer").startup(
       },
       {
         "mhartington/formatter.nvim",
-        cmd = {"Format", "FormatWrite"},
+        -- cmd = {"Format", "FormatWrite"},
+        -- events = {"BufWritePre"},
         config = function()
           require("formatter").setup {
             filetype = {
@@ -634,14 +643,13 @@ require("packer").startup(
             }
           }
 
-          vim.api.nvim_exec(
+          vim.cmd(
             [[ 
 						augroup FormatAutogroup
 							autocmd!
 							autocmd BufWritePost *.rs,*.lua FormatWrite
 						augroup END 
-						]],
-            true
+						]]
           )
         end
       },
@@ -762,7 +770,7 @@ require("packer").startup(
           vim.g.tokyonight_style = "night" -- storm, night, day
           -- vim.g.tokyonight_transparent = true
           vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer", "NvimTree"}
-          vim.g.tokyonight_italic_functions = true
+          -- vim.g.tokyonight_italic_functions = true
           vim.cmd [[colorscheme tokyonight]]
         end
       },
@@ -781,7 +789,7 @@ require("packer").startup(
       },
       {
         "kyazdani42/nvim-tree.lua",
-				events = {'VimEnter'},
+        events = {"VimEnter"},
         -- keys = {"<leader><leader>"},
         -- cmd = {"NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile"},
         requires = {"kyazdani42/nvim-web-devicons", opt = true},
@@ -832,7 +840,7 @@ require("packer").startup(
             {key = "q", cb = tree_cb("close")},
             {key = "g?", cb = tree_cb("toggle_help")}
           }
-				end
+        end
       },
       {
         "hoob3rt/lualine.nvim",
