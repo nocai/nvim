@@ -11,14 +11,20 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
   }
 )
 
-local signs = {Error = " ", Warning = " ", Hint = " ", Information = " "}
+local signs = {
+  Error = " ",
+  Warning = " ",
+  Hint = " ",
+  Information = " "
+}
 for type, icon in pairs(signs) do
   local hl = "LspDiagnosticsSign" .. type
   vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
 end
 
 local on_attach = function(client, bufnr)
-  require("minilsp").on_attach(client, bufnr)
+  -- require("minilsp.autocmd").on_attach(client, bufnr)
+
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
@@ -71,24 +77,25 @@ local on_attach = function(client, bufnr)
 		]]
     )
   end
-  require "lsp_compl".attach(client, bufnr)
+  -- require "lsp_compl".attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.documentationFormat = {"markdown", "plaintext"}
+capabilities.textDocument.completion.completionItem.documentationFormat = {
+  "markdown",
+  "plaintext"
+}
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
 capabilities.textDocument.completion.completionItem.deprecatedSupport = true
 capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-capabilities.textDocument.completion.completionItem.tagSupport = {valueSet = {1}}
+capabilities.textDocument.completion.completionItem.tagSupport = {
+  valueSet = {1}
+}
 capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    "documentation",
-    "detail",
-    "additionalTextEdits"
-  }
+  properties = {"documentation", "detail", "additionalTextEdits"}
 }
 
 local lspconfig = require("lspconfig")
@@ -127,10 +134,7 @@ lspconfig.sumneko_lua.setup {
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
   settings = {
     Lua = {
-      diagnostics = {
-        enable = true,
-        globals = {"vim", "packer_plugins"}
-      },
+      diagnostics = {enable = true, globals = {"vim", "packer_plugins"}},
       runtime = {version = "LuaJIT", path = runtime_path},
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -141,13 +145,16 @@ lspconfig.sumneko_lua.setup {
         }
       },
       -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false
-      }
+      telemetry = {enable = false}
     }
   }
 }
 
+lspconfig.denols.setup {on_attach = on_attach, capabilities = capabilities}
+-- lspconfig.tsserver.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities
+-- }
 -- rust-analyzer
 lspconfig.rust_analyzer.setup {
   on_attach = on_attach,

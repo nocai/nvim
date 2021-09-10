@@ -490,11 +490,6 @@ require("packer").startup(
         event = "InsertEnter",
         requires = {
           {
-            "hrsh7th/vim-vsnip",
-            after = "nvim-cmp",
-            requires = {{"rafamadriz/friendly-snippets", after = "vim-vsnip"}}
-          },
-          {
             "windwp/nvim-autopairs",
             after = "nvim-cmp",
             config = function()
@@ -506,9 +501,22 @@ require("packer").startup(
               }
             end
           },
-          {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
           {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"},
-          {"hrsh7th/cmp-buffer", after = "nvim-cmp"}
+          {"hrsh7th/cmp-buffer", after = "nvim-cmp"},
+          {
+            "saadparwaiz1/cmp_luasnip",
+            after = "nvim-cmp",
+            requires = {
+              {
+                "L3MON4D3/LuaSnip",
+                after = "cmp_luasnip",
+                requires = {{"rafamadriz/friendly-snippets"}},
+                config = function()
+                  require("luasnip.loaders.from_vscode").load()
+                end
+              }
+            }
+          }
         },
         config = function()
           local lspkind_icons = {
@@ -543,25 +551,25 @@ require("packer").startup(
             preselect = cmp.PreselectMode.None,
             snippet = {
               expand = function(args)
-                vim.fn["vsnip#anonymous"](args.body)
+                require "luasnip".lsp_expand(args.body)
               end
             },
             completion = {
               keyword_length = 3
               -- autocomplete = false
-              -- completeopt = 'menu,menuone,noinsert',
             },
             formatting = {
               format = function(entry, vim_item)
                 vim_item.kind = lspkind_icons[vim_item.kind] .. " " .. vim_item.kind -- string.sub(vim_item.kind, 1, 4)
-								-- set a name for each source
-								vim_item.menu = ({
-									buffer = "[Buffer]",
-									nvim_lsp = "[LSP]",
-									luasnip = "[LuaSnip]",
-									nvim_lua = "[Lua]",
-									latex_symbols = "[Latex]",
-								})[entry.source.name]
+                -- set a name for each source
+                vim_item.menu =
+                  ({
+                  buffer = "[Buffer]",
+                  nvim_lsp = "[LSP]",
+                  luasnip = "[LuaSnip]",
+                  nvim_lua = "[Lua]",
+                  latex_symbols = "[Latex]"
+                })[entry.source.name]
                 return vim_item
               end
             },
@@ -571,8 +579,8 @@ require("packer").startup(
               ["<C-k>"] = cmp.mapping.select_next_item(),
               ["<C-p>"] = cmp.mapping.select_prev_item(),
               ["<C-e>"] = cmp.mapping.select_prev_item(),
-              ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-              ["<C-f>"] = cmp.mapping.scroll_docs(4),
+              ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+              ["<C-d>"] = cmp.mapping.scroll_docs(4),
               ["<C-Space>"] = cmp.mapping.complete(),
               ["<C-j>"] = cmp.mapping.abort(),
               -- ['<CR>'] = cmp.mapping.confirm({
@@ -580,10 +588,14 @@ require("packer").startup(
               -- }),
               ["<Tab>"] = cmp.mapping(
                 function(fallback)
-                  if is_pairs() then
+                  if require("luasnip").expand_or_jumpable() then
+                    vim.api.nvim_feedkeys(
+                      vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
+                      "",
+                      true
+                    )
+                  elseif is_pairs() then
                     return vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, true, true), "n")
-                  elseif vim.fn["vsnip#jumpable"](1) == 1 then
-                    vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-jump-next)", true, true, true), "")
                   else
                     fallback()
                   end
@@ -592,10 +604,14 @@ require("packer").startup(
               ),
               ["<S-Tab>"] = cmp.mapping(
                 function(fallback)
-                  if is_pairs(true) then
+                  if require("luasnip").jumpable(-1) then
+                    vim.api.nvim_feedkeys(
+                      vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true),
+                      "",
+                      true
+                    )
+                  elseif is_pairs(true) then
                     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, true, true), "n")
-                  elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-                    vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-jump-prev)", true, true, true), "")
                   else
                     fallback()
                   end
@@ -606,8 +622,8 @@ require("packer").startup(
             -- You should specify your *installed* sources.
             sources = {
               {name = "nvim_lsp"},
-              {name = "vsnip"},
-              {name = "buffer"}
+              {name = "buffer"},
+              {name = "luasnip"}
             }
           }
           -- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
