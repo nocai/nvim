@@ -152,7 +152,7 @@ require("packer").startup(
           local actions = require "telescope.actions"
           require("telescope").setup {
             defaults = {
-              prompt_prefix = "🔍",
+              prompt_prefix = "  ",
               previewers = true,
               mappings = {
                 i = {
@@ -574,7 +574,7 @@ require("packer").startup(
               ["<C-d>"] = cmp.mapping.scroll_docs(-4),
               ["<C-f>"] = cmp.mapping.scroll_docs(4),
               ["<C-Space>"] = cmp.mapping.complete(),
-              ["<C-j>"] = cmp.mapping.close(),
+              ["<C-j>"] = cmp.mapping.abort(),
               -- ['<CR>'] = cmp.mapping.confirm({
               -- 	select = true,
               -- }),
