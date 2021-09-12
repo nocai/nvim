@@ -23,8 +23,6 @@ for type, icon in pairs(signs) do
 end
 
 local on_attach = function(client, bufnr)
-  -- require("minilsp.autocmd").on_attach(client, bufnr)
-
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
@@ -77,7 +75,7 @@ local on_attach = function(client, bufnr)
 		]]
     )
   end
-  -- require "lsp_compl".attach(client, bufnr)
+  require("autoc.autocmd").attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
