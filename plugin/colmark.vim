@@ -78,7 +78,9 @@ onoremap K N
 
 " iL => lL {{{
 nnoremap i          l
+nnoremap gi         gl
 nnoremap I          L
+nnoremap gI         gL
 nnoremap <C-I>      <C-L>
 nnoremap <C-W>i     <C-W>l
 nnoremap <C-W><C-I> <C-W><C-L>
@@ -92,7 +94,9 @@ onoremap I L
 
 " lL => iI {{{
 nnoremap l          i
+nnoremap gl         gi
 nnoremap L          I
+nnoremap gL         gI
 nnoremap <C-L>      <C-I>
 nnoremap <C-W>l     <C-W>i
 nnoremap <C-W><C-L> <C-W><C-I>
