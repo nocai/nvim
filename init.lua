@@ -38,8 +38,9 @@ require("packer").startup(
         cmd = {"TranslateW"},
         keys = {"<leader>tr"},
         config = function()
-          vim.api.nvim_set_keymap("n", "<leader>tr", "<cmd>TranslateW<cr>", {silent = true, noremap = true})
-          vim.api.nvim_set_keymap("x", "<leader>tr", "<cmd>TranslateW<cr>", {silent = true, noremap = true})
+          vim.g.translator_default_engines = {"youdao", "bing"}
+          vim.api.nvim_set_keymap("n", "<leader>tr", ":TranslateW<CR>", {silent = true, noremap = true})
+          vim.api.nvim_set_keymap("x", "<leader>tr", ":TranslateW<CR>", {silent = true, noremap = true})
         end
       },
       {
@@ -83,21 +84,71 @@ require("packer").startup(
           )
         end
       },
+      -- {
+      --   "voldikss/vim-floaterm",
+      --   cmd = {"FloatermToggle", "FloatermNew"},
+      --   keys = {"<F7>", "<F8>", "<F9>", "<F12>", "<M-t>"},
+      --   config = function()
+      --     vim.cmd(
+      --       [[
+      -- 						 let g:floaterm_keymap_new    = '<F7>'
+      -- 						 let g:floaterm_keymap_prev   = '<F8>'
+      -- 						 let g:floaterm_keymap_next   = '<F9>'
+      -- 						 let g:floaterm_keymap_toggle = '<F12>'
+      -- 						 nnoremap <silent> <M-t> :FloatermToggle<CR>
+      -- 						 tnoremap <silent> <M-t> <C-\><C-n>:FloatermToggle<CR>
+      -- 					 ]]
+      --     )
+      --   end
+      -- },
       {
-        "voldikss/vim-floaterm",
-        cmd = {"FloatermToggle", "FloatermNew"},
-        keys = {"<F7>", "<F8>", "<F9>", "<F12>", "<M-t>"},
+        "akinsho/toggleterm.nvim",
         config = function()
-          vim.cmd(
-            [[
-						 let g:floaterm_keymap_new    = '<F7>'
-						 let g:floaterm_keymap_prev   = '<F8>'
-						 let g:floaterm_keymap_next   = '<F9>'
-						 let g:floaterm_keymap_toggle = '<F12>'
-						 nnoremap <silent> <M-t> :FloatermToggle<CR>
-						 tnoremap <silent> <M-t> <C-\><C-n>:FloatermToggle<CR>
-					 ]]
-          )
+          require("toggleterm").setup {
+            -- size can be a number or function which is passed the current terminal
+            -- size = 20 | function(term)
+            -- 	if term.direction == "horizontal" then
+            -- 		return 15
+            -- 	elseif term.direction == "vertical" then
+            -- 		return vim.o.columns * 0.4
+            -- 	end
+            -- end,
+            size = function(term)
+              if term.direction == "horizontal" then
+                return 15
+              elseif term.direction == "vertical" then
+                return vim.o.columns * 0.4
+              end
+            end,
+            open_mapping = [[<c-\>]],
+            hide_numbers = true, -- hide the number column in toggleterm buffers
+            shade_filetypes = {},
+            shade_terminals = true,
+            shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+            start_in_insert = true,
+            insert_mappings = true, -- whether or not the open mapping applies in insert mode
+            persist_size = true,
+            -- direction = 'vertical' | 'horizontal' | 'window' | 'float',
+            direction = "float",
+            close_on_exit = true, -- close the terminal window when the process exits
+            shell = vim.o.shell, -- change the default shell
+            -- This field is only relevant if direction is set to 'float'
+            float_opts = {
+              -- The border key is *almost* the same as 'nvim_open_win'
+              -- see :h nvim_open_win for details on borders however
+              -- the 'curved' border is a custom border type
+              -- not natively supported but implemented in this plugin.
+              -- border = 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+              border = "curved",
+              -- width = <value>,
+              -- height = <value>,
+              winblend = 3,
+              highlights = {
+                border = "Normal",
+                background = "Normal"
+              }
+            }
+          }
         end
       }
     }
@@ -322,7 +373,7 @@ require("packer").startup(
       {
         "nvim-treesitter/nvim-treesitter",
         event = {"BufRead"},
-        run = ":TSUpdate<cr>",
+        run = ":TSUpdate",
         config = function()
           -- :TSInstall
           require("nvim-treesitter.configs").setup {
@@ -356,15 +407,6 @@ require("packer").startup(
               termcolors = {} -- table of colour name strings
             }
           }
-        end
-      },
-      {
-        "windwp/nvim-ts-autotag",
-        after = "nvim-treesitter",
-        requires = {"nvim-treesitter/nvim-treesitter"},
-        ft = {"html", "xml"},
-        config = function()
-          require("nvim-ts-autotag").setup()
         end
       },
       {
@@ -509,15 +551,17 @@ require("packer").startup(
             after = "nvim-cmp",
             requires = {
               {
-                "rafamadriz/friendly-snippets",
-                after = "cmp_luasnip"
-              },
-              {
                 "L3MON4D3/LuaSnip",
-                after = "friendly-snippets",
-                config = function()
-                  require("luasnip.loaders.from_vscode").load()
-                end
+                after = "cmp_luasnip",
+                requires = {
+                  {
+                    "rafamadriz/friendly-snippets",
+                    after = {"LuaSnip"},
+                    config = function()
+                      require("luasnip.loaders.from_vscode").load()
+                    end
+                  }
+                }
               }
             }
           }
@@ -788,6 +832,13 @@ require("packer").startup(
       --   end
       -- },
       {
+        "shaunsingh/nord.nvim",
+        config = function()
+          -- vim.g.nord_disable_background = true
+          -- vim.cmd[[colorscheme nord]]
+        end
+      },
+      {
         "folke/tokyonight.nvim",
         config = function()
           vim.g.tokyonight_style = "night" -- storm, night, day
@@ -890,6 +941,7 @@ require("packer").startup(
             options = {
               -- theme = "onedark",
               theme = "tokyonight",
+              -- theme = "nord",
               section_separators = "",
               component_separators = ""
             },
@@ -922,6 +974,23 @@ require("packer").startup(
               offsets = {{filetype = "NvimTree", text = "Press g? for help", text_align = "left"}}
             }
           }
+        end
+      },
+      {
+        "sunjon/shade.nvim",
+        -- keys = "<C-W>",
+        config = function()
+          require "shade".setup(
+            {
+              overlay_opacity = 60,
+              opacity_step = 1,
+              keys = {
+                brightness_up = "<C-Up>",
+                brightness_down = "<C-Down>"
+                -- toggle           = '<Leader>s',
+              }
+            }
+          )
         end
       }
       -- { 'xiyaowong/nvim-transparent',

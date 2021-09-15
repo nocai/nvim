@@ -1,8 +1,9 @@
 vim.o.termguicolors = true
+vim.o.showmode = false
 
 --Incremental live completion
-vim.o.inccommand = 'nosplit'
-vim.o.completeopt = 'menu,menuone,noinsert'
+vim.o.inccommand = "nosplit"
+vim.o.completeopt = "menu,menuone,noinsert"
 
 --Set highlight on search
 vim.o.hlsearch = false
@@ -15,7 +16,7 @@ vim.wo.relativenumber = true
 vim.o.hidden = true
 
 --Enable mouse mode
-vim.o.mouse = 'a'
+vim.o.mouse = "a"
 
 --Enable break indent
 vim.o.breakindent = true
@@ -29,17 +30,17 @@ vim.o.smartcase = true
 
 --Decrease update time
 vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = "yes"
 
 vim.o.cursorline = true
-vim.o.colorcolumn = '88'
+vim.o.colorcolumn = "88"
 
-vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard = "unnamedplus"
 -- vim.o.list = true
-vim.o.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
+vim.o.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
 
-vim.o.scrolloff      = 5
-vim.o.sidescrolloff  = 5
+vim.o.scrolloff = 5
+vim.o.sidescrolloff = 5
 
 vim.o.pumheight = 10
 
@@ -50,4 +51,3 @@ vim.o.shiftwidth = 4
 vim.wo.foldenable = false
 -- vim.wo.foldmethod = 'indent'
 -- vim.wo.foldmethod = 'syntax'
-
