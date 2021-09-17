@@ -13,8 +13,8 @@ let maplocalleader = ' '
 
 " nN => jJ {{{
 " nnoremap n j
-" nnoremap gn gj
 nnoremap n          gj
+nnoremap gn         gj
 nnoremap N          J
 nnoremap gN         gJ
 nnoremap <C-N>      <C-J>
@@ -46,8 +46,8 @@ onoremap J E
 
 " eE => kK {{{
 " nnoremap e k
-" nnoremap ge gk
 nnoremap e          gk
+nnoremap ge         gk
 nnoremap E          K
 nnoremap <C-E>      <C-K>
 nnoremap <C-W>e     <C-W>k

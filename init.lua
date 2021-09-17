@@ -23,6 +23,12 @@ require("packer").startup(
       -- { "tpope/vim-surround" },
       -- { 'tpope/vim-repeat' },
       -- { 'jiangmiao/auto-pairs' },
+      -- {
+      --   "folke/which-key.nvim",
+      --   config = function()
+      --     require("which-key").setup {}
+      --   end
+      -- },
       {"tweekmonster/startuptime.vim", cmd = {"StartupTime"}},
       {"nanotee/nvim-lua-guide"},
       {
@@ -37,10 +43,18 @@ require("packer").startup(
         "voldikss/vim-translator",
         cmd = {"TranslateW"},
         keys = {"<leader>tr"},
+        -- requires = {"which-key.nvim"},
         config = function()
           vim.g.translator_default_engines = {"youdao", "bing"}
           vim.api.nvim_set_keymap("n", "<leader>tr", ":TranslateW<CR>", {silent = true, noremap = true})
           vim.api.nvim_set_keymap("x", "<leader>tr", ":TranslateW<CR>", {silent = true, noremap = true})
+
+          -- local wk = require("which-key")
+          -- wk.register(
+          --   {
+          --     ["<c-p>tr"] = {"<cmd>TranslateW<cr>", "Translate with window"}
+          --   }
+          -- )
         end
       },
       {
@@ -198,8 +212,9 @@ require("packer").startup(
     use {
       {
         "nvim-telescope/telescope.nvim",
+        cmd = {"Telescope"},
         keys = {"<c-p>"},
-        requires = {{"nvim-lua/plenary.nvim"}},
+        requires = {{"nvim-lua/plenary.nvim"}, {"which-key.nvim"}},
         config = function()
           local actions = require "telescope.actions"
           require("telescope").setup {
@@ -639,14 +654,14 @@ require("packer").startup(
               -- }),
               ["<Tab>"] = cmp.mapping(
                 function(fallback)
-                  if require("luasnip").expand_or_jumpable() then
+                  if is_pairs() then
+                    return vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, true, true), "n")
+                  elseif require("luasnip").expand_or_jumpable() then
                     vim.api.nvim_feedkeys(
                       vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
                       "",
                       true
                     )
-                  elseif is_pairs() then
-                    return vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, true, true), "n")
                   else
                     fallback()
                   end
@@ -655,14 +670,14 @@ require("packer").startup(
               ),
               ["<S-Tab>"] = cmp.mapping(
                 function(fallback)
-                  if require("luasnip").jumpable(-1) then
+                  if is_pairs(true) then
+                    vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, true, true), "n")
+                  elseif require("luasnip").jumpable(-1) then
                     vim.api.nvim_feedkeys(
                       vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true),
                       "",
                       true
                     )
-                  elseif is_pairs(true) then
-                    vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, true, true), "n")
                   else
                     fallback()
                   end
@@ -682,21 +697,22 @@ require("packer").startup(
       },
       {
         "mhartington/formatter.nvim",
+        ft = "lua",
         -- cmd = {"Format", "FormatWrite"},
         -- events = {"BufWritePre"},
         config = function()
           require("formatter").setup {
             filetype = {
-              rust = {
-                -- Rustfmt
-                function()
-                  return {
-                    exe = "rustfmt",
-                    args = {"--emit=stdout"},
-                    stdin = true
-                  }
-                end
-              },
+              -- rust = {
+              --   -- Rustfmt
+              --   function()
+              --     return {
+              --       exe = "rustfmt",
+              --       args = {"--emit=stdout"},
+              --       stdin = true
+              --     }
+              --   end
+              -- },
               lua = {
                 -- luafmt
                 function()
@@ -710,14 +726,14 @@ require("packer").startup(
             }
           }
 
-          vim.cmd(
-            [[ 
-						augroup FormatAutogroup
-							autocmd!
-							autocmd BufWritePost *.rs,*.lua FormatWrite
-						augroup END 
-						]]
-          )
+          --           vim.cmd(
+          --             [[
+          -- augroup FormatAutogroup
+          -- 	autocmd!
+          -- 	autocmd BufWritePost *.lua FormatWrite
+          -- augroup END
+          -- ]]
+          --           )
         end
       },
       {
@@ -736,7 +752,7 @@ require("packer").startup(
       },
       {
         "terrortylor/nvim-comment",
-        keys = {"gc", "gcc"},
+        keys = {{"x","gc"}, "gcc"},
         config = function()
           require("nvim_comment").setup()
         end
