@@ -23,12 +23,6 @@ require("packer").startup(
       -- { "tpope/vim-surround" },
       -- { 'tpope/vim-repeat' },
       -- { 'jiangmiao/auto-pairs' },
-      -- {
-      --   "folke/which-key.nvim",
-      --   config = function()
-      --     require("which-key").setup {}
-      --   end
-      -- },
       {"tweekmonster/startuptime.vim", cmd = {"StartupTime"}},
       {"nanotee/nvim-lua-guide"},
       {
@@ -43,38 +37,28 @@ require("packer").startup(
         "voldikss/vim-translator",
         cmd = {"TranslateW"},
         keys = {"<leader>tr"},
-        -- requires = {"which-key.nvim"},
         config = function()
           vim.g.translator_default_engines = {"youdao", "bing"}
           vim.api.nvim_set_keymap("n", "<leader>tr", ":TranslateW<CR>", {silent = true, noremap = true})
           vim.api.nvim_set_keymap("x", "<leader>tr", ":TranslateW<CR>", {silent = true, noremap = true})
-
-          -- local wk = require("which-key")
-          -- wk.register(
-          --   {
-          --     ["<c-p>tr"] = {"<cmd>TranslateW<cr>", "Translate with window"}
-          --   }
-          -- )
         end
       },
       {
         "karb94/neoscroll.nvim",
         event = "WinScrolled",
         config = function()
-          require("neoscroll").setup(
-            {
-              mappings = {
-                "<C-u>",
-                "<C-d>",
-                "<C-b>",
-                "<C-f>",
-                "<C-y>",
-                "zt",
-                "zz",
-                "zb"
-              }
+          require("neoscroll").setup {
+            mappings = {
+              "<C-u>",
+              "<C-d>",
+              "<C-b>",
+              "<C-f>",
+              "<C-y>",
+              "zt",
+              "zz",
+              "zb"
             }
-          )
+          }
           require("neoscroll.config").set_mappings({["<C-j>"] = {"scroll", {"0.10", "false", "100"}}})
         end
       },
@@ -214,7 +198,7 @@ require("packer").startup(
         "nvim-telescope/telescope.nvim",
         cmd = {"Telescope"},
         keys = {"<c-p>"},
-        requires = {{"nvim-lua/plenary.nvim"}, {"which-key.nvim"}},
+        requires = {{"nvim-lua/plenary.nvim"}},
         config = function()
           local actions = require "telescope.actions"
           require("telescope").setup {
@@ -519,6 +503,7 @@ require("packer").startup(
         config = function()
           vim.cmd(
             [[
+						let test#strategy = "neovim"
 						nmap <silent> <leader>tl :TestLast -v<CR>
 						nmap <silent> <leader>tv :TestVisit<CR>
 					]]
@@ -541,6 +526,13 @@ require("packer").startup(
         event = "BufReadPre",
         config = function()
           require("lsp")
+        end
+      },
+      {
+        "terrortylor/nvim-comment",
+        event = "BufReadPre",
+        config = function()
+          require("nvim_comment").setup()
         end
       },
       {
@@ -688,7 +680,7 @@ require("packer").startup(
             -- You should specify your *installed* sources.
             sources = {
               {name = "nvim_lsp"},
-              {name = "buffer"},
+              -- {name = "buffer"},
               {name = "luasnip"}
             }
           }
@@ -750,92 +742,85 @@ require("packer").startup(
           vim.api.nvim_set_keymap("n", "gO", ":SymbolsOutline<CR>", {noremap = true, silent = true})
         end
       },
-      {
-        "terrortylor/nvim-comment",
-        keys = {{"x","gc"}, "gcc"},
-        config = function()
-          require("nvim_comment").setup()
-        end
-      },
-      {
-        "folke/trouble.nvim",
-        cmd = {"Trouble"},
-        keys = {"<leader>tn", "<leader>tp", "<leader>dd", "<leader>wd"},
-        requires = {"kyazdani42/nvim-web-devicons", opt = true},
-        config = function()
-          require("trouble").setup {
-            position = "bottom", -- position of the list can be: bottom, top, left, right
-            height = 10, -- height of the trouble list when position is top or bottom
-            width = 50, -- width of the list when position is left or right
-            icons = true, -- use devicons for filenames
-            mode = "lsp_workspace_diagnostics", -- "lsp_workspace_diagnostics", "lsp_document_diagnostics", "quickfix", "lsp_references", "loclist"
-            fold_open = "", -- icon used for open folds
-            fold_closed = "", -- icon used for closed folds
-            action_keys = {
-              -- key mappings for actions in the trouble list
-              -- map to {} to remove a mapping, for example:
-              -- close = {},
-              close = "q", -- close the list
-              cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
-              refresh = "r", -- manually refresh
-              jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
-              open_split = {"<c-x>"}, -- open buffer in new split
-              open_vsplit = {"<c-v>"}, -- open buffer in new vsplit
-              open_tab = {"<c-t>"}, -- open buffer in new tab
-              jump_close = {"o"}, -- jump to the diagnostic and close the list
-              toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
-              toggle_preview = "P", -- toggle auto_preview
-              hover = "E", -- opens a small popup with the full multiline message
-              preview = "p", -- preview the diagnostic location
-              close_folds = {"zM", "zm"}, -- close all folds
-              open_folds = {"zR", "zr"}, -- open all folds
-              toggle_fold = {"zA", "za"}, -- toggle fold of current file
-              previous = "e", -- preview item
-              next = "n" -- next item
-            },
-            indent_lines = true, -- add an indent guide below the fold icons
-            auto_open = false, -- automatically open the list when you have diagnostics
-            auto_close = true, -- automatically close the list when you have no diagnostics
-            auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
-            auto_fold = false, -- automatically fold a file trouble list at creation
-            signs = {
-              -- icons / text used for a diagnostic
-              error = "",
-              warning = "",
-              hint = "",
-              information = "",
-              other = "﫠"
-            },
-            use_lsp_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
-          }
-
-          vim.api.nvim_set_keymap(
-            "n",
-            "<leader>tn",
-            "<cmd>lua require('trouble').next({skip_groups = true, jump = true})<cr>",
-            {silent = true, noremap = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<leader>tp",
-            "<cmd>lua require('trouble').previous({skip_groups = true, jump = true})<cr>",
-            {silent = true, noremap = true}
-          )
-          vim.api.nvim_set_keymap("n", "<leader>gr", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
-          vim.api.nvim_set_keymap(
-            "n",
-            "<leader>dd",
-            "<cmd>Trouble lsp_document_diagnostics<cr>",
-            {silent = true, noremap = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<leader>wd",
-            "<cmd>Trouble lsp_workspace_diagnostics<cr>",
-            {silent = true, noremap = true}
-          )
-        end
-      }
+--       {
+--         "folke/trouble.nvim",
+--         cmd = {"Trouble"},
+--         keys = {"<leader>tn", "<leader>tp", "<leader>dd", "<leader>wd"},
+--         requires = {"kyazdani42/nvim-web-devicons", opt = true},
+--         config = function()
+--           require("trouble").setup {
+--             position = "bottom", -- position of the list can be: bottom, top, left, right
+--             height = 10, -- height of the trouble list when position is top or bottom
+--             width = 50, -- width of the list when position is left or right
+--             icons = true, -- use devicons for filenames
+--             mode = "lsp_workspace_diagnostics", -- "lsp_workspace_diagnostics", "lsp_document_diagnostics", "quickfix", "lsp_references", "loclist"
+--             fold_open = "", -- icon used for open folds
+--             fold_closed = "", -- icon used for closed folds
+--             action_keys = {
+--               -- key mappings for actions in the trouble list
+--               -- map to {} to remove a mapping, for example:
+--               -- close = {},
+--               close = "q", -- close the list
+--               cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+--               refresh = "r", -- manually refresh
+--               jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
+--               open_split = {"<c-x>"}, -- open buffer in new split
+--               open_vsplit = {"<c-v>"}, -- open buffer in new vsplit
+--               open_tab = {"<c-t>"}, -- open buffer in new tab
+--               jump_close = {"o"}, -- jump to the diagnostic and close the list
+--               toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+--               toggle_preview = "P", -- toggle auto_preview
+--               hover = "E", -- opens a small popup with the full multiline message
+--               preview = "p", -- preview the diagnostic location
+--               close_folds = {"zM", "zm"}, -- close all folds
+--               open_folds = {"zR", "zr"}, -- open all folds
+--               toggle_fold = {"zA", "za"}, -- toggle fold of current file
+--               previous = "e", -- preview item
+--               next = "n" -- next item
+--             },
+--             indent_lines = true, -- add an indent guide below the fold icons
+--             auto_open = false, -- automatically open the list when you have diagnostics
+--             auto_close = true, -- automatically close the list when you have no diagnostics
+--             auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+--             auto_fold = false, -- automatically fold a file trouble list at creation
+--             signs = {
+--               -- icons / text used for a diagnostic
+--               error = "",
+--               warning = "",
+--               hint = "",
+--               information = "",
+--               other = "﫠"
+--             },
+--             use_lsp_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
+--           }
+-- 
+--           vim.api.nvim_set_keymap(
+--             "n",
+--             "<leader>tn",
+--             "<cmd>lua require('trouble').next({skip_groups = true, jump = true})<cr>",
+--             {silent = true, noremap = true}
+--           )
+--           vim.api.nvim_set_keymap(
+--             "n",
+--             "<leader>tp",
+--             "<cmd>lua require('trouble').previous({skip_groups = true, jump = true})<cr>",
+--             {silent = true, noremap = true}
+--           )
+--           vim.api.nvim_set_keymap("n", "<leader>gr", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
+--           vim.api.nvim_set_keymap(
+--             "n",
+--             "<leader>dd",
+--             "<cmd>Trouble lsp_document_diagnostics<cr>",
+--             {silent = true, noremap = true}
+--           )
+--           vim.api.nvim_set_keymap(
+--             "n",
+--             "<leader>wd",
+--             "<cmd>Trouble lsp_workspace_diagnostics<cr>",
+--             {silent = true, noremap = true}
+--           )
+--         end
+--       }
     }
 
     -- UI
@@ -847,13 +832,13 @@ require("packer").startup(
       --     -- vim.cmd [[ colorscheme onedark ]]
       --   end
       -- },
-      {
-        "shaunsingh/nord.nvim",
-        config = function()
+      -- {
+      --   "shaunsingh/nord.nvim",
+      --   config = function()
           -- vim.g.nord_disable_background = true
           -- vim.cmd[[colorscheme nord]]
-        end
-      },
+      --   end
+      -- },
       {
         "folke/tokyonight.nvim",
         config = function()
@@ -880,56 +865,60 @@ require("packer").startup(
       {
         "kyazdani42/nvim-tree.lua",
         events = {"VimEnter"},
-        -- keys = {"<leader><leader>"},
-        -- cmd = {"NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile"},
-        requires = {"kyazdani42/nvim-web-devicons", opt = true},
+        requires = {"kyazdani42/nvim-web-devicons"},
         config = function()
-          vim.g.nvim_tree_disable_default_keybindings = 1
-          vim.g.nvim_tree_auto_close = 1
-          vim.g.nvim_tree_auto_open = 1
-          vim.g.nvim_tree_quit_on_open = 1
           vim.g.nvim_tree_highlight_opened_files = 3
-          vim.g.nvim_tree_follow = 1
-          vim.g.nvim_tree_width_allow_resize = 1
-          -- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', 'logs'}
           vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1, folder_arrows = 1}
           vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFile<CR>", {noremap = true, silent = true})
 
           local tree_cb = require "nvim-tree.config".nvim_tree_callback
-          vim.g.nvim_tree_bindings = {
-            {key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit")},
-            {key = {"<2-RightMouse>", "<C-]>"}, cb = tree_cb("cd")},
-            {key = "<C-v>", cb = tree_cb("vsplit")},
-            {key = "<C-x>", cb = tree_cb("split")},
-            {key = "<C-t>", cb = tree_cb("tabnew")},
-            {key = "<", cb = tree_cb("prev_sibling")},
-            {key = ">", cb = tree_cb("next_sibling")},
-            {key = "P", cb = tree_cb("parent_node")},
-            {key = "<BS>", cb = tree_cb("close_node")},
-            {key = "<S-CR>", cb = tree_cb("close_node")},
-            {key = "<Tab>", cb = tree_cb("preview")},
-            {key = "E", cb = tree_cb("first_sibling")},
-            {key = "N", cb = tree_cb("last_sibling")},
-            {key = "I", cb = tree_cb("toggle_ignored")},
-            {key = "H", cb = tree_cb("toggle_dotfiles")},
-            {key = "R", cb = tree_cb("refresh")},
-            {key = "a", cb = tree_cb("create")},
-            {key = "d", cb = tree_cb("remove")},
-            {key = "r", cb = tree_cb("rename")},
-            {key = "<C-r>", cb = tree_cb("full_rename")},
-            {key = "x", cb = tree_cb("cut")},
-            {key = "c", cb = tree_cb("copy")},
-            {key = "p", cb = tree_cb("paste")},
-            {key = "y", cb = tree_cb("copy_name")},
-            {key = "Y", cb = tree_cb("copy_path")},
-            {key = "gy", cb = tree_cb("copy_absolute_path")},
-            {key = "[c", cb = tree_cb("prev_git_item")},
-            {key = "]c", cb = tree_cb("next_git_item")},
-            {key = "-", cb = tree_cb("dir_up")},
-            {key = "s", cb = tree_cb("system_open")},
-            {key = "q", cb = tree_cb("close")},
-            {key = "g?", cb = tree_cb("toggle_help")}
+          require "nvim-tree".setup {
+            open_on_setup = true,
+						auto_close = true,
+						lsp_diagnostics = true,
+            view = {
+              auto_resize = true,
+              mappings = {
+                custom_only = true,
+                list = {
+                  {key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit")},
+                  {key = {"<2-RightMouse>", "<C-]>"}, cb = tree_cb("cd")},
+                  {key = "<C-v>", cb = tree_cb("vsplit")},
+                  {key = "<C-x>", cb = tree_cb("split")},
+                  {key = "<C-t>", cb = tree_cb("tabnew")},
+                  {key = "<", cb = tree_cb("prev_sibling")},
+                  {key = ">", cb = tree_cb("next_sibling")},
+                  {key = "P", cb = tree_cb("parent_node")},
+                  {key = "<BS>", cb = tree_cb("close_node")},
+                  {key = "<S-CR>", cb = tree_cb("close_node")},
+                  {key = "<Tab>", cb = tree_cb("preview")},
+                  {key = "E", cb = tree_cb("first_sibling")},
+                  {key = "N", cb = tree_cb("last_sibling")},
+                  {key = "I", cb = tree_cb("toggle_ignored")},
+                  {key = "H", cb = tree_cb("toggle_dotfiles")},
+                  {key = "R", cb = tree_cb("refresh")},
+                  {key = "a", cb = tree_cb("create")},
+                  {key = "d", cb = tree_cb("remove")},
+                  {key = "r", cb = tree_cb("rename")},
+                  {key = "<C-r>", cb = tree_cb("full_rename")},
+                  {key = "x", cb = tree_cb("cut")},
+                  {key = "c", cb = tree_cb("copy")},
+                  {key = "p", cb = tree_cb("paste")},
+                  {key = "y", cb = tree_cb("copy_name")},
+                  {key = "Y", cb = tree_cb("copy_path")},
+                  {key = "gy", cb = tree_cb("copy_absolute_path")},
+                  {key = "[c", cb = tree_cb("prev_git_item")},
+                  {key = "]c", cb = tree_cb("next_git_item")},
+                  {key = "-", cb = tree_cb("dir_up")},
+                  {key = "s", cb = tree_cb("system_open")},
+                  {key = "q", cb = tree_cb("close")},
+                  {key = "g?", cb = tree_cb("toggle_help")}
+                }
+              }
+            }
           }
+          -- vim.g.nvim_tree_bindings = {
+          -- }
         end
       },
       {
@@ -992,23 +981,6 @@ require("packer").startup(
           }
         end
       },
-      {
-        "sunjon/shade.nvim",
-        -- keys = "<C-W>",
-        config = function()
-          require "shade".setup(
-            {
-              overlay_opacity = 60,
-              opacity_step = 1,
-              keys = {
-                brightness_up = "<C-Up>",
-                brightness_down = "<C-Down>"
-                -- toggle           = '<Leader>s',
-              }
-            }
-          )
-        end
-      }
       -- { 'xiyaowong/nvim-transparent',
       -- 	config = function()
       -- 		require("transparent").setup({

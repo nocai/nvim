@@ -11,17 +11,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
   }
 )
 
-local signs = {
-  Error = " ",
-  Warning = " ",
-  Hint = " ",
-  Information = " "
-}
-for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
-  vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
-end
-
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -107,8 +96,8 @@ lspconfig.gopls.setup {
     usePlaceholders = true,
     completeUnimported = true,
     analyses = {
-      unreachable = true
-      -- unusedparams = true
+      unreachable = true,
+      unusedparams = true
     },
     staticcheck = true
   }
