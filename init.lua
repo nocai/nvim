@@ -917,8 +917,6 @@ require("packer").startup(
               }
             }
           }
-          -- vim.g.nvim_tree_bindings = {
-          -- }
         end
       },
       {
