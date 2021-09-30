@@ -499,11 +499,12 @@ require("packer").startup(
       },
       {
         "vim-test/vim-test",
-        cmd = "TestNearest",
+				ft = {'go', 'rust'},
         config = function()
           vim.cmd(
             [[
 						let test#strategy = "neovim"
+						nmap <silent> <leader>tt :TestNearest -v<CR>
 						nmap <silent> <leader>tl :TestLast -v<CR>
 						nmap <silent> <leader>tv :TestVisit<CR>
 					]]
