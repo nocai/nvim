@@ -1,3 +1,5 @@
+vim.o.lazyredraw = true
+
 vim.o.termguicolors = true
 vim.o.showmode = false
 

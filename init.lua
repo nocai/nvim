@@ -499,7 +499,7 @@ require("packer").startup(
       },
       {
         "vim-test/vim-test",
-				ft = {'go', 'rust'},
+        ft = {"go", "rust"},
         config = function()
           vim.cmd(
             [[
@@ -552,6 +552,17 @@ require("packer").startup(
               }
             end
           },
+          {
+            "onsails/lspkind-nvim",
+            after = "nvim-cmp",
+            config = function()
+              require("cmp").setup {
+                formatting = {
+                  format = require("lspkind").cmp_format({with_text = true, maxwidth = 25})
+                }
+              }
+            end
+          },
           {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"},
           {"hrsh7th/cmp-buffer", after = "nvim-cmp"},
           {
@@ -569,68 +580,54 @@ require("packer").startup(
                       require("luasnip.loaders.from_vscode").load()
                     end
                   }
-                }
+                },
+								config = function()
+									local cmp = require("cmp")
+									local luasnip = require("luasnip")
+									cmp.setup {
+										snippet = {
+											expand = function(args)
+												luasnip.lsp_expand(args.body)
+											end
+										},
+										mapping = {
+											["<Tab>"] = cmp.mapping(
+												function(fallback)
+													if is_pairs() then
+														vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, true, true), "n", true)
+													elseif luasnip.expand_or_jumpable() then
+														vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "n", true)
+													else
+														fallback()
+													end
+												end,
+												{"i", "s"}
+											),
+											["<S-Tab>"] = cmp.mapping(
+												function(fallback)
+													if is_pairs(true) then
+														vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, true, true), "n", true)
+													elseif luasnip.jumpable(-1) then
+														vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "n", true)
+													else
+														fallback()
+													end
+												end,
+												{"i", "s"}
+											)
+										}
+									}
+								end
               }
-            }
+            },
           }
         },
         config = function()
-          local lspkind_icons = {
-            Text = "",
-            Method = "",
-            Function = "",
-            Constructor = "",
-            Field = "ﰠ",
-            Variable = "",
-            Class = "ﴯ",
-            Interface = "",
-            Module = "",
-            Property = "ﰠ",
-            Unit = "塞",
-            Value = "",
-            Enum = "",
-            Keyword = "",
-            Snippet = "",
-            Color = "",
-            File = "",
-            Reference = "",
-            Folder = "",
-            EnumMember = "",
-            Constant = "",
-            Struct = "פּ",
-            Event = "",
-            Operator = "",
-            TypeParameter = ""
-          }
           local cmp = require("cmp")
           cmp.setup {
             preselect = cmp.PreselectMode.None,
-            enabled = function()
-              return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-            end,
-            snippet = {
-              expand = function(args)
-                require "luasnip".lsp_expand(args.body)
-              end
-            },
             completion = {
               keyword_length = 3
-              -- autocomplete = false
-            },
-            formatting = {
-              format = function(entry, vim_item)
-                vim_item.kind = lspkind_icons[vim_item.kind] .. " " .. vim_item.kind -- string.sub(vim_item.kind, 1, 4)
-                -- set a name for each source
-                -- vim_item.menu =
-                --   ({
-                --   buffer = "[Buffer]",
-                --   nvim_lsp = "[LSP]",
-                --   luasnip = "[LuaSnip]",
-                --   nvim_lua = "[Lua]",
-                --   latex_symbols = "[Latex]"
-                -- })[entry.source.name]
-                return vim_item
-              end
             },
             -- You must set mapping.
             mapping = {
@@ -641,42 +638,10 @@ require("packer").startup(
               ["<C-u>"] = cmp.mapping.scroll_docs(-4),
               ["<C-d>"] = cmp.mapping.scroll_docs(4),
               ["<C-Space>"] = cmp.mapping.complete(),
-              ["<C-j>"] = cmp.mapping.abort(),
+              ["<C-j>"] = cmp.mapping.abort()
               -- ['<CR>'] = cmp.mapping.confirm({
               -- 	select = true,
               -- }),
-              ["<Tab>"] = cmp.mapping(
-                function(fallback)
-                  if is_pairs() then
-                    return vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, true, true), "n")
-                  elseif require("luasnip").expand_or_jumpable() then
-                    vim.api.nvim_feedkeys(
-                      vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
-                      "",
-                      true
-                    )
-                  else
-                    fallback()
-                  end
-                end,
-                {"i", "s"}
-              ),
-              ["<S-Tab>"] = cmp.mapping(
-                function(fallback)
-                  if is_pairs(true) then
-                    vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, true, true), "n")
-                  elseif require("luasnip").jumpable(-1) then
-                    vim.api.nvim_feedkeys(
-                      vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true),
-                      "",
-                      true
-                    )
-                  else
-                    fallback()
-                  end
-                end,
-                {"i", "s"}
-              )
             },
             -- You should specify your *installed* sources.
             sources = {
@@ -686,47 +651,6 @@ require("packer").startup(
             }
           }
           -- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
-        end
-      },
-      {
-        "mhartington/formatter.nvim",
-        ft = "lua",
-        -- cmd = {"Format", "FormatWrite"},
-        -- events = {"BufWritePre"},
-        config = function()
-          require("formatter").setup {
-            filetype = {
-              -- rust = {
-              --   -- Rustfmt
-              --   function()
-              --     return {
-              --       exe = "rustfmt",
-              --       args = {"--emit=stdout"},
-              --       stdin = true
-              --     }
-              --   end
-              -- },
-              lua = {
-                -- luafmt
-                function()
-                  return {
-                    exe = "luafmt",
-                    args = {"--indent-count", 2, "--stdin"},
-                    stdin = true
-                  }
-                end
-              }
-            }
-          }
-
-          --           vim.cmd(
-          --             [[
-          -- augroup FormatAutogroup
-          -- 	autocmd!
-          -- 	autocmd BufWritePost *.lua FormatWrite
-          -- augroup END
-          -- ]]
-          --           )
         end
       },
       {
@@ -742,86 +666,7 @@ require("packer").startup(
         config = function()
           vim.api.nvim_set_keymap("n", "gO", ":SymbolsOutline<CR>", {noremap = true, silent = true})
         end
-      },
---       {
---         "folke/trouble.nvim",
---         cmd = {"Trouble"},
---         keys = {"<leader>tn", "<leader>tp", "<leader>dd", "<leader>wd"},
---         requires = {"kyazdani42/nvim-web-devicons", opt = true},
---         config = function()
---           require("trouble").setup {
---             position = "bottom", -- position of the list can be: bottom, top, left, right
---             height = 10, -- height of the trouble list when position is top or bottom
---             width = 50, -- width of the list when position is left or right
---             icons = true, -- use devicons for filenames
---             mode = "lsp_workspace_diagnostics", -- "lsp_workspace_diagnostics", "lsp_document_diagnostics", "quickfix", "lsp_references", "loclist"
---             fold_open = "", -- icon used for open folds
---             fold_closed = "", -- icon used for closed folds
---             action_keys = {
---               -- key mappings for actions in the trouble list
---               -- map to {} to remove a mapping, for example:
---               -- close = {},
---               close = "q", -- close the list
---               cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
---               refresh = "r", -- manually refresh
---               jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
---               open_split = {"<c-x>"}, -- open buffer in new split
---               open_vsplit = {"<c-v>"}, -- open buffer in new vsplit
---               open_tab = {"<c-t>"}, -- open buffer in new tab
---               jump_close = {"o"}, -- jump to the diagnostic and close the list
---               toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
---               toggle_preview = "P", -- toggle auto_preview
---               hover = "E", -- opens a small popup with the full multiline message
---               preview = "p", -- preview the diagnostic location
---               close_folds = {"zM", "zm"}, -- close all folds
---               open_folds = {"zR", "zr"}, -- open all folds
---               toggle_fold = {"zA", "za"}, -- toggle fold of current file
---               previous = "e", -- preview item
---               next = "n" -- next item
---             },
---             indent_lines = true, -- add an indent guide below the fold icons
---             auto_open = false, -- automatically open the list when you have diagnostics
---             auto_close = true, -- automatically close the list when you have no diagnostics
---             auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
---             auto_fold = false, -- automatically fold a file trouble list at creation
---             signs = {
---               -- icons / text used for a diagnostic
---               error = "",
---               warning = "",
---               hint = "",
---               information = "",
---               other = "﫠"
---             },
---             use_lsp_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
---           }
--- 
---           vim.api.nvim_set_keymap(
---             "n",
---             "<leader>tn",
---             "<cmd>lua require('trouble').next({skip_groups = true, jump = true})<cr>",
---             {silent = true, noremap = true}
---           )
---           vim.api.nvim_set_keymap(
---             "n",
---             "<leader>tp",
---             "<cmd>lua require('trouble').previous({skip_groups = true, jump = true})<cr>",
---             {silent = true, noremap = true}
---           )
---           vim.api.nvim_set_keymap("n", "<leader>gr", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
---           vim.api.nvim_set_keymap(
---             "n",
---             "<leader>dd",
---             "<cmd>Trouble lsp_document_diagnostics<cr>",
---             {silent = true, noremap = true}
---           )
---           vim.api.nvim_set_keymap(
---             "n",
---             "<leader>wd",
---             "<cmd>Trouble lsp_workspace_diagnostics<cr>",
---             {silent = true, noremap = true}
---           )
---         end
---       }
+      }
     }
 
     -- UI
@@ -836,8 +681,8 @@ require("packer").startup(
       -- {
       --   "shaunsingh/nord.nvim",
       --   config = function()
-          -- vim.g.nord_disable_background = true
-          -- vim.cmd[[colorscheme nord]]
+      -- vim.g.nord_disable_background = true
+      -- vim.cmd[[colorscheme nord]]
       --   end
       -- },
       {
@@ -875,8 +720,7 @@ require("packer").startup(
           local tree_cb = require "nvim-tree.config".nvim_tree_callback
           require "nvim-tree".setup {
             open_on_setup = true,
-						auto_close = true,
-						lsp_diagnostics = true,
+            auto_close = true,
             view = {
               auto_resize = true,
               mappings = {
@@ -979,65 +823,7 @@ require("packer").startup(
             }
           }
         end
-      },
-      -- { 'xiyaowong/nvim-transparent',
-      -- 	config = function()
-      -- 		require("transparent").setup({
-      -- 			enable = true,
-      -- 			extra_groups = {"NvimTreeNormal", "NvimTreeEndOfBuffer" }
-      -- 		})
-      -- 	end
-      -- },
+      }
     }
   end
 )
-
---   use {
---     'neoclide/coc.nvim',
--- 		requires = {
--- 			{ 'honza/vim-snippets' },
--- 		},
---     branch = 'release',
---     config = function ()
---       vim.cmd([[
---         let g:coc_snippet_next = '<Tab>'
---         let g:coc_snippet_prev = '<S-Tab>'
---         let g:snips_author = 'bucai'
-
---         let g:coc_global_extensions =[ 'coc-marketplace', 'coc-snippets', 'coc-json' ]
---
---         autocmd BufWritePre *.go silent :call CocAction('runCommand', 'editor.action.organizeImport')
-
---         inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"
-
---         nmap <silent>[g <Plug>(coc-diagnostic-prev)
---         nmap <silent>]g <Plug>(coc-diagnostic-next)
-
---         nmap <silent>gd <Plug>(coc-definition)
---         nmap <silent>gD <Plug>(coc-declaration)
---         nmap <silent>gy <Plug>(coc-type-definition)
---         nmap <silent>gi <Plug>(coc-implementation)
---         nmap <silent>gr <Plug>(coc-references)
---         nmap <silent>rn <Plug>(coc-rename)
-
---         nmap <silent><leader>fc <Plug>(coc-fix-current)
---         nmap <silent><leader>rf <Plug>(coc-refactor)
-
---         nmap <silent><leader>ca <Plug>(coc-codeaction)
-
---         nnoremap <silent><leader><leader>l :<C-u>CocList<cr>
---         nnoremap <silent><leader><leader>a :<C-u>CocList diagnostics<cr>
---         nnoremap <silent><leader><leader>o :<C-u>CocList outline<cr>
---         " nnoremap <silent><leader><leader>s :<C-u>CocList -I symbols<cr>
---         nnoremap <silent><leader><leader>n :<C-u>CocNext<CR>
---         nnoremap <silent><leader><leader>p :<C-u>CocPrev<CR>
---         nnoremap <silent><leader><leader>r :<C-u>CocListResume<CR>
-
--- 				" Use K to show documentation in preview window
---         nnoremap <silent>E :call CocActionAsync('doHover')<CR>
-
--- 				nmap <Leader>tr <Plug>(coc-translator-p)
--- 				vmap <Leader>tr <Plug>(coc-translator-pv)
---			 ]])
---     end
---   }
