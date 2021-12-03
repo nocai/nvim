@@ -1,15 +1,15 @@
 require("global")
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  {
-    underline = true,
-    update_in_insert = false,
-    virtual_text = {spacing = 4, prefix = "❯❯❯ "},
-    severity_sort = true
-  }
-)
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] =
+--   vim.lsp.with(
+--   vim.lsp.diagnostic.on_publish_diagnostics,
+--   {
+--     underline = true,
+--     update_in_insert = false,
+--     virtual_text = {spacing = 4, prefix = "❯❯❯ "},
+--     severity_sort = true
+--   }
+-- )
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
@@ -30,11 +30,11 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
   buf_set_keymap("n", "gs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
 
-  buf_set_keymap("n", "rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  buf_set_keymap("n", "ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  buf_set_keymap("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+  buf_set_keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
   buf_set_keymap("n", "E", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  buf_set_keymap("i", "<C-h>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+  buf_set_keymap("v", "<C-e>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
   buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
   buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
@@ -158,3 +158,25 @@ require "lspconfig".jedi_language_server.setup {
 -- 	on_attach = on_attach,
 -- 	capabilities = capabilities,
 -- }
+
+-- c/c++
+-- lspconfig.ccls.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   init_options = {
+--     compilationDatabaseDirectory = "build";
+--     index = {
+--       threads = 0;
+--     };
+--     clang = {
+--       excludeArgs = { "-frounding-math"} ;
+--     };
+--   }
+-- }
+lspconfig.clangd.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
+	cmd = { "clangd", "--background-index" },
+	filetypes = { "c", "cpp", "objc", "objcpp" },
+	single_file_support = true
+}

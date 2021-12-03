@@ -2,6 +2,8 @@ vim.g.home = os.getenv("HOME")
 vim.g.nvim_home = vim.g.home .. "/.config/nvim"
 vim.g.is_mac = jit.os == "OSX"
 vim.g.is_linux = jit.os == "Linux"
+vim.g.is_vscode = vim.g.vscode == 1
+-- print(vim.g.is_vscode)
 
 -- disable distribution plugins
 vim.g.loaded_gzip = 1
