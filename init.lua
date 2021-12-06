@@ -77,21 +77,25 @@ require("packer").startup(
       {
         "machakann/vim-sandwich",
         event = {"BufRead"},
-        config = function()
+				setup = function ()
           vim.g.textobj_sandwich_no_default_key_mappings = 1
-          vim.cmd(
-            [[
-				silent! omap <unique> lb <Plug>(textobj-sandwich-auto-i)
-				silent! xmap <unique> lb <Plug>(textobj-sandwich-auto-i)
-				silent! omap <unique> ab <Plug>(textobj-sandwich-auto-a)
-				silent! xmap <unique> ab <Plug>(textobj-sandwich-auto-a)
+				end,
+        config = function()
+          vim.cmd([[
+						silent! omap <unique> lb <Plug>(textobj-sandwich-auto-i)
+						silent! xmap <unique> lb <Plug>(textobj-sandwich-auto-i)
+						silent! omap <unique> ab <Plug>(textobj-sandwich-auto-a)
+						silent! xmap <unique> ab <Plug>(textobj-sandwich-auto-a)
 
-				silent! omap <unique> ls <Plug>(textobj-sandwich-query-i)
-				silent! xmap <unique> ls <Plug>(textobj-sandwich-query-i)
-				silent! omap <unique> as <Plug>(textobj-sandwich-query-a)
-				silent! xmap <unique> as <Plug>(textobj-sandwich-query-a)
-			]]
-          )
+						silent! omap <unique> ls <Plug>(textobj-sandwich-query-i)
+						silent! xmap <unique> ls <Plug>(textobj-sandwich-query-i)
+						silent! omap <unique> as <Plug>(textobj-sandwich-query-a)
+						silent! xmap <unique> as <Plug>(textobj-sandwich-query-a)
+
+						silent! xmap <unique> l <Plug>(textobj-parameter-i)
+						silent! xmap <unique> l2 <Plug>(textobj-parameter-greedy-i)
+
+					]])
         end
       },
       -- {
@@ -191,16 +195,16 @@ require("packer").startup(
         "sgur/vim-textobj-parameter",
         after = {"vim-textobj-user"},
         requires = {"kana/vim-textobj-user"},
+				setup = function ()
+					vim.g.textobj_parameter_no_default_key_mappings=1
+				end,
         config = function()
-          vim.cmd(
-            [[
-				let g:textobj_parameter_no_default_key_mappings=1
-				xmap la <Plug>(textobj-parameter-i)
-				omap la <Plug>(textobj-parameter-i)
-				xmap aa <Plug>(textobj-parameter-a)
-				omap aa <Plug>(textobj-parameter-a)
-			]]
-          )
+          vim.cmd([[
+						xmap la <Plug>(textobj-parameter-i)
+						omap la <Plug>(textobj-parameter-i)
+						xmap aa <Plug>(textobj-parameter-a)
+						omap aa <Plug>(textobj-parameter-a)
+					]])
         end
       }
     }
@@ -211,7 +215,7 @@ require("packer").startup(
         "nvim-telescope/telescope.nvim",
 				disable = vim.g.is_vscode,
         cmd = {"Telescope"},
-        keys = {"<M-f>"},
+        keys = {"<M-f>", "<M-g>", "<M-b>", "<M-h>"},
         requires = {{"nvim-lua/plenary.nvim"}},
         config = function()
           local actions = require "telescope.actions"
@@ -238,89 +242,15 @@ require("packer").startup(
               }
             }
           }
-
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>f",
-            [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]],
-            {noremap = true, silent = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f><M-f>",
-            [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]],
-            {noremap = true, silent = true}
-          )
-
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>g",
-            [[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
-            {noremap = true, silent = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f><M-g>",
-            [[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
-            {noremap = true, silent = true}
-          )
-
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>b",
-            [[<cmd>lua require('telescope.builtin').buffers()<CR>]],
-            {noremap = true, silent = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f><M-b>",
-            [[<cmd>lua require('telescope.builtin').buffers()<CR>]],
-            {noremap = true, silent = true}
-          )
-
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>h",
-            [[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
-            {noremap = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f><M-h>",
-            [[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
-            {noremap = true}
-          )
-
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>gs",
-            [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]],
-            {noremap = true, silent = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>gr",
-            [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]],
-            {noremap = true, silent = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>gi",
-            [[<cmd>lua require('telescope.builtin').lsp_implementations()<CR>]],
-            {noremap = true, silent = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>dd",
-            [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>]],
-            {noremap = true, silent = true}
-          )
-          vim.api.nvim_set_keymap(
-            "n",
-            "<M-f>wd",
-            [[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>]],
-            {noremap = true, silent = true}
-          )
+          vim.api.nvim_set_keymap("n", "<M-f>", [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<M-g>", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<M-b>", [[<cmd>lua require('telescope.builtin').buffers()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<M-h>", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], {noremap = true})
+          vim.api.nvim_set_keymap("n", "<leader>gs", [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<leader>gr", [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<leader>gi", [[<cmd>lua require('telescope.builtin').lsp_implementations()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<leader>dd", [[<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<leader>wd", [[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>]], {noremap = true, silent = true})
         end
       },
       {
@@ -394,15 +324,15 @@ require("packer").startup(
           require("nvim-treesitter.configs").setup {
             indent = {enable = true},
             highlight = {enable = true},
-            incremental_selection = {
-              enable = true,
-              keymaps = {
-                init_selection = "gnn",
-                node_incremental = "grn",
-                scope_incremental = "grc",
-                node_decremental = "grm"
-              }
-            }
+            -- incremental_selection = {
+            --   enable = true,
+            --   keymaps = {
+            --     init_selection = "gnn",
+            --     node_incremental = "grn",
+            --     scope_incremental = "grc",
+            --     node_decremental = "grm"
+            --   }
+            -- }
           }
           -- vim.api.nvim_command('set foldmethod=expr')
           -- vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
@@ -438,18 +368,23 @@ require("packer").startup(
                 lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
                 keymaps = {
                   -- You can use the capture groups defined in textobjects.scm
+									-- func
                   ["lf"] = "@function.inner",
                   ["af"] = "@function.outer",
+									-- class
                   ["lc"] = "@class.inner",
                   ["ac"] = "@class.outer",
+									-- loop
                   ["ll"] = "@loop.inner",
                   ["al"] = "@loop.outer",
+									-- if
                   ["li"] = "@conditional.inner",
                   ["ai"] = "@conditional.outer",
-                  -- ["l."] = "@call.inner",
-                  -- ["a."] = "@call.outer",
-                  -- ["l,"] = "@parameter.inner",
-                  -- ["a,"] = "@parameter.outer"
+									-- method
+                  ["lm"] = "@call.inner",
+                  ["am"] = "@call.outer",
+                  -- ["la"] = "@parameter.inner",
+                  -- ["aa"] = "@parameter.outer"
                 }
               },
               move = {
@@ -461,7 +396,7 @@ require("packer").startup(
                   ["]l"] = "@loop.outer",
                   ["]i"] = "@conditional.outer",
                   ["]a"] = "@parameter.outer",
-                  -- ["]."] = "@call.outer"
+                  ["]m"] = "@call.outer"
                 },
                 goto_next_end = {
                   ["]F"] = "@function.outer",
@@ -473,7 +408,7 @@ require("packer").startup(
                   ["[l"] = "@loop.outer",
                   ["[i"] = "@conditional.outer",
                   ["[a"] = "@parameter.outer",
-                  -- ["[."] = "@call.outer"
+                  ["[m"] = "@call.outer"
                 },
                 goto_previous_end = {
                   ["[F"] = "@function.outer",
@@ -712,9 +647,11 @@ require("packer").startup(
       {
         "navarasu/onedark.nvim",
 				disable = vim.g.is_vscode,
+				setup = function ()
+          vim.g.onedark_transparent_background = true
+				end,
         config = function()
-          -- vim.g.onedark_transparent_background = true
-          -- vim.cmd [[ colorscheme onedark ]]
+          vim.cmd [[ colorscheme onedark ]]
         end
       },
       -- {
@@ -727,12 +664,14 @@ require("packer").startup(
       {
         "folke/tokyonight.nvim",
 				disable = vim.g.is_vscode,
-        config = function()
+				setup = function ()
           vim.g.tokyonight_style = "night" -- storm, night, day
           -- vim.g.tokyonight_transparent = true
           vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer", "NvimTree"}
           -- vim.g.tokyonight_italic_functions = true
-          vim.cmd [[colorscheme tokyonight]]
+				end,
+        config = function()
+          -- vim.cmd [[colorscheme tokyonight]]
         end
       },
       {
@@ -754,11 +693,12 @@ require("packer").startup(
 				disable = vim.g.is_vscode,
         events = {"VimEnter"},
         requires = {"kyazdani42/nvim-web-devicons"},
-        config = function()
+				setup = function ()
           vim.g.nvim_tree_highlight_opened_files = 3
           vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1, folder_arrows = 1}
           vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFile<CR>", {noremap = true, silent = true})
-
+				end,
+        config = function()
           local tree_cb = require "nvim-tree.config".nvim_tree_callback
           require "nvim-tree".setup {
             open_on_setup = true,

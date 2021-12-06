@@ -33,7 +33,7 @@ vim.o.updatetime = 250
 vim.wo.signcolumn = "yes"
 
 vim.o.cursorline = true
-vim.o.colorcolumn = "88"
+-- vim.o.colorcolumn = "88"
 
 vim.o.clipboard = "unnamedplus"
 -- vim.o.list = true
