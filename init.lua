@@ -215,7 +215,8 @@ require("packer").startup(
         "nvim-telescope/telescope.nvim",
 				disable = vim.g.is_vscode,
         cmd = {"Telescope"},
-        keys = {"<M-f>", "<M-g>", "<M-b>", "<M-h>"},
+        -- keys = {"<M-f>", "<M-g>", "<M-b>", "<M-h>"},
+        keys = {"<C-p>"},
         requires = {{"nvim-lua/plenary.nvim"}},
         config = function()
           local actions = require "telescope.actions"
@@ -242,10 +243,19 @@ require("packer").startup(
               }
             }
           }
-          vim.api.nvim_set_keymap("n", "<M-f>", [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], {noremap = true, silent = true})
-          vim.api.nvim_set_keymap("n", "<M-g>", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], {noremap = true, silent = true})
-          vim.api.nvim_set_keymap("n", "<M-b>", [[<cmd>lua require('telescope.builtin').buffers()<CR>]], {noremap = true, silent = true})
-          vim.api.nvim_set_keymap("n", "<M-h>", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], {noremap = true})
+					vim.api.nvim_set_keymap("n", "<C-p>", "", {noremap = true, silent = true})
+          -- vim.api.nvim_set_keymap("n", "<M-f>", [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], {noremap = true, silent = true})
+          -- vim.api.nvim_set_keymap("n", "<M-g>", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], {noremap = true, silent = true})
+          -- vim.api.nvim_set_keymap("n", "<M-b>", [[<cmd>lua require('telescope.builtin').buffers()<CR>]], {noremap = true, silent = true})
+          -- vim.api.nvim_set_keymap("n", "<M-h>", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], {noremap = true})
+          vim.api.nvim_set_keymap("n", "<C-p>p", [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<C-p><C-p>", [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<C-p>g", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<C-p><C-g>", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<C-p>b", [[<cmd>lua require('telescope.builtin').buffers()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<C-p><C-b>", [[<cmd>lua require('telescope.builtin').buffers()<CR>]], {noremap = true, silent = true})
+          vim.api.nvim_set_keymap("n", "<C-p>h", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], {noremap = true})
+          vim.api.nvim_set_keymap("n", "<C-p><C-h>", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], {noremap = true})
           vim.api.nvim_set_keymap("n", "<leader>gs", [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], {noremap = true, silent = true})
           vim.api.nvim_set_keymap("n", "<leader>gr", [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]], {noremap = true, silent = true})
           vim.api.nvim_set_keymap("n", "<leader>gi", [[<cmd>lua require('telescope.builtin').lsp_implementations()<CR>]], {noremap = true, silent = true})
