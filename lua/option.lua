@@ -51,3 +51,10 @@ vim.o.shiftwidth = 4
 vim.wo.foldenable = false
 -- vim.wo.foldmethod = 'indent'
 -- vim.wo.foldmethod = 'syntax'
+
+-- disable nvim intro
+vim.opt.shortmess:append "sI"
+
+-- go to previous/next line with h,l,left arrow and right arrow
+-- when cursor reaches end/beginning of line
+vim.opt.whichwrap:append "<>[]hl"
