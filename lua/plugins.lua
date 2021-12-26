@@ -40,7 +40,7 @@ packer.init {
   compile_on_sync = true
 }
 
-packer.startup(
+return packer.startup(
   function(use)
     use {
       {
