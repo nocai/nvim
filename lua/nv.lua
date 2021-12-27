@@ -1,25 +1,25 @@
 -- nv varables
 vim.nv = {
-  user_home = os.getenv("HOME"),
-  packer_path = vim.fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim",
-  home = os.getenv("HOME") .. "/.config/nvim",
-  is_mac = jit.os == "OSX",
-  is_linux = jit.os == "Linux",
-  is_vscode = vim.g.vscode == 1,
-  diagnostics = {
-    enable = true,
-    icons = {
-      hint = " ",
-      info = " ",
-      warning = " ",
-      error = " "
-    }
-  },
-  ui = {
-    theme = "onedark",
-    italic_comments = true,
-    transparency = false
-  }
+	user_home = os.getenv("HOME"),
+	packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim",
+	home = os.getenv("HOME") .. "/.config/nvim",
+	is_mac = jit.os == "OSX",
+	is_linux = jit.os == "Linux",
+	is_vscode = vim.g.vscode == 1,
+	diagnostics = {
+		enable = true,
+		icons = {
+			hint = "",
+			info = "",
+			warning = "",
+			error = "",
+		},
+	},
+	ui = {
+		theme = "gruvbox-material",
+		italic_comments = true,
+		transparency = false,
+	},
 }
 
 -- disable distribution plugins

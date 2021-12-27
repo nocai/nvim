@@ -22,7 +22,7 @@ vim.o.mouse = "a"
 vim.o.breakindent = true
 
 --Save undo history
-vim.cmd [[set undofile]]
+vim.cmd([[set undofile]])
 
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -53,8 +53,8 @@ vim.wo.foldenable = false
 -- vim.wo.foldmethod = 'syntax'
 
 -- disable nvim intro
-vim.opt.shortmess:append "sI"
+vim.opt.shortmess:append("sI")
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
-vim.opt.whichwrap:append "<>[]hl"
+vim.opt.whichwrap:append("<>[]hl")
