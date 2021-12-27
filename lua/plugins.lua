@@ -9,7 +9,7 @@ if not present then
   vim.fn.system {
     "git",
     "clone",
-    "https://github.com/wbthomason/packer.nvim",
+    "https://ghproxy.com/https://github.com/wbthomason/packer.nvim",
     "--depth",
     "20",
     vim.nv.packer_path
@@ -34,7 +34,7 @@ packer.init {
   },
   git = {
     clone_timeout = 6000, -- seconds
-    default_url_format = "git@github.com:/%s"
+    default_url_format = "https://ghproxy.com/https://github.com/%s"
   },
   auto_clean = true,
   compile_on_sync = true

@@ -137,32 +137,21 @@ local function lspconfig()
   }
 
   -- sumneko_lua
-  local sumneko_root_path = vim.nv.home .. "/.lsp/lua-language-server"
-  local system_name = "macOS" -- (Linux, macOS, or Windows)
-  if vim.nv.is_linux then
-    system_name = "Linux"
-  end
-  -- Make runtime files discoverable to the server
   local runtime_path = vim.split(package.path, ";")
   table.insert(runtime_path, "lua/?.lua")
   table.insert(runtime_path, "lua/?/init.lua")
 
-  local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
   lspc.sumneko_lua.setup {
     on_attach = on_attach,
     capabilities = capabilities,
-    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
     settings = {
       Lua = {
-        diagnostics = {enable = true, globals = {"vim", "packer_plugins"}},
         runtime = {version = "LuaJIT", path = runtime_path},
+        diagnostics = {enable = true, globals = {"vim"}},
+        hint = {enable = true},
         workspace = {
           -- Make the server aware of Neovim runtime files
-          library = {
-            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-            [vim.fn.expand(vim.nv.user_home .. "/.local/share/nvim/site/pack/packer")] = true
-          }
+          library = vim.api.nvim_get_runtime_file("", true)
         },
         -- Do not send telemetry data containing a randomized but unique identifier
         telemetry = {enable = false}
