@@ -130,23 +130,26 @@ return {
 		"kana/vim-textobj-user",
 		event = { "BufRead" },
 	},
-	-- 		{'kana/vim-textobj-indent',
-	-- 			requires = {'kana/vim-textobj-user'},
-	-- 			config = function()
-	-- 				vim.cmd([[
-	-- 					let g:textobj_indent_no_default_key_mappings=1
-	-- 					xmap ll <Plug>(textobj-indent-i)
-	-- 					omap ll <Plug>(textobj-indent-i)
-	-- 					xmap lL <Plug>(textobj-indent-same-i)
-	-- 					omap lL <Plug>(textobj-indent-same-i)
+	{
+		"kana/vim-textobj-indent",
+		after = { "vim-textobj-user" },
+		setup = function()
+			vim.g.textobj_indent_no_default_key_mappings = 1
+		end,
+		config = function()
+			vim.cmd([[
+				xmap ll <Plug>(textobj-indent-i)
+				omap ll <Plug>(textobj-indent-i)
+				xmap lL <Plug>(textobj-indent-same-i)
+				omap lL <Plug>(textobj-indent-same-i)
 
-	-- 					xmap al <Plug>(textobj-indent-a)
-	-- 					omap al <Plug>(textobj-indent-a)
-	-- 					xmap aL <Plug>(textobj-indent-same-a)
-	-- 					omap aL <Plug>(textobj-indent-same-a)
-	-- 				]])
-	-- 			end
-	-- 		},
+				xmap al <Plug>(textobj-indent-a)
+				omap al <Plug>(textobj-indent-a)
+				xmap aL <Plug>(textobj-indent-same-a)
+				omap aL <Plug>(textobj-indent-same-a)
+			]])
+		end,
+	},
 	{
 		"sgur/vim-textobj-parameter",
 		after = { "vim-textobj-user" },

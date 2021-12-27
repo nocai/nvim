@@ -42,22 +42,14 @@ packer.init({
 
 return packer.startup(function(use)
 	use({
-		{
-			"nvim-lua/plenary.nvim",
-			disable = vim.nv.is_vscode,
-		},
+		{ "nvim-lua/plenary.nvim", disable = vim.nv.is_vscode },
+		{ "nathom/filetype.nvim", disable = vim.nv.is_vscode },
+		{ "nanotee/nvim-lua-guide", disable = vim.nv.is_vscode },
+		{ "wbthomason/packer.nvim", disable = vim.nv.is_vscode, event = "VimEnter" },
 		{
 			"kyazdani42/nvim-web-devicons",
 			disable = vim.nv.is_vscode,
-		},
-		{
-			"nanotee/nvim-lua-guide",
-			disable = vim.nv.is_vscode,
-		},
-		{
-			"wbthomason/packer.nvim",
-			disable = vim.nv.is_vscode,
-			event = "VimEnter",
+			config = require("colors").devicons(),
 		},
 		-- {
 		--   "NvChad/nvim-base16.lua",

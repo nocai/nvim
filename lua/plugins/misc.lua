@@ -99,6 +99,7 @@ local function autosave_nvim()
 		clean_command_line_interval = 2500,
 		on_off_commands = true,
 		write_all_buffers = false,
+		debounce_delay = 5000,
 	})
 end
 
@@ -108,7 +109,7 @@ local function vim_matchup()
 		config.setup({
 			matchup = {
 				enable = true, -- mandatory, false will disable the whole extension
-				disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+				-- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
 			},
 		})
 	end
@@ -167,5 +168,8 @@ return {
 		"andymass/vim-matchup",
 		disable = vim.nv.is_vscode,
 		config = vim_matchup,
+		setup = function()
+			vim.cmd([[xmap l% <plug>(matchup-i%)]])
+		end,
 	},
 }

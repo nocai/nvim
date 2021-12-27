@@ -59,6 +59,7 @@ local function lspconfig()
 
 		buf_set_keymap("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 		buf_set_keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+		buf_set_keymap("x", "ga", "<cmd><c-u>lua vim.lsp.buf.code_action()<CR>", opts)
 
 		buf_set_keymap("n", "E", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 		buf_set_keymap("v", "<C-e>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
@@ -73,10 +74,10 @@ local function lspconfig()
 
 		-- format on save
 		-- if client.resolved_capabilities.document_formatting then
-		--   vim.api.nvim_command [[augroup Format]]
-		--   vim.api.nvim_command [[autocmd! * <buffer>]]
-		--   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
-		--   vim.api.nvim_command [[augroup END]]
+		-- 	vim.api.nvim_command([[augroup Format]])
+		-- 	vim.api.nvim_command([[autocmd! * <buffer>]])
+		-- 	vim.api.nvim_command([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]])
+		-- 	vim.api.nvim_command([[augroup END]])
 		-- end
 
 		if client.resolved_capabilities.document_highlight then
@@ -149,27 +150,28 @@ local function lspconfig()
 		},
 	})
 
-	-- lspc.denols.setup {on_attach = on_attach, capabilities = capabilities}
-	-- lspconfig.tsserver.setup {
-	--   on_attach = on_attach,
-	--   capabilities = capabilities
-	-- }
+	lspc.denols.setup({ on_attach = on_attach, capabilities = capabilities })
+	lspc.tsserver.setup({
+		on_attach = on_attach,
+		capabilities = capabilities,
+	})
+
 	-- rust-analyzer
-	-- lspc.rust_analyzer.setup {
-	--   on_attach = on_attach,
-	--   capabilities = capabilities
-	--   -- cmd = {vim.g.home.."/.local/bin/rust-analyzer-linux"}
-	-- }
+	lspc.rust_analyzer.setup({
+		on_attach = on_attach,
+		capabilities = capabilities,
+		-- cmd = {vim.g.home.."/.local/bin/rust-analyzer-linux"}
+	})
 
 	-- python
 	-- lspc.jedi_language_server.setup {
 	--   on_attach = on_attach,
 	--   capabilities = capabilities
 	-- }
-	-- require'lspconfig'.pyright.setup{
-	-- 	on_attach = on_attach,
-	-- 	capabilities = capabilities,
-	-- }
+	require("lspconfig").pyright.setup({
+		on_attach = on_attach,
+		capabilities = capabilities,
+	})
 
 	-- c/c++
 	-- lspconfig.ccls.setup {
@@ -185,13 +187,13 @@ local function lspconfig()
 	--     };
 	--   }
 	-- }
-	-- lspc.clangd.setup {
-	--   on_attach = on_attach,
-	--   capabilities = capabilities,
-	--   cmd = {"clangd", "--background-index"},
-	--   filetypes = {"c", "cpp", "objc", "objcpp"},
-	--   single_file_support = true
-	-- }
+	lspc.clangd.setup({
+		on_attach = on_attach,
+		capabilities = capabilities,
+		cmd = { "clangd", "--background-index" },
+		filetypes = { "c", "cpp", "objc", "objcpp" },
+		single_file_support = true,
+	})
 end
 
 -- vim.lsp.set_log_level("debug")
@@ -211,11 +213,11 @@ return {
 			ls.setup({
 				sources = {
 					ls.builtins.formatting.stylua,
-					ls.builtins.diagnostics.eslint,
-					ls.builtins.completion.spell,
 					ls.builtins.formatting.prettier.with({
 						filetypes = { "html", "json", "yaml", "markdown" },
 					}),
+					-- ls.builtins.diagnostics.eslint,
+					-- ls.builtins.completion.spell,
 				},
 			})
 		end,
@@ -232,7 +234,7 @@ return {
 			}
 		end,
 		config = function()
-			vim.api.nvim_set_keymap("n", "gO", ":SymbolsOutline<CR>", { noremap = true, silent = true })
+			vim.api.nvim_set_keymap("n", "gO", "<cmd>SymbolsOutline<CR>", { noremap = true, silent = true })
 		end,
 	},
 }

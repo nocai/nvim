@@ -68,9 +68,9 @@ local function lualine()
 					"diagnostics",
 					sources = { "nvim_diagnostic" },
 					symbols = {
-						error = vim.nv.diagnostics.icons.error,
-						warn = vim.nv.diagnostics.icons.warning,
-						info = vim.nv.diagnostics.icons.info,
+						error = vim.nv.diagnostics.icons.error .. " ",
+						warn = vim.nv.diagnostics.icons.warning .. " ",
+						info = vim.nv.diagnostics.icons.info .. " ",
 					},
 				},
 				{ progress_message },
@@ -84,9 +84,78 @@ local function lualine()
 end
 
 local function bufferline()
+	local colors = {
+		white = "#abb2bf",
+		black = "#1e222a", --  nvim bg
+		black2 = "#252931",
+		grey_fg = "#565c64",
+		light_grey = "#6f737b",
+		red = "#d47d85",
+		green = "#A3BE8C",
+		lightbg = "#2d3139",
+		lightbg2 = "#262a32",
+	}
+
 	require("bufferline").setup({
 		options = {
 			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
+		},
+		highlights = {
+			fill = {
+				guifg = colors.grey_fg,
+			},
+			-- buffers
+			buffer_visible = {
+				guifg = colors.light_grey,
+			},
+			buffer_selected = {
+				guifg = colors.white,
+				gui = "bold",
+			},
+			-- tabs
+			tab = {
+				guifg = colors.light_grey,
+			},
+			tab_selected = {
+				guifg = colors.black2,
+			},
+			tab_close = {
+				guifg = colors.red,
+			},
+			indicator_selected = {
+				guifg = colors.black,
+			},
+			-- separators
+			separator = {
+				guifg = colors.black2,
+			},
+			separator_visible = {
+				guifg = colors.black2,
+			},
+			separator_selected = {
+				guifg = colors.black2,
+			},
+			-- modified
+			modified = {
+				guifg = colors.red,
+			},
+			modified_visible = {
+				guifg = colors.red,
+			},
+			modified_selected = {
+				guifg = colors.green,
+			},
+			-- close buttons
+
+			close_button = {
+				guifg = colors.light_grey,
+			},
+			close_button_visible = {
+				guifg = colors.light_grey,
+			},
+			close_button_selected = {
+				guifg = colors.red,
+			},
 		},
 	})
 end
@@ -171,9 +240,51 @@ local function nvim_tree()
 	})
 end
 
+local function dashboard_nvim()
+	local g = vim.g
+
+	g.dashboard_disable_at_vimenter = 1
+	g.dashboard_disable_statusline = 0
+
+	g.dashboard_default_executive = "telescope"
+
+	g.dashboard_custom_section = {
+		a = {
+			description = { "  Find File                 <C-E><C-P>" },
+			command = "Telescope find_files",
+		},
+		b = {
+			description = { "  Recents                   " },
+			command = "Telescope oldfiles",
+		},
+		c = {
+			description = { "  Find Word                 <C-E><C-G>" },
+			command = "Telescope live_grep",
+		},
+		d = {
+			description = { "洛 New File                  " },
+			command = "enew",
+		},
+		e = {
+			description = { "  Bookmarks                 " },
+			command = "Telescope marks",
+		},
+		f = {
+			description = { "  Load Last Session         " },
+			command = "SessionLoad",
+		},
+	}
+end
+
 -- ui
 --
 return {
+	{
+		"glepnir/dashboard-nvim",
+		disable = vim.nv.is_vscode,
+		event = "BufWinEnter",
+		config = dashboard_nvim,
+	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		disable = vim.nv.is_vscode,

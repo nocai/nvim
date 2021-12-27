@@ -102,8 +102,6 @@ local function telescope()
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap("n", "<leader>cs", [[<cmd>Telescope themes <CR>]], { noremap = true, silent = true })
-
-	require("telescope").load_extension("themes")
 end
 
 local function telescope_fzf_native()
@@ -126,6 +124,7 @@ return {
 		"nvim-telescope/telescope.nvim",
 		disable = vim.nv.is_vscode,
 		keys = { "<C-E>" },
+		cmd = {"Telescope"},
 		config = telescope,
 	},
 	{

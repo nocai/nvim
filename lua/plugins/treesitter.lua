@@ -25,23 +25,10 @@ local function treesitter_textobjects()
 				lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
 				keymaps = {
 					-- You can use the capture groups defined in textobjects.scm
-					-- func
 					["lf"] = "@function.inner",
 					["af"] = "@function.outer",
-					-- class
 					["lc"] = "@class.inner",
 					["ac"] = "@class.outer",
-					-- loop
-					["ll"] = "@loop.inner",
-					["al"] = "@loop.outer",
-					-- if
-					["li"] = "@conditional.inner",
-					["ai"] = "@conditional.outer",
-					-- method
-					["lm"] = "@call.inner",
-					["am"] = "@call.outer",
-					-- ["la"] = "@parameter.inner",
-					-- ["aa"] = "@parameter.outer"
 				},
 			},
 			move = {
@@ -50,10 +37,6 @@ local function treesitter_textobjects()
 				goto_next_start = {
 					["]f"] = "@function.outer",
 					["]c"] = "@class.outer",
-					["]l"] = "@loop.outer",
-					["]i"] = "@conditional.outer",
-					["]a"] = "@parameter.outer",
-					["]m"] = "@call.outer",
 				},
 				goto_next_end = {
 					["]F"] = "@function.outer",
@@ -62,10 +45,6 @@ local function treesitter_textobjects()
 				goto_previous_start = {
 					["[f"] = "@function.outer",
 					["[c"] = "@class.outer",
-					["[l"] = "@loop.outer",
-					["[i"] = "@conditional.outer",
-					["[a"] = "@parameter.outer",
-					["[m"] = "@call.outer",
 				},
 				goto_previous_end = {
 					["[F"] = "@function.outer",
@@ -81,14 +60,14 @@ local function treesitter_textobjects()
 					["sap"] = "@parameter.inner",
 				},
 			},
-			-- lsp_interop = {
-			-- 	enable = true,
-			-- 	border = 'none',
-			-- 	peek_definition_code = {
-			-- 		["gpf"] = "@function.outer",
-			-- 		["gpc"] = "@class.outer",
-			-- 	},
-			-- },
+			lsp_interop = {
+				enable = true,
+				border = "none",
+				peek_definition_code = {
+					["gpf"] = "@function.outer",
+					["gpc"] = "@class.outer",
+				},
+			},
 		},
 	})
 end
