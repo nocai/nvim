@@ -38,7 +38,7 @@ local function toggleterm()
 				return vim.o.columns * 0.4
 			end
 		end,
-		open_mapping = [[<M-t>]],
+		open_mapping = [[<C-Space>]], -- mapping to <C-`>
 		hide_numbers = true, -- hide the number column in toggleterm buffers
 		shade_filetypes = {},
 		shade_terminals = true,
@@ -118,6 +118,11 @@ end
 -- misc
 return {
 	{
+		"tweekmonster/startuptime.vim",
+		disable = vim.nv.is_vscode,
+		cmd = { "StartupTime" },
+	},
+	{
 		"norcalli/nvim-colorizer.lua",
 		disable = vim.nv.is_vscode,
 		config = function()
@@ -170,6 +175,17 @@ return {
 		config = vim_matchup,
 		setup = function()
 			vim.cmd([[xmap l% <plug>(matchup-i%)]])
+		end,
+	},
+	{
+		"rhysd/accelerated-jk",
+		disable = vim.nv.is_vscode,
+		event = { "BufRead" },
+		setup = function()
+			vim.cmd([[
+				nmap <silent>n <Plug>(accelerated_jk_gj)
+				nmap <silent>e <Plug>(accelerated_jk_gk)
+			]])
 		end,
 	},
 }

@@ -1,8 +1,8 @@
-vim.cmd("packadd packer.nvim")
+local ok, _ = pcall(vim.cmd, "packadd packer.nvim")
 
 local present, packer = pcall(require, "packer")
 
-if not present then
+if not present or not ok then
 	print("Cloning packer...")
 	-- remove the dir before cloning
 	vim.fn.delete(vim.nv.packer_path, "rf")

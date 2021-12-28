@@ -109,10 +109,10 @@ onoremap L I
 " }}}
 
 " {{{Resize splits with arrow keys
-" noremap <silent><up>    :res +5<CR>
-" noremap <silent><down>  :res -5<CR>
-" noremap <silent><left>  :vertical resize-5<CR>
-" noremap <silent><right> :vertical resize+5<CR>
+noremap <silent><up>    :res +5<CR>
+noremap <silent><down>  :res -5<CR>
+noremap <silent><left>  :vertical resize-5<CR>
+noremap <silent><right> :vertical resize+5<CR>
 " }}}
 
 " buffers

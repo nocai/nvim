@@ -39,6 +39,16 @@ end
 
 local function lspconfig()
 	local on_attach = function(client, bufnr)
+		if client.resolved_capabilities.document_highlight then
+			vim.cmd([[
+					augroup lsp_document_highlight
+						autocmd!
+						autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+						autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+					augroup END
+				]])
+		end
+
 		local function buf_set_keymap(...)
 			vim.api.nvim_buf_set_keymap(bufnr, ...)
 		end
@@ -52,21 +62,20 @@ local function lspconfig()
 		local opts = { noremap = true, silent = true }
 		buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
 		-- buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-		buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 		buf_set_keymap("n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-		buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-		buf_set_keymap("n", "gs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
-
 		buf_set_keymap("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-		buf_set_keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-		buf_set_keymap("x", "ga", "<cmd><c-u>lua vim.lsp.buf.code_action()<CR>", opts)
+
+		-- buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+		-- buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+		-- buf_set_keymap("n", "gs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
+		-- buf_set_keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+		-- buf_set_keymap("x", "ga", "<cmd><c-u>lua vim.lsp.buf.code_action()<CR>", opts)
 
 		buf_set_keymap("n", "E", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 		buf_set_keymap("v", "<C-e>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
 		buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
 		buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-
 		buf_set_keymap("n", "<leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
 
 		-- formatting
@@ -80,15 +89,44 @@ local function lspconfig()
 		-- 	vim.api.nvim_command([[augroup END]])
 		-- end
 
-		if client.resolved_capabilities.document_highlight then
-			vim.cmd([[
-					augroup lsp_document_highlight
-						autocmd!
-						autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-						autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-					augroup END
-				]])
-		end
+		-- LSP
+		buf_set_keymap(
+			"n",
+			"ga",
+			[[<cmd>lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_cursor({}))<CR>]],
+			opts
+		)
+		buf_set_keymap(
+			"v",
+			"ga",
+			[[<cmd>lua require('telescope.builtin').lsp_range_code_actions(require('telescope.themes').get_cursor({}))<CR>]],
+			opts
+		)
+		buf_set_keymap(
+			"n",
+			"gs",
+			[[<cmd>lua require('telescope.builtin').lsp_document_symbols(require('telescope.themes').get_ivy({}))<CR>]],
+			opts
+		)
+		buf_set_keymap(
+			"n",
+			"gr",
+			[[<cmd>lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy({}))<CR>]],
+			opts
+		)
+		buf_set_keymap(
+			"n",
+			"gi",
+			[[<cmd>lua require('telescope.builtin').lsp_implementations(require('telescope.themes').get_ivy({}))<CR>]],
+			opts
+		)
+
+		buf_set_keymap(
+			"n",
+			"<leader>ld",
+			[[<cmd>lua require('telescope.builtin').lsp_diagnostics(require('telescope.themes').get_ivy({}))<CR>]],
+			opts
+		)
 	end
 
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -133,6 +171,7 @@ local function lspconfig()
 	table.insert(runtime_path, "lua/?/init.lua")
 
 	lspc.sumneko_lua.setup({
+		cmd = { "lua-language-server" },
 		on_attach = on_attach,
 		capabilities = capabilities,
 		settings = {

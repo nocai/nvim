@@ -20,6 +20,7 @@ vim.nv = {
 
 	ui = {
 		theme = "gruvbox-material",
+		-- theme = "sonokai",
 		italic_comments = true,
 		transparency = false,
 	},

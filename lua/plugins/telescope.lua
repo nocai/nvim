@@ -26,13 +26,13 @@ local function telescope()
 	vim.api.nvim_set_keymap(
 		"n",
 		"<C-E>p",
-		[[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]],
+		[[<cmd>lua require('telescope.builtin').find_files({})<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
 		"<C-E><C-p>",
-		[[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]],
+		[[<cmd>lua require('telescope.builtin').find_files({})<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
@@ -59,49 +59,13 @@ local function telescope()
 		[[<cmd>lua require('telescope.builtin').buffers()<CR>]],
 		{ noremap = true, silent = true }
 	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-E>h",
-		[[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
-		{ noremap = true }
-	)
+	vim.api.nvim_set_keymap("n", "<C-E>h", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true })
 	vim.api.nvim_set_keymap(
 		"n",
 		"<C-E><C-h>",
 		[[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
-		{ noremap = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>gs",
-		[[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]],
 		{ noremap = true, silent = true }
 	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>gr",
-		[[<cmd>lua require('telescope.builtin').lsp_references()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>gi",
-		[[<cmd>lua require('telescope.builtin').lsp_implementations()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>dd",
-		[[<cmd>lua require('telescope.builtin').lsp_document_diagnostics()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>wd",
-		[[<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap("n", "<leader>cs", [[<cmd>Telescope themes <CR>]], { noremap = true, silent = true })
 end
 
 local function telescope_fzf_native()
@@ -123,8 +87,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		disable = vim.nv.is_vscode,
-		keys = { "<C-E>" },
-		cmd = {"Telescope"},
+		event = { "VimEnter" },
 		config = telescope,
 	},
 	{

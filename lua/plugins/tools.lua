@@ -138,16 +138,16 @@ return {
 			end,
 			config = function()
 				vim.cmd([[
-				xmap ll <Plug>(textobj-indent-i)
-				omap ll <Plug>(textobj-indent-i)
-				xmap lL <Plug>(textobj-indent-same-i)
-				omap lL <Plug>(textobj-indent-same-i)
+					xmap ll <Plug>(textobj-indent-i)
+					omap ll <Plug>(textobj-indent-i)
+					xmap lL <Plug>(textobj-indent-same-i)
+					omap lL <Plug>(textobj-indent-same-i)
 
-				xmap al <Plug>(textobj-indent-a)
-				omap al <Plug>(textobj-indent-a)
-				xmap aL <Plug>(textobj-indent-same-a)
-				omap aL <Plug>(textobj-indent-same-a)
-			]])
+					xmap al <Plug>(textobj-indent-a)
+					omap al <Plug>(textobj-indent-a)
+					xmap aL <Plug>(textobj-indent-same-a)
+					omap aL <Plug>(textobj-indent-same-a)
+				]])
 			end,
 		},
 		{

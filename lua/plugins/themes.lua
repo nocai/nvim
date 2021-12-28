@@ -50,6 +50,14 @@ local M = {
 			end
 		end,
 	},
+	{
+		"sainnhe/sonokai",
+		config = function()
+			if vim.nv.ui.theme == "sonokai" then
+				vim.cmd("colorscheme " .. vim.nv.ui.theme)
+			end
+		end,
+	},
 }
 
 return M
