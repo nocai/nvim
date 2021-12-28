@@ -122,6 +122,7 @@ nnoremap [b :bprevious<CR>
 nnoremap [B :bfirst<CR>
 
 " terminal mode
+tnoremap <Esc> <C-\><C-N>
 tnoremap <M-N> <C-\><C-N><C-W>J
 tnoremap <M-E> <C-\><C-N><C-W>K
 tnoremap <M-H> <C-\><C-N><C-W>H
