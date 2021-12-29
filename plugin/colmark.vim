@@ -147,6 +147,11 @@ nnoremap E <Cmd>call VSCodeNotify('editor.action.showHover')<CR>
 
 nnoremap <C-l> <Cmd>call VSCodeNotify("workbench.action.navigateForward")<CR>
 
+function s:moveCursor(to)
+    " Native VSCode commands don't register jumplist. Fix by registering jumplist in Vim e.g. for subsequent use of <C-o>
+    normal! m'
+    call VSCodeExtensionNotify('move-cursor', a:to)
+endfunction
 nnoremap H <Cmd>call <SID>moveCursor('top')<CR>
 xnoremap H <Cmd>call <SID>moveCursor('top')<CR>
 nnoremap M <Cmd>call <SID>moveCursor('middle')<CR>
@@ -158,6 +163,19 @@ xnoremap I <Cmd>call <SID>moveCursor('bottom')<CR>
 nnoremap ge <Cmd>call VSCodeNotify('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
 nnoremap gn <Cmd>call VSCodeNotify('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
 
+function! s:split(...) abort
+    let direction = a:1
+    let file = exists('a:2') ? a:2 : ''
+    call VSCodeCall(direction ==# 'h' ? 'workbench.action.splitEditorDown' : 'workbench.action.splitEditorRight')
+    if !empty(file)
+        call VSCodeExtensionNotify('open-file', expand(file), 'all')
+    endif
+endfunction
+
+function! s:splitNew(...)
+    let file = a:2
+    call s:split(a:1, empty(file) ? '__vscode_new__' : file)
+endfunction
 " buffer management
 nnoremap <C-w>k <Cmd>call <SID>splitNew('h', '__vscode_new__')<CR>
 xnoremap <C-w>k <Cmd>call <SID>splitNew('h', '__vscode_new__')<CR>
