@@ -63,11 +63,7 @@ local function lua_snip()
 				-- 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, true, true), "n", true)
 				-- elseif luasnip.jumpable(-1) then
 				if luasnip.jumpable(-1) then
-					vim.api.nvim_feedkeys(
-						vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true),
-						"",
-						true
-					)
+					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "", true)
 				else
 					fallback()
 				end
@@ -82,7 +78,9 @@ end
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = "InsertEnter",
 		config = nvim_cmp,
 		requires = {
@@ -124,7 +122,9 @@ return {
 	},
 	{
 		"rafamadriz/friendly-snippets",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = "InsertEnter",
 	},
 }

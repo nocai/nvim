@@ -23,6 +23,9 @@ local function telescope()
 			},
 		},
 	})
+
+	vim.api.nvim_set_keymap("n", "<C-E><C-E>", [[<cmd>Telescope<CR>]], { noremap = true, silent = true })
+
 	vim.api.nvim_set_keymap(
 		"n",
 		"<C-E>p",
@@ -59,11 +62,22 @@ local function telescope()
 		[[<cmd>lua require('telescope.builtin').buffers()<CR>]],
 		{ noremap = true, silent = true }
 	)
-	vim.api.nvim_set_keymap("n", "<C-E>h", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true })
+	vim.api.nvim_set_keymap(
+		"n",
+		"<C-E>h",
+		[[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
+		{ noremap = true, silent = true }
+	)
 	vim.api.nvim_set_keymap(
 		"n",
 		"<C-E><C-h>",
 		[[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
+		{ noremap = true, silent = true }
+	)
+	vim.api.nvim_set_keymap(
+		"n",
+		"<C-E><C-R>",
+		[[<cmd>lua require("telescope.builtin").resume()<CR>]],
 		{ noremap = true, silent = true }
 	)
 end
@@ -86,13 +100,14 @@ end
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = { "VimEnter" },
 		config = telescope,
 	},
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
-		disable = vim.nv.is_vscode,
 		after = { "telescope.nvim" },
 		run = "make",
 		config = telescope_fzf_native,

@@ -1,7 +1,10 @@
 local M = {
 	{
 		"navarasu/onedark.nvim",
-		disable = vim.nv.is_vscode,
+		event = "VimEnter",
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		setup = function()
 			if vim.nv.ui.transparency then
 				vim.g.onedark_transparent_background = true
@@ -15,7 +18,10 @@ local M = {
 	},
 	{
 		"shaunsingh/nord.nvim",
-		disable = vim.nv.is_vscode,
+		event = "VimEnter",
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		config = function()
 			vim.g.nord_disable_background = true
 			if vim.nv.ui.theme == "nord" then
@@ -25,7 +31,10 @@ local M = {
 	},
 	{
 		"folke/tokyonight.nvim",
-		disable = vim.nv.is_vscode,
+		event = "VimEnter",
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		setup = function()
 			vim.g.tokyonight_style = "night" -- storm, night, day
 			vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer", "NvimTree" }
@@ -42,7 +51,10 @@ local M = {
 	},
 	{
 		"sainnhe/gruvbox-material",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
+		event = "VimEnter",
 		config = function()
 			if vim.nv.ui.theme == "gruvbox-material" then
 				-- let g:gruvbox_material_transparent_background = 1
@@ -52,6 +64,10 @@ local M = {
 	},
 	{
 		"sainnhe/sonokai",
+		event = "VimEnter",
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		config = function()
 			if vim.nv.ui.theme == "sonokai" then
 				vim.cmd("colorscheme " .. vim.nv.ui.theme)

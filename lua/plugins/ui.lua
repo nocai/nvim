@@ -57,6 +57,7 @@ local function lualine()
 
 	require("lualine").setup({
 		options = {
+			-- theme = "gruvbox"
 			theme = vim.nv.ui.theme,
 		},
 		sections = {
@@ -281,19 +282,25 @@ end
 return {
 	{
 		"glepnir/dashboard-nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = "BufWinEnter",
 		config = dashboard_nvim,
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		ft = { "lua" },
 		setup = indent_blankline,
 	},
 	{
 		"kyazdani42/nvim-tree.lua",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		events = { "VimEnter" },
 		config = nvim_tree,
 		setup = function()
@@ -309,13 +316,17 @@ return {
 	},
 	{
 		"hoob3rt/lualine.nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = { "VimEnter" },
 		config = lualine,
 	},
 	{
 		"akinsho/nvim-bufferline.lua",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = { "VimEnter" },
 		config = bufferline,
 	},

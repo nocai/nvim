@@ -76,14 +76,15 @@ end
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = { "BufRead" },
 		run = ":TSUpdate",
 		config = treesitter,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		disable = vim.nv.is_vscode,
 		after = "nvim-treesitter",
 		requires = { "nvim-treesitter/nvim-treesitter" },
 		config = treesitter_textobjects,

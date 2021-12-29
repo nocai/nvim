@@ -26,6 +26,7 @@ if not present or not ok then
 end
 
 packer.init({
+	-- compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "packer_compiled.lua"),
 	display = {
 		open_fn = function()
 			return require("packer.util").float({ border = "single" })
@@ -45,11 +46,14 @@ return packer.startup(function(use)
 		{ "nvim-lua/plenary.nvim", disable = vim.nv.is_vscode },
 		{ "nathom/filetype.nvim", disable = vim.nv.is_vscode },
 		{ "nanotee/nvim-lua-guide", disable = vim.nv.is_vscode },
-		{ "wbthomason/packer.nvim", disable = vim.nv.is_vscode, event = "VimEnter" },
+		{ "wbthomason/packer.nvim", event = "VimEnter" },
 		{
 			"kyazdani42/nvim-web-devicons",
+			event = "VimEnter",
 			disable = vim.nv.is_vscode,
-			config = require("colors").devicons(),
+			config = function()
+				require("colors").devicons()
+			end,
 		},
 		-- {
 		--   "NvChad/nvim-base16.lua",

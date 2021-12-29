@@ -86,31 +86,41 @@ end
 return {
 	{
 		"tpope/vim-fugitive",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		cmd = { "G" },
 	},
 	{
 		"lewis6991/gitsigns.nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = { "BufRead" },
 		config = gitsigns,
 	},
 	{
 		"thinca/vim-quickrun",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		ft = { "go", "rust" },
 		keys = "<leader>rr",
 		config = quickrun,
 	},
 	{
 		"vim-test/vim-test",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		ft = { "go", "rust" },
 		config = test,
 	},
 	{
 		"sebdah/vim-delve",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		cmd = "DlvToggleBreakpoint",
 		config = function()
 			vim.cmd([[nmap <leader>bb :DlvToggleBreakpoint<CR>]])
@@ -118,7 +128,9 @@ return {
 	},
 	{
 		"terrortylor/nvim-comment",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = "BufReadPre",
 		config = function()
 			require("nvim_comment").setup()

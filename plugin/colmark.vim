@@ -130,3 +130,62 @@ tnoremap <M-I> <C-\><C-N><C-W>L
 
 nnoremap <c-s>      <cmd>wall<cr>
 nnoremap <leader>lf <cmd>luafile %<cr>
+
+
+if exists('g:vscode')
+nnoremap rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
+nnoremap gD <Cmd>call VSCodeNotify('editor.action.peekDefinition')<CR>
+nnoremap gy <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
+nnoremap gY <Cmd>call VSCodeNotify('editor.action.peekTypeDefinition')<CR>
+nnoremap gi <Cmd>call VSCodeNotify('editor.action.goToImplementation')<CR>
+nnoremap gI <Cmd>call VSCodeNotify('editor.action.peekImplementation')<CR>
+nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
+nnoremap gq <Cmd>call VSCodeNotify('editor.action.organizeImports')<CR>
+nnoremap <leader><leader> <Cmd>call VSCodeNotify('workbench.files.action.showActiveFileInExplorer')<CR>
+
+nnoremap E <Cmd>call VSCodeNotify('editor.action.showHover')<CR>
+
+nnoremap <C-l> <Cmd>call VSCodeNotify("workbench.action.navigateForward")<CR>
+
+nnoremap H <Cmd>call <SID>moveCursor('top')<CR>
+xnoremap H <Cmd>call <SID>moveCursor('top')<CR>
+nnoremap M <Cmd>call <SID>moveCursor('middle')<CR>
+xnoremap M <Cmd>call <SID>moveCursor('middle')<CR>
+nnoremap I <Cmd>call <SID>moveCursor('bottom')<CR>
+xnoremap I <Cmd>call <SID>moveCursor('bottom')<CR>
+
+" Note: Using these in macro will break it
+nnoremap ge <Cmd>call VSCodeNotify('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
+nnoremap gn <Cmd>call VSCodeNotify('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
+
+" buffer management
+nnoremap <C-w>k <Cmd>call <SID>splitNew('h', '__vscode_new__')<CR>
+xnoremap <C-w>k <Cmd>call <SID>splitNew('h', '__vscode_new__')<CR>
+" window navigation
+nnoremap <C-w>n <Cmd>call VSCodeNotify('workbench.action.focusBelowGroup')<CR>
+xnoremap <C-w>n <Cmd>call VSCodeNotify('workbench.action.focusBelowGroup')<CR>
+nnoremap <C-w>e <Cmd>call VSCodeNotify('workbench.action.focusAboveGroup')<CR>
+xnoremap <C-w>e <Cmd>call VSCodeNotify('workbench.action.focusAboveGroup')<CR>
+nnoremap <C-w>h <Cmd>call VSCodeNotify('workbench.action.focusLeftGroup')<CR>
+xnoremap <C-w>h <Cmd>call VSCodeNotify('workbench.action.focusLeftGroup')<CR>
+nnoremap <C-w>i <Cmd>call VSCodeNotify('workbench.action.focusRightGroup')<CR>
+xnoremap <C-w>i <Cmd>call VSCodeNotify('workbench.action.focusRightGroup')<CR>
+
+nnoremap <C-w><C-n> <Cmd>call VSCodeNotify('workbench.action.moveEditorToBelowGroup')<CR>
+xnoremap <C-w><C-n> <Cmd>call VSCodeNotify('workbench.action.moveEditorToBelowGroup')<CR>
+nnoremap <C-w><C-e> <Cmd>call VSCodeNotify('workbench.action.moveEditorToAboveGroup')<CR>
+xnoremap <C-w><C-e> <Cmd>call VSCodeNotify('workbench.action.moveEditorToAboveGroup')<CR>
+nnoremap <C-w><C-h> <Cmd>call VSCodeNotify('workbench.action.moveEditorToLeftGroup')<CR>
+xnoremap <C-w><C-h> <Cmd>call VSCodeNotify('workbench.action.moveEditorToLeftGroup')<CR>
+nnoremap <C-w><C-i> <Cmd>call VSCodeNotify('workbench.action.moveEditorToRightGroup')<CR>
+xnoremap <C-w><C-i> <Cmd>call VSCodeNotify('workbench.action.moveEditorToRightGroup')<CR>
+
+nnoremap <C-w><S-n> <Cmd>call VSCodeNotify('workbench.action.moveActiveEditorGroupDown')<CR>
+xnoremap <C-w><S-n> <Cmd>call VSCodeNotify('workbench.action.moveActiveEditorGroupDown')<CR>
+nnoremap <C-w><S-e> <Cmd>call VSCodeNotify('workbench.action.moveActiveEditorGroupUp')<CR>
+xnoremap <C-w><S-e> <Cmd>call VSCodeNotify('workbench.action.moveActiveEditorGroupUp')<CR>
+nnoremap <C-w><S-h> <Cmd>call VSCodeNotify('workbench.action.moveActiveEditorGroupLeft')<CR>
+xnoremap <C-w><S-h> <Cmd>call VSCodeNotify('workbench.action.moveActiveEditorGroupLeft')<CR>
+nnoremap <C-w><S-i> <Cmd>call VSCodeNotify('workbench.action.moveActiveEditorGroupRight')<CR>
+xnoremap <C-w><S-i> <Cmd>call VSCodeNotify('workbench.action.moveActiveEditorGroupRight')<CR>
+endif

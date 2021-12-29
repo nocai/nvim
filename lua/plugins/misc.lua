@@ -119,29 +119,41 @@ end
 return {
 	{
 		"tweekmonster/startuptime.vim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		cmd = { "StartupTime" },
 	},
 	{
 		"norcalli/nvim-colorizer.lua",
-		disable = vim.nv.is_vscode,
+		event = "VimEnter",
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		config = function()
 			require("colorizer").setup()
 		end,
 	},
 	{
 		"kshenoy/vim-signature",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
+		event = "VimEnter",
 	},
 	{
 		"npxbr/glow.nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		run = "GlowInstall",
 		cmd = "Glow",
 	},
 	{
 		"voldikss/vim-translator",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		keys = { "<leader>tr" },
 		config = translator,
 	},
@@ -162,11 +174,13 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		disable = vim.nv.is_vscode,
+		event = "VimEnter",
 		config = toggleterm,
 	},
 	{
 		"Pocco81/AutoSave.nvim",
 		disable = vim.nv.is_vscode,
+		event = "VimEnter",
 		config = autosave_nvim,
 	},
 	{
