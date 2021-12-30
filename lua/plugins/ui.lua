@@ -1,3 +1,80 @@
+local function nvim_befferline()
+	local colors = {
+		white = "#abb2bf",
+		black = "#1e222a", --  nvim bg
+		black2 = "#252931",
+		grey_fg = "#565c64",
+		light_grey = "#6f737b",
+		red = "#d47d85",
+		green = "#A3BE8C",
+		lightbg = "#2d3139",
+		lightbg2 = "#262a32",
+	}
+
+	require("bufferline").setup({
+		options = {
+			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
+		},
+		highlights = {
+			fill = {
+				guifg = colors.grey_fg,
+			},
+			-- buffers
+			buffer_visible = {
+				guifg = colors.light_grey,
+			},
+			buffer_selected = {
+				guifg = colors.white,
+				gui = "bold",
+			},
+			-- tabs
+			tab = {
+				guifg = colors.light_grey,
+			},
+			tab_selected = {
+				guifg = colors.black2,
+			},
+			tab_close = {
+				guifg = colors.red,
+			},
+			indicator_selected = {
+				guifg = colors.black,
+			},
+			-- separators
+			separator = {
+				guifg = colors.black2,
+			},
+			separator_visible = {
+				guifg = colors.black2,
+			},
+			separator_selected = {
+				guifg = colors.black2,
+			},
+			-- modified
+			modified = {
+				guifg = colors.red,
+			},
+			modified_visible = {
+				guifg = colors.red,
+			},
+			modified_selected = {
+				guifg = colors.green,
+			},
+			-- close buttons
+
+			close_button = {
+				guifg = colors.light_grey,
+			},
+			close_button_visible = {
+				guifg = colors.light_grey,
+			},
+			close_button_selected = {
+				guifg = colors.red,
+			},
+		},
+	})
+end
+
 local function indent_blankline()
 	vim.g.indent_blankline_char = "┊"
 	vim.g.indent_blankline_filetype_exclude = { "help", "packer", "nvimtree" }
@@ -84,86 +161,8 @@ local function lualine()
 	})
 end
 
-local function bufferline()
-	local colors = {
-		white = "#abb2bf",
-		black = "#1e222a", --  nvim bg
-		black2 = "#252931",
-		grey_fg = "#565c64",
-		light_grey = "#6f737b",
-		red = "#d47d85",
-		green = "#A3BE8C",
-		lightbg = "#2d3139",
-		lightbg2 = "#262a32",
-	}
-
-	require("bufferline").setup({
-		options = {
-			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
-		},
-		highlights = {
-			fill = {
-				guifg = colors.grey_fg,
-			},
-			-- buffers
-			buffer_visible = {
-				guifg = colors.light_grey,
-			},
-			buffer_selected = {
-				guifg = colors.white,
-				gui = "bold",
-			},
-			-- tabs
-			tab = {
-				guifg = colors.light_grey,
-			},
-			tab_selected = {
-				guifg = colors.black2,
-			},
-			tab_close = {
-				guifg = colors.red,
-			},
-			indicator_selected = {
-				guifg = colors.black,
-			},
-			-- separators
-			separator = {
-				guifg = colors.black2,
-			},
-			separator_visible = {
-				guifg = colors.black2,
-			},
-			separator_selected = {
-				guifg = colors.black2,
-			},
-			-- modified
-			modified = {
-				guifg = colors.red,
-			},
-			modified_visible = {
-				guifg = colors.red,
-			},
-			modified_selected = {
-				guifg = colors.green,
-			},
-			-- close buttons
-
-			close_button = {
-				guifg = colors.light_grey,
-			},
-			close_button_visible = {
-				guifg = colors.light_grey,
-			},
-			close_button_selected = {
-				guifg = colors.red,
-			},
-		},
-	})
-end
-
 local function nvim_tree()
 	vim.g.nvim_tree_highlight_opened_files = 3
-	vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1, folder_arrows = 1 }
 	vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFileToggle<CR>", {
 		noremap = true,
 		silent = true,
@@ -176,7 +175,7 @@ local function nvim_tree()
 		hijack_netrw = true,
 		ignore_ft_on_setup = {},
 		open_on_tab = false,
-		hijack_cursor = false,
+		hijack_cursor = true,
 		update_cwd = true,
 		update_to_buf_dir = {
 			enable = true,
@@ -192,8 +191,8 @@ local function nvim_tree()
 			},
 		},
 		update_focused_file = {
-			enable = false,
-			update_cwd = false,
+			enable = true,
+			update_cwd = true,
 			ignore_list = {},
 		},
 		system_open = {
@@ -222,7 +221,7 @@ local function nvim_tree()
 					{ key = "<Tab>", cb = tree_cb("preview") },
 					{ key = "E", cb = tree_cb("first_sibling") },
 					{ key = "N", cb = tree_cb("last_sibling") },
-					{ key = "I", cb = tree_cb("toggle_ignored") },
+					{ key = "L", cb = tree_cb("toggle_ignored") },
 					{ key = "H", cb = tree_cb("toggle_dotfiles") },
 					{ key = "R", cb = tree_cb("refresh") },
 					{ key = "a", cb = tree_cb("create") },
@@ -250,7 +249,7 @@ end
 local function dashboard_nvim()
 	local g = vim.g
 
-	g.dashboard_disable_at_vimenter = 1
+	g.dashboard_disable_at_vimenter = 0
 	g.dashboard_disable_statusline = 0
 
 	g.dashboard_default_executive = "telescope"
@@ -261,30 +260,25 @@ local function dashboard_nvim()
 			command = "Telescope find_files",
 		},
 		b = {
-			description = { "  Recents                   " },
-			command = "Telescope oldfiles",
-		},
-		c = {
 			description = { "  Find Word                 <C-E><C-G>" },
 			command = "Telescope live_grep",
 		},
-		d = {
-			description = { "洛 New File                  " },
+		c = {
+			description = { "洛 New File                            " },
 			command = "enew",
 		},
-		e = {
-			description = { "  Bookmarks                 " },
-			command = "Telescope marks",
+		d = {
+			description = { "  Recents                             " },
+			command = "Telescope oldfiles",
 		},
-		f = {
-			description = { "  Load Last Session         " },
-			command = "SessionLoad",
+		e = {
+			description = { "  Bookmarks                           " },
+			command = "Telescope marks",
 		},
 	}
 end
 
 -- ui
---
 return {
 	{
 		"glepnir/dashboard-nvim",
@@ -324,6 +318,6 @@ return {
 			return vim.g.vscode ~= 1
 		end,
 		event = { "VimEnter" },
-		config = bufferline,
+		config = nvim_befferline,
 	},
 }

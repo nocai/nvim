@@ -10,7 +10,7 @@ local M = {
 				if vim.nv.ui.transparency then
 					vim.g.onedark_transparent_background = true
 				end
-				vim.cmd("colorscheme " .. vim.nv.ui.theme)
+				-- vim.cmd("colorscheme " .. vim.nv.ui.theme)
 			end
 		end,
 	},
@@ -41,19 +41,6 @@ local M = {
 				vim.g.tokyonight_italic_functions = true
 			end
 			if vim.nv.ui.theme == "tokyonight" then
-				vim.cmd("colorscheme " .. vim.nv.ui.theme)
-			end
-		end,
-	},
-	{
-		"sainnhe/gruvbox-material",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		event = "VimEnter",
-		config = function()
-			if vim.nv.ui.theme == "gruvbox-material" then
-				-- let g:gruvbox_material_transparent_background = 1
 				vim.cmd("colorscheme " .. vim.nv.ui.theme)
 			end
 		end,

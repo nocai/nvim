@@ -19,7 +19,7 @@ vim.nv = {
 	},
 
 	ui = {
-		theme = "gruvbox-material",
+		theme = "gruvbox",
 		italic_comments = true,
 		transparency = false,
 	},
@@ -61,5 +61,3 @@ vim.g.did_load_filetypes = 1
 require("option")
 require("autocmd")
 require("plugins")
-
--- vim.cmd("colorscheme " .. vim.nv.ui.theme)

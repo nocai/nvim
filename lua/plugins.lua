@@ -43,33 +43,63 @@ packer.init({
 
 return packer.startup(function(use)
 	use({
-		{ "nvim-lua/plenary.nvim", disable = vim.nv.is_vscode },
-		{ "nathom/filetype.nvim", disable = vim.nv.is_vscode },
-		{ "nanotee/nvim-lua-guide", disable = vim.nv.is_vscode },
 		{ "wbthomason/packer.nvim", event = "VimEnter" },
 		{
+			"nvim-lua/plenary.nvim",
+			cond = function()
+				return vim.g.vscode ~= 1
+			end,
+		},
+		{
+			"nathom/filetype.nvim",
+			cond = function()
+				return vim.g.vscode ~= 1
+			end,
+		},
+		{
+			"nanotee/nvim-lua-guide",
+			cond = function()
+				return vim.g.vscode ~= 1
+			end,
+		},
+		{
 			"kyazdani42/nvim-web-devicons",
-			event = "VimEnter",
-			disable = vim.nv.is_vscode,
+			cond = function()
+				return vim.g.vscode ~= 1
+			end,
 			config = function()
 				require("colors").devicons()
 			end,
 		},
-		-- {
-		--   "NvChad/nvim-base16.lua",
-		--   after = "packer.nvim",
-		--   config = function()
-		--     require("colors").init(vim.nv.ui.theme)
-		--   end
-		-- }
 	})
 
 	use(require("plugins.misc"))
-	use(require("plugins.ui"))
 	use(require("plugins.cmp"))
 	use(require("plugins.lspconfig"))
 	use(require("plugins.telescope"))
 	use(require("plugins.tools"))
 	use(require("plugins.treesitter"))
-	use(require("plugins.themes"))
+	use(require("plugins.ui"))
+	-- use(require("plugins.themes"))
+
+	use({
+		"ellisonleao/gruvbox.nvim",
+		requires = { "rktjmp/lush.nvim" },
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
+		config = function()
+			vim.o.background = "dark" -- or "light" for light mode
+			vim.cmd([[colorscheme gruvbox]])
+		end,
+	})
+
+	-- {
+	-- 	"NvChad/nvim-base16.lua",
+	-- 	after = "packer.nvim",
+	-- 	config = function()
+	-- 		local base16 = require("base16")
+	-- 		base16(base16.themes("gruvbox"), true)
+	-- 	end,
+	-- },
 end)

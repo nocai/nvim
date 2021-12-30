@@ -1,5 +1,3 @@
-local M = {}
-
 local colors = {
 	white = "#abb2bf",
 	red = "#d47d85",
@@ -15,7 +13,7 @@ local colors = {
 	cyan = "#a3b8ef",
 }
 
-M.devicons = function()
+function colors.devicons()
 	require("nvim-web-devicons").setup({
 		override = {
 			html = {
@@ -132,4 +130,4 @@ M.devicons = function()
 	})
 end
 
-return M
+return colors
