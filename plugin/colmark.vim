@@ -8,7 +8,7 @@
 "     v
 
 noremap <Space> <Nop>
-let mapleader=' '
+let mapleader = ' '
 let maplocalleader = ' '
 
 " nN => jJ {{{
@@ -133,8 +133,7 @@ nnoremap <leader>lf <cmd>luafile %<cr>
 
 
 if exists('g:vscode')
-nnoremap rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
-nnoremap gD <Cmd>call VSCodeNotify('editor.action.peekDefinition')<CR>
+nnoremap gn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 nnoremap gy <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
 nnoremap gY <Cmd>call VSCodeNotify('editor.action.peekTypeDefinition')<CR>
 nnoremap gi <Cmd>call VSCodeNotify('editor.action.goToImplementation')<CR>
@@ -160,8 +159,8 @@ nnoremap I <Cmd>call <SID>moveCursor('bottom')<CR>
 xnoremap I <Cmd>call <SID>moveCursor('bottom')<CR>
 
 " Note: Using these in macro will break it
-nnoremap ge <Cmd>call VSCodeNotify('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
-nnoremap gn <Cmd>call VSCodeNotify('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
+" nnoremap ge <Cmd>call VSCodeNotify('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
+" nnoremap gn <Cmd>call VSCodeNotify('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
 
 function! s:split(...) abort
     let direction = a:1

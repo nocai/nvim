@@ -162,6 +162,12 @@ local function bufferline()
 end
 
 local function nvim_tree()
+	vim.g.nvim_tree_highlight_opened_files = 3
+	vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1, folder_arrows = 1 }
+	vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFileToggle<CR>", {
+		noremap = true,
+		silent = true,
+	})
 	local tree_cb = require("nvim-tree.config").nvim_tree_callback
 	require("nvim-tree").setup({
 		open_on_setup = true,
@@ -294,7 +300,7 @@ return {
 			return vim.g.vscode ~= 1
 		end,
 		ft = { "lua" },
-		setup = indent_blankline,
+		config = indent_blankline,
 	},
 	{
 		"kyazdani42/nvim-tree.lua",
@@ -303,16 +309,6 @@ return {
 		end,
 		events = { "VimEnter" },
 		config = nvim_tree,
-		setup = function()
-			vim.g.nvim_tree_highlight_opened_files = 3
-			vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1, folder_arrows = 1 }
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader><leader>",
-				"<cmd>NvimTreeFindFileToggle<CR>",
-				{ noremap = true, silent = true }
-			)
-		end,
 	},
 	{
 		"hoob3rt/lualine.nvim",

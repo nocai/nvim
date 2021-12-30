@@ -1,5 +1,4 @@
 -- nv varables
-vim.g.is_vscode = vim.g.vscode == 1
 vim.nv = {
 	user_home = os.getenv("HOME"),
 	packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim",

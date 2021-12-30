@@ -331,12 +331,10 @@ return {
 		keys = "gO",
 		after = { "nvim-lspconfig" },
 		requires = { "neovim/nvim-lspconfig" },
-		setup = function()
+		config = function()
 			vim.g.symbols_outline = {
 				auto_preview = false,
 			}
-		end,
-		config = function()
 			vim.api.nvim_set_keymap("n", "gO", "<cmd>SymbolsOutline<CR>", { noremap = true, silent = true })
 		end,
 	},

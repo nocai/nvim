@@ -167,25 +167,30 @@ return {
 	},
 	{
 		"karb94/neoscroll.nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = "WinScrolled",
 		config = neoscroll,
 	},
 	{
 		"akinsho/toggleterm.nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = "VimEnter",
 		config = toggleterm,
 	},
 	{
 		"Pocco81/AutoSave.nvim",
-		disable = vim.nv.is_vscode,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		event = "VimEnter",
 		config = autosave_nvim,
 	},
 	{
 		"andymass/vim-matchup",
-		disable = vim.nv.is_vscode,
 		config = vim_matchup,
 		setup = function()
 			vim.cmd([[xmap l% <plug>(matchup-i%)]])
@@ -193,7 +198,6 @@ return {
 	},
 	{
 		"rhysd/accelerated-jk",
-		disable = vim.nv.is_vscode,
 		event = { "BufRead" },
 		setup = function()
 			vim.cmd([[
