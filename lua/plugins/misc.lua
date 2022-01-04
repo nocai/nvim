@@ -192,18 +192,21 @@ return {
 	{
 		"andymass/vim-matchup",
 		config = vim_matchup,
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
 		setup = function()
 			vim.cmd([[xmap l% <plug>(matchup-i%)]])
 		end,
 	},
-	{
-		"rhysd/accelerated-jk",
-		event = { "BufRead" },
-		setup = function()
-			vim.cmd([[
-				nmap <silent>n <Plug>(accelerated_jk_gj)
-				nmap <silent>e <Plug>(accelerated_jk_gk)
-			]])
-		end,
-	},
+	-- {
+	-- 	"rhysd/accelerated-jk",
+	-- 	event = { "BufRead" },
+	-- 	setup = function()
+	-- 		vim.cmd([[
+	-- 			nmap <silent>n <Plug>(accelerated_jk_gj)
+	-- 			nmap <silent>e <Plug>(accelerated_jk_gk)
+	-- 		]])
+	-- 	end,
+	-- },
 }
