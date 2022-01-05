@@ -196,7 +196,7 @@ return {
 			return vim.g.vscode ~= 1
 		end,
 		setup = function()
-			vim.cmd([[xmap l% <plug>(matchup-i%)]])
+			vim.cmd([[vmap l% <plug>(matchup-i%)]])
 		end,
 	},
 	-- {

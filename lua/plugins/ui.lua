@@ -293,7 +293,7 @@ return {
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
-		ft = { "lua" },
+		-- ft = { "lua" },
 		config = indent_blankline,
 	},
 	{
