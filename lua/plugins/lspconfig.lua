@@ -323,19 +323,19 @@ return {
 			})
 		end,
 	},
-	{
-		"simrat39/symbols-outline.nvim",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		keys = "gO",
-		after = { "nvim-lspconfig" },
-		requires = { "neovim/nvim-lspconfig" },
-		config = function()
-			vim.g.symbols_outline = {
-				auto_preview = false,
-			}
-			vim.api.nvim_set_keymap("n", "gO", "<cmd>SymbolsOutline<CR>", { noremap = true, silent = true })
-		end,
-	},
+	-- {
+	-- 	"simrat39/symbols-outline.nvim",
+	-- 	cond = function()
+	-- 		return vim.g.vscode ~= 1
+	-- 	end,
+	-- 	keys = "gO",
+	-- 	after = { "nvim-lspconfig" },
+	-- 	requires = { "neovim/nvim-lspconfig" },
+	-- 	config = function()
+	-- 		vim.g.symbols_outline = {
+	-- 			auto_preview = false,
+	-- 		}
+	-- 		vim.api.nvim_set_keymap("n", "gO", "<cmd>SymbolsOutline<CR>", { noremap = true, silent = true })
+	-- 	end,
+	-- },
 }

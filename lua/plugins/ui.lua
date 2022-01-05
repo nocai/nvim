@@ -301,7 +301,7 @@ return {
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
-		events = { "VimEnter" },
+		requires = { "kyazdani42/nvim-web-devicons" },
 		config = nvim_tree,
 	},
 	{
@@ -317,6 +317,7 @@ return {
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
+		requires = { "kyazdani42/nvim-web-devicons" },
 		event = { "VimEnter" },
 		config = nvim_befferline,
 	},

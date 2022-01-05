@@ -45,6 +45,12 @@ return packer.startup(function(use)
 	use({
 		{ "wbthomason/packer.nvim", event = "VimEnter" },
 		{
+			"kyazdani42/nvim-web-devicons",
+			config = function()
+				require("colors").devicons()
+			end,
+		},
+		{
 			"nvim-lua/plenary.nvim",
 			cond = function()
 				return vim.g.vscode ~= 1
@@ -62,15 +68,6 @@ return packer.startup(function(use)
 				return vim.g.vscode ~= 1
 			end,
 		},
-		{
-			"kyazdani42/nvim-web-devicons",
-			cond = function()
-				return vim.g.vscode ~= 1
-			end,
-			config = function()
-				require("colors").devicons()
-			end,
-		},
 	})
 
 	use(require("plugins.misc"))
@@ -83,16 +80,29 @@ return packer.startup(function(use)
 	-- use(require("plugins.themes"))
 
 	use({
-		"ellisonleao/gruvbox.nvim",
-		requires = { "rktjmp/lush.nvim" },
+		"sainnhe/sonokai",
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
+		setup = function ()
+			-- vim.g.sonokai_style = "andromeda"
+			vim.g.sonokai_enable_italic = 1
+			vim.g.sonokai_disable_italic_comment = 1
+		end,
 		config = function()
-			vim.o.background = "dark" -- or "light" for light mode
-			vim.cmd([[colorscheme gruvbox]])
+			vim.cmd([[colorscheme sonokai]])
 		end,
 	})
+	-- use({
+	-- 	"bluz71/vim-moonfly-colors",
+	-- 	cond = function()
+	-- 		return vim.g.vscode ~= 1
+	-- 	end,
+	-- 	config = function()
+	-- 		vim.g.moonflyCursorColor = 1
+	-- 		vim.cmd([[colorscheme moonfly]])
+	-- 	end,
+	-- })
 
 	-- {
 	-- 	"NvChad/nvim-base16.lua",
