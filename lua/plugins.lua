@@ -84,7 +84,7 @@ return packer.startup(function(use)
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
-		setup = function ()
+		setup = function()
 			-- vim.g.sonokai_style = "andromeda"
 			vim.g.sonokai_enable_italic = 1
 			vim.g.sonokai_disable_italic_comment = 1

@@ -51,14 +51,14 @@ local function textobject_parameter()
 		]])
 end
 
--- git
 return {
+	-- git
 	{
 		"tpope/vim-fugitive",
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
-		cmd = { "G" },
+		cmd = { "G", "Git" },
 	},
 	{
 		"lewis6991/gitsigns.nvim",
