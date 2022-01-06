@@ -210,4 +210,25 @@ xmap gc  <Plug>VSCodeCommentary
 nmap gc  <Plug>VSCodeCommentary
 omap gc  <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
+
+function! s:vscodePrepareMultipleCursors(append, skipEmpty)
+    let m = mode()
+    if m ==# 'V' || m ==# "\<C-v>"
+        let b:notifyMultipleCursors = 1
+        let b:multipleCursorsVisualMode = m
+        let b:multipleCursorsAppend = a:append
+        let b:multipleCursorsSkipEmpty = a:skipEmpty
+        " We need to start insert, then spawn cursors otherwise they'll be destroyed
+        " using feedkeys() here because :startinsert is being delayed
+        call feedkeys("\<Esc>i", 'n')
+    endif
+endfunction
+" Multiple cursors support for visual line/block modes
+xnoremap ma <Cmd>call <SID>vscodePrepareMultipleCursors(1, 1)<CR>
+xnoremap mA <Cmd>call <SID>vscodePrepareMultipleCursors(1, 0)<CR>
+
+xnoremap mi <Nop>
+xnoremap mI <Nop>
+xnoremap ml <Cmd>call <SID>vscodePrepareMultipleCursors(0, 1)<CR>
+xnoremap mL <Cmd>call <SID>vscodePrepareMultipleCursors(0, 0)<CR>
 endif

@@ -1,4 +1,5 @@
 -- nv varables
+vim.g.neovide_cursor_vfx_mode = "railgun"
 vim.nv = {
 	user_home = os.getenv("HOME"),
 	packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim",

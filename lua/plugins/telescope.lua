@@ -2,7 +2,7 @@ local function telescope()
 	local actions = require("telescope.actions")
 	require("telescope").setup({
 		defaults = {
-			prompt_prefix = "   ",
+			prompt_prefix = "  ",
 			previewers = true,
 			mappings = {
 				i = {

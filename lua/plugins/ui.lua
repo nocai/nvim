@@ -77,7 +77,7 @@ end
 
 local function indent_blankline()
 	vim.g.indent_blankline_char = "┊"
-	vim.g.indent_blankline_filetype_exclude = { "help", "packer", "nvimtree" }
+	vim.g.indent_blankline_filetype_exclude = { "help", "packer", "nvimtree", "dashboard" }
 	vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile", "packer" }
 	vim.g.indent_blankline_show_first_indent_level = false
 	vim.g.indent_blankline_char_highlight = "LineNr"
@@ -178,11 +178,12 @@ local function nvim_tree()
 		hijack_cursor = true,
 		update_cwd = false,
 		update_to_buf_dir = {
-			enable = true,
+			enable = false,
 			auto_open = true,
 		},
 		diagnostics = {
 			enable = vim.nv.diagnostics.enable,
+			show_on_dirs = vim.nv.diagnostics.enable,
 			icons = {
 				hint = vim.nv.diagnostics.icons.hint,
 				info = vim.nv.diagnostics.icons.info,

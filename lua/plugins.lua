@@ -72,7 +72,7 @@ return packer.startup(function(use)
 
 	use(require("plugins.misc"))
 	use(require("plugins.cmp"))
-	use(require("plugins.lspconfig"))
+	use(require("plugins.lsp"))
 	use(require("plugins.telescope"))
 	use(require("plugins.tools"))
 	use(require("plugins.treesitter"))
