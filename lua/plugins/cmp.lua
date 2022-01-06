@@ -95,6 +95,16 @@ local function tabout()
 	})
 end
 
+local function autopairs()
+	require("nvim-autopairs").setup({})
+
+	local ok, cmp = pcall(require, "cmp")
+	if ok then
+		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+	end
+end
+
 -- auto complete
 return {
 	{
@@ -153,5 +163,11 @@ return {
 		config = tabout,
 		wants = { "nvim-treesitter" }, -- or require if not used so far
 		after = "nvim-cmp",
+	},
+
+	{
+		"windwp/nvim-autopairs",
+		after = "nvim-cmp",
+		config = autopairs,
 	},
 }

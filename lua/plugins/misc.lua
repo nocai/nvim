@@ -89,7 +89,7 @@ local function autosave_nvim()
 	local autosave = require("autosave")
 	autosave.setup({
 		enabled = true,
-		execution_message = "autosaved at : " .. vim.fn.strftime("%H:%M:%S"),
+		execution_message = "auto saved at : " .. vim.fn.strftime("%H:%M:%S"),
 		events = { "InsertLeave", "TextChanged" },
 		conditions = {
 			exists = true,
@@ -98,21 +98,9 @@ local function autosave_nvim()
 		},
 		clean_command_line_interval = 2500,
 		on_off_commands = true,
-		write_all_buffers = false,
+		write_all_buffers = true,
 		debounce_delay = 5000,
 	})
-end
-
-local function vim_matchup()
-	local ok, config = pcall(require, "nvim-treesitter.configs")
-	if ok then
-		config.setup({
-			matchup = {
-				enable = true, -- mandatory, false will disable the whole extension
-				-- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
-			},
-		})
-	end
 end
 
 -- misc
@@ -188,16 +176,6 @@ return {
 		end,
 		event = "VimEnter",
 		config = autosave_nvim,
-	},
-	{
-		"andymass/vim-matchup",
-		config = vim_matchup,
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		setup = function()
-			vim.cmd([[vmap l% <plug>(matchup-i%)]])
-		end,
 	},
 	-- {
 	-- 	"rhysd/accelerated-jk",
