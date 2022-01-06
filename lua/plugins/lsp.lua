@@ -1,11 +1,6 @@
 local function lspconfig()
 	local lspc = require("lspconfig")
-	local on_attach, capabilities = require("plugins.lsp_config")
-
-	-- sumneko_lua
-	require("plugins.lsp.sumneko_lua").setup(lspc, on_attach, capabilities)
-	-- jdtls
-	require("plugins.lsp.jdtls").setup(lspc, on_attach, capabilities)
+	local on_attach, capabilities = require("plugins.lsp.config")
 
 	-- Use a loop to conveniently call 'setup' on multiple servers and
 	-- map buffer local keybindings when the language server attaches
@@ -20,30 +15,24 @@ local function lspconfig()
 		})
 	end
 
+	local server_ext = {}
+	-- sumneko_lua
+	server_ext.sumneko_lua = require("plugins.lsp.sumneko_lua")
+	-- jdtls
+	server_ext.jdtls = require("plugins.lsp.jdtls")
 	-- gopls
-	lspc.gopls.setup({
-		cmd = { "gopls", "--remote=auto" },
-		on_attach = on_attach,
-		capabilities = capabilities,
-		init_options = {
-			usePlaceholders = true,
-			completeUnimported = true,
-			analyses = {
-				unreachable = true,
-				unusedparams = true,
-			},
-			staticcheck = true,
-		},
-	})
-
+	server_ext.gopls = require("plugins.lsp.gopls")
 	-- clangd
-	lspc.clangd.setup({
-		on_attach = on_attach,
-		capabilities = capabilities,
-		cmd = { "clangd", "--background-index" },
-		filetypes = { "c", "cpp", "objc", "objcpp" },
-		single_file_support = true,
-	})
+	server_ext.clangd = require("plugins.lsp.clangd")
+
+	for lsp, server in pairs(server_ext) do
+		server.on_attach = on_attach
+		server.capabilities = capabilities
+		server.flags = {
+			debounce_text_changes = 150,
+		}
+		lspc[lsp].setup(server)
+	end
 end
 
 -- vim.lsp.set_log_level("debug")
@@ -71,8 +60,8 @@ return {
 					ls.builtins.formatting.prettier.with({
 						filetypes = { "html", "json", "yaml", "markdown" },
 					}),
-					-- ls.builtins.diagnostics.eslint,
-					-- ls.builtins.completion.spell,
+					ls.builtins.diagnostics.eslint,
+					ls.builtins.completion.spell,
 				},
 			})
 		end,

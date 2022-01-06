@@ -24,4 +24,21 @@ local function setup(lspc, on_attach, capabilities)
 	})
 end
 
-return { setup = setup }
+-- return { setup = setup }
+
+return {
+	cmd = { "lua-language-server" },
+	settings = {
+		Lua = {
+			runtime = { version = "LuaJIT", path = runtime_path },
+			diagnostics = { enable = true, globals = { "vim" } },
+			hint = { enable = true },
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = { enable = false },
+		},
+	},
+}

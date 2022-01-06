@@ -47,7 +47,7 @@ return packer.startup(function(use)
 		{
 			"kyazdani42/nvim-web-devicons",
 			config = function()
-				require("colors").devicons()
+				require("plugins.devicons")
 			end,
 		},
 		{
