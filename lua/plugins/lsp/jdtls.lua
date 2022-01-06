@@ -34,38 +34,6 @@ local function get_workspace_dir()
 	return env.WORKSPACE and env.WORKSPACE or util.path.join(env.HOME, "workspace")
 end
 
-local function setup(lspc, on_attach, capabilities)
-	lspc.jdtls.setup({
-		on_attach = on_attach,
-		capabilities = capabilities,
-		cmd = {
-			get_java_executable(),
-			-- "jdtls",
-			"-Declipse.application=org.eclipse.jdt.ls.core.id1",
-			"-Dosgi.bundles.defaultStartLevel=4",
-			"-Declipse.product=org.eclipse.jdt.ls.core.product",
-			"-Dlog.protocol=true",
-			"-Dlog.level=ALL",
-			"-Xms1g",
-			"-Xmx2G",
-			"--add-modules=ALL-SYSTEM",
-			"--add-opens",
-			"java.base/java.util=ALL-UNNAMED",
-			"--add-opens",
-			"java.base/java.lang=ALL-UNNAMED",
-			"-javaagent:/usr/share/java/jdtls/plugins/lombok.jar",
-			"-jar",
-			get_jdtls_jar(),
-			"-configuration",
-			get_jdtls_config(),
-			"-data",
-			get_workspace_dir(),
-		},
-	})
-end
-
--- return { setup = setup }
-
 return {
 	cmd = {
 		get_java_executable(),
