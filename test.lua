@@ -1,4 +1,5 @@
 local m = {}
+
 m["nvim/nvim-lspconfig"] = {
 	event = "VimEnter",
 	-- cond = function()

@@ -1,4 +1,27 @@
-local function gitsigns()
+local tools = {}
+
+-- git
+table.insert(tools, {
+	{
+		"tpope/vim-fugitive",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		cmd = { "G", "Git" },
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		event = { "BufRead" },
+		config = function()
+			require("plugins.tools").gitsigns()
+		end,
+	},
+})
+
+function tools.gitsigns()
 	require("gitsigns").setup({
 		current_line_blame = true,
 		signs = {
@@ -27,68 +50,40 @@ local function gitsigns()
 	})
 end
 
-local function quickrun()
-	vim.g.quickrun_no_default_key_mappings = 1
-	vim.g.quickrun_config = { _ = { outputter = "message" } }
-	vim.api.nvim_set_keymap("n", "<leader>rr", "<Plug>(quickrun)", { noremap = false, silent = false })
-end
-
-local function test()
-	vim.cmd([[
-			let test#strategy = "neovim"
-			nmap <silent> <leader>tt :TestNearest -v<CR>
-			nmap <silent> <leader>tl :TestLast -v<CR>
-			nmap <silent> <leader>tv :TestVisit<CR>
-	]])
-end
-
-local function textobject_parameter()
-	vim.cmd([[
-			xmap la <Plug>(textobj-parameter-i)
-			omap la <Plug>(textobj-parameter-i)
-			xmap aa <Plug>(textobj-parameter-a)
-			omap aa <Plug>(textobj-parameter-a)
-		]])
-end
-
-return {
-	-- git
-	{
-		"tpope/vim-fugitive",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		cmd = { "G", "Git" },
-	},
-	{
-		"lewis6991/gitsigns.nvim",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		event = { "BufRead" },
-		config = gitsigns,
-	},
+-- develop
+table.insert(tools, {
 	{
 		"thinca/vim-quickrun",
 		cond = function()
-			return vim.g.vscode ~= 1
+			return not vim.g.vscode
 		end,
 		ft = { "go", "rust" },
 		keys = "<leader>rr",
-		config = quickrun,
+		config = function()
+			vim.g.quickrun_no_default_key_mappings = 1
+			vim.g.quickrun_config = { _ = { outputter = "message" } }
+			vim.api.nvim_set_keymap("n", "<leader>rr", "<Plug>(quickrun)", { noremap = false, silent = false })
+		end,
 	},
 	{
 		"vim-test/vim-test",
 		cond = function()
-			return vim.g.vscode ~= 1
+			return not vim.g.vscode
 		end,
 		ft = { "go", "rust", "java" },
-		config = test,
+		config = function()
+			vim.cmd([[
+				let test#strategy = "neovim"
+				nmap <silent> <leader>tt :TestNearest -v<CR>
+				nmap <silent> <leader>tl :TestLast -v<CR>
+				nmap <silent> <leader>tv :TestVisit<CR>
+			]])
+		end,
 	},
 	{
 		"sebdah/vim-delve",
 		cond = function()
-			return vim.g.vscode ~= 1
+			return not vim.g.vscode
 		end,
 		fg = { "go" },
 		cmd = "DlvToggleBreakpoint",
@@ -96,59 +91,26 @@ return {
 			vim.cmd([[nmap <leader>bb :DlvToggleBreakpoint<CR>]])
 		end,
 	},
-	-- {
-	-- 	"terrortylor/nvim-comment",
-	-- 	cond = function()
-	-- 		return vim.g.vscode ~= 1
-	-- 	end,
-	-- 	event = "BufReadPre",
-	-- 	config = function()
-	-- 		require("nvim_comment").setup()
-	-- 	end,
-	-- },
 	{
 		"numToStr/Comment.nvim",
 		cond = function()
-			return vim.g.vscode ~= 1
+			return not vim.g.vscode
 		end,
 		event = "BufReadPre",
 		config = function()
 			require("Comment").setup()
 		end,
 	},
-	-- textobject
-	{
-		{
-			"kana/vim-textobj-user",
-			event = { "BufRead" },
-		},
-		{
-			"kana/vim-textobj-indent",
-			after = { "vim-textobj-user" },
-			setup = function()
-				vim.g.textobj_indent_no_default_key_mappings = 1
-			end,
-			config = function()
-				vim.cmd([[
-					xmap ll <Plug>(textobj-indent-i)
-					omap ll <Plug>(textobj-indent-i)
-					xmap lL <Plug>(textobj-indent-same-i)
-					omap lL <Plug>(textobj-indent-same-i)
+})
 
-					xmap al <Plug>(textobj-indent-a)
-					omap al <Plug>(textobj-indent-a)
-					xmap aL <Plug>(textobj-indent-same-a)
-					omap aL <Plug>(textobj-indent-same-a)
-				]])
-			end,
-		},
-		{
-			"sgur/vim-textobj-parameter",
-			after = { "vim-textobj-user" },
-			setup = function()
-				vim.g.textobj_parameter_no_default_key_mappings = 1
-			end,
-			config = textobject_parameter,
-		},
-	},
-}
+
+table.insert(tools, {
+	"npxbr/glow.nvim",
+	cond = function()
+		return vim.g.vscode ~= 1
+	end,
+	run = "GlowInstall",
+	cmd = "Glow",
+})
+
+return tools

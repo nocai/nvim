@@ -103,8 +103,9 @@ local function autosave_nvim()
 	})
 end
 
--- misc
-return {
+local misc = {}
+
+table.insert(misc, {
 	{
 		"tweekmonster/startuptime.vim",
 		cond = function()
@@ -113,45 +114,12 @@ return {
 		cmd = { "StartupTime" },
 	},
 	{
-		"norcalli/nvim-colorizer.lua",
-		event = "VimEnter",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		config = function()
-			require("colorizer").setup()
-		end,
-	},
-	{
-		"kshenoy/vim-signature",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		event = "VimEnter",
-	},
-	{
-		"npxbr/glow.nvim",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		run = "GlowInstall",
-		cmd = "Glow",
-	},
-	{
 		"voldikss/vim-translator",
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
 		keys = { "<leader>tr" },
 		config = translator,
-	},
-	{
-		"machakann/vim-sandwich",
-		event = { "BufRead" },
-		setup = function()
-			vim.g.textobj_sandwich_no_default_key_mappings = 1
-		end,
-		config = sandwich,
 	},
 	{
 		"karb94/neoscroll.nvim",
@@ -169,14 +137,6 @@ return {
 		event = "VimEnter",
 		config = toggleterm,
 	},
-	{
-		"Pocco81/AutoSave.nvim",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		event = "VimEnter",
-		config = autosave_nvim,
-	},
 	-- {
 	-- 	"rhysd/accelerated-jk",
 	-- 	event = { "BufRead" },
@@ -187,4 +147,75 @@ return {
 	-- 		]])
 	-- 	end,
 	-- },
-}
+})
+
+-- edit
+table.insert(misc, {
+	{
+		"kshenoy/vim-signature",
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
+		event = "VimEnter",
+	},
+	{
+		"machakann/vim-sandwich",
+		event = { "BufRead" },
+		setup = function()
+			vim.g.textobj_sandwich_no_default_key_mappings = 1
+		end,
+		config = sandwich,
+	},
+	{
+		"Pocco81/AutoSave.nvim",
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
+		event = "VimEnter",
+		config = autosave_nvim,
+	},
+})
+
+-- textobject
+table.insert(misc, {
+	{
+		"kana/vim-textobj-user",
+		event = { "BufRead" },
+	},
+	{
+		"kana/vim-textobj-indent",
+		after = { "vim-textobj-user" },
+		setup = function()
+			vim.g.textobj_indent_no_default_key_mappings = 1
+		end,
+		config = function()
+			vim.cmd([[
+				xmap ll <Plug>(textobj-indent-i)
+				omap ll <Plug>(textobj-indent-i)
+				xmap lL <Plug>(textobj-indent-same-i)
+				omap lL <Plug>(textobj-indent-same-i)
+
+				xmap al <Plug>(textobj-indent-a)
+				omap al <Plug>(textobj-indent-a)
+				xmap aL <Plug>(textobj-indent-same-a)
+				omap aL <Plug>(textobj-indent-same-a)
+			]])
+		end,
+	},
+	{
+		"sgur/vim-textobj-parameter",
+		after = { "vim-textobj-user" },
+		setup = function()
+			vim.g.textobj_parameter_no_default_key_mappings = 1
+		end,
+		config = function()
+			vim.cmd([[
+				xmap la <Plug>(textobj-parameter-i)
+				omap la <Plug>(textobj-parameter-i)
+				xmap aa <Plug>(textobj-parameter-a)
+				omap aa <Plug>(textobj-parameter-a)
+			]])
+		end,
+	},
+})
+return misc

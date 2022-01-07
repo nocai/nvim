@@ -283,6 +283,16 @@ end
 -- ui
 return {
 	{
+		"norcalli/nvim-colorizer.lua",
+		event = "VimEnter",
+		cond = function()
+			return vim.g.vscode ~= 1
+		end,
+		config = function()
+			require("colorizer").setup()
+		end,
+	},
+	{
 		"glepnir/dashboard-nvim",
 		cond = function()
 			return vim.g.vscode ~= 1

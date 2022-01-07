@@ -48,7 +48,7 @@ return packer.startup(function(use)
 	use(utils.spce("plugins.common"))
 
 	use(require("plugins.misc"))
-	use(require("plugins.cmp"))
+	use(utils.spce("plugins.cmp"))
 	use(require("plugins.lsp"))
 	use(require("plugins.telescope"))
 	use(require("plugins.tools"))
