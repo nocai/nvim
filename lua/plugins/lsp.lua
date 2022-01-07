@@ -19,7 +19,7 @@ local function lspconfig()
 	-- sumneko_lua
 	server_ext.sumneko_lua = require("plugins.lsp.sumneko_lua")
 	-- jdtls
-	server_ext.jdtls = require("plugins.lsp.jdtls")
+	-- server_ext.jdtls = require("plugins.lsp.jdtls")
 	-- gopls
 	server_ext.gopls = require("plugins.lsp.gopls")
 	-- clangd
@@ -65,6 +65,12 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"mfussenegger/nvim-jdtls",
+		cond = function()
+			return not vim.g.vscode
+		end
 	},
 	-- {
 	-- 	"simrat39/symbols-outline.nvim",
