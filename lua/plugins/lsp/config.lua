@@ -89,7 +89,7 @@ local on_attach = function(client, bufnr)
 		buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 		buf_set_keymap("n", "gs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
 		buf_set_keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-		buf_set_keymap("x", "ga", "<cmd><c-u>lua vim.lsp.buf.code_action()<CR>", opts)
+		buf_set_keymap("v", "ga", "<cmd><c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
 	else
 		buf_set_keymap(
 			"n",
@@ -100,7 +100,8 @@ local on_attach = function(client, bufnr)
 		buf_set_keymap(
 			"v",
 			"ga",
-			[[<cmd>lua require('telescope.builtin').lsp_range_code_actions(require('telescope.themes').get_cursor({}))<CR>]],
+			[[<cmd>Telescope lsp_range_code_actions theme=get_cursor<CR>]],
+			-- [[<cmd>lua require('telescope.builtin').lsp_range_code_actions(require('telescope.themes').get_cursor({}))<CR>]],
 			opts
 		)
 		buf_set_keymap(

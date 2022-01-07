@@ -18,24 +18,22 @@ local function lspconfig()
 	local server_ext = {}
 	-- sumneko_lua
 	server_ext.sumneko_lua = require("plugins.lsp.sumneko_lua")
-	-- jdtls
-	-- server_ext.jdtls = require("plugins.lsp.jdtls")
 	-- gopls
 	server_ext.gopls = require("plugins.lsp.gopls")
 	-- clangd
 	server_ext.clangd = require("plugins.lsp.clangd")
 
-	for lsp, server in pairs(server_ext) do
-		server.on_attach = on_attach
-		server.capabilities = capabilities
-		server.flags = {
+	for lsp, config in pairs(server_ext) do
+		config.on_attach = on_attach
+		config.capabilities = capabilities
+		config.flags = {
 			debounce_text_changes = 150,
 		}
-		lspc[lsp].setup(server)
+		lspc[lsp].setup(config)
 	end
 end
 
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -50,6 +48,7 @@ return {
 		cond = function()
 			return not vim.g.vscode
 		end,
+		ft = { "lua" },
 		after = { "nvim-lspconfig" },
 		requires = { "nvim-lua/plenary.nvim" },
 		config = function()
@@ -60,17 +59,18 @@ return {
 					ls.builtins.formatting.prettier.with({
 						filetypes = { "html", "json", "yaml", "markdown" },
 					}),
-					ls.builtins.diagnostics.eslint,
-					ls.builtins.completion.spell,
+					-- ls.builtins.diagnostics.eslint,
+					-- ls.builtins.completion.spell,
 				},
 			})
 		end,
 	},
 	{
+		-- config, see: ftfplugin/java.lua
 		"mfussenegger/nvim-jdtls",
 		cond = function()
 			return not vim.g.vscode
-		end
+		end,
 	},
 	-- {
 	-- 	"simrat39/symbols-outline.nvim",

@@ -82,7 +82,7 @@ return {
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
-		ft = { "go", "rust" },
+		ft = { "go", "rust", "java" },
 		config = test,
 	},
 	{
@@ -90,6 +90,7 @@ return {
 		cond = function()
 			return vim.g.vscode ~= 1
 		end,
+		fg = { "go" },
 		cmd = "DlvToggleBreakpoint",
 		config = function()
 			vim.cmd([[nmap <leader>bb :DlvToggleBreakpoint<CR>]])

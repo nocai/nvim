@@ -23,7 +23,7 @@ local function nvim_cmp()
 			{ name = "nvim_lsp" },
 			{ name = "buffer" },
 			{ name = "luasnip" },
-			{ name = "nvim_lua" },
+			-- { name = "nvim_lua" },
 		},
 	})
 	-- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
@@ -45,9 +45,6 @@ local function lua_snip()
 		},
 		mapping = {
 			["<Tab>"] = cmp.mapping(function(fallback)
-				-- if is_pairs() then
-				-- 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, true, true), "n", true)
-				-- elseif luasnip.expand_or_jumpable() then
 				if luasnip.expand_or_jumpable() then
 					vim.api.nvim_feedkeys(
 						vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
@@ -59,9 +56,6 @@ local function lua_snip()
 				end
 			end, { "i", "s" }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
-				-- if is_pairs(true) then
-				-- 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, true, true), "n", true)
-				-- elseif luasnip.jumpable(-1) then
 				if luasnip.jumpable(-1) then
 					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "", true)
 				else
@@ -70,8 +64,6 @@ local function lua_snip()
 			end, { "i", "s" }),
 		},
 	})
-
-	require("luasnip.loaders.from_vscode").load()
 end
 
 local function tabout()
@@ -136,6 +128,13 @@ return {
 						after = { "cmp_luasnip", "nvim-cmp" },
 						config = lua_snip,
 					},
+					{
+						"rafamadriz/friendly-snippets",
+						after = { "cmp_luasnip", "nvim-cmp", "LuaSnip" },
+						config = function()
+							require("luasnip.loaders.from_vscode").load()
+						end,
+					},
 				},
 			},
 		},
@@ -150,13 +149,6 @@ return {
 				},
 			})
 		end,
-	},
-	{
-		"rafamadriz/friendly-snippets",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		event = "InsertEnter",
 	},
 	{
 		"abecodes/tabout.nvim",

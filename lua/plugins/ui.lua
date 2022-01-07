@@ -162,6 +162,7 @@ local function lualine()
 end
 
 local function nvim_tree()
+	vim.g.nvim_tree_group_empty = 1
 	vim.g.nvim_tree_highlight_opened_files = 3
 	vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFileToggle<CR>", {
 		noremap = true,
