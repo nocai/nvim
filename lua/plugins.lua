@@ -41,34 +41,11 @@ packer.init({
 	compile_on_sync = true,
 })
 
+local utils = require("utils")
+
 return packer.startup(function(use)
-	use({
-		{ "wbthomason/packer.nvim", event = "VimEnter" },
-		{
-			"kyazdani42/nvim-web-devicons",
-			config = function()
-				require("plugins.devicons")
-			end,
-		},
-		{
-			"nvim-lua/plenary.nvim",
-			cond = function()
-				return vim.g.vscode ~= 1
-			end,
-		},
-		{
-			"nathom/filetype.nvim",
-			cond = function()
-				return vim.g.vscode ~= 1
-			end,
-		},
-		{
-			"nanotee/nvim-lua-guide",
-			cond = function()
-				return vim.g.vscode ~= 1
-			end,
-		},
-	})
+	use({ "wbthomason/packer.nvim", event = "VimEnter" })
+	use(utils.spce("plugins.common"))
 
 	use(require("plugins.misc"))
 	use(require("plugins.cmp"))
