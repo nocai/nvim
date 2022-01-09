@@ -166,14 +166,14 @@ table.insert(misc, {
 		end,
 		config = sandwich,
 	},
-	{
-		"Pocco81/AutoSave.nvim",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		event = "VimEnter",
-		config = autosave_nvim,
-	},
+	-- {
+	-- 	"Pocco81/AutoSave.nvim",
+	-- 	cond = function()
+	-- 		return vim.g.vscode ~= 1
+	-- 	end,
+	-- 	event = "VimEnter",
+	-- 	config = autosave_nvim,
+	-- },
 })
 
 -- textobject

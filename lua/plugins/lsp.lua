@@ -185,38 +185,36 @@ function lsp.lspconfig()
 end
 
 table.insert(lsp, {
-	{
-		"neovim/nvim-lspconfig",
-		cond = function()
-			return not vim.g.vscode
-		end,
-		event = "BufReadPre",
-		config = function()
-			require("plugins.lsp").lspconfig()
-		end,
-	},
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		cond = function()
-			return not vim.g.vscode
-		end,
-		ft = { "lua" },
-		after = { "nvim-lspconfig" },
-		requires = { "nvim-lua/plenary.nvim" },
-		config = function()
-			local ls = require("null-ls")
-			ls.setup({
-				sources = {
-					ls.builtins.formatting.stylua,
-					ls.builtins.formatting.prettier.with({
-						filetypes = { "html", "json", "yaml", "markdown" },
-					}),
-					-- ls.builtins.diagnostics.eslint,
-					-- ls.builtins.completion.spell,
-				},
-			})
-		end,
-	},
+	"neovim/nvim-lspconfig",
+	cond = function()
+		return not vim.g.vscode
+	end,
+	event = "BufReadPre",
+	config = function()
+		require("plugins.lsp").lspconfig()
+	end,
+	-- {
+	-- 	"jose-elias-alvarez/null-ls.nvim",
+	-- 	cond = function()
+	-- 		return not vim.g.vscode
+	-- 	end,
+	-- 	ft = { "lua" },
+	-- 	after = { "nvim-lspconfig" },
+	-- 	requires = { "nvim-lua/plenary.nvim" },
+	-- 	config = function()
+	-- 		local ls = require("null-ls")
+	-- 		ls.setup({
+	-- 			sources = {
+	-- 				ls.builtins.formatting.stylua,
+	-- 				ls.builtins.formatting.prettier.with({
+	-- 					filetypes = { "html", "json", "yaml", "markdown" },
+	-- 				}),
+	-- 				-- ls.builtins.diagnostics.eslint,
+	-- 				-- ls.builtins.completion.spell,
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 })
 
 table.insert(lsp, {
