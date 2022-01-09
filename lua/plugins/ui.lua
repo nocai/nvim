@@ -1,4 +1,107 @@
-local function nvim_befferline()
+-- about ui
+--
+local ui = {}
+
+table.insert(ui, {
+	"norcalli/nvim-colorizer.lua",
+	event = "VimEnter",
+	cond = function()
+		return vim.g.vscode ~= 1
+	end,
+	config = function()
+		require("colorizer").setup()
+	end,
+})
+
+table.insert(ui, {
+	"glepnir/dashboard-nvim",
+	cond = function()
+		return vim.g.vscode ~= 1
+	end,
+	event = "BufWinEnter",
+	config = function()
+		require("plugins.ui").dashboard_nvim()
+	end,
+})
+
+function ui.dashboard_nvim()
+	local g = vim.g
+
+	g.dashboard_disable_at_vimenter = 0
+	g.dashboard_disable_statusline = 0
+
+	g.dashboard_default_executive = "telescope"
+
+	g.dashboard_custom_section = {
+		a = {
+			description = { "  Find File                 <C-E><C-P>" },
+			command = "Telescope find_files",
+		},
+		b = {
+			description = { "  Find Word                 <C-E><C-G>" },
+			command = "Telescope live_grep",
+		},
+		c = {
+			description = { "洛 New File                            " },
+			command = "enew",
+		},
+		d = {
+			description = { "  Recents                             " },
+			command = "Telescope oldfiles",
+		},
+		e = {
+			description = { "  Bookmarks                           " },
+			command = "Telescope marks",
+		},
+	}
+end
+
+-- ui
+table.insert(ui, {
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		-- ft = { "lua" },
+		config = function()
+			require("plugins.ui").indent_blankline()
+		end,
+	},
+	{
+		"kyazdani42/nvim-tree.lua",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		requires = { "kyazdani42/nvim-web-devicons" },
+		config = function()
+			require("plugins.ui").nvim_tree()
+		end,
+	},
+	{
+		"hoob3rt/lualine.nvim",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		event = { "VimEnter" },
+		config = function()
+			require("plugins.ui").lualine()
+		end,
+	},
+	{
+		"akinsho/nvim-bufferline.lua",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		requires = { "kyazdani42/nvim-web-devicons" },
+		event = { "VimEnter" },
+		config = function()
+			require("plugins.ui").nvim_bufferline()
+		end,
+	},
+})
+
+function ui.nvim_bufferline()
 	local colors = {
 		white = "#abb2bf",
 		black = "#1e222a", --  nvim bg
@@ -13,6 +116,13 @@ local function nvim_befferline()
 
 	require("bufferline").setup({
 		options = {
+			indicator_icon = "",
+			diagnostics = "nvim_lsp",
+			diagnostics_indicator = function(count, level, diagnostics_dict, context)
+				local icon = level:match("error") and " " or " "
+				return " " .. icon .. count
+			end,
+			-- separator_style = "thick",
 			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
 		},
 		highlights = {
@@ -75,7 +185,7 @@ local function nvim_befferline()
 	})
 end
 
-local function indent_blankline()
+function ui.indent_blankline()
 	vim.g.indent_blankline_char = "┊"
 	vim.g.indent_blankline_filetype_exclude = { "help", "packer", "nvimtree", "dashboard" }
 	vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile", "packer" }
@@ -84,7 +194,7 @@ local function indent_blankline()
 	vim.g.indent_blankline_show_trailing_blankline_indent = false
 end
 
-local function lualine()
+function ui.lualine()
 	local function lsp()
 		local icon = [[  ]]
 		local msg = "No Active LSP"
@@ -127,14 +237,8 @@ local function lualine()
 		return ""
 	end
 
-	-- local colortheme = vim.nv.ui.theme
-	-- if not colortheme then
-	--   colortheme = "auto"
-	-- end
-
 	require("lualine").setup({
 		options = {
-			-- theme = "gruvbox"
 			theme = vim.nv.ui.theme,
 		},
 		sections = {
@@ -161,7 +265,7 @@ local function lualine()
 	})
 end
 
-local function nvim_tree()
+function ui.nvim_tree()
 	vim.g.nvim_tree_group_empty = 1
 	vim.g.nvim_tree_highlight_opened_files = 3
 	vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFileToggle<CR>", {
@@ -248,89 +352,4 @@ local function nvim_tree()
 	})
 end
 
-local function dashboard_nvim()
-	local g = vim.g
-
-	g.dashboard_disable_at_vimenter = 0
-	g.dashboard_disable_statusline = 0
-
-	g.dashboard_default_executive = "telescope"
-
-	g.dashboard_custom_section = {
-		a = {
-			description = { "  Find File                 <C-E><C-P>" },
-			command = "Telescope find_files",
-		},
-		b = {
-			description = { "  Find Word                 <C-E><C-G>" },
-			command = "Telescope live_grep",
-		},
-		c = {
-			description = { "洛 New File                            " },
-			command = "enew",
-		},
-		d = {
-			description = { "  Recents                             " },
-			command = "Telescope oldfiles",
-		},
-		e = {
-			description = { "  Bookmarks                           " },
-			command = "Telescope marks",
-		},
-	}
-end
-
--- ui
-return {
-	{
-		"norcalli/nvim-colorizer.lua",
-		event = "VimEnter",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		config = function()
-			require("colorizer").setup()
-		end,
-	},
-	{
-		"glepnir/dashboard-nvim",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		event = "BufWinEnter",
-		config = dashboard_nvim,
-	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		-- ft = { "lua" },
-		config = indent_blankline,
-	},
-	{
-		"kyazdani42/nvim-tree.lua",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		requires = { "kyazdani42/nvim-web-devicons" },
-		config = nvim_tree,
-	},
-	{
-		"hoob3rt/lualine.nvim",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		event = { "VimEnter" },
-		config = lualine,
-	},
-	{
-		"akinsho/nvim-bufferline.lua",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		requires = { "kyazdani42/nvim-web-devicons" },
-		event = { "VimEnter" },
-		config = nvim_befferline,
-	},
-}
+return ui
