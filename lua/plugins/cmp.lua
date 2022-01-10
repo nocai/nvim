@@ -58,6 +58,9 @@ table.insert(autoc, {
 			})
 		end,
 	},
+})
+
+table.insert(autoc, {
 	{
 		"windwp/nvim-autopairs",
 		after = "nvim-cmp",
@@ -122,7 +125,7 @@ function autoc.cmp()
 			{ name = "nvim_lsp" },
 			{ name = "buffer" },
 			{ name = "luasnip" },
-			-- { name = "nvim_lua" },
+			{ name = "nvim_lua" },
 		},
 	})
 	-- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])

@@ -41,20 +41,18 @@ packer.init({
 	compile_on_sync = true,
 })
 
-local utils = require("utils")
-
 return packer.startup(function(use)
 	use({ "wbthomason/packer.nvim", event = "VimEnter" })
-	use(utils.spce("plugins.common"))
+	use(require("plugins.commons"))
 
-	use(require("plugins.misc"))
-	use(utils.spce("plugins.cmp"))
 	use(require("plugins.lsp"))
-	use(require("plugins.telescope"))
-	use(require("plugins.tools"))
-	use(require("plugins.treesitter"))
+	use(require("plugins.cmp"))
+
 	use(require("plugins.ui"))
-	-- use(require("plugins.themes"))
+	use(require("plugins.misc"))
+	use(require("plugins.tools"))
+	use(require("plugins.telescope"))
+	use(require("plugins.treesitter"))
 
 	use({
 		"sainnhe/sonokai",
@@ -70,17 +68,6 @@ return packer.startup(function(use)
 			vim.cmd([[colorscheme sonokai]])
 		end,
 	})
-	-- use({
-	-- 	"bluz71/vim-moonfly-colors",
-	-- 	cond = function()
-	-- 		return vim.g.vscode ~= 1
-	-- 	end,
-	-- 	config = function()
-	-- 		vim.g.moonflyCursorColor = 1
-	-- 		vim.cmd([[colorscheme moonfly]])
-	-- 	end,
-	-- })
-
 	-- {
 	-- 	"NvChad/nvim-base16.lua",
 	-- 	after = "packer.nvim",
