@@ -56,7 +56,8 @@ function lsp.on_attach(client, bufnr)
 
 	-- print(vim.inspect(client.resolved_capabilities))
 	if client.resolved_capabilities.code_lens then
-		vim.cmd([[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
+		-- vim.cmd([[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
+		vim.cmd([[autocmd BufEnter,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
 		buf_set_keymap("n", "<leader>lr", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
 	end
 
