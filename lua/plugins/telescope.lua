@@ -66,6 +66,7 @@ table.insert(telescope, {
 		return vim.g.vscode ~= 1
 	end,
 	event = { "VimEnter" },
+	requires = {"nvim-lua/plenary.nvim"},
 	config = function()
 		local actions = require("telescope.actions")
 		require("telescope").setup({
@@ -95,6 +96,50 @@ table.insert(telescope, {
 		require("plugins.telescope").keymap()
 	end,
 })
+
+table.insert(telescope, {
+	"glepnir/dashboard-nvim",
+	cond = function()
+		return vim.g.vscode ~= 1
+	end,
+	-- event = "BufWinEnter",
+	after = { "telescope.nvim" },
+	config = function()
+		require("plugins.telescope").dashboard_nvim()
+	end,
+})
+
+function telescope.dashboard_nvim()
+	local g = vim.g
+
+	g.dashboard_disable_at_vimenter = 0
+	g.dashboard_disable_statusline = 0
+
+	g.dashboard_default_executive = "telescope"
+
+	g.dashboard_custom_section = {
+		a = {
+			description = { "  Find File                 <C-E><C-P>" },
+			command = "Telescope find_files",
+		},
+		b = {
+			description = { "  Find Word                 <C-E><C-G>" },
+			command = "Telescope live_grep",
+		},
+		c = {
+			description = { "洛 New File                            " },
+			command = "enew",
+		},
+		d = {
+			description = { "  Recents                             " },
+			command = "Telescope oldfiles",
+		},
+		e = {
+			description = { "  Bookmarks                           " },
+			command = "Telescope marks",
+		},
+	}
+end
 
 -- telescope extensions
 table.insert(telescope, {

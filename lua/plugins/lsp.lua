@@ -72,15 +72,15 @@ function lsp.on_attach(client, bufnr)
 	end
 
 	-- formatting
+	buf_set_keymap("n", "gq", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 	if client.resolved_capabilities.document_formatting then
-		buf_set_keymap("n", "gq", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 		-- format on save
-		-- if client.resolved_capabilities.document_formatting then
-		-- 	vim.api.nvim_command([[augroup Format]])
-		-- 	vim.api.nvim_command([[autocmd! * <buffer>]])
-		-- 	vim.api.nvim_command([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]])
-		-- 	vim.api.nvim_command([[augroup END]])
-		-- end
+		if client.resolved_capabilities.document_formatting then
+			vim.api.nvim_command([[augroup Format]])
+			vim.api.nvim_command([[autocmd! * <buffer>]])
+			vim.api.nvim_command([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]])
+			vim.api.nvim_command([[augroup END]])
+		end
 	end
 
 	buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)

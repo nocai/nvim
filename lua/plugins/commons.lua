@@ -3,7 +3,6 @@ local commons = {}
 table.insert(commons, {
 	{
 		"nvim-lua/plenary.nvim",
-		event = "BufReadPre",
 		cond = function()
 			return not vim.g.vscode
 		end,

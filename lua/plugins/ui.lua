@@ -13,49 +13,6 @@ table.insert(ui, {
 	end,
 })
 
-table.insert(ui, {
-	"glepnir/dashboard-nvim",
-	cond = function()
-		return vim.g.vscode ~= 1
-	end,
-	event = "BufWinEnter",
-	config = function()
-		require("plugins.ui").dashboard_nvim()
-	end,
-})
-
-function ui.dashboard_nvim()
-	local g = vim.g
-
-	g.dashboard_disable_at_vimenter = 0
-	g.dashboard_disable_statusline = 0
-
-	g.dashboard_default_executive = "telescope"
-
-	g.dashboard_custom_section = {
-		a = {
-			description = { "  Find File                 <C-E><C-P>" },
-			command = "Telescope find_files",
-		},
-		b = {
-			description = { "  Find Word                 <C-E><C-G>" },
-			command = "Telescope live_grep",
-		},
-		c = {
-			description = { "洛 New File                            " },
-			command = "enew",
-		},
-		d = {
-			description = { "  Recents                             " },
-			command = "Telescope oldfiles",
-		},
-		e = {
-			description = { "  Bookmarks                           " },
-			command = "Telescope marks",
-		},
-	}
-end
-
 -- ui
 table.insert(ui, {
 	{
