@@ -158,11 +158,10 @@ local function get_workspace_dir()
 	return env.HOME .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
 end
 
-local on_attach, capabilities = require("plugins.lsp.config")
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
-	on_attach = on_attach,
-	capabilities = capabilities,
+	on_attach = require("plugins.lsp").on_attach,
+	capabilities = require("plugins.lsp").make_capabilities(),
 	-- The command that starts the language server
 	-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
 	cmd = {
