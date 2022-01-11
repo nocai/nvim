@@ -1,14 +1,7 @@
 local utils = {}
 
-function utils.spce(module)
-	local specs = {}
-
-	local ok, _ = pcall(require, module)
-	if not ok then
-		return specs
-	end
-
-	if #specs == 1 then
+function utils.specs(specs)
+	if type(specs) == 'table' and #specs == 1 then
 		return specs[1]
 	end
 	return specs
