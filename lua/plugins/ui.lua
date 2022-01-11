@@ -75,9 +75,12 @@ function ui.nvim_bufferline()
 		options = {
 			indicator_icon = "",
 			diagnostics = "nvim_lsp",
-			diagnostics_indicator = function(count, level, diagnostics_dict, context)
-				local icon = level:match("error") and " " or " "
-				return " " .. icon .. count
+			diagnostics_indicator = function(count, level, _, _)
+				if vim.nv.diagnostics.enable then
+					local icon = level:match("error") and vim.nv.diagnostics.icons.error or vim.nv.diagnostics.icons.warning
+					return " " .. icon .. " " .. count
+				end
+				return count
 			end,
 			-- separator_style = "thick",
 			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
