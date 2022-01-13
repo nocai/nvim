@@ -77,10 +77,10 @@ function ui.nvim_bufferline()
 			diagnostics = "nvim_lsp",
 			diagnostics_indicator = function(count, level, _, _)
 				if vim.nv.diagnostics.enable then
-					local icon = level:match("error") and vim.nv.diagnostics.icons.error or vim.nv.diagnostics.icons.warning
-					return " " .. icon .. " " .. count
+					local icon = level:match("error") and vim.nv.diagnostics.icons.error or vim.nv.diagnostics.icons.hint
+					return icon .. " " .. count
 				end
-				return count
+				return " " .. count
 			end,
 			-- separator_style = "thick",
 			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
@@ -131,7 +131,6 @@ function ui.nvim_bufferline()
 				guifg = colors.green,
 			},
 			-- close buttons
-
 			close_button = {
 				guifg = colors.light_grey,
 			},

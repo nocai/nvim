@@ -3,7 +3,6 @@ vim.g.neovide_cursor_vfx_mode = "railgun"
 
 vim.nv = {
 	user_home = os.getenv("HOME"),
-	packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim",
 	home = os.getenv("HOME") .. "/.config/nvim",
 
 	is_mac = jit.os == "OSX",
@@ -22,7 +21,7 @@ vim.nv = {
 
 	ui = {
 		theme = "sonokai",
-		italic_comments = true,
+		italic = true,
 		transparency = false,
 	},
 }

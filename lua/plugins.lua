@@ -3,16 +3,18 @@ local ok, _ = pcall(vim.cmd, "packadd packer.nvim")
 local present, packer = pcall(require, "packer")
 
 if not present or not ok then
-	print("Cloning packer...")
+	local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+
 	-- remove the dir before cloning
-	vim.fn.delete(vim.nv.packer_path, "rf")
+	vim.fn.delete(packer_path, "rf")
+	print("Cloning packer...")
 	vim.fn.system({
 		"git",
 		"clone",
 		"https://ghproxy.com/https://github.com/wbthomason/packer.nvim",
 		"--depth",
 		"20",
-		vim.nv.packer_path,
+		packer_path,
 	})
 
 	vim.cmd("packadd packer.nvim")
@@ -21,7 +23,7 @@ if not present or not ok then
 	if present then
 		print("Packer cloned successfully.")
 	else
-		error("Couldn't clone packer !\nPacker path: " .. vim.nv.packer_path .. "\n" .. packer)
+		error("Couldn't clone packer !\nPacker path: " .. packer_path .. "\n" .. packer)
 	end
 end
 
@@ -62,9 +64,19 @@ return packer.startup(function(use)
 			return vim.g.vscode ~= 1
 		end,
 		setup = function()
-			-- vim.g.sonokai_style = "andromeda"
-			vim.g.sonokai_enable_italic = 1
-			vim.g.sonokai_disable_italic_comment = 1
+			-- Available values: `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+			-- Default value: `'default'`
+			vim.g.sonokai_style = "shusia"
+			-- Available values: `'auto'`, `'red'`, `'orange'`, `'yellow'`, `'green'`, `'blue'`, `'purple'`
+			-- Default value: `'auto'`
+			vim.g.sonokai_cursor = "red"
+			if vim.nv.ui.italic then
+				vim.g.sonokai_enable_italic = 1
+				vim.g.sonokai_disable_italic_comment = 1
+			end
+			if vim.nv.ui.transparency then
+				vim.g.sonokai_transparent_background = 1
+			end
 		end,
 		config = function()
 			vim.cmd([[colorscheme sonokai]])

@@ -27,6 +27,10 @@ table.insert(autoc, {
 				"saadparwaiz1/cmp_luasnip",
 				after = "nvim-cmp",
 			},
+			{
+				"hrsh7th/cmp-cmdline",
+				after = "nvim-cmp",
+			},
 		},
 	},
 	{
@@ -120,14 +124,32 @@ function autoc.cmp()
 			}),
 			["<CR>"] = cmp.mapping.confirm({ select = true }),
 		},
-		-- You should specify your *installed* sources.
-		sources = {
+		sources = cmp.config.sources({
 			{ name = "nvim_lsp" },
+			-- { name = 'vsnip' }, -- For vsnip users.
+			{ name = "luasnip" }, -- For luasnip users.
+			-- { name = 'ultisnips' }, -- For ultisnips users.
+			-- { name = 'snippy' }, -- For snippy users.
+		}, {
 			{ name = "buffer" },
-			{ name = "luasnip" },
-			{ name = "nvim_lua" },
+		}),
+	})
+
+	-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+	cmp.setup.cmdline("/", {
+		sources = {
+			{ name = "buffer" },
 		},
 	})
+
+	-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+	-- cmp.setup.cmdline(":", {
+	-- 	sources = cmp.config.sources({
+	-- 		{ name = "path" },
+	-- 	}, {
+	-- 		{ name = "cmdline" },
+	-- 	}),
+	-- })
 	-- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
 end
 
