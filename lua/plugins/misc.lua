@@ -38,7 +38,7 @@ local function toggleterm()
 				return vim.o.columns * 0.4
 			end
 		end,
-		open_mapping = [[<C-Space>]], -- mapping to <C-`>
+		open_mapping = [[<C-\>]], -- mapping to <C-`>
 		hide_numbers = true, -- hide the number column in toggleterm buffers
 		shade_filetypes = {},
 		shade_terminals = true,
