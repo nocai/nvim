@@ -133,14 +133,16 @@ nnoremap <leader>lf <cmd>luafile %<cr>
 
 
 if exists('g:vscode')
+nnoremap ga <Cmd>call VSCodeNotify('editor.action.quickFix')<CR>
+nnoremap gq <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
+nnoremap <leader><leader> <Cmd>call VSCodeNotify('workbench.files.action.showActiveFileInExplorer')<CR>
+
 nnoremap gn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 nnoremap gy <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
 nnoremap gY <Cmd>call VSCodeNotify('editor.action.peekTypeDefinition')<CR>
 nnoremap gi <Cmd>call VSCodeNotify('editor.action.goToImplementation')<CR>
 nnoremap gI <Cmd>call VSCodeNotify('editor.action.peekImplementation')<CR>
 nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
-nnoremap gq <Cmd>call VSCodeNotify('editor.action.organizeImports')<CR>
-nnoremap <leader><leader> <Cmd>call VSCodeNotify('workbench.files.action.showActiveFileInExplorer')<CR>
 
 nnoremap E <Cmd>call VSCodeNotify('editor.action.showHover')<CR>
 
