@@ -135,6 +135,7 @@ nnoremap <leader>lf <cmd>luafile %<cr>
 if exists('g:vscode')
 nnoremap ga <Cmd>call VSCodeNotify('editor.action.quickFix')<CR>
 nnoremap gq <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
+nnoremap go <Cmd>call VSCodeNotify('editor.action.organizeImports')<CR>
 nnoremap <leader><leader> <Cmd>call VSCodeNotify('workbench.files.action.showActiveFileInExplorer')<CR>
 
 nnoremap gn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
