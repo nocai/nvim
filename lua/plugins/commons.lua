@@ -9,12 +9,6 @@ table.insert(commons, {
 	},
 
 	{
-		"nathom/filetype.nvim",
-		cond = function()
-			return not vim.g.vscode
-		end,
-	},
-	{
 		"nanotee/nvim-lua-guide",
 		cond = function()
 			return not vim.g.vscode
