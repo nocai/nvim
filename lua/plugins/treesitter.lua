@@ -6,13 +6,12 @@ table.insert(treesitter, {
 	cond = function()
 		return not vim.g.vscode
 	end,
-	event = { "BufRead" },
-	run = ":TSUpdate",
+	event = { "BufRead", "BufNewFile" },
+	-- run = ":TSUpdate",
 	config = function()
 		-- :TSInstall
 		require("nvim-treesitter.configs").setup({
-			ensure_installed = { "lua" },
-			indent = { enable = true },
+			ensure_installed = { "lua", "go" },
 			highlight = { enable = true, use_languagetree = true },
 			incremental_selection = {
 				enable = false,
