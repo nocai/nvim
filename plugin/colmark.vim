@@ -17,9 +17,10 @@ nnoremap n          gj
 nnoremap gn         gj
 nnoremap N          J
 nnoremap gN         gJ
-nnoremap <C-N>      <C-J>
-nnoremap <C-W>n     <C-W>j
-nnoremap <C-W><C-N> <C-W><C-J>
+nnoremap <C-n>      <C-j>
+nnoremap <C-w>n     <C-w>j
+nnoremap <C-w><C-n> <C-w><C-j>
+nnoremap <C-n>		<C-w>j
 
 xnoremap n j
 xnoremap N J
@@ -32,9 +33,9 @@ onoremap N J
 nnoremap j          e
 nnoremap J          E
 nnoremap gj         ge
-nnoremap <C-J>      <C-E>
-nnoremap <C-W>j     <C-W>e
-nnoremap <C-W><C-J> <C-W><C-E>
+nnoremap <C-j>      <C-e>
+nnoremap <C-w>j     <C-w>e
+nnoremap <C-w><C-j> <C-w><C-e>
 
 xnoremap j  e
 xnoremap J  E
@@ -49,9 +50,10 @@ onoremap J E
 nnoremap e          gk
 nnoremap ge         gk
 nnoremap E          K
-nnoremap <C-E>      <C-K>
-nnoremap <C-W>e     <C-W>k
-nnoremap <C-W><C-E> <C-W><C-K>
+nnoremap <C-e>      <C-k>
+nnoremap <C-w>e     <C-w>k
+nnoremap <C-w><C-e> <C-w><C-k>
+nnoremap <C-e>		<C-w>k
 
 xnoremap e k
 xnoremap E K
@@ -64,7 +66,7 @@ onoremap E K
 nnoremap k          n
 nnoremap K          N
 nnoremap gk         gn
-nnoremap <C-K>      <C-N>
+" nnoremap <C-K>      <C-N>
 nnoremap <C-W>k     <C-W>n
 nnoremap <C-W><C-K> <C-W><C-N>
 
@@ -84,6 +86,7 @@ nnoremap gI         gL
 nnoremap <C-I>      <C-L>
 nnoremap <C-W>i     <C-W>l
 nnoremap <C-W><C-I> <C-W><C-L>
+nnoremap <C-i>		<C-w>l
 
 xnoremap i l
 xnoremap I L
@@ -107,6 +110,8 @@ xnoremap L I
 onoremap l i
 onoremap L I
 " }}}
+
+nnoremap <C-h> <C-w>h
 
 " {{{Resize splits with arrow keys
 noremap <silent><up>    :res +5<CR>

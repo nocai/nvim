@@ -1,59 +1,59 @@
 local telescope = {}
 
 function telescope.keymap()
-	vim.api.nvim_set_keymap("n", "<C-E><C-E>", [[<cmd>Telescope<CR>]], { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "<C-k><C-k>", [[<cmd>Telescope<CR>]], { noremap = true, silent = true })
 
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E>p",
+		"<C-k>p",
 		[[<cmd>lua require('telescope.builtin').find_files({})<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E><C-p>",
+		"<C-k><C-p>",
 		[[<cmd>lua require('telescope.builtin').find_files({})<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E>g",
+		"<C-k>g",
 		[[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E><C-g>",
+		"<C-k><C-g>",
 		[[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E>b",
+		"<C-k>b",
 		[[<cmd>lua require('telescope.builtin').buffers()<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E><C-b>",
+		"<C-k><C-b>",
 		[[<cmd>lua require('telescope.builtin').buffers()<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E>h",
+		"<C-k>h",
 		[[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E><C-h>",
+		"<C-k><C-h>",
 		[[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_set_keymap(
 		"n",
-		"<C-E><C-R>",
+		"<C-k><C-r>",
 		[[<cmd>lua require("telescope.builtin").resume()<CR>]],
 		{ noremap = true, silent = true }
 	)
@@ -71,7 +71,7 @@ table.insert(telescope, {
 		local actions = require("telescope.actions")
 		require("telescope").setup({
 			defaults = {
-				prompt_prefix = "  ",
+				prompt_prefix = "   ",
 				previewers = true,
 				mappings = {
 					i = {
