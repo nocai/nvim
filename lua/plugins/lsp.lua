@@ -232,6 +232,7 @@ table.insert(lsp, {
 table.insert(lsp, {
 	-- config, see: ftplugin/java.lua
 	"mfussenegger/nvim-jdtls",
+	ft = { "java" },
 	cond = function()
 		return not vim.g.vscode
 	end,

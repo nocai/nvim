@@ -11,7 +11,8 @@ noremap <Space> <Nop>
 let mapleader = ' '
 let maplocalleader = ' '
 
-" nN => jJ {{{
+" nN => jJ 
+" {{{
 " nnoremap n j
 nnoremap n          gj
 nnoremap gn         gj
@@ -20,7 +21,6 @@ nnoremap gN         gJ
 nnoremap <C-n>      <C-j>
 nnoremap <C-w>n     <C-w>j
 nnoremap <C-w><C-n> <C-w><C-j>
-nnoremap <C-n>		<C-w>j
 
 xnoremap n j
 xnoremap N J
@@ -29,7 +29,8 @@ onoremap n j
 onoremap N J
 " }}}
 
-" jJ => eE {{{
+" jJ => eE 
+" {{{
 nnoremap j          e
 nnoremap J          E
 nnoremap gj         ge
@@ -45,7 +46,8 @@ onoremap j e
 onoremap J E
 " }}}
 
-" eE => kK {{{
+" eE => kK 
+" {{{
 " nnoremap e k
 nnoremap e          gk
 nnoremap ge         gk
@@ -53,7 +55,6 @@ nnoremap E          K
 nnoremap <C-e>      <C-k>
 nnoremap <C-w>e     <C-w>k
 nnoremap <C-w><C-e> <C-w><C-k>
-nnoremap <C-e>		<C-w>k
 
 xnoremap e k
 xnoremap E K
@@ -62,13 +63,14 @@ onoremap e k
 onoremap E K
 " }}}
 
-" kK => nN {{{
+" kK => nN 
+" {{{
 nnoremap k          n
 nnoremap K          N
 nnoremap gk         gn
 " nnoremap <C-K>      <C-N>
-nnoremap <C-W>k     <C-W>n
-nnoremap <C-W><C-K> <C-W><C-N>
+nnoremap <C-w>k     <C-w>n
+nnoremap <C-w><C-k> <C-w><C-n>
 
 xnoremap k  n
 xnoremap K  N
@@ -78,15 +80,15 @@ onoremap k n
 onoremap K N
 " }}}
 
-" iL => lL {{{
+" iL => lL 
+" {{{
 nnoremap i          l
 nnoremap gi         gl
 nnoremap I          L
 nnoremap gI         gL
-nnoremap <C-I>      <C-L>
-nnoremap <C-W>i     <C-W>l
-nnoremap <C-W><C-I> <C-W><C-L>
-nnoremap <C-i>		<C-w>l
+nnoremap <C-i>      <C-l>
+nnoremap <C-w>i     <C-w>l
+nnoremap <C-w><C-i> <C-w><C-l>
 
 xnoremap i l
 xnoremap I L
@@ -95,14 +97,15 @@ onoremap i l
 onoremap I L
 " }}}
 
-" lL => iI {{{
+" lL => iI 
+" {{{
 nnoremap l          i
 nnoremap gl         gi
 nnoremap L          I
 nnoremap gL         gI
-nnoremap <C-L>      <C-I>
-nnoremap <C-W>l     <C-W>i
-nnoremap <C-W><C-L> <C-W><C-I>
+nnoremap <C-l>      <C-i>
+nnoremap <C-w>l     <C-w>i
+nnoremap <C-w><C-L> <C-w><C-i>
 
 xnoremap l i
 xnoremap L I
@@ -111,9 +114,17 @@ onoremap l i
 onoremap L I
 " }}}
 
-nnoremap <C-h> <C-w>h
+" terminal mode
+" {{{
+tnoremap <Esc> <C-\><C-n>
+tnoremap <M-n> <C-\><C-n><C-w>J
+tnoremap <M-e> <C-\><C-n><C-w>K
+tnoremap <M-h> <C-\><C-n><C-w>H
+tnoremap <M-i> <C-\><C-n><C-w>L
+" }}}
 
-" {{{Resize splits with arrow keys
+" Resize splits with arrow keys
+" {{{
 noremap <silent><up>    :res +5<CR>
 noremap <silent><down>  :res -5<CR>
 noremap <silent><left>  :vertical resize-5<CR>
@@ -121,27 +132,22 @@ noremap <silent><right> :vertical resize+5<CR>
 " }}}
 
 " buffers
+" {{{
 nnoremap ]b :bnext<CR>
 nnoremap ]B :blast<CR>
 nnoremap [b :bprevious<CR>
 nnoremap [B :bfirst<CR>
+" }}}
 
-" terminal mode
-tnoremap <Esc> <C-\><C-N>
-tnoremap <M-N> <C-\><C-N><C-W>J
-tnoremap <M-E> <C-\><C-N><C-W>K
-tnoremap <M-H> <C-\><C-N><C-W>H
-tnoremap <M-I> <C-\><C-N><C-W>L
-
-nnoremap <c-s>      <cmd>wall<cr>
+nnoremap <C-s>      <cmd>wall<cr>
 nnoremap <leader>lf <cmd>luafile %<cr>
 
-
 if exists('g:vscode')
+nnoremap <leader><leader> <Cmd>call VSCodeNotify('workbench.files.action.showActiveFileInExplorer')<CR>
+
 nnoremap ga <Cmd>call VSCodeNotify('editor.action.quickFix')<CR>
 nnoremap gq <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 nnoremap go <Cmd>call VSCodeNotify('editor.action.organizeImports')<CR>
-nnoremap <leader><leader> <Cmd>call VSCodeNotify('workbench.files.action.showActiveFileInExplorer')<CR>
 
 nnoremap gn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 nnoremap gy <Cmd>call VSCodeNotify('editor.action.goToTypeDefinition')<CR>
