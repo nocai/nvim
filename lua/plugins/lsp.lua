@@ -9,12 +9,11 @@ lspSymbol("Hint", vim.nv.diagnostics.icons.hint)
 lspSymbol("Warn", vim.nv.diagnostics.icons.warning)
 
 vim.diagnostic.config({
-	virtual_text = {
-		prefix = "",
-		spacing = 0,
-	},
-	signs = true,
-	underline = true,
+	-- virtual_text = {
+	-- 	prefix = "",
+	-- 	spacing = 0,
+	-- },
+	-- signs = true,
 	update_in_insert = false,
 })
 
