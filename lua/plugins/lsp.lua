@@ -87,7 +87,8 @@ function lsp.on_attach(client, bufnr)
 	buf_set_keymap("n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 	buf_set_keymap("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
-	buf_set_keymap("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	-- mapping: K => E
+	buf_set_keymap("n", "E", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 
 	buf_set_keymap("n", "<leader>d", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	buf_set_keymap("n", "<leader>D", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
