@@ -58,30 +58,6 @@ return packer.startup(function(use)
 	use(utils.specs(require("plugins.telescope")))
 	use(utils.specs(require("plugins.treesitter")))
 
-	use({
-		"sainnhe/sonokai",
-		cond = function()
-			return vim.g.vscode ~= 1
-		end,
-		setup = function()
-			-- Available values: `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
-			-- Default value: `'default'`
-			vim.g.sonokai_style = "shusia"
-			-- Available values: `'auto'`, `'red'`, `'orange'`, `'yellow'`, `'green'`, `'blue'`, `'purple'`
-			-- Default value: `'auto'`
-			vim.g.sonokai_cursor = "red"
-			if vim.nv.ui.italic then
-				vim.g.sonokai_enable_italic = 1
-				vim.g.sonokai_disable_italic_comment = 1
-			end
-			if vim.nv.ui.transparency then
-				vim.g.sonokai_transparent_background = 1
-			end
-		end,
-		config = function()
-			vim.cmd([[colorscheme sonokai]])
-		end,
-	})
 	-- {
 	-- 	"NvChad/nvim-base16.lua",
 	-- 	after = "packer.nvim",

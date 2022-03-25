@@ -37,12 +37,6 @@ table.insert(autoc, {
 		"L3MON4D3/LuaSnip",
 		after = "nvim-cmp",
 		config = function()
-			local luasnip = require("luasnip")
-			luasnip.config.set_config({
-				history = true,
-				updateevents = "TextChanged,TextChangedI",
-			})
-
 			require("plugins.cmp").luasnip()
 			require("luasnip.loaders.from_vscode").load()
 		end,
@@ -114,6 +108,8 @@ function autoc.cmp()
 		-- You must set mapping.
 		mapping = {
 			["<C-n>"] = cmp.mapping.select_next_item(),
+			["<C-k>"] = cmp.mapping.select_next_item(),
+			["<C-e>"] = cmp.mapping.select_prev_item(),
 			["<C-p>"] = cmp.mapping.select_prev_item(),
 			["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 			["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),

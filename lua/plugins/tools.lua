@@ -103,11 +103,10 @@ table.insert(tools, {
 	},
 })
 
-
 table.insert(tools, {
 	"npxbr/glow.nvim",
 	cond = function()
-		return vim.g.vscode ~= 1
+		return not vim.g.vscode
 	end,
 	run = "GlowInstall",
 	cmd = "Glow",

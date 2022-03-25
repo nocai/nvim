@@ -3,10 +3,31 @@
 local ui = {}
 
 table.insert(ui, {
+	"sainnhe/sonokai",
+	cond = function()
+		return not vim.g.vscode
+	end,
+	setup = function()
+		-- Available values: `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+		-- Default value: `'default'`
+		vim.g.sonokai_style = "shusia"
+		-- Available values: `'auto'`, `'red'`, `'orange'`, `'yellow'`, `'green'`, `'blue'`, `'purple'`
+		-- Default value: `'auto'`
+		vim.g.sonokai_cursor = "red"
+		vim.g.sonokai_enable_italic = 1
+		vim.g.sonokai_disable_italic_comment = 1
+		-- vim.g.sonokai_transparent_background = 1
+	end,
+	config = function()
+		vim.cmd([[colorscheme sonokai]])
+	end,
+})
+
+table.insert(ui, {
 	"norcalli/nvim-colorizer.lua",
 	event = "VimEnter",
 	cond = function()
-		return vim.g.vscode ~= 1
+		return not vim.g.vscode
 	end,
 	config = function()
 		require("colorizer").setup()
@@ -53,27 +74,15 @@ table.insert(ui, {
 		requires = { "kyazdani42/nvim-web-devicons" },
 		event = { "VimEnter" },
 		config = function()
-			require("plugins.ui").nvim_bufferline()
+			require("plugins.ui").bufferline()
 		end,
 	},
 })
 
-function ui.nvim_bufferline()
-	local colors = {
-		white = "#abb2bf",
-		black = "#1e222a", --  nvim bg
-		black2 = "#252931",
-		grey_fg = "#565c64",
-		light_grey = "#6f737b",
-		red = "#d47d85",
-		green = "#A3BE8C",
-		lightbg = "#2d3139",
-		lightbg2 = "#262a32",
-	}
-
+function ui.bufferline()
 	require("bufferline").setup({
 		options = {
-			indicator_icon = "",
+			-- indicator_icon = "",
 			diagnostics = "nvim_lsp",
 			diagnostics_indicator = function(count, level, _, _)
 				if vim.nv.diagnostics.enable then
@@ -82,64 +91,7 @@ function ui.nvim_bufferline()
 				end
 				return " " .. count
 			end,
-			-- separator_style = "thick",
 			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
-		},
-		highlights = {
-			fill = {
-				guifg = colors.grey_fg,
-			},
-			-- buffers
-			buffer_visible = {
-				guifg = colors.light_grey,
-			},
-			buffer_selected = {
-				guifg = colors.white,
-				gui = "bold",
-			},
-			-- tabs
-			tab = {
-				guifg = colors.light_grey,
-			},
-			tab_selected = {
-				guifg = colors.black2,
-			},
-			tab_close = {
-				guifg = colors.red,
-			},
-			indicator_selected = {
-				guifg = colors.black,
-			},
-			-- separators
-			separator = {
-				guifg = colors.black2,
-			},
-			separator_visible = {
-				guifg = colors.black2,
-			},
-			separator_selected = {
-				guifg = colors.black2,
-			},
-			-- modified
-			modified = {
-				guifg = colors.red,
-			},
-			modified_visible = {
-				guifg = colors.red,
-			},
-			modified_selected = {
-				guifg = colors.green,
-			},
-			-- close buttons
-			close_button = {
-				guifg = colors.light_grey,
-			},
-			close_button_visible = {
-				guifg = colors.light_grey,
-			},
-			close_button_selected = {
-				guifg = colors.red,
-			},
 		},
 	})
 end
@@ -198,7 +150,7 @@ function ui.lualine()
 
 	require("lualine").setup({
 		options = {
-			theme = vim.nv.ui.theme,
+			theme = "sonokai",
 		},
 		sections = {
 			lualine_a = { "mode" },
@@ -227,7 +179,11 @@ end
 function ui.nvim_tree()
 	vim.g.nvim_tree_group_empty = 1
 	vim.g.nvim_tree_highlight_opened_files = 3
-	vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFileToggle<CR>", {
+	vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFile<CR>", {
+		noremap = true,
+		silent = true,
+	})
+	vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>NvimTreeClose<CR>", {
 		noremap = true,
 		silent = true,
 	})

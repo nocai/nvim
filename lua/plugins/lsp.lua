@@ -88,8 +88,8 @@ function lsp.on_attach(client, bufnr)
 	buf_set_keymap("n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 	buf_set_keymap("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
-	buf_set_keymap("n", "E", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	buf_set_keymap("v", "<C-e>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+	buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	buf_set_keymap("v", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
 	buf_set_keymap("n", "<leader>d", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	buf_set_keymap("n", "<leader>D", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
@@ -204,54 +204,38 @@ table.insert(lsp, {
 			require("plugins.lsp").lspconfig()
 		end,
 	},
+	-- {
+	-- 	"jose-elias-alvarez/null-ls.nvim",
+	-- 	cond = function()
+	-- 		return not vim.g.vscode
+	-- 	end,
+	-- 	ft = { "lua" },
+	-- 	after = { "nvim-lspconfig" },
+	-- 	requires = { "nvim-lua/plenary.nvim" },
+	-- 	config = function()
+	-- 		local ls = require("null-ls")
+	-- 		ls.setup({
+	-- 			sources = {
+	-- 				ls.builtins.formatting.stylua,
+	-- 				ls.builtins.formatting.prettier.with({
+	-- 					filetypes = { "html", "json", "yaml", "markdown" },
+	-- 				}),
+	-- 				-- ls.builtins.diagnostics.eslint,
+	-- 				-- ls.builtins.completion.spell,
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
+	-- or https://github.com/ckipp01/stylua-nvim
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		-- config, see: ftplugin/java.lua
+		"mfussenegger/nvim-jdtls",
+		ft = { "java" },
 		cond = function()
 			return not vim.g.vscode
 		end,
-		ft = { "lua" },
-		after = { "nvim-lspconfig" },
-		requires = { "nvim-lua/plenary.nvim" },
-		config = function()
-			local ls = require("null-ls")
-			ls.setup({
-				sources = {
-					ls.builtins.formatting.stylua,
-					ls.builtins.formatting.prettier.with({
-						filetypes = { "html", "json", "yaml", "markdown" },
-					}),
-					-- ls.builtins.diagnostics.eslint,
-					-- ls.builtins.completion.spell,
-				},
-			})
-		end,
 	},
-	-- or https://github.com/ckipp01/stylua-nvim
-})
-
-table.insert(lsp, {
-	-- config, see: ftplugin/java.lua
-	"mfussenegger/nvim-jdtls",
-	ft = { "java" },
-	cond = function()
-		return not vim.g.vscode
-	end,
 })
 
 return lsp
 
--- {
--- 	"simrat39/symbols-outline.nvim",
--- 	cond = function()
--- 		return vim.g.vscode ~= 1
--- 	end,
--- 	keys = "gO",
--- 	after = { "nvim-lspconfig" },
--- 	requires = { "neovim/nvim-lspconfig" },
--- 	config = function()
--- 		vim.g.symbols_outline = {
--- 			auto_preview = false,
--- 		}
--- 		vim.api.nvim_set_keymap("n", "gO", "<cmd>SymbolsOutline<CR>", { noremap = true, silent = true })
--- 	end,
--- },

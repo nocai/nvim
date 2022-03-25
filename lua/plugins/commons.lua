@@ -21,13 +21,15 @@ table.insert(commons, {
 			return not vim.g.vscode
 		end,
 	},
-})
-
-table.insert(commons, {
-	"kyazdani42/nvim-web-devicons",
-	config = function()
-		require("plugins.commons").devicons()
-	end,
+	{
+		"kyazdani42/nvim-web-devicons",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		config = function()
+			require("plugins.commons").devicons()
+		end,
+	},
 })
 
 function commons.devicons()
