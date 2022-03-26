@@ -58,12 +58,12 @@ return packer.startup(function(use)
 	use(utils.specs(require("plugins.telescope")))
 	use(utils.specs(require("plugins.treesitter")))
 
-	-- {
+	-- use({
 	-- 	"NvChad/nvim-base16.lua",
 	-- 	after = "packer.nvim",
 	-- 	config = function()
 	-- 		local base16 = require("base16")
 	-- 		base16(base16.themes("gruvbox"), true)
 	-- 	end,
-	-- },
+	-- })
 end)

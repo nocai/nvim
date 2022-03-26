@@ -7,7 +7,7 @@
 "     e
 "     v
 
-noremap <Space> <Nop>
+noremap <space> <nop>
 let mapleader = ' '
 let maplocalleader = ' '
 
@@ -143,7 +143,7 @@ nnoremap <C-s>      <cmd>wall<cr>
 nnoremap <leader>lf <cmd>luafile %<cr>
 
 if exists('g:vscode')
-nnoremap <leader><leader> <Cmd>call VSCodeNotify('workbench.files.action.showActiveFileInExplorer')<CR>
+nnoremap <space><space> <Cmd>call VSCodeNotify('workbench.files.action.showActiveFileInExplorer')<CR>
 
 nnoremap ga <Cmd>call VSCodeNotify('editor.action.quickFix')<CR>
 nnoremap gq <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
