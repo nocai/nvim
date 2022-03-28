@@ -46,9 +46,7 @@ table.insert(autoc, {
 	},
 	{
 		"L3MON4D3/LuaSnip",
-		cond = function()
-			return not vim.g.vscode
-		end,
+		after = "nvim-cmp",
 		config = function()
 			require("luasnip.config").setup({
 				region_check_events = "InsertEnter",
@@ -59,6 +57,7 @@ table.insert(autoc, {
 		end,
 		requires = {
 			"rafamadriz/friendly-snippets",
+			after = "nvim-cmp",
 		},
 	},
 })
