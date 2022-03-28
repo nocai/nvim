@@ -6,7 +6,7 @@ table.insert(treesitter, {
 	cond = function()
 		return not vim.g.vscode
 	end,
-	event = { "BufRead", "BufNewFile" },
+	-- event = { "BufRead", "BufNewFile" },
 	-- run = ":TSUpdate",
 	config = function()
 		-- :TSInstall

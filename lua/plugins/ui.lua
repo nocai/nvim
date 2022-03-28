@@ -16,7 +16,7 @@ table.insert(ui, {
 		vim.g.sonokai_cursor = "red"
 		vim.g.sonokai_enable_italic = 1
 		vim.g.sonokai_disable_italic_comment = 1
-		-- vim.g.sonokai_transparent_background = 1
+		vim.g.sonokai_transparent_background = 1
 	end,
 	config = function()
 		vim.cmd([[colorscheme sonokai]])
@@ -189,18 +189,6 @@ function ui.nvim_tree()
 	})
 	local tree_cb = require("nvim-tree.config").nvim_tree_callback
 	require("nvim-tree").setup({
-		open_on_setup = true,
-		auto_close = true,
-		disable_netrw = true,
-		hijack_netrw = true,
-		ignore_ft_on_setup = {},
-		open_on_tab = false,
-		hijack_cursor = true,
-		update_cwd = false,
-		update_to_buf_dir = {
-			enable = false,
-			auto_open = true,
-		},
 		diagnostics = {
 			enable = vim.nv.diagnostics.enable,
 			show_on_dirs = vim.nv.diagnostics.enable,
@@ -211,21 +199,7 @@ function ui.nvim_tree()
 				error = vim.nv.diagnostics.icons.error,
 			},
 		},
-		update_focused_file = {
-			enable = false,
-			update_cwd = true,
-			ignore_list = {},
-		},
-		system_open = {
-			cmd = nil,
-			args = {},
-		},
-		filters = {
-			dotfiles = false,
-			custom = {},
-		},
 		view = {
-			auto_resize = true,
 			mappings = {
 				custom_only = true,
 				list = {
@@ -265,6 +239,8 @@ function ui.nvim_tree()
 			},
 		},
 	})
+	-- auto close last windows in the tab
+	vim.cmd([[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]])
 end
 
 return ui

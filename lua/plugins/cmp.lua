@@ -31,30 +31,35 @@ table.insert(autoc, {
 				"hrsh7th/cmp-cmdline",
 				after = "nvim-cmp",
 			},
+			{
+				"onsails/lspkind-nvim",
+				after = "nvim-cmp",
+				config = function()
+					require("cmp").setup({
+						formatting = {
+							format = require("lspkind").cmp_format({ with_text = true, maxwidth = 25 }),
+						},
+					})
+				end,
+			},
 		},
 	},
 	{
 		"L3MON4D3/LuaSnip",
-		after = "nvim-cmp",
-		config = function()
-			require("plugins.cmp").luasnip()
-			require("luasnip.loaders.from_vscode").load()
+		cond = function()
+			return not vim.g.vscode
 		end,
-	},
-	{
-		"rafamadriz/friendly-snippets",
-		after = "nvim-cmp",
-	},
-	{
-		"onsails/lspkind-nvim",
-		after = "nvim-cmp",
 		config = function()
-			require("cmp").setup({
-				formatting = {
-					format = require("lspkind").cmp_format({ with_text = true, maxwidth = 25 }),
-				},
+			require("luasnip.config").setup({
+				region_check_events = "InsertEnter",
 			})
+			require("luasnip.loaders.from_vscode").load()
+
+			require("plugins.cmp").luasnip()
 		end,
+		requires = {
+			"rafamadriz/friendly-snippets",
+		},
 	},
 })
 
@@ -102,9 +107,9 @@ function autoc.cmp()
 	local cmp = require("cmp")
 	cmp.setup({
 		-- preselect = cmp.PreselectMode.None,
-		documentation = {
-			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-		},
+		-- documentation = {
+		-- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		-- },
 		-- completion = {
 		--   keyword_length = 3
 		-- },
@@ -153,7 +158,11 @@ function autoc.cmp()
 end
 
 function autoc.luasnip()
-	local cmp = require("cmp")
+	local ok, cmp = pcall(require, "cmp")
+	if not ok then
+		return
+	end
+
 	cmp.setup({
 		snippet = {
 			expand = function(args)
