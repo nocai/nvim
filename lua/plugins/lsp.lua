@@ -198,7 +198,7 @@ table.insert(lsp, {
 		cond = function()
 			return not vim.g.vscode
 		end,
-		event = "BufReadPre",
+		event = "VimEnter",
 		config = function()
 			require("plugins.lsp").lspconfig()
 		end,
