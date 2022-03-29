@@ -37,6 +37,7 @@ vim.g.loaded_netrwFileHandlers = 1
 -- vim.g.loaded_matchit = 1
 -- vim.g.loaded_matchparen = 1
 
+-- require('impatient')
 require("option")
 require("autocmd")
 require("plugins")
