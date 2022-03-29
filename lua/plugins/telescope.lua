@@ -35,6 +35,10 @@ table.insert(telescope, {
 		})
 
 		require("plugins.telescope").keymap()
+
+		-- lua
+		vim.cmd([[hi TelescopeNormal guibg=none]])
+		vim.cmd([[hi TelescopeBorder guibg=none]])
 	end,
 })
 

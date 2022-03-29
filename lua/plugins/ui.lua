@@ -31,11 +31,12 @@ table.insert(ui, {
 	end,
 	setup = function()
 		vim.g.tokyonight_italic_functions = true
-		vim.g.tokyonight_style = "night"
+		-- vim.g.tokyonight_style = "night"
 		vim.g.tokyonight_italic_variables = true
+
 		vim.g.tokyonight_transparent = true
 		vim.g.tokyonight_transparent_sidebar = true
-		vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+
 		vim.g.tokyonight_hide_inactive_statusline = true
 		vim.g.tokyonight_lualine_bold = true
 		vim.g.tokyonight_terminal_colors = true
