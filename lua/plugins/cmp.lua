@@ -20,28 +20,37 @@ table.insert(autoc, {
 				after = "nvim-cmp",
 			},
 			{
-				"hrsh7th/cmp-buffer",
-				after = "nvim-cmp",
-			},
-			{
 				"saadparwaiz1/cmp_luasnip",
 				after = "nvim-cmp",
 			},
 			{
-				"hrsh7th/cmp-cmdline",
-				after = "nvim-cmp",
-			},
-			{
-				"onsails/lspkind-nvim",
+				"hrsh7th/cmp-buffer",
 				after = "nvim-cmp",
 				config = function()
-					require("cmp").setup({
-						formatting = {
-							format = require("lspkind").cmp_format({ with_text = true, maxwidth = 25 }),
+					-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+					local cmp = require("cmp")
+					cmp.setup.cmdline("/", {
+						sources = {
+							{ name = "buffer" },
 						},
 					})
 				end,
 			},
+			-- {
+			-- 	"hrsh7th/cmp-cmdline",
+			-- 	after = "nvim-cmp",
+			-- 	config = function()
+			-- 		-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+			-- 		local cmp = require("cmp")
+			-- 		cmp.setup.cmdline(":", {
+			-- 			sources = cmp.config.sources({
+			-- 				{ name = "path" },
+			-- 			}, {
+			-- 				{ name = "cmdline" },
+			-- 			}),
+			-- 		})
+			-- 	end,
+			-- },
 		},
 	},
 	{
@@ -106,12 +115,46 @@ function autoc.cmp()
 	local cmp = require("cmp")
 	cmp.setup({
 		-- preselect = cmp.PreselectMode.None,
-		-- documentation = {
-		-- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-		-- },
 		-- completion = {
 		--   keyword_length = 3
 		-- },
+		-- documentation = {
+		-- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		-- },
+		formatting = {
+			fields = { "kind", "abbr", "menu" },
+			duplicates_default = 0,
+			format = function(entry, vim_item)
+				local lspkind_icon = require("plugins.lspkind_icon")
+				vim_item.kind = lspkind_icon[vim_item.kind]
+
+				local maxwidth = 25
+				if string.len(vim_item.abbr) > maxwidth then
+					vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth) .. ".."
+				end
+
+				local source_names = {
+					nvim_lsp = "(LSP)",
+					emoji = "(Emoji)",
+					path = "(Path)",
+					calc = "(Calc)",
+					cmp_tabnine = "(Tabnine)",
+					vsnip = "(Snippet)",
+					luasnip = "(Snippet)",
+					buffer = "(Buffer)",
+				}
+				vim_item.menu = source_names[entry.source.name]
+
+				local duplicates = {
+					buffer = 1,
+					path = 1,
+					nvim_lsp = 0,
+					luasnip = 1,
+				}
+				vim_item.dup = duplicates[entry.source.name]
+				return vim_item
+			end,
+		},
 		-- You must set mapping.
 		mapping = {
 			["<C-n>"] = cmp.mapping.select_next_item(),
@@ -137,22 +180,6 @@ function autoc.cmp()
 			{ name = "buffer" },
 		}),
 	})
-
-	-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-	cmp.setup.cmdline("/", {
-		sources = {
-			{ name = "buffer" },
-		},
-	})
-
-	-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-	-- cmp.setup.cmdline(":", {
-	-- 	sources = cmp.config.sources({
-	-- 		{ name = "path" },
-	-- 	}, {
-	-- 		{ name = "cmdline" },
-	-- 	}),
-	-- })
 	-- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
 end
 
