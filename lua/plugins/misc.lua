@@ -184,7 +184,7 @@ function misc.toggleterm()
 			border = "curved",
 			-- width = <value>,
 			-- height = <value>,
-			winblend = 3,
+			winblend = 0,
 			highlights = {
 				border = "Normal",
 				background = "Normal",
