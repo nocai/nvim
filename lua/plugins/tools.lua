@@ -101,6 +101,19 @@ table.insert(tools, {
 			require("Comment").setup()
 		end,
 	},
+	{
+		"junegunn/vim-easy-align",
+		keys = { "<leader>ga" },
+		-- cond = function()
+		-- 	return not vim.g.vscode
+		-- end,
+		config = function()
+			vim.cmd([[
+				nmap <leader>ga <Plug>(EasyAlign)
+				xmap <leader>ga <Plug>(EasyAlign)
+			]])
+		end,
+	},
 })
 
 table.insert(tools, {
