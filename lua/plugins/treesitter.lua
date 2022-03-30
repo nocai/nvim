@@ -134,7 +134,6 @@ table.insert(treesitter, {
 	},
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
-		event = "BufRead",
 		after = { "nvim-treesitter" },
 		requires = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
