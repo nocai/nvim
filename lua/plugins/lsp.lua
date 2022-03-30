@@ -241,6 +241,7 @@ table.insert(lsp, {
 	},
 	{
 		"ray-x/lsp_signature.nvim",
+		disable = true,
 		event = "BufRead",
 		cond = function()
 			return not vim.g.vscode
