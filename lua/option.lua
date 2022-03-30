@@ -23,6 +23,8 @@ vim.o.breakindent = true
 
 --Save undo history
 vim.cmd([[set undofile]])
+-- no swap files
+vim.cmd([[set noswapfile]])
 
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
