@@ -1,18 +1,14 @@
 local commons = {}
 
 table.insert(commons, {
-	-- {
-	-- 	"lewis6991/impatient.nvim",
-	-- },
-	{
-		"nvim-lua/plenary.nvim",
-		cond = function()
-			return not vim.g.vscode
-		end,
-	},
-
 	{
 		"nathom/filetype.nvim",
+	},
+	{
+		"lewis6991/impatient.nvim",
+	},
+	{
+		"nvim-lua/plenary.nvim",
 		cond = function()
 			return not vim.g.vscode
 		end,

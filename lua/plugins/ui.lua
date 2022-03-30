@@ -20,7 +20,7 @@ table.insert(ui, {
 		vim.g.sonokai_transparent_background = 1
 	end,
 	config = function()
-		-- vim.cmd([[colorscheme sonokai]])
+		vim.cmd([[colorscheme sonokai]])
 	end,
 })
 

@@ -6,7 +6,7 @@ table.insert(treesitter, {
 	cond = function()
 		return not vim.g.vscode
 	end,
-	-- event = { "BufRead", "BufNewFile" },
+	event = { "BufRead", "BufNewFile" },
 	-- run = ":TSUpdate",
 	config = function()
 		-- :TSInstall
@@ -121,10 +121,6 @@ table.insert(treesitter, {
 		"andymass/vim-matchup",
 		after = "nvim-treesitter",
 		requires = { "nvim-treesitter/nvim-treesitter" },
-		setup = function()
-			vim.g.loaded_matchit = 1
-			vim.g.loaded_matchparen = 1
-		end,
 		config = function()
 			vim.cmd([[vmap l% <plug>(matchup-i%)]])
 			require("nvim-treesitter.configs").setup({
