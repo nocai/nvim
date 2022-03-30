@@ -121,7 +121,7 @@ table.insert(treesitter, {
 		"andymass/vim-matchup",
 		after = "nvim-treesitter",
 		requires = { "nvim-treesitter/nvim-treesitter" },
-		event = { "CursorMoved" },
+		-- event = { "CursorMoved" },
 		config = function()
 			vim.cmd([[vmap l% <plug>(matchup-i%)]])
 			require("nvim-treesitter.configs").setup({
@@ -134,7 +134,7 @@ table.insert(treesitter, {
 	},
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
-		event = "BufRead",
+		-- event = "BufRead",
 		after = { "nvim-treesitter" },
 		requires = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
