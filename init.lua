@@ -1,3 +1,5 @@
+pcall(require, "impatient")
+
 vim.nv = {
 	home = os.getenv("HOME"),
 	nvim_home = os.getenv("HOME") .. "/.config/nvim",
@@ -38,7 +40,6 @@ vim.g.loaded_matchit = 1
 vim.g.loaded_matchparen = 1
 vim.g.did_load_filetypes = 1
 
-pcall(require, "impatient")
 require("option")
 require("autocmd")
 require("plugins")

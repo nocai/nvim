@@ -98,7 +98,23 @@ table.insert(tools, {
 		end,
 		event = "BufReadPre",
 		config = function()
-			require("Comment").setup()
+			require("Comment").setup({
+				pre_hook = function(ctx) -- for plugin: commentstring
+					local U = require("Comment.utils")
+
+					local location = nil
+					if ctx.ctype == U.ctype.block then
+						location = require("ts_context_commentstring.utils").get_cursor_location()
+					elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+						location = require("ts_context_commentstring.utils").get_visual_start_location()
+					end
+
+					return require("ts_context_commentstring.internal").calculate_commentstring({
+						key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
+						location = location,
+					})
+				end,
+			})
 		end,
 	},
 	{
@@ -112,6 +128,24 @@ table.insert(tools, {
 				nmap <leader>ga <Plug>(EasyAlign)
 				xmap <leader>ga <Plug>(EasyAlign)
 			]])
+		end,
+	},
+	{
+		"folke/todo-comments.nvim",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		event = "BufRead",
+		config = function()
+			require("todo-comments").setup()
+		end,
+	},
+	{
+		"ggandor/lightspeed.nvim",
+		disable = true,
+		event = "BufRead",
+		cond = function()
+			return not vim.g.vscode
 		end,
 	},
 })

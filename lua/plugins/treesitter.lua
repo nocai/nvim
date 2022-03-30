@@ -121,12 +121,27 @@ table.insert(treesitter, {
 		"andymass/vim-matchup",
 		after = "nvim-treesitter",
 		requires = { "nvim-treesitter/nvim-treesitter" },
+		event = { "CursorMoved" },
 		config = function()
 			vim.cmd([[vmap l% <plug>(matchup-i%)]])
 			require("nvim-treesitter.configs").setup({
 				matchup = {
 					enable = true, -- mandatory, false will disable the whole extension
 					-- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+				},
+			})
+		end,
+	},
+	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		event = "BufRead",
+		after = { "nvim-treesitter" },
+		requires = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				context_commentstring = {
+					enable = true,
+					enable_autocmd = false, -- for plugin: Comment.nvim
 				},
 			})
 		end,

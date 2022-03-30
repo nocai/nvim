@@ -61,12 +61,20 @@ table.insert(ui, {
 table.insert(ui, {
 	{
 		"lukas-reineke/indent-blankline.nvim",
+		event = { "BufRead" },
 		cond = function()
 			return not vim.g.vscode
 		end,
 		-- ft = { "lua" },
-		config = function()
-			require("plugins.ui").indent_blankline()
+		setup = function()
+			vim.g.indentLine_enabled = 1
+			vim.g.indent_blankline_char = "┊"
+			vim.g.indent_blankline_filetype_exclude = { "help", "packer", "nvimtree", "dashboard" }
+			vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile", "packer" }
+			vim.g.indent_blankline_show_first_indent_level = false
+			vim.g.indent_blankline_char_highlight = "LineNr"
+			vim.g.indent_blankline_show_trailing_blankline_indent = false
+			vim.g.indent_blankline_show_first_indent_level = false
 		end,
 	},
 	{
@@ -117,15 +125,6 @@ function ui.bufferline()
 			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
 		},
 	})
-end
-
-function ui.indent_blankline()
-	vim.g.indent_blankline_char = "┊"
-	vim.g.indent_blankline_filetype_exclude = { "help", "packer", "nvimtree", "dashboard" }
-	vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile", "packer" }
-	vim.g.indent_blankline_show_first_indent_level = false
-	vim.g.indent_blankline_char_highlight = "LineNr"
-	vim.g.indent_blankline_show_trailing_blankline_indent = false
 end
 
 function ui.lualine()

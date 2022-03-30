@@ -80,7 +80,22 @@ table.insert(misc, {
 			vim.g.textobj_sandwich_no_default_key_mappings = 1
 		end,
 		config = function()
-			require("plugins.misc").sandwich()
+			vim.cmd([[
+				map ls <Plug>(textobj-sandwich-query-i)
+				map ls <Plug>(textobj-sandwich-query-i)
+				map as <Plug>(textobj-sandwich-query-a)
+				map as <Plug>(textobj-sandwich-query-a)
+
+				map lss <Plug>(textobj-sandwich-auto-i)
+				map lss <Plug>(textobj-sandwich-auto-i)
+				map ass <Plug>(textobj-sandwich-auto-a)
+				map ass <Plug>(textobj-sandwich-auto-a)
+
+				map lm <Plug>(textobj-sandwich-literal-query-i)
+				map lm <Plug>(textobj-sandwich-literal-query-i)
+				map am <Plug>(textobj-sandwich-literal-query-a)
+				map am <Plug>(textobj-sandwich-literal-query-a)
+		]])
 		end,
 	},
 })
@@ -127,23 +142,6 @@ table.insert(misc, {
 		end,
 	},
 })
-
-function misc.sandwich()
-	vim.cmd([[
-			silent! omap <unique> lb <Plug>(textobj-sandwich-auto-i)
-			silent! xmap <unique> lb <Plug>(textobj-sandwich-auto-i)
-			silent! omap <unique> ab <Plug>(textobj-sandwich-auto-a)
-			silent! xmap <unique> ab <Plug>(textobj-sandwich-auto-a)
-
-			silent! omap <unique> ls <Plug>(textobj-sandwich-query-i)
-			silent! xmap <unique> ls <Plug>(textobj-sandwich-query-i)
-			silent! omap <unique> as <Plug>(textobj-sandwich-query-a)
-			silent! xmap <unique> as <Plug>(textobj-sandwich-query-a)
-
-			silent! xmap <unique> l <Plug>(textobj-parameter-i)
-			silent! xmap <unique> l2 <Plug>(textobj-parameter-greedy-i)
-		]])
-end
 
 function misc.toggleterm()
 	require("toggleterm").setup({
