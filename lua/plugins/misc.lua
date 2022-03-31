@@ -81,20 +81,20 @@ table.insert(misc, {
 		end,
 		config = function()
 			vim.cmd([[
-				map ls <Plug>(textobj-sandwich-query-i)
-				map ls <Plug>(textobj-sandwich-query-i)
-				map as <Plug>(textobj-sandwich-query-a)
-				map as <Plug>(textobj-sandwich-query-a)
+				xmap ls <Plug>(textobj-sandwich-query-i)
+				omap ls <Plug>(textobj-sandwich-query-i)
+				xmap as <Plug>(textobj-sandwich-query-a)
+				omap as <Plug>(textobj-sandwich-query-a)
 
-				map lss <Plug>(textobj-sandwich-auto-i)
-				map lss <Plug>(textobj-sandwich-auto-i)
-				map ass <Plug>(textobj-sandwich-auto-a)
-				map ass <Plug>(textobj-sandwich-auto-a)
+				xmap lss <Plug>(textobj-sandwich-auto-i)
+				omap lss <Plug>(textobj-sandwich-auto-i)
+				xmap ass <Plug>(textobj-sandwich-auto-a)
+				omap ass <Plug>(textobj-sandwich-auto-a)
 
-				map lm <Plug>(textobj-sandwich-literal-query-i)
-				map lm <Plug>(textobj-sandwich-literal-query-i)
-				map am <Plug>(textobj-sandwich-literal-query-a)
-				map am <Plug>(textobj-sandwich-literal-query-a)
+				xmap lm <Plug>(textobj-sandwich-literal-query-i)
+				omap lm <Plug>(textobj-sandwich-literal-query-i)
+				xmap am <Plug>(textobj-sandwich-literal-query-a)
+				omap am <Plug>(textobj-sandwich-literal-query-a)
 		]])
 		end,
 	},
