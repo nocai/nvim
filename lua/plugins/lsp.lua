@@ -204,6 +204,27 @@ table.insert(lsp, {
 		end,
 	},
 	{
+		"ray-x/lsp_signature.nvim",
+		after = { "nvim-lspconfig" },
+		cond = function()
+			return not vim.g.vscode
+		end,
+		config = function()
+			require("lsp_signature").setup({
+				bind = true,
+				fix_pos = true,
+				hint_prefix = " ",
+				max_height = 22,
+				max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+				handler_opts = {
+					border = "rounded", -- double, single, shadow, none
+				},
+				zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
+				padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
+			})
+		end,
+	},
+	{
 		"jose-elias-alvarez/null-ls.nvim",
 		cond = function()
 			return not vim.g.vscode
@@ -237,17 +258,6 @@ table.insert(lsp, {
 				-- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
 				-- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
 			})
-		end,
-	},
-	{
-		"ray-x/lsp_signature.nvim",
-		disable = true,
-		event = "BufRead",
-		cond = function()
-			return not vim.g.vscode
-		end,
-		config = function()
-			require("lsp_signature").setup()
 		end,
 	},
 	{
