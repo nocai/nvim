@@ -135,6 +135,7 @@ function autoc.cmp()
 
 				local source_names = {
 					nvim_lsp = "(LSP)",
+					nvim_lua = "(NvLua)",
 					emoji = "(Emoji)",
 					path = "(Path)",
 					calc = "(Calc)",
@@ -171,6 +172,7 @@ function autoc.cmp()
 			["<CR>"] = cmp.mapping.confirm({ select = true }),
 		},
 		sources = cmp.config.sources({
+			{ name = "nvim_lua" },
 			{ name = "nvim_lsp" },
 			-- { name = 'vsnip' }, -- For vsnip users.
 			{ name = "luasnip" }, -- For luasnip users.

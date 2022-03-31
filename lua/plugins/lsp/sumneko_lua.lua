@@ -8,11 +8,16 @@ return {
 	settings = {
 		Lua = {
 			runtime = { version = "LuaJIT", path = runtime_path },
-			diagnostics = { enable = true, globals = { "vim" } },
+			diagnostics = { enable = true, globals = { "vim", "redis" } },
 			hint = { enable = true },
 			workspace = {
+				-- library = vim.api.nvim_get_runtime_file("", true),
+
 				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				},
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier
 			telemetry = { enable = false },
