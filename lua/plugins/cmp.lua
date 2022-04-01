@@ -128,9 +128,9 @@ function autoc.cmp()
 				local lspkind_icon = require("plugins.lspkind_icon")
 				vim_item.kind = lspkind_icon[vim_item.kind]
 
-				local maxwidth = 25
+				local maxwidth = 30
 				if string.len(vim_item.abbr) > maxwidth then
-					vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth) .. ".."
+					vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth) .. " .."
 				end
 
 				local source_names = {
