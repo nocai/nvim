@@ -112,15 +112,18 @@ table.insert(autoc, {
 })
 
 function autoc.cmp()
+	vim.cmd([[hi Pmenu ctermbg=none guibg=none]])
+
 	local cmp = require("cmp")
 	cmp.setup({
 		-- preselect = cmp.PreselectMode.None,
 		-- completion = {
 		--   keyword_length = 3
 		-- },
-		-- documentation = {
-		-- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-		-- },
+		documentation = {
+			winhighlight = "NormalFloat:NONE,FloatBorder:NONE",
+			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		},
 		formatting = {
 			fields = { "kind", "abbr", "menu" },
 			duplicates_default = 0,
@@ -181,6 +184,10 @@ function autoc.cmp()
 		}, {
 			{ name = "buffer" },
 		}),
+		experimental = {
+			native_menu = false,
+			ghost_text = true,
+		},
 	})
 	-- vim.cmd([[ autocmd FileType lua lua require('cmp').setup.buffer { sources = { {name='nvim_lua'} } } ]])
 end
