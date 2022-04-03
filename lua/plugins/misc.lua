@@ -114,15 +114,15 @@ table.insert(misc, {
 		end,
 		config = function()
 			vim.cmd([[
-				xmap ll <Plug>(textobj-indent-i)
-				omap ll <Plug>(textobj-indent-i)
-				xmap lL <Plug>(textobj-indent-same-i)
-				omap lL <Plug>(textobj-indent-same-i)
+				xmap li <Plug>(textobj-indent-i)
+				omap li <Plug>(textobj-indent-i)
+				xmap lI <Plug>(textobj-indent-same-i)
+				omap lI <Plug>(textobj-indent-same-i)
 
-				xmap al <Plug>(textobj-indent-a)
-				omap al <Plug>(textobj-indent-a)
-				xmap aL <Plug>(textobj-indent-same-a)
-				omap aL <Plug>(textobj-indent-same-a)
+				xmap ai <Plug>(textobj-indent-a)
+				omap ai <Plug>(textobj-indent-a)
+				xmap aI <Plug>(textobj-indent-same-a)
+				omap aI <Plug>(textobj-indent-same-a)
 			]])
 		end,
 	},

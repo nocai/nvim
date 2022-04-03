@@ -7,24 +7,34 @@ table.insert(treesitter, {
 		return not vim.g.vscode
 	end,
 	event = { "BufRead", "BufNewFile" },
-	-- run = ":TSUpdate",
+	run = ":TSUpdate",
 	config = function()
+		-- I want to use Git instead of curl for downloading the parsers
+		require("nvim-treesitter.install").prefer_git = true
+		-- I want to use a mirror instead of "https://github.com/"
+		for _, config in pairs(require("nvim-treesitter.parsers").get_parser_configs()) do
+			config.install_info.url = config.install_info.url:gsub(
+				"https://github.com/",
+				"https://ghproxy.com/https://github.com/"
+			)
+		end
 		-- :TSInstall
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = { "lua", "go" },
-			highlight = { enable = true, use_languagetree = true },
+			highlight = { enable = true, additional_vim_regex_highlighting = false, use_languagetree = true },
+			-- indent = { enable = true },
 			incremental_selection = {
 				enable = false,
-				-- keymaps = {
-				-- 	init_selection = "gnn",
-				-- 	node_incremental = "grn",
-				-- 	scope_incremental = "grc",
-				-- 	node_decremental = "grm",
-				-- },
+				keymaps = {
+					init_selection = "gnn",
+					node_incremental = "grn",
+					scope_incremental = "grc",
+					node_decremental = "grm",
+				},
 			},
 		})
-		-- vim.api.nvim_command('set foldmethod=expr')
-		-- vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
+		vim.api.nvim_command("set foldmethod=expr")
+		vim.api.nvim_command("set foldexpr=nvim_treesitter#foldexpr()")
 	end,
 })
 
@@ -52,19 +62,19 @@ table.insert(treesitter, {
 						set_jumps = true, -- whether to set jumps in the jumplist
 						goto_next_start = {
 							["]f"] = "@function.outer",
-							["]c"] = "@class.outer",
+							["]]"] = "@class.outer",
 						},
 						goto_next_end = {
 							["]F"] = "@function.outer",
-							["]C"] = "@class.outer",
+							["]["] = "@class.outer",
 						},
 						goto_previous_start = {
 							["[f"] = "@function.outer",
-							["[c"] = "@class.outer",
+							["[["] = "@class.outer",
 						},
 						goto_previous_end = {
 							["[F"] = "@function.outer",
-							["[C"] = "@class.outer",
+							["[]"] = "@class.outer",
 						},
 					},
 					swap = {
