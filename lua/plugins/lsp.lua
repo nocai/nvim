@@ -41,6 +41,93 @@ end
 
 local lsp = {}
 
+table.insert(lsp, {
+	{
+		"neovim/nvim-lspconfig",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		event = "VimEnter",
+		config = function()
+			require("plugins.lsp").lspconfig()
+		end,
+	},
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		ft = { "lua" },
+		config = function()
+			local ls = require("null-ls")
+			ls.setup({
+				sources = {
+					ls.builtins.formatting.stylua,
+				},
+			})
+		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		disable = true, -- 不知道为什么，在本地签名窗口会抖动（弹出两次）
+		after = { "nvim-lspconfig" },
+		cond = function()
+			return not vim.g.vscode
+		end,
+		config = function()
+			require("lsp_signature").setup({
+				bind = true,
+				fix_pos = true,
+				hint_prefix = " ",
+				max_height = 22,
+				max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+				handler_opts = {
+					border = "rounded", -- double, single, shadow, none
+				},
+				zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
+				padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
+			})
+		end,
+	},
+	{
+		-- config, see: ftplugin/java.lua
+		"mfussenegger/nvim-jdtls",
+		ft = { "java" },
+		cond = function()
+			return not vim.g.vscode
+		end,
+	},
+})
+
+function lsp.lspconfig()
+	local lspc = require("lspconfig")
+	-- Use a loop to conveniently call 'setup' on multiple servers and
+	-- map buffer local keybindings when the language server attaches
+	local servers = { "pyright", "rust_analyzer", "tsserver", "denols" }
+	for _, name in ipairs(servers) do
+		lspc[name].setup({
+			on_attach = require("plugins.lsp").on_attach,
+			capabilities = require("plugins.lsp").make_capabilities(),
+			flags = {
+				debounce_text_changes = 150,
+			},
+		})
+	end
+
+	local items = vim.split(vim.fn.globpath("lua/plugins/lsp", "*.lua"), "\n")
+	for _, item in ipairs(items) do
+		local name = item:sub(#"lua/plugins/lsp/", -5)
+
+		local config = require(item:sub(#"lua/", -5))
+		config.on_attach = require("plugins.lsp").on_attach
+		config.capabilities = require("plugins.lsp").make_capabilities()
+		config.flags = {
+			debounce_text_changes = 150,
+		}
+		lspc[name].setup(config)
+	end
+end
+
 function lsp.on_attach(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -156,96 +243,5 @@ function lsp.make_capabilities()
 	}
 	return capabilities
 end
-
-function lsp.lspconfig()
-	local lspc = require("lspconfig")
-	-- Use a loop to conveniently call 'setup' on multiple servers and
-	-- map buffer local keybindings when the language server attaches
-	local servers = { "pyright", "rust_analyzer", "tsserver", "denols" }
-	for _, name in ipairs(servers) do
-		lspc[name].setup({
-			on_attach = require("plugins.lsp").on_attach,
-			capabilities = require("plugins.lsp").make_capabilities(),
-			flags = {
-				debounce_text_changes = 150,
-			},
-		})
-	end
-
-	local server_ext = {}
-	-- sumneko_lua
-	server_ext.sumneko_lua = require("plugins.lsp.sumneko_lua")
-	-- gopls
-	server_ext.gopls = require("plugins.lsp.gopls")
-	-- clangd
-	server_ext.clangd = require("plugins.lsp.clangd")
-
-	for name, config in pairs(server_ext) do
-		config.on_attach = require("plugins.lsp").on_attach
-		config.capabilities = require("plugins.lsp").make_capabilities()
-		config.flags = {
-			debounce_text_changes = 150,
-		}
-		lspc[name].setup(config)
-	end
-end
-
-table.insert(lsp, {
-	{
-		"neovim/nvim-lspconfig",
-		cond = function()
-			return not vim.g.vscode
-		end,
-		event = "VimEnter",
-		config = function()
-			require("plugins.lsp").lspconfig()
-		end,
-	},
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		cond = function()
-			return not vim.g.vscode
-		end,
-		ft = { "lua" },
-		config = function()
-			local ls = require("null-ls")
-			ls.setup({
-				sources = {
-					ls.builtins.formatting.stylua,
-				},
-			})
-		end,
-	},
-	{
-		"ray-x/lsp_signature.nvim",
-		disable = true, -- 不知道为什么，在本地签名窗口会抖动（弹出两次）
-		after = { "nvim-lspconfig" },
-		cond = function()
-			return not vim.g.vscode
-		end,
-		config = function()
-			require("lsp_signature").setup({
-				bind = true,
-				fix_pos = true,
-				hint_prefix = " ",
-				max_height = 22,
-				max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
-				handler_opts = {
-					border = "rounded", -- double, single, shadow, none
-				},
-				zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
-				padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
-			})
-		end,
-	},
-	{
-		-- config, see: ftplugin/java.lua
-		"mfussenegger/nvim-jdtls",
-		ft = { "java" },
-		cond = function()
-			return not vim.g.vscode
-		end,
-	},
-})
 
 return lsp

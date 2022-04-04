@@ -1,12 +1,11 @@
-local ok, _ = pcall(vim.cmd, "packadd packer.nvim")
+vim.cmd([[packadd packer.nvim]])
 
-local present, packer = pcall(require, "packer")
-
-if not present or not ok then
+local ok, packer = pcall(require, "packer")
+if not ok then
 	local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
-
 	-- remove the dir before cloning
 	vim.fn.delete(packer_path, "rf")
+
 	print("Cloning packer...")
 	vim.fn.system({
 		"git",
@@ -16,11 +15,10 @@ if not present or not ok then
 		"20",
 		packer_path,
 	})
+	vim.cmd([[packadd packer.nvim]])
 
-	vim.cmd("packadd packer.nvim")
-	present, packer = pcall(require, "packer")
-
-	if present then
+	ok, packer = pcall(require, "packer")
+	if ok then
 		print("Packer cloned successfully.")
 	else
 		error("Couldn't clone packer !\nPacker path: " .. packer_path .. "\n" .. packer)
@@ -44,9 +42,8 @@ packer.init({
 })
 
 local utils = require("utils")
-
 return packer.startup(function(use)
-	use({ "wbthomason/packer.nvim", event = "VimEnter" })
+	use({ "wbthomason/packer.nvim", opt = true })
 	use(utils.specs(require("plugins.commons")))
 
 	use(utils.specs(require("plugins.lsp")))
@@ -57,13 +54,4 @@ return packer.startup(function(use)
 	use(utils.specs(require("plugins.tools")))
 	use(utils.specs(require("plugins.telescope")))
 	use(utils.specs(require("plugins.treesitter")))
-
-	-- use({
-	-- 	"NvChad/nvim-base16.lua",
-	-- 	after = "packer.nvim",
-	-- 	config = function()
-	-- 		local base16 = require("base16")
-	-- 		base16(base16.themes("gruvbox"), true)
-	-- 	end,
-	-- })
 end)
