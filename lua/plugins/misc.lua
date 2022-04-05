@@ -62,6 +62,31 @@ table.insert(misc, {
 			]])
 		end,
 	},
+	{
+		"norcalli/nvim-colorizer.lua",
+		event = "VimEnter",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		config = function()
+			require("colorizer").setup()
+		end,
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		setup = function()
+			vim.g.indentLine_enabled = 1
+			vim.g.indent_blankline_char = "┊"
+			vim.g.indent_blankline_filetype_exclude = { "help", "packer", "nvimtree", "dashboard" }
+			vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile", "packer" }
+			vim.g.indent_blankline_char_highlight = "LineNr"
+			vim.g.indent_blankline_show_trailing_blankline_indent = false
+			vim.g.indent_blankline_show_first_indent_level = false
+		end,
+	},
 })
 
 -- edit

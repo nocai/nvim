@@ -3,87 +3,60 @@
 local ui = {}
 
 table.insert(ui, {
-	"sainnhe/sonokai",
-	disable = true,
-	cond = function()
-		return not vim.g.vscode
-	end,
-	setup = function()
-		-- Available values: `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
-		-- Default value: `'default'`
-		vim.g.sonokai_style = "shusia"
-		-- Available values: `'auto'`, `'red'`, `'orange'`, `'yellow'`, `'green'`, `'blue'`, `'purple'`
-		-- Default value: `'auto'`
-		vim.g.sonokai_cursor = "red"
-		vim.g.sonokai_enable_italic = 1
-		vim.g.sonokai_disable_italic_comment = 1
-		vim.g.sonokai_transparent_background = 1
-	end,
-	config = function()
-		vim.cmd([[colorscheme sonokai]])
-	end,
-})
+	{
+		"sainnhe/sonokai",
+		disable = true,
+		cond = function()
+			return not vim.g.vscode
+		end,
+		setup = function()
+			-- Available values: `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+			-- Default value: `'default'`
+			vim.g.sonokai_style = "shusia"
+			-- Available values: `'auto'`, `'red'`, `'orange'`, `'yellow'`, `'green'`, `'blue'`, `'purple'`
+			-- Default value: `'auto'`
+			vim.g.sonokai_cursor = "red"
+			vim.g.sonokai_enable_italic = 1
+			vim.g.sonokai_disable_italic_comment = 1
+			vim.g.sonokai_transparent_background = 1
+		end,
+		config = function()
+			vim.cmd([[colorscheme sonokai]])
+		end,
+	},
+	{
+		"folke/tokyonight.nvim",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		setup = function()
+			vim.g.tokyonight_italic_functions = true
+			-- vim.g.tokyonight_style = "night"
+			vim.g.tokyonight_italic_variables = true
 
-table.insert(ui, {
-	"folke/tokyonight.nvim",
-	cond = function()
-		return not vim.g.vscode
-	end,
-	setup = function()
-		vim.g.tokyonight_italic_functions = true
-		-- vim.g.tokyonight_style = "night"
-		vim.g.tokyonight_italic_variables = true
+			vim.g.tokyonight_transparent = true
+			vim.g.tokyonight_transparent_sidebar = true
+			vim.g.tokyonight_dark_float = false
 
-		vim.g.tokyonight_transparent = true
-		vim.g.tokyonight_transparent_sidebar = true
-		vim.g.tokyonight_dark_float = false
-
-		vim.g.tokyonight_hide_inactive_statusline = true
-		vim.g.tokyonight_lualine_bold = true
-		vim.g.tokyonight_terminal_colors = true
-	end,
-	config = function()
-		vim.cmd([[colorscheme tokyonight]])
-	end,
-})
-
-table.insert(ui, {
-	"norcalli/nvim-colorizer.lua",
-	event = "VimEnter",
-	cond = function()
-		return not vim.g.vscode
-	end,
-	config = function()
-		require("colorizer").setup()
-	end,
+			vim.g.tokyonight_hide_inactive_statusline = true
+			vim.g.tokyonight_lualine_bold = true
+			vim.g.tokyonight_terminal_colors = true
+		end,
+		config = function()
+			vim.cmd([[colorscheme tokyonight]])
+		end,
+	},
 })
 
 -- ui
 table.insert(ui, {
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = { "BufRead" },
-		cond = function()
-			return not vim.g.vscode
-		end,
-		-- ft = { "lua" },
-		setup = function()
-			vim.g.indentLine_enabled = 1
-			vim.g.indent_blankline_char = "┊"
-			vim.g.indent_blankline_filetype_exclude = { "help", "packer", "nvimtree", "dashboard" }
-			vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile", "packer" }
-			vim.g.indent_blankline_show_first_indent_level = false
-			vim.g.indent_blankline_char_highlight = "LineNr"
-			vim.g.indent_blankline_show_trailing_blankline_indent = false
-			vim.g.indent_blankline_show_first_indent_level = false
-		end,
-	},
 	{
 		"kyazdani42/nvim-tree.lua",
 		cond = function()
 			return not vim.g.vscode
 		end,
 		requires = { "kyazdani42/nvim-web-devicons" },
+		after = { "nvim-web-devicons" },
 		config = function()
 			require("plugins.ui").nvim_tree()
 		end,
@@ -93,7 +66,8 @@ table.insert(ui, {
 		cond = function()
 			return not vim.g.vscode
 		end,
-		event = { "VimEnter" },
+		requires = { "kyazdani42/nvim-web-devicons" },
+		after = { "nvim-web-devicons" },
 		config = function()
 			require("plugins.ui").lualine()
 		end,
@@ -104,7 +78,7 @@ table.insert(ui, {
 			return not vim.g.vscode
 		end,
 		requires = { "kyazdani42/nvim-web-devicons" },
-		event = { "VimEnter" },
+		after = { "nvim-web-devicons" },
 		config = function()
 			require("plugins.ui").bufferline()
 		end,

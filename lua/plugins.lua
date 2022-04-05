@@ -34,7 +34,7 @@ packer.init({
 		prompt_border = "single",
 	},
 	git = {
-		clone_timeout = 6000, -- seconds
+		clone_timeout = 30, -- seconds
 		default_url_format = "https://ghproxy.com/https://github.com/%s",
 	},
 	auto_clean = true,
@@ -44,14 +44,23 @@ packer.init({
 local utils = require("utils")
 return packer.startup(function(use)
 	use({ "wbthomason/packer.nvim", opt = true })
-	use(utils.specs(require("plugins.commons")))
-
-	use(utils.specs(require("plugins.lsp")))
-	use(utils.specs(require("plugins.cmp")))
+	use({ "nathom/filetype.nvim" })
+	use({ "lewis6991/impatient.nvim" })
+	use({ "nvim-lua/plenary.nvim" })
+	use({ "nanotee/nvim-lua-guide" })
+	use({
+		"kyazdani42/nvim-web-devicons",
+		cond = function()
+			return not vim.g.vscode
+		end,
+		config = "require('colors.nvim_web_devicons')",
+	})
 
 	use(utils.specs(require("plugins.ui")))
 	use(utils.specs(require("plugins.misc")))
 	use(utils.specs(require("plugins.tools")))
 	use(utils.specs(require("plugins.telescope")))
 	use(utils.specs(require("plugins.treesitter")))
+	use(utils.specs(require("plugins.lsp")))
+	use(utils.specs(require("plugins.cmp")))
 end)
