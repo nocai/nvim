@@ -70,7 +70,11 @@ table.insert(ui, {
 		after = { "nvim-web-devicons" },
 		config = function()
 			require("lualine").setup({
-				options = { theme = "auto" },
+				options = {
+					theme = "auto",
+					-- section_separators = { left = "", right = "" },
+					-- component_separators = { left = "", right = "" },
+				},
 				extensions = { "nvim-tree" },
 			})
 		end,
