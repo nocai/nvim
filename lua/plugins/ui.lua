@@ -69,7 +69,10 @@ table.insert(ui, {
 		requires = { "kyazdani42/nvim-web-devicons" },
 		after = { "nvim-web-devicons" },
 		config = function()
-			require("plugins.ui").lualine()
+			require("lualine").setup({
+				options = { theme = "auto" },
+				extensions = { "nvim-tree" },
+			})
 		end,
 	},
 	{
@@ -80,99 +83,23 @@ table.insert(ui, {
 		requires = { "kyazdani42/nvim-web-devicons" },
 		after = { "nvim-web-devicons" },
 		config = function()
-			require("plugins.ui").bufferline()
+			require("bufferline").setup({
+				options = {
+					indicator_icon = "",
+					diagnostics = "nvim_lsp",
+					diagnostics_indicator = function(count, level, _, _)
+						if vim.nv.diagnostics.enable then
+							local icon = level:match("error") and vim.nv.diagnostics.icons.error or vim.nv.diagnostics.icons.hint
+							return icon .. " " .. count
+						end
+						return " " .. count
+					end,
+					offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
+				},
+			})
 		end,
 	},
 })
-
-function ui.bufferline()
-	require("bufferline").setup({
-		options = {
-			-- indicator_icon = "",
-			diagnostics = "nvim_lsp",
-			diagnostics_indicator = function(count, level, _, _)
-				if vim.nv.diagnostics.enable then
-					local icon = level:match("error") and vim.nv.diagnostics.icons.error or vim.nv.diagnostics.icons.hint
-					return icon .. " " .. count
-				end
-				return " " .. count
-			end,
-			offsets = { { filetype = "NvimTree", text = "Press g? for help", text_align = "left", padding = 1 } },
-		},
-	})
-end
-
-function ui.lualine()
-	local function lsp()
-		local icon = [[  ]]
-		local msg = "No Active LSP"
-		local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-		local clients = vim.lsp.get_active_clients()
-		if next(clients) == nil then
-			return icon .. msg
-		end
-
-		for _, client in ipairs(clients) do
-			local filetypes = client.config.filetypes
-			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-				return icon .. client.name
-			end
-		end
-
-		return icon .. msg
-	end
-
-	local function progress_message()
-		local Lsp = vim.lsp.util.get_progress_messages()[1]
-
-		if Lsp then
-			local msg = Lsp.message or ""
-			local percentage = Lsp.percentage or 0
-			local title = Lsp.title or ""
-			local spinners = { "", "", "" }
-			local success_icon = { "", "", "" }
-
-			local ms = vim.loop.hrtime() / 1000000
-			local frame = math.floor(ms / 120) % #spinners
-
-			if percentage >= 70 then
-				return string.format(" %%<%s %s %s (%s%%%%) ", success_icon[frame + 1], title, msg, percentage)
-			end
-
-			return string.format(" %%<%s %s %s (%s%%%%) ", spinners[frame + 1], title, msg, percentage)
-		end
-
-		return ""
-	end
-
-	require("lualine").setup({
-		options = {
-			-- theme = "sonokai",
-			theme = "tokyonight",
-		},
-		sections = {
-			lualine_a = { "mode" },
-			lualine_b = { { "branch" }, { "diff" } },
-			lualine_c = {
-				{ "filename" },
-				{
-					"diagnostics",
-					sources = { "nvim_diagnostic" },
-					symbols = {
-						error = vim.nv.diagnostics.icons.error .. " ",
-						warn = vim.nv.diagnostics.icons.warning .. " ",
-						info = vim.nv.diagnostics.icons.info .. " ",
-					},
-				},
-				{ progress_message },
-			},
-			lualine_x = { { lsp } },
-			lualine_y = { "encoding" },
-			lualine_z = { { "progress" }, { "location" } },
-		},
-		extensions = { "nvim-tree" },
-	})
-end
 
 function ui.nvim_tree()
 	vim.g.nvim_tree_group_empty = 1
