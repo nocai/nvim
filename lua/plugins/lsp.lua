@@ -114,12 +114,11 @@ function lsp.lspconfig()
 		})
 	end
 
-	local items = vim.split(vim.fn.globpath(vim.nv.nvim_home .. "/lua/plugins/lsp", "*.lua"), "\n")
+	local items = vim.fn.globpath(vim.nv.nvim_home .. "/lua/plugins/lsp", "*.lua", false, true)
 	for _, item in ipairs(items) do
-		local name = item:sub(#(vim.nv.nvim_home .. "/lua/plugins/lsp/") + 1, -5)
-		local module = item:sub(#(vim.nv.nvim_home .. "/lua/") + 1, -5)
+		local name = vim.fn.fnamemodify(item, ":t:r")
 
-		local config = require(module)
+		local config = require("plugins.lsp." .. name)
 		config.on_attach = require("plugins.lsp").on_attach
 		config.capabilities = require("plugins.lsp").make_capabilities()
 		config.flags = {
