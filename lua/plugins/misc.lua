@@ -209,7 +209,7 @@ function misc.toggleterm()
 			-- height = <value>,
 			winblend = 0,
 			highlights = {
-				border = "Normal",
+				border = "FloatBorder",
 				background = "Normal",
 			},
 		},

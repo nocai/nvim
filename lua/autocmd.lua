@@ -11,3 +11,6 @@ vim.cmd([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") 
 
 -- codelenses
 -- vim.cmd([[autocmd BufEnter,CursorHold,InsertLeave lua vim.lsp.codelens.refresh()]])
+
+vim.cmd([[autocmd ColorScheme * highlight FloatBorder guibg=None ctermbg=None]])
+vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=None ctermbg=None]])

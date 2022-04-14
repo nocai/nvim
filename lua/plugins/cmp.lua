@@ -124,10 +124,10 @@ function autoc.cmp()
 			completion = {
 				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 				-- winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
-				winhighlight = "Normal:None,FloatBorder:None,CursorLine:PmenuSel,Search:None",
+				winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
 			},
 			documentation = {
-				winhighlight = "NormalFloat:None,FloatBorder:None",
+				winhighlight = "NormalFloat:Normal,FloatBorder:FloatBorder",
 				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 			},
 		},
