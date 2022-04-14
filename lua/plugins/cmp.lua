@@ -112,7 +112,7 @@ table.insert(autoc, {
 })
 
 function autoc.cmp()
-	vim.cmd([[hi Pmenu ctermbg=none guibg=none]])
+	-- vim.cmd([[hi Pmenu ctermbg=none guibg=none]])
 
 	local cmp = require("cmp")
 	cmp.setup({
@@ -120,9 +120,16 @@ function autoc.cmp()
 		-- completion = {
 		--   keyword_length = 3
 		-- },
-		documentation = {
-			winhighlight = "NormalFloat:NONE,FloatBorder:NONE",
-			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		window = {
+			completion = {
+				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+				-- winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
+				winhighlight = "Normal:None,FloatBorder:None,CursorLine:PmenuSel,Search:None",
+			},
+			documentation = {
+				winhighlight = "NormalFloat:None,FloatBorder:None",
+				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			},
 		},
 		formatting = {
 			fields = { "kind", "abbr", "menu" },
