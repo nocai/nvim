@@ -214,6 +214,14 @@ function misc.toggleterm()
 			},
 		},
 	})
+
+	function _G.toggle_glow()
+		local Terminal = require("toggleterm.terminal").Terminal
+		local glow = Terminal:new({ cmd = "glow -p " .. vim.fn.expand("%"), hidden = true })
+		glow:toggle()
+	end
+	-- vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua toggle_glow()<CR>", { noremap = true, silent = true })
+	vim.cmd([[command! -nargs=? -complete=file Glow :lua toggle_glow()<CR>]])
 end
 
 return misc

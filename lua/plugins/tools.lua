@@ -152,6 +152,7 @@ table.insert(tools, {
 
 table.insert(tools, {
 	"npxbr/glow.nvim",
+	disable = true,
 	cond = function()
 		return not vim.g.vscode
 	end,
