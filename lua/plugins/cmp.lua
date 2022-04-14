@@ -140,7 +140,7 @@ function autoc.cmp()
 
 				local maxwidth = 30
 				if string.len(vim_item.abbr) > maxwidth then
-					vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth) .. " .."
+					vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth) .. "…"
 				end
 
 				local source_names = {
