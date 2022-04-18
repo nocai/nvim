@@ -39,6 +39,10 @@ vim.g.loaded_netrwFileHandlers = 1
 vim.g.loaded_matchit = 1
 vim.g.loaded_matchparen = 1
 vim.g.did_load_filetypes = 1
+-- disable ruby
+vim.g.loaded_ruby_provider = 0
+-- disable perl
+vim.g.loaded_perl_provider = 0
 
 require("option")
 require("autocmd")
