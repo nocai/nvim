@@ -133,7 +133,9 @@ table.insert(treesitter, {
 		requires = { "nvim-treesitter/nvim-treesitter" },
 		event = { "CursorMoved" },
 		config = function()
-			vim.cmd([[vmap l% <plug>(matchup-i%)]])
+			vim.cmd([[unmap i%]])
+			vim.cmd([[xmap l% <plug>(matchup-i%)]])
+			vim.cmd([[omap l% <plug>(matchup-i%)]])
 			require("nvim-treesitter.configs").setup({
 				matchup = {
 					enable = true, -- mandatory, false will disable the whole extension
