@@ -47,7 +47,7 @@ table.insert(telescope, {
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
 		after = { "telescope.nvim" },
-		run = "make",
+		-- run = "make",
 		config = function()
 			require("telescope").setup({
 				extensions = {
