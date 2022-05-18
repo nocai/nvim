@@ -7,9 +7,9 @@
 "     e
 "     v
 
-noremap <space> <nop>
 let mapleader = ' '
 let maplocalleader = ' '
+noremap <space> <nop>
 
 " nN => jJ 
 " {{{

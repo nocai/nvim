@@ -160,8 +160,8 @@ end
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
-	on_attach = require("plugins.lsp").on_attach,
-	capabilities = require("plugins.lsp").make_capabilities(),
+	on_attach = require("configs.lsp").on_attach,
+	capabilities = require("configs.lsp").make_capabilities(),
 	-- The command that starts the language server
 	-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
 	cmd = {
