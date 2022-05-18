@@ -76,7 +76,8 @@ return packer.startup(function(use)
 		{
 			"akinsho/nvim-bufferline.lua",
 			cond = function()
-				return not nvim.is_vscode
+				return false
+				-- return not nvim.is_vscode
 			end,
 			after = { "nvim-web-devicons" },
 			config = function()
@@ -305,6 +306,7 @@ return packer.startup(function(use)
 				return not vim.g.vscode
 			end,
 			event = { "VimEnter" },
+			requires = { "nvim-lua/plenary.nvim" },
 			config = function()
 				require("configs.telescope").config()
 			end,

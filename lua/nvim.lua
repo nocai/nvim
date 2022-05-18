@@ -8,6 +8,7 @@ _G.nvim = {
 
 	diagnostics = {
 		enable = true,
+		show_on_dirs = true,
 		icons = {
 			hint = "",
 			info = "",

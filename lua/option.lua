@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-
 -- vim.opt.laststatus = 3 -- global statusline
 
 vim.o.termguicolors = true

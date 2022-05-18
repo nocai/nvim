@@ -27,36 +27,30 @@ function ui.tokyonight()
 	vim.g.tokyonight_lualine_bold = true
 	vim.g.tokyonight_terminal_colors = true
 
-	vim.g.tokyonight_colors = { bg_highlight = "#2f3e42" }
+	-- vim.g.tokyonight_colors = { bg_highlight = "#2f3e42" }
 end
 
 function ui.nvim_tree()
 	vim.g.nvim_tree_group_empty = 1
 	vim.g.nvim_tree_highlight_opened_files = 3
-	vim.api.nvim_set_keymap("n", "<leader><leader>", "<cmd>NvimTreeFindFile<CR>", {
-		noremap = true,
-		silent = true,
-	})
-	vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>NvimTreeClose<CR>", {
-		noremap = true,
-		silent = true,
-	})
+
+	vim.keymap.set("n", "<leader><leader>", "<cmd>NvimTreeFindFileToggle<CR>")
+
 	local tree_cb = require("nvim-tree.config").nvim_tree_callback
 	require("nvim-tree").setup({
-		-- update_focused_file = {
-		-- 	enable = false,
-		-- 	update_cwd = false,
-		-- },
-		diagnostics = {
-			enable = nvim.diagnostics.enable,
-			show_on_dirs = nvim.diagnostics.enable,
+		update_focused_file = {
+			enable = true,
+			update_cwd = true,
+		},
+		renderer = {
+			indent_markers = {
+				enable = true,
+			},
 			icons = {
-				hint = nvim.diagnostics.icons.hint,
-				info = nvim.diagnostics.icons.info,
-				warning = nvim.diagnostics.icons.warning,
-				error = nvim.diagnostics.icons.error,
+				git_placement = "signcolumn",
 			},
 		},
+		diagnostics = nvim.diagnostics,
 		view = {
 			mappings = {
 				custom_only = true,
@@ -105,10 +99,26 @@ function ui.lualine()
 	require("lualine").setup({
 		options = {
 			theme = "auto",
+			globalstatus = true,
+			-- section_separators = "",
+			-- component_separators = "",
 			-- section_separators = { left = "", right = "" },
 			-- component_separators = { left = "", right = "" },
 		},
-		extensions = { "nvim-tree" },
+		tabline = {
+			lualine_a = {
+				{
+					"buffers",
+					buffers_color = {
+						-- Same values as the general color option can be used here.
+						active = "lualine_a_normal", -- Color for active buffer.
+						inactive = "lualine_b_normal", -- Color for inactive buffer.
+					},
+				},
+			},
+			lualine_z = { "tabs" },
+		},
+		extensions = { "nvim-tree", "quickfix", "toggleterm" },
 	})
 end
 
