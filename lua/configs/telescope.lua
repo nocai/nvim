@@ -31,62 +31,21 @@ function telescope.config()
 	vim.cmd([[hi TelescopeBorder guibg=none]])
 
 	-- keymap
-	vim.api.nvim_set_keymap("n", "<C-k><C-k>", [[<cmd>Telescope<CR>]], { noremap = true, silent = true })
+	vim.keymap.set("n", "<C-k><C-k>", [[<cmd>Telescope<CR>]])
 
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k>p",
-		[[<cmd>lua require('telescope.builtin').find_files({})<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k><C-p>",
-		[[<cmd>lua require('telescope.builtin').find_files({})<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k>g",
-		[[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k><C-g>",
-		[[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k>b",
-		[[<cmd>lua require('telescope.builtin').buffers()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k><C-b>",
-		[[<cmd>lua require('telescope.builtin').buffers()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k>h",
-		[[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k><C-h>",
-		[[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<C-k><C-r>",
-		[[<cmd>lua require("telescope.builtin").resume()<CR>]],
-		{ noremap = true, silent = true }
-	)
+	vim.keymap.set("n", "<C-k>p", [[<cmd>lua require('telescope.builtin').find_files({})<CR>]])
+	vim.keymap.set("n", "<C-k><C-p>", [[<cmd>lua require('telescope.builtin').find_files({})<CR>]])
+
+	vim.keymap.set("n", "<C-k>g", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]])
+	vim.keymap.set("n", "<C-k><C-g>", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]])
+
+	vim.keymap.set("n", "<C-k>b", [[<cmd>lua require('telescope.builtin').buffers()<CR>]])
+	vim.keymap.set("n", "<C-k><C-b>", [[<cmd>lua require('telescope.builtin').buffers()<CR>]])
+
+	vim.keymap.set("n", "<C-k>h", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]])
+	vim.keymap.set("n", "<C-k><C-h>", [[<cmd>lua require('telescope.builtin').help_tags()<CR>]])
+
+	vim.keymap.set("n", "<C-k><C-r>", [[<cmd>lua require("telescope.builtin").resume()<CR>]])
 end
 
 function telescope.telescope_fzf_native()

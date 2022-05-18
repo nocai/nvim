@@ -103,9 +103,8 @@ function treesitter.nvim_ts_tainbow()
 end
 
 function treesitter.vim_match()
-	pcall(vim.cmd, [[unmap i%]])
-	vim.cmd([[xmap l% <plug>(matchup-i%)]])
-	vim.cmd([[omap l% <plug>(matchup-i%)]])
+	vim.keymap.set({ "x", "o" }, "l%", "<plug>(matchup-i%)")
+	vim.keymap.del({ "x", "o" }, "i%")
 
 	local present, configs = pcall(require, "nvim-treesitter.configs")
 	if not present then

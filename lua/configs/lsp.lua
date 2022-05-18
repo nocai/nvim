@@ -72,22 +72,15 @@ function lsp.nvim_lspconfig()
 end
 
 function lsp.on_attach(client, bufnr)
-	local function buf_set_keymap(...)
-		vim.api.nvim_buf_set_keymap(bufnr, ...)
-	end
-	local function buf_set_option(...)
-		vim.api.nvim_buf_set_option(bufnr, ...)
-	end
+	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-	local opts = { noremap = true, silent = true }
+	local opts = { buffer = bufnr }
 
 	-- print(vim.inspect(client.resolved_capabilities))
 	if client.resolved_capabilities.code_lens then
 		-- vim.cmd([[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
 		vim.cmd([[autocmd BufEnter,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
-		buf_set_keymap("n", "<leader>lr", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
+		vim.keymap.set("n", "<leader>lr", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
 	end
 
 	if client.resolved_capabilities.document_highlight then
@@ -101,7 +94,7 @@ function lsp.on_attach(client, bufnr)
 	end
 
 	-- formatting
-	buf_set_keymap("n", "gq", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+	vim.keymap.set("n", "gq", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 	-- format on save
 	-- if client.resolved_capabilities.document_formatting then
 	-- 	vim.api.nvim_command([[augroup Format]])
@@ -110,54 +103,48 @@ function lsp.on_attach(client, bufnr)
 	-- 	vim.api.nvim_command([[augroup END]])
 	-- end
 
-	buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-	buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-	buf_set_keymap("n", "<leader>d", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+	vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+	vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+	vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 	-- mapping: K => E
-	buf_set_keymap("n", "E", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	vim.keymap.set("n", "E", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 
-	buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	buf_set_keymap("n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+	vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	vim.keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+	vim.keymap.set("n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 
-	buf_set_keymap("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+	vim.keymap.set("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
 	-- LSP
 	local ok, _ = pcall(require, "telescope")
 	if not ok then
-		buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-		buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-		buf_set_keymap("n", "gs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
-		buf_set_keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-		buf_set_keymap("v", "ga", "<cmd><c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
+		vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+		vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+		vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
+		vim.keymap.set("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+		vim.keymap.set("v", "ga", "<cmd><c-u>lua vim.lsp.buf.range_code_action()<CR>", opts)
 	else
-		buf_set_keymap(
+		vim.keymap.set(
 			"n",
 			"ga",
 			[[<cmd>lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_cursor({}))<CR>]],
 			opts
 		)
-		buf_set_keymap(
-			"v",
-			"ga",
-			[[<cmd>Telescope lsp_range_code_actions theme=get_cursor<CR>]],
-			-- [[<cmd>lua require('telescope.builtin').lsp_range_code_actions(require('telescope.themes').get_cursor({}))<CR>]],
-			opts
-		)
-		buf_set_keymap(
+		vim.keymap.set("v", "ga", [[<cmd>Telescope lsp_range_code_actions theme=get_cursor<CR>]], opts)
+		vim.keymap.set(
 			"n",
 			"gs",
 			[[<cmd>lua require('telescope.builtin').lsp_document_symbols(require('telescope.themes').get_ivy({}))<CR>]],
 			opts
 		)
-		buf_set_keymap(
+		vim.keymap.set(
 			"n",
 			"gr",
 			[[<cmd>lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy({}))<CR>]],
 			opts
 		)
-		buf_set_keymap(
+		vim.keymap.set(
 			"n",
 			"gi",
 			[[<cmd>lua require('telescope.builtin').lsp_implementations(require('telescope.themes').get_ivy({}))<CR>]],

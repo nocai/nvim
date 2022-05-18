@@ -120,7 +120,8 @@ return packer.startup(function(use)
 			cond = function()
 				return not vim.g.vscode
 			end,
-			event = "VimEnter",
+			keys = { "<C-\\>" },
+			cmd = { "Glow" },
 			config = function()
 				require("configs.misc").toggleterm()
 			end,
@@ -141,7 +142,7 @@ return packer.startup(function(use)
 				return not vim.g.vscode
 			end,
 			event = "VimEnter",
-			ft = { "html", "css" },
+			ft = { "lua", "html", "css" },
 			config = function()
 				require("colorizer").setup()
 			end,

@@ -2,7 +2,7 @@ local tools = {}
 
 function tools.gitsigns()
 	require("gitsigns").setup({
-		current_line_blame = false,
+		current_line_blame = true,
 		signs = {
 			add = { text = "+" },
 			change = { text = "~" },
@@ -32,7 +32,7 @@ end
 function tools.vim_quickrun()
 	vim.g.quickrun_no_default_key_mappings = 1
 	vim.g.quickrun_config = { _ = { outputter = "message" } }
-	vim.api.nvim_set_keymap("n", "<leader>rr", "<Plug>(quickrun)", { noremap = false, silent = false })
+	vim.keymap.set("n", "<leader>rr", "<Plug>(quickrun)")
 end
 
 function tools.vim_test()
