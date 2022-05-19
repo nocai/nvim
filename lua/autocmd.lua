@@ -40,9 +40,3 @@ autocmd("FileType", {
 -- vim.cmd([[autocmd ColorScheme * highlight FloatBorder guibg=None ctermbg=None]])
 -- vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=None ctermbg=None]])
 
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost init.lua source <afile> | PackerCompile
-  augroup end
-]])

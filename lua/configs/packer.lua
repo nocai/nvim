@@ -41,4 +41,11 @@ packer.init({
 	compile_on_sync = true,
 })
 
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost init.lua source <afile> | PackerCompile
+  augroup end
+]])
+
 return packer

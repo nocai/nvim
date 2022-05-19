@@ -27,6 +27,7 @@ function ui.tokyonight()
 	vim.g.tokyonight_lualine_bold = true
 	vim.g.tokyonight_terminal_colors = true
 
+	vim.g.tokyonight_colors = { bg_float = "none" }
 	-- vim.g.tokyonight_colors = { bg_highlight = "#2f3e42" }
 end
 

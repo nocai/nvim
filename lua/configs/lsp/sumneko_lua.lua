@@ -8,7 +8,7 @@ return {
 	settings = {
 		Lua = {
 			runtime = { version = "LuaJIT", path = runtime_path },
-			diagnostics = { enable = true, globals = { "vim", "redis" } },
+			diagnostics = { enable = true, globals = { "vim", "redis", "nvim" } },
 			hint = { enable = true },
 			workspace = {
 				-- library = vim.api.nvim_get_runtime_file("", true),

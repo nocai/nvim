@@ -29,7 +29,6 @@ local autocmp = {
 }
 
 function autocmp.nvim_cmp()
-	-- vim.cmd([[hi Pmenu ctermbg=none guibg=none]])
 	local cmp = require("cmp")
 	cmp.setup({
 		-- preselect = cmp.PreselectMode.None,
@@ -39,12 +38,11 @@ function autocmp.nvim_cmp()
 		window = {
 			completion = {
 				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-				-- winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
-				winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+				winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
 			},
 			documentation = {
-				winhighlight = "NormalFloat:Normal,FloatBorder:FloatBorder",
 				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+				winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
 			},
 		},
 		formatting = {
@@ -132,8 +130,8 @@ function autocmp.luasnip()
 		region_check_events = "InsertEnter",
 	})
 
-	local ok, cmp = pcall(require, "cmp")
-	if not ok then
+	local present, cmp = pcall(require, "cmp")
+	if not present then
 		return
 	end
 

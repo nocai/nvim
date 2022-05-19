@@ -1,4 +1,5 @@
 local uv = vim.loop
+local lsp_settings = require("configs.lsp_settings")
 
 local path = (function()
 	local is_windows = uv.os_uname().version:match("Windows")
@@ -160,8 +161,6 @@ end
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
-	on_attach = require("configs.lsp").on_attach,
-	capabilities = require("configs.lsp").make_capabilities(),
 	-- The command that starts the language server
 	-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
 	cmd = {
@@ -253,6 +252,9 @@ local config = {
 		bundles = {},
 	},
 }
+
+config = lsp_settings.config(config)
+
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require("jdtls").start_or_attach(config)

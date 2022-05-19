@@ -27,8 +27,8 @@ function telescope.config()
 	})
 
 	-- lua
-	vim.cmd([[hi TelescopeNormal guibg=none]])
-	vim.cmd([[hi TelescopeBorder guibg=none]])
+	-- vim.cmd([[hi TelescopeNormal guibg=none]])
+	-- vim.cmd([[hi TelescopeBorder guibg=none]])
 
 	-- keymap
 	vim.keymap.set("n", "<C-k><C-k>", [[<cmd>Telescope<CR>]])

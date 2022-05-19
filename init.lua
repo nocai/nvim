@@ -100,7 +100,8 @@ return packer.startup(function(use)
 			cond = function()
 				return not nvim.is_vscode
 			end,
-			event = "VimEnter",
+			-- event = "VimEnter",
+			keys = { "<leader>tr" },
 			config = function()
 				require("configs.misc").vim_translator()
 			end,
@@ -128,7 +129,7 @@ return packer.startup(function(use)
 		},
 		{
 			"rhysd/accelerated-jk",
-			event = { "BufRead" },
+			event = { "CursorMoved" },
 			setup = function()
 				vim.cmd([[
 					nmap <silent>n <Plug>(accelerated_jk_gj)
@@ -373,7 +374,7 @@ return packer.startup(function(use)
 			after = "nvim-treesitter",
 			event = { "CursorMoved" },
 			config = function()
-				require("configs.treesitter").vim_match()
+				require("configs.treesitter").vim_matchup()
 			end,
 		},
 		{
