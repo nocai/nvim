@@ -39,9 +39,9 @@ vim.keymap.set({ "n", "x", "o" }, "k", "n")
 vim.keymap.set({ "n", "x", "o" }, "K", "N")
 
 vim.keymap.set({ "n", "x" }, "gk", "gn")
-vim.keymap.set("n", "<C-n>", "<C-n>")
-vim.keymap.set("n", "<C-w>n", "<C-w>n")
-vim.keymap.set("n", "<C-w><C-n>", "<C-w><C-n>")
+vim.keymap.set("n", "<C-k>", "<C-n>")
+vim.keymap.set("n", "<C-w>k", "<C-w>n")
+vim.keymap.set("n", "<C-w><C-k>", "<C-w><C-n>")
 
 -- i => l
 vim.keymap.set({ "n", "x", "o" }, "i", "l")
